@@ -1,0 +1,13 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '7.0'
+
+target 'JabbrClient' do
+  platform :ios, '7.0'
+  pod  'SignalR-ObjC', :path => '~/Documents/workspace/SignalR-ObjC/'
+  #pod 'SignalR-ObjC', '2.0.0.alpha1'
+end
+
+target 'JabbrClientTests' do
+
+end
+

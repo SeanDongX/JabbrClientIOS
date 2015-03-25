@@ -62,7 +62,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="hcW-e5-c5g" kind="relationship" relationship="rootViewController" id="qfZ-Fv-8VX"/>
+                        <segue destination="6Xm-ey-H7h" kind="relationship" relationship="rootViewController" id="324-gp-di7"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9hP-Lw-LhR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -74,7 +74,7 @@
             <objects>
                 <viewController storyboardIdentifier="RawViewController" title="Raw" id="hcW-e5-c5g" customClass="RawViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vsn-zO-WTT">
-                        <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LdR-2B-2AV">
@@ -111,7 +111,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qab-QJ-Am3">
-                                <rect key="frame" x="20" y="417" width="663" height="331"/>
+                                <rect key="frame" x="20" y="417" width="728" height="587"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -292,7 +292,7 @@
             <objects>
                 <viewController storyboardIdentifier="ChatViewController" title="Chat" id="6Xm-ey-H7h" customClass="ChatViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HwY-a9-wGJ">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4mZ-0n-2mp">
@@ -306,7 +306,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="HYL-zA-8Ty">
-                                <rect key="frame" x="20" y="168" width="728" height="836"/>
+                                <rect key="frame" x="20" y="168" width="663" height="580"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -355,7 +355,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S6Q-ir-Rpb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4596" y="-610"/>
+            <point key="canvasLocation" x="1249.5" y="356"/>
         </scene>
         <!--Mouse Tracking-->
         <scene sceneID="BPm-iq-S9T">

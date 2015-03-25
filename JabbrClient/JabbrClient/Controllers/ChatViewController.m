@@ -175,7 +175,7 @@
     [hub on:@"refreshRoom" perform:self selector:@selector(refreshRoom:)];
     [hub on:@"showRooms" perform:self selector:@selector(showRooms:)];
     [hub on:@"addMessageContent" perform:self selector:@selector(addMessageContent:content:)];
-    [hub on:@"addMessage" perform:self selector:@selector(addMessage:name:message:)];
+    [hub on:@"addMessage" perform:self selector:@selector(addMessage:)];
     [hub on:@"addUser" perform:self selector:@selector(addUser:exists:)];
     [hub on:@"changeUserName" perform:self selector:@selector(changeUserName:newUser:)];
     [hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:to:message:)];
@@ -270,9 +270,53 @@
     NSLog(@"addMessageContent");
 }
 
-- (void)addMessage:(id)id name:(id)inName message:(id)message
+- (void)addMessage:(NSArray *)messageData
 {
-    [self addMessage:[NSString stringWithFormat:@"%@: %@",inName,message] type:nil];
+    //Message data example
+//    {
+//        Content = hi;
+//        HtmlContent = "<null>";
+//        HtmlEncoded = 0;
+//        Id = "8111d548-2db7-420b-bb2e-7494c6205f56";
+//        ImageUrl = "<null>";
+//        MessageType = 0;
+//        Source = "<null>";
+//        User =     {
+//            Active = 1;
+//            AfkNote = "<null>";
+//            Country = "<null>";
+//            Flag = "<null>";
+//            Hash = "<null>";
+//            IsAdmin = 1;
+//            IsAfk = 0;
+//            LastActivity = "2015-03-25T22:02:03.8653739Z";
+//            Name = seanxd;
+//            Note = "some note, help";
+//            Status = Active;
+//        };
+//        UserRoomPresence = present;
+//        When = "2015-03-25T22:02:03.8809978+00:00";
+//    },
+//    TestRoom
+//  }
+    NSString *messageString = @"Error occured";
+    
+    if (messageData.count >=2)
+    {
+        NSDictionary *messageDictionary = messageData[0];
+        NSString *userName = @"Unknown";
+        NSDictionary *userData = [messageDictionary objectForKey:@"User"];
+        
+        if (userData && [userData objectForKey:@"Name"])
+        {
+            userName = [userData objectForKey:@"Name"];
+        }
+        
+        NSString *room = messageData[1];
+        messageString = [NSString stringWithFormat:@"@%@ in %@: %@", userName, room, [messageDictionary objectForKey:@"Content"]];
+    }
+    
+    [self addMessage: messageString type:@"message"],
     [self refreshMessages];
 }
 

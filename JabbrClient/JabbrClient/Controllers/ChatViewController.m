@@ -199,7 +199,15 @@
 
 - (IBAction)sendClicked:(id)sender
 {
-    [hub invoke:@"Send" withArgs:@[messageField.text]];
+    NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
+    [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
+    
+    [messageData setObject:messageField.text forKey:@"content"];
+    
+    //TODO: get room
+    [messageData setObject:@"Welcome" forKey:@"room"];
+    
+    [hub invoke:@"Send" withArgs:@[messageData]];
     [messageField setText:@""];
 }
 

@@ -49,16 +49,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self reconnect];
     [super viewWillAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [connection stop];
-    hub = nil;
-    connection.delegate = nil;
-    connection = nil;
-
     [super viewDidDisappear:animated];
 }
 
@@ -107,8 +103,12 @@
 #pragma mark - 
 #pragma mark View Actions
 
-- (IBAction)connectClicked:(id)sender
+- (void)reconnect
 {
+    [connection stop];
+    hub = nil;
+    connection.delegate = nil;
+    connection = nil;
     
     NSString *authToken = [self getCachedAuthToken];
     if (authToken) {
@@ -147,6 +147,11 @@
                                    }
                                }];
     }
+}
+
+- (IBAction)connectClicked:(id)sender
+{
+    [self reconnect];
 }
 
 - (NSString *)getCachedAuthToken {

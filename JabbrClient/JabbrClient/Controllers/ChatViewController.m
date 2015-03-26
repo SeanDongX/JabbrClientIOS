@@ -169,19 +169,25 @@
     
     hub = [connection createHubProxy:@"Chat"];
     
+    [hub on:@"addUser" perform:self selector:@selector(addUser:)];
+    [hub on:@"leave" perform:self selector:@selector(leave:)];
+    
+    [hub on:@"addMessage" perform:self selector:@selector(addMessage:)];
+    [hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
+    [hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
+    [hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
+    
+    //TOOD: fix subscriptions
     [hub setMember:@"focus" object:@YES];
     [hub setMember:@"unread" object:@0];
     
     [hub on:@"refreshRoom" perform:self selector:@selector(refreshRoom:)];
     [hub on:@"showRooms" perform:self selector:@selector(showRooms:)];
     [hub on:@"addMessageContent" perform:self selector:@selector(addMessageContent:content:)];
-    [hub on:@"addMessage" perform:self selector:@selector(addMessage:)];
-    [hub on:@"addUser" perform:self selector:@selector(addUser:exists:)];
     [hub on:@"changeUserName" perform:self selector:@selector(changeUserName:newUser:)];
-    [hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:to:message:)];
+
     [hub on:@"sendMeMessage" perform:self selector:@selector(sendMeMessage:message:)];
-    [hub on:@"leave" perform:self selector:@selector(leave:)];
-    
+   
     [connection setDelegate:self];
     [connection start];
     
@@ -270,7 +276,7 @@
     NSLog(@"addMessageContent");
 }
 
-- (void)addMessage:(NSArray *)messageData
+- (void)addMessage:(NSArray *)data
 {
     //Message data example
 //    {
@@ -301,9 +307,9 @@
 //  }
     NSString *messageString = @"Error occured";
     
-    if (messageData.count >=2)
+    if (data && data.count >=2)
     {
-        NSDictionary *messageDictionary = messageData[0];
+        NSDictionary *messageDictionary = data[0];
         NSString *userName = @"Unknown";
         NSDictionary *userData = [messageDictionary objectForKey:@"User"];
         
@@ -312,7 +318,7 @@
             userName = [userData objectForKey:@"Name"];
         }
         
-        NSString *room = messageData[1];
+        NSString *room = data[1];
         messageString = [NSString stringWithFormat:@"@%@ in %@: %@", userName, room, [messageDictionary objectForKey:@"Content"]];
     }
     
@@ -320,14 +326,129 @@
     [self refreshMessages];
 }
 
-- (void)addUser:(id)user exists:(BOOL)exists
+- (void)updateActivity:(NSArray *)data
 {
-    NSString *userName = [NSString stringWithFormat:@"%@",user[@"Name"]];
-
-    if(!exists && ([name isEqualToString:userName] == NO))
+//    {
+//        Active = 1;
+//        AfkNote = "<null>";
+//        Country = "<null>";
+//        Flag = "<null>";
+//        Hash = "<null>";
+//        IsAdmin = 1;
+//        IsAfk = 0;
+//        LastActivity = "2015-03-25T23:48:24.2351142Z";
+//        Name = seanxd;
+//        Note = "some note, help";
+//        Status = Active;
+//    },
+//    Welcome
+//    )
+    
+    if (!data && data.count <2)
     {
-        //NSString *userId = [NSString stringWithFormat:@"u-%@",[user objectForKey:@"Name"]];
-        [self addMessage:[NSString stringWithFormat:@"%@ just entered %@",userName,room] type:nil];
+        return;
+    }
+    
+    NSDictionary *userDictionary = data[0];
+    if (userDictionary && [userDictionary objectForKey:@"Name"])
+    {
+        [self addMessage:[NSString stringWithFormat: @"@%@ in %@: %@", [userDictionary objectForKey:@"Name"], data[1], [userDictionary objectForKey:@"Status"]] type:@"UpdateActivity"],
+        [self refreshMessages];
+    }
+}
+
+- (void)setTyping:(NSArray *)data
+{
+    //    {
+    //        Active = 1;
+    //        AfkNote = "<null>";
+    //        Country = "<null>";
+    //        Flag = "<null>";
+    //        Hash = "<null>";
+    //        IsAdmin = 1;
+    //        IsAfk = 0;
+    //        LastActivity = "2015-03-25T23:48:24.2351142Z";
+    //        Name = seanxd;
+    //        Note = "some note, help";
+    //        Status = Active;
+    //    },
+    //    Welcome
+    //    )
+    
+    if (!data && data.count <2)
+    {
+        return;
+    }
+    
+    NSDictionary *userDictionary = data[0];
+    if (userDictionary && [userDictionary objectForKey:@"Name"])
+    {
+        [self addMessage:[NSString stringWithFormat: @"@%@ in %@: typing...", [userDictionary objectForKey:@"Name"], data[1]] type:@"UserTyping"],
+        [self refreshMessages];
+    }
+}
+
+- (void)markInactive:(NSArray *)data
+{
+//    {
+//        Active = 0;
+//        AfkNote = "<null>";
+//        Country = Barbados;
+//        Flag = bb;
+//        Hash = "<null>";
+//        IsAdmin = 0;
+//        IsAfk = 0;
+//        LastActivity = "2015-03-25T22:53:59.973Z";
+//        Name = testclient;
+//        Note = "<null>";
+//        Status = Inactive;
+//    }
+//    )
+    
+    if (!data && data.count <1)
+    {
+        return;
+    }
+    
+    NSDictionary *userDictionary = data[0];
+    if (userDictionary && [userDictionary objectForKey:@"Name"])
+    {
+        NSString *userName = [userDictionary objectForKey:@"Name"];
+        [self addMessage:[NSString stringWithFormat: @"@%@ is inactive", userName] type:@"UserStatus"],
+        [self refreshMessages];
+    }
+}
+
+- (void)addUser:(NSArray *)data
+{
+//    {
+//        Active = 1;
+//        AfkNote = "<null>";
+//        Country = "<null>";
+//        Flag = "<null>";
+//        Hash = "<null>";
+//        IsAdmin = 1;
+//        IsAfk = 0;
+//        LastActivity = "2015-03-25T23:31:43.557Z";
+//        Name = seanxd;
+//        Note = "some note, help";
+//        Status = Active;
+//    },
+//    Welcome,
+//    1
+//    )
+
+    if (!data && data.count <3)
+    {
+        return;
+    }
+    
+    NSDictionary *userDictionary = data[0];
+    if (userDictionary && [userDictionary objectForKey:@"Name"])
+    {
+        NSString *userName = [userDictionary objectForKey:@"Name"];
+        [self addMessage:[NSString stringWithFormat: @"@%@ has joined %@", userName, data[1]] type:@"UserJoinRoom"],
+        [self refreshMessages];
     }
 }
 
@@ -354,15 +475,51 @@
     [self addMessage:[NSString stringWithFormat:@"*%@* %@",inName,message] type:@"notification"];
 }
 
-- (void)sendPrivateMessage:(id)from to:(id)to message:(id)message
+- (void)sendPrivateMessage:(NSArray *)data
 {
-    [self addMessage:[NSString stringWithFormat:@"*%@* %@",from,message] type:@"pm"];
+//    seanxd,
+//    testclient,
+//    this is a pm
+    
+    if (!data && data.count <3)
+    {
+        return;
+    }
+    
+    [self addMessage:[NSString stringWithFormat: @"@%@ PM: %@", data[0], data[2]] type:@"PrivateMessage"],
+    [self refreshMessages];
 }
 
-- (void)leave:(id)user
+- (void)leave:(NSArray *)data
 {
-    NSString *userName = [NSString stringWithFormat:@"%@",user[@"Name"]];
-    [self addMessage:[NSString stringWithFormat:@"%@ left the room",userName] type:nil];
+//    {
+//        Active = 1;
+//        AfkNote = "<null>";
+//        Country = "<null>";
+//        Flag = "<null>";
+//        Hash = "<null>";
+//        IsAdmin = 1;
+//        IsAfk = 0;
+//        LastActivity = "2015-03-25T23:27:21.903Z";
+//        Name = seanxd;
+//        Note = "some note, help";
+//        Status = Active;
+//    },
+//    Welcome
+//    )
+    
+    if (!data && data.count <2)
+    {
+        return;
+    }
+    
+    NSDictionary *userDictionary = data[0];
+    if (userDictionary && [userDictionary objectForKey:@"Name"])
+    {
+        NSString *userName = [userDictionary objectForKey:@"Name"];
+        [self addMessage:[NSString stringWithFormat: @"@%@ has left %@", userName, data[1]] type:@"UserLeaveRoom"],
+        [self refreshMessages];
+    }
 }
 
 #pragma mark - 

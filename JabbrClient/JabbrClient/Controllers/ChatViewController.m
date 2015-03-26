@@ -327,7 +327,7 @@
         }
         
         NSString *room = data[1];
-        messageString = [NSString stringWithFormat:@"@%@ in %@: %@", userName, room, [messageDictionary objectForKey:@"Content"]];
+        messageString = [NSString stringWithFormat:@"@%@ #%@: %@", userName, room, [messageDictionary objectForKey:@"Content"]];
     }
     
     [self addMessage: messageString type:@"message"],
@@ -360,7 +360,7 @@
     NSDictionary *userDictionary = data[0];
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
-        [self addMessage:[NSString stringWithFormat: @"@%@ in %@: %@", [userDictionary objectForKey:@"Name"], data[1], [userDictionary objectForKey:@"Status"]] type:@"UpdateActivity"],
+        [self addMessage:[NSString stringWithFormat: @"@%@ #%@: %@", [userDictionary objectForKey:@"Name"], data[1], [userDictionary objectForKey:@"Status"]] type:@"UpdateActivity"],
         [self refreshMessages];
     }
 }
@@ -391,7 +391,7 @@
     NSDictionary *userDictionary = data[0];
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
-        [self addMessage:[NSString stringWithFormat: @"@%@ in %@: typing...", [userDictionary objectForKey:@"Name"], data[1]] type:@"UserTyping"],
+        [self addMessage:[NSString stringWithFormat: @"@%@ #%@: typing...", [userDictionary objectForKey:@"Name"], data[1]] type:@"UserTyping"],
         [self refreshMessages];
     }
 }
@@ -455,7 +455,7 @@
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
         NSString *userName = [userDictionary objectForKey:@"Name"];
-        [self addMessage:[NSString stringWithFormat: @"@%@ has joined %@", userName, data[1]] type:@"UserJoinRoom"],
+        [self addMessage:[NSString stringWithFormat: @"@%@ has joined #%@", userName, data[1]] type:@"UserJoinRoom"],
         [self refreshMessages];
     }
 }
@@ -525,10 +525,11 @@
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
         NSString *userName = [userDictionary objectForKey:@"Name"];
-        [self addMessage:[NSString stringWithFormat: @"@%@ has left %@", userName, data[1]] type:@"UserLeaveRoom"],
+        [self addMessage:[NSString stringWithFormat: @"@%@ has left #%@", userName, data[1]] type:@"UserLeaveRoom"],
         [self refreshMessages];
     }
 }
+
 
 #pragma mark - 
 #pragma mark SRConnection Delegate

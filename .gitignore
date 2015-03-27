@@ -1,2 +1,12 @@
 pods
 JabbrClient/Podfile.lock
+
+*.xccheckout
+
+*.xcuserstate
+
+*.xcbkptlist
+
+*.xcsettings
+
+*.xcbkptlist

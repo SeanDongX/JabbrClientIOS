@@ -174,6 +174,7 @@
     
     hub = [connection createHubProxy:@"Chat"];
     
+    [hub on:@"logOn" perform:self selector:@selector(logon:)];
     [hub on:@"addUser" perform:self selector:@selector(addUser:)];
     [hub on:@"leave" perform:self selector:@selector(leave:)];
     
@@ -284,11 +285,57 @@
     }
 }
 
-- (void)addMessageContent:(id)id content:(id)content
-{
-    NSLog(@"addMessageContent");
-}
+//- (void)addMessageContent:(id)id content:(id)content
+//{
+//    NSLog(@"addMessageContent");
+//}
 
+
+#pragma mark -
+#pragma mark Response handlers
+
+- (void)logon:(NSArray *)data {
+//    <__NSCFArray 0x7fae4162a260>(
+//    <__NSCFArray 0x7fae41625510>(
+//    {
+//        Closed = 0;
+//        Count = 0;
+//        Name = Welcome;
+//        Owners = "<null>";
+//        Private = 0;
+//        RecentMessages = "<null>";
+//        Topic = "<null>";
+//        Users = "<null>";
+//        Welcome = "<null>";
+//    },
+//    {
+//        Closed = 0;
+//        Count = 0;
+//        Name = TestRoom;
+//        Owners = "<null>";
+//        Private = 0;
+//        RecentMessages = "<null>";
+//        Topic = "<null>";
+//        Users = "<null>";
+//        Welcome = "<null>";
+//    }
+//    )
+//    ,
+//    <__NSArrayI 0x7fae41731c00>(
+//                                 
+//    )
+//    ,
+//    {
+//        TabOrder =     (
+//                        Lobby,
+//                        TestRoom,
+//                        Welcome
+//                        );
+//    }
+//)
+
+    
+}
 - (void)addMessage:(NSArray *)data
 {
     //Message data example

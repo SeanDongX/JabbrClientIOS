@@ -9,15 +9,34 @@
 #import "ChatViewController.h"
 #import "Router.h"
 #import "UIViewController+ECSlidingViewController.h"
+#import "ChatThread.h"
+#import "Masonry.h"
 
 @interface ChatViewController ()
-{
-    NSString *name;
-    NSString *hash;
-    NSString *room;
-}
 
 @property (nonatomic, strong) UIPanGestureRecognizer *dynamicTransitionPanGesture;
+
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *password;
+@property (nonatomic, strong) ChatThread *chatThread;
+
+
+@property (nonatomic, strong) SRHubConnection *connection;
+@property (nonatomic, strong) SRHubProxy *hub;
+@property (nonatomic, strong) NSMutableArray *messagesReceived;
+
+@property (nonatomic, strong) IBOutlet UITableView *messageTable;
+
+@property (weak, nonatomic) IBOutlet UIView *bottomViewContainer;
+@property (nonatomic, strong) IBOutlet UITextField *messageField;
+@property (weak, nonatomic) IBOutlet UIButton *sendMessageButton;
+
+@property (weak, nonatomic) IBOutlet UINavigationItem *navifationItem;
+@property (weak, nonatomic) IBOutlet UILabel *tyepingStatusLabel;
+
+//- (IBAction)sendClicked:(id)sender;
+//- (IBAction)menuButtonTapped:(id)sender;
+//- (IBAction)reconnectButtonTapped:(id)sender;
 
 @end
 
@@ -28,7 +47,24 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    [self setUsernamePassword];
     [self connect];
+    
+}
+
+- (void)setUsernamePassword {
+    self.username = @"testclient";
+    self.password = @"password";
+}
+
+- (void)hideTypingStausLabel {
+    self.tyepingStatusLabel.alpha = 0;
+}
+
+- (void)resetChatThread:(ChatThread *)chatThread {
+    self.chatThread = chatThread;
+    self.navifationItem.title = [NSString stringWithFormat:@"#%@", self.chatThread.name];
+    [self clearMessages];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,6 +88,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self hideTypingStausLabel];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -78,6 +115,36 @@
 
 - (IBAction)reconnectButtonTapped:(id)sender {
     [self reconnect];
+}
+
+#pragma mark -
+#pragma mark Event handlers
+
+- (IBAction)connectClicked:(id)sender
+{
+    [self reconnect];
+}
+
+- (IBAction)sendClicked:(id)sender
+{
+    NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
+    [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
+    
+    [messageData setObject:self.messageField.text forKey:@"content"];
+    
+    [messageData setObject:self.chatThread.name forKey:@"room"];
+    
+    [self.hub invoke:@"Send" withArgs:@[messageData]];
+    
+    [self.messagesReceived addObject:[NSString stringWithFormat:@"%@ : %@", @"testclient", self.messageField.text]];
+    [self.messageTable reloadData];
+    
+    [self.messageField setText:@""];
+}
+
+- (IBAction)textFieldTextChanged:(id)sender {
+    
+   [self.hub invoke:@"Typing" withArgs:@[self.chatThread.name]];
 }
 
 #pragma mark -
@@ -117,14 +184,12 @@
         [self connectWithAuthToken:authToken];
     }
     else {
-        NSString *username = @"testclient";
-        NSString *password = @"password";
         
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@account/login?ReturnUrl=/account/tokenr", [Router sharedRouter].server_url]]];
         
         [request setHTTPMethod:@"POST"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
-        NSString *postString = [NSString stringWithFormat: @"username=%@&password=%@", username, password];
+        NSString *postString = [NSString stringWithFormat: @"username=%@&password=%@", self.username, self.password];
         
         NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
         [request setHTTPBody:data];
@@ -167,11 +232,6 @@
     {
         [self makeConnection];
     }
-}
-
-- (IBAction)connectClicked:(id)sender
-{
-    [self reconnect];
 }
 
 - (NSString *)getCachedAuthToken {
@@ -223,22 +283,9 @@
     }
 }
 
-- (IBAction)sendClicked:(id)sender
-{
-    NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
-    [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
-    
-    [messageData setObject:self.messageField.text forKey:@"content"];
-    
-    //TODO: get room
-    [messageData setObject:@"Welcome" forKey:@"room"];
-    
-    [self.hub invoke:@"Send" withArgs:@[messageData]];
-    [self.messageField setText:@""];
-}
 
 #pragma mark - 
-#pragma mark Chat Sample Project
+#pragma mark Chat actions
 
 - (void)clearMessages
 {
@@ -284,7 +331,6 @@
     }];
     
     [self addMessage:[NSString stringWithFormat:@"Entered %@",inRoom] type:@"notification"];
-    room = inRoom;
 }
 
 -(void)showRooms:(id)rooms
@@ -305,14 +351,29 @@
     }
 }
 
-//- (void)addMessageContent:(id)id content:(id)content
-//{
-//    NSLog(@"addMessageContent");
-//}
-
-
 #pragma mark -
-#pragma mark Response handlers
+#pragma mark Incoming message handlers
+
+
+- (BOOL)shoudIgnoreIncoming:(NSDictionary*)data {
+    if (!data) {
+        return false;
+    }
+    
+    NSString* room = [data objectForKey:@"room"];
+    if (room && ![room isEqualToString:self.chatThread.name])
+    {
+        return true;
+    }
+    
+    NSString* username = [data objectForKey:@"username"];
+    if (username && [username isEqualToString:self.username])
+    {
+        return true;
+    }
+    
+    return false;
+}
 
 - (void)logon:(NSArray *)data {
 //    <__NSCFArray 0x7fae4162a260>(
@@ -353,9 +414,8 @@
 //                        );
 //    }
 //)
-
-    
 }
+
 - (void)addMessage:(NSArray *)data
 {
     //Message data example
@@ -385,22 +445,33 @@
 //    },
 //    TestRoom
 //  }
-    NSString *messageString = @"Error occured";
     
-    if (data && data.count >=2)
+    if (!data && data.count <2)
     {
-        NSDictionary *messageDictionary = data[0];
-        NSString *userName = @"Unknown";
-        NSDictionary *userData = [messageDictionary objectForKey:@"User"];
-        
-        if (userData && [userData objectForKey:@"Name"])
-        {
-            userName = [userData objectForKey:@"Name"];
-        }
-        
-        NSString *room = data[1];
-        messageString = [NSString stringWithFormat:@"@%@ #%@: %@", userName, room, [messageDictionary objectForKey:@"Content"]];
+        return;
     }
+    
+    NSString *room = data[1];
+    
+    NSDictionary *messageDictionary = data[0];
+    NSString *userName = @"Unknown";
+    NSDictionary *userData = [messageDictionary objectForKey:@"User"];
+    
+    if (userData && [userData objectForKey:@"Name"])
+    {
+        userName = [userData objectForKey:@"Name"];
+    }
+    
+    NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
+    [ignoreParamDictionary setObject:room forKey:@"room"];
+    [ignoreParamDictionary setObject:userName forKey:@"username"];
+    
+    if ([self shoudIgnoreIncoming:ignoreParamDictionary])
+    {
+        return;
+    }
+    
+    NSString *messageString = [NSString stringWithFormat:@"@%@: %@", userName, [messageDictionary objectForKey:@"Content"]];
     
     [self addMessage: messageString type:@"message"],
     [self refreshMessages];
@@ -432,29 +503,25 @@
     NSDictionary *userDictionary = data[0];
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
-        [self addMessage:[NSString stringWithFormat: @"@%@ #%@: %@", [userDictionary objectForKey:@"Name"], data[1], [userDictionary objectForKey:@"Status"]] type:@"UpdateActivity"],
+        NSString *room = data[1];
+        NSString *userName = [userDictionary objectForKey:@"Name"];
+        
+        NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
+        [ignoreParamDictionary setObject:room forKey:@"room"];
+        [ignoreParamDictionary setObject:userName forKey:@"username"];
+        
+        if ([self shoudIgnoreIncoming:ignoreParamDictionary])
+        {
+            return;
+        }
+        
+        [self addMessage:[NSString stringWithFormat: @"@%@: %@", userName, [userDictionary objectForKey:@"Status"]] type:@"UpdateActivity"];
         [self refreshMessages];
     }
 }
 
 - (void)setTyping:(NSArray *)data
 {
-    //    {
-    //        Active = 1;
-    //        AfkNote = "<null>";
-    //        Country = "<null>";
-    //        Flag = "<null>";
-    //        Hash = "<null>";
-    //        IsAdmin = 1;
-    //        IsAfk = 0;
-    //        LastActivity = "2015-03-25T23:48:24.2351142Z";
-    //        Name = seanxd;
-    //        Note = "some note, help";
-    //        Status = Active;
-    //    },
-    //    Welcome
-    //    )
-    
     if (!data && data.count <2)
     {
         return;
@@ -463,8 +530,25 @@
     NSDictionary *userDictionary = data[0];
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
-        [self addMessage:[NSString stringWithFormat: @"@%@ #%@: typing...", [userDictionary objectForKey:@"Name"], data[1]] type:@"UserTyping"],
-        [self refreshMessages];
+        NSString *room = data[1];
+        NSString *userName = [userDictionary objectForKey:@"Name"];
+        
+        NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
+        [ignoreParamDictionary setObject:room forKey:@"room"];
+        [ignoreParamDictionary setObject:userName forKey:@"username"];
+        
+        if ([self shoudIgnoreIncoming:ignoreParamDictionary])
+        {
+            return;
+        }
+        
+        [self.tyepingStatusLabel setText:[NSString stringWithFormat: @"@%@ ...", userName]];
+        self.tyepingStatusLabel.alpha = 1;
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self.tyepingStatusLabel setText:@""];
+            self.tyepingStatusLabel.alpha = 0;
+        });
     }
 }
 
@@ -523,32 +607,28 @@
         return;
     }
     
+    NSString *room = data[1];
+    
     NSDictionary *userDictionary = data[0];
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
+        
         NSString *userName = [userDictionary objectForKey:@"Name"];
-        [self addMessage:[NSString stringWithFormat: @"@%@ has joined #%@", userName, data[1]] type:@"UserJoinRoom"],
+        
+        NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
+        [ignoreParamDictionary setObject:room forKey:@"room"];
+        [ignoreParamDictionary setObject:userName forKey:@"username"];
+        
+        if ([self shoudIgnoreIncoming:ignoreParamDictionary])
+        {
+            return;
+        }
+        
+        [self addMessage:[NSString stringWithFormat: @"@%@ has joined", userName] type:@"UserJoinRoom"],
         [self refreshMessages];
     }
 }
 
-- (void)changeUserName:(id)oldUser newUser:(id)newUser
-{
-    [self refreshUsers];
-    NSString *newUserName = [NSString stringWithFormat:@"%@",newUser[@"Name"]];
-    
-    name = newUserName;
-    
-    if([newUserName isEqualToString:name])
-    {
-        [self addMessage:[NSString stringWithFormat:@"Your name is now %@",newUserName] type:@"notification"];
-    }
-    else
-    {
-        NSString *oldUserName = [NSString stringWithFormat:@"%@",oldUser[@"Name"]];
-        [self addMessage:[NSString stringWithFormat:@"%@'s nick has changed to %@",oldUserName,newUserName] type:@"notification"];
-    }
-}
 
 - (void)sendMeMessage:(id)inName message:(id)message
 {
@@ -593,11 +673,28 @@
         return;
     }
     
+    NSString *room = data[1];
+    
+    if (!room || ![room isEqualToString:self.chatThread.name])
+    {
+        return;
+    }
+
     NSDictionary *userDictionary = data[0];
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
         NSString *userName = [userDictionary objectForKey:@"Name"];
-        [self addMessage:[NSString stringWithFormat: @"@%@ has left #%@", userName, data[1]] type:@"UserLeaveRoom"],
+        
+        NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
+        [ignoreParamDictionary setObject:room forKey:@"room"];
+        [ignoreParamDictionary setObject:userName forKey:@"username"];
+        
+        if ([self shoudIgnoreIncoming:ignoreParamDictionary])
+        {
+            return;
+        }
+        
+        [self addMessage:[NSString stringWithFormat: @"@%@ has left", userName] type:@"UserLeaveRoom"],
         [self refreshMessages];
     }
 }

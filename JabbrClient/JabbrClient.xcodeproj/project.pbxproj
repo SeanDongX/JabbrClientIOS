@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0B4BD3682C7FD3D36AD8832C /* libPods-JabbrClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1090D86306F7E103B79E7158 /* libPods-JabbrClient.a */; };
+		14679E961AC8838900316C9C /* ChatThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14679E951AC8838900316C9C /* ChatThread.m */; };
 		149F99421AC4D0A200525EA7 /* MEDynamicTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99331AC4D0A200525EA7 /* MEDynamicTransition.m */; };
 		149F99431AC4D0A200525EA7 /* MEFoldAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99351AC4D0A200525EA7 /* MEFoldAnimationController.m */; };
 		149F99441AC4D0A200525EA7 /* MEMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99371AC4D0A200525EA7 /* MEMenuViewController.m */; };
-		149F99451AC4D0A200525EA7 /* MESettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99391AC4D0A200525EA7 /* MESettingsViewController.m */; };
 		149F99461AC4D0A200525EA7 /* METransitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F993B1AC4D0A200525EA7 /* METransitions.m */; };
 		149F99471AC4D0A200525EA7 /* METransitionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F993D1AC4D0A200525EA7 /* METransitionsViewController.m */; };
 		149F99481AC4D0A200525EA7 /* MEZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F993F1AC4D0A200525EA7 /* MEZoomAnimationController.m */; };
@@ -45,14 +45,14 @@
 
 /* Begin PBXFileReference section */
 		1090D86306F7E103B79E7158 /* libPods-JabbrClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JabbrClient.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		14679E941AC8838900316C9C /* ChatThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatThread.h; path = JabbrClient/DataModel/ChatThread.h; sourceTree = SOURCE_ROOT; };
+		14679E951AC8838900316C9C /* ChatThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatThread.m; path = JabbrClient/DataModel/ChatThread.m; sourceTree = SOURCE_ROOT; };
 		149F99321AC4D0A200525EA7 /* MEDynamicTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDynamicTransition.h; sourceTree = "<group>"; };
 		149F99331AC4D0A200525EA7 /* MEDynamicTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDynamicTransition.m; sourceTree = "<group>"; };
 		149F99341AC4D0A200525EA7 /* MEFoldAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEFoldAnimationController.h; sourceTree = "<group>"; };
 		149F99351AC4D0A200525EA7 /* MEFoldAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEFoldAnimationController.m; sourceTree = "<group>"; };
 		149F99361AC4D0A200525EA7 /* MEMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEMenuViewController.h; sourceTree = "<group>"; };
 		149F99371AC4D0A200525EA7 /* MEMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEMenuViewController.m; sourceTree = "<group>"; };
-		149F99381AC4D0A200525EA7 /* MESettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MESettingsViewController.h; sourceTree = "<group>"; };
-		149F99391AC4D0A200525EA7 /* MESettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MESettingsViewController.m; sourceTree = "<group>"; };
 		149F993A1AC4D0A200525EA7 /* METransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METransitions.h; sourceTree = "<group>"; };
 		149F993B1AC4D0A200525EA7 /* METransitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METransitions.m; sourceTree = "<group>"; };
 		149F993C1AC4D0A200525EA7 /* METransitionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METransitionsViewController.h; sourceTree = "<group>"; };
@@ -110,6 +110,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14679E931AC8832900316C9C /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				14679E941AC8838900316C9C /* ChatThread.h */,
+				14679E951AC8838900316C9C /* ChatThread.m */,
+			);
+			name = DataModel;
+			sourceTree = "<group>";
+		};
 		149F99311AC4D07000525EA7 /* menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,8 +128,6 @@
 				149F99351AC4D0A200525EA7 /* MEFoldAnimationController.m */,
 				149F99361AC4D0A200525EA7 /* MEMenuViewController.h */,
 				149F99371AC4D0A200525EA7 /* MEMenuViewController.m */,
-				149F99381AC4D0A200525EA7 /* MESettingsViewController.h */,
-				149F99391AC4D0A200525EA7 /* MESettingsViewController.m */,
 				149F993A1AC4D0A200525EA7 /* METransitions.h */,
 				149F993B1AC4D0A200525EA7 /* METransitions.m */,
 				149F993C1AC4D0A200525EA7 /* METransitionsViewController.h */,
@@ -202,6 +209,7 @@
 		14B515A01ABF14C90000CC4F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				14679E931AC8832900316C9C /* DataModel */,
 				149F994A1AC4D0FD00525EA7 /* StoryBoards */,
 				149F99311AC4D07000525EA7 /* menu */,
 				14B515A11ABF14C90000CC4F /* AppDelegate.h */,
@@ -391,10 +399,10 @@
 				14B515B21ABF14C90000CC4F /* MasterViewController.m in Sources */,
 				14B515741ABF138A0000CC4F /* main.m in Sources */,
 				14B515B51ABF14C90000CC4F /* StreamingViewController.m in Sources */,
-				149F99451AC4D0A200525EA7 /* MESettingsViewController.m in Sources */,
 				14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */,
 				14B515B81ABF15330000CC4F /* Router.m in Sources */,
 				14B515B31ABF14C90000CC4F /* MouseTrackingViewController.m in Sources */,
+				14679E961AC8838900316C9C /* ChatThread.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

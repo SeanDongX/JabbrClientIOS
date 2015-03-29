@@ -23,6 +23,7 @@
 
 #import "MEMenuViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
+#import "ChatViewController.h"
 
 @interface MEMenuViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
@@ -53,7 +54,7 @@
 - (NSArray *)menuItems {
     if (_menuItems) return _menuItems;
     
-    _menuItems = @[@"Chat", @"Transitions"];
+    _menuItems = @[@"PitchDemo", @"FeaturePlanning", @"Transitions"];
     
     return _menuItems;
 }
@@ -61,6 +62,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
     return self.menuItems.count;
 }
 
@@ -70,7 +72,13 @@
     
     NSString *menuItem = self.menuItems[indexPath.row];
     
-    cell.textLabel.text = menuItem;
+    if (indexPath.row == 2) {
+        cell.textLabel.text = menuItem;
+    }
+    else {
+        cell.textLabel.text = [NSString stringWithFormat:@"#%@", menuItem];
+    }
+    
     [cell setBackgroundColor:[UIColor clearColor]];
     
     return cell;
@@ -96,15 +104,23 @@
         }
         
         self.slidingViewController.topViewController = self.transitionsNavigationController;
-    } else if ([menuItem isEqualToString:@"Chat"]) {
-        UIViewController *vc = [self.controllers objectForKey:@"Chat"];
+    } else {
+        UINavigationController *chatViewNavController = [self.controllers objectForKey:@"Chat"];
         
-        if (!vc){
-            vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatNavigationController"];
-            [self.controllers setObject:vc forKey:@"Chat"];
+        if (!chatViewNavController){
+            chatViewNavController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatNavigationController"];
+            [self.controllers setObject:chatViewNavController forKey:@"Chat"];
+            
         }
         
-        self.slidingViewController.topViewController = vc;
+        
+        self.slidingViewController.topViewController = chatViewNavController;
+        
+        ChatViewController *chatViewController = [chatViewNavController.viewControllers objectAtIndex:0];
+        
+        ChatThread *chatThread = [[ChatThread alloc] init];
+        chatThread.name = menuItem;
+        [chatViewController resetChatThread:chatThread];
     }
     
         

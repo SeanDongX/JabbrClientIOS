@@ -301,7 +301,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="6Xm-ey-H7h" id="cZb-NK-xqL"/>
-                                    <outlet property="delegate" destination="6Xm-ey-H7h" id="UO1-cz-Iqm"/>
+                                    <outlet property="delegate" destination="6Xm-ey-H7h" id="ETo-Fw-BvY"/>
                                 </connections>
                             </tableView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Messages:" lineBreakMode="tailTruncation" minimumFontSize="10" id="cUZ-ig-jk2">
@@ -334,7 +334,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4mZ-0n-2mp">
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Chat" id="ivC-GN-Yo1">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="XQL-sS-pUh">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4mZ-0n-2mp">
                                 <rect key="frame" x="570" y="91" width="117" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Reconnect">
@@ -344,10 +349,8 @@
                                     <action selector="connectClicked:" destination="6Xm-ey-H7h" eventType="touchUpInside" id="sUG-d4-B9R"/>
                                 </connections>
                             </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Chat" id="ivC-GN-Yo1"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="messageField" destination="qrk-BB-ejZ" id="E1R-O7-CB1"/>
                         <outlet property="messageTable" destination="HYL-zA-8Ty" id="0f5-fp-TSg"/>
@@ -355,7 +358,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S6Q-ir-Rpb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1249.5" y="356"/>
+            <point key="canvasLocation" x="1249.5" y="475"/>
         </scene>
         <!--Mouse Tracking-->
         <scene sceneID="BPm-iq-S9T">

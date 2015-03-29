@@ -103,42 +103,10 @@
             </objects>
             <point key="canvasLocation" x="277" y="180"/>
         </scene>
-        <!--Settings-->
-        <scene sceneID="mBM-zs-keE">
-            <objects>
-                <tableViewController storyboardIdentifier="MESettingsViewController" id="ZPb-2X-K4z" customClass="MESettingsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="WaZ-wp-RdA">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="mAa-nV-Zlw">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mAa-nV-Zlw" id="IYY-YO-E9u">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="Q6E-TG-MZt">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="xI7-Ui-0xs">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="menuButtonTapped:" destination="ZPb-2X-K4z" id="jTe-aZ-9Zc"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xd1-2z-24K" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="811" y="1562"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="C8G-31-ClJ">
             <objects>
-                <navigationController storyboardIdentifier="MESettingsNavigationController" definesPresentationContext="YES" id="ClZ-r3-7Fa" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ChatNavigationController" definesPresentationContext="YES" id="ClZ-r3-7Fa" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zBW-Xd-mzi">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.2421875" green="0.41135378649999998" blue="0.74942974449999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -148,12 +116,78 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="ZPb-2X-K4z" kind="relationship" relationship="rootViewController" id="LMh-kj-IdO"/>
+                        <segue destination="vtJ-5i-UDw" kind="relationship" relationship="rootViewController" id="Dit-YP-SLf"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RIN-Nv-f4a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="277" y="1562"/>
+        </scene>
+        <!--Chat-->
+        <scene sceneID="WDy-qq-umt">
+            <objects>
+                <viewController id="vtJ-5i-UDw" userLabel="Chat" customClass="ChatViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7uS-nx-P72"/>
+                        <viewControllerLayoutGuide type="bottom" id="hpH-vO-XbI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bCB-35-Luu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="50S-rZ-1GS" userLabel="MessageTable">
+                                <rect key="frame" x="0.0" y="64" width="320" height="440"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="vtJ-5i-UDw" id="yPu-uQ-zKW"/>
+                                    <outlet property="delegate" destination="vtJ-5i-UDw" id="1JG-PL-xFu"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vJ0-L1-LCM">
+                                <rect key="frame" x="0.0" y="506" width="320" height="62"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MuX-fq-D5W" userLabel="MessageField">
+                                        <rect key="frame" x="44" y="16" width="216" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NW0-td-my9" userLabel="SendButton">
+                                        <rect key="frame" x="268" y="16" width="46" height="30"/>
+                                        <state key="normal" title="Send">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendClicked:" destination="vtJ-5i-UDw" eventType="touchUpInside" id="Vmf-Zu-nq2"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Chat" id="iDk-6w-F7j">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="zun-6c-983" userLabel="Menu">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="menuButtonTapped:" destination="vtJ-5i-UDw" id="aix-nN-noc"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Reconnect" id="eIt-t0-87j">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="reconnectButtonTapped:" destination="vtJ-5i-UDw" id="Kvb-54-vOA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="messageField" destination="MuX-fq-D5W" id="J60-tJ-QQ3"/>
+                        <outlet property="messageTable" destination="50S-rZ-1GS" id="5Mn-5K-Fk9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KfC-cv-NP1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="744" y="1562"/>
         </scene>
         <!--Transitions-->
         <scene sceneID="4cU-nh-c5P">

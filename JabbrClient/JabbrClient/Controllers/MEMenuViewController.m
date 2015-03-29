@@ -26,6 +26,7 @@
 
 @interface MEMenuViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
+@property (nonatomic, strong) NSMutableDictionary *controllers;
 @property (nonatomic, strong) UINavigationController *transitionsNavigationController;
 @end
 
@@ -33,11 +34,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.controllers = [NSMutableDictionary dictionaryWithCapacity:self.menuItems.count];
     
     // topViewController is the transitions navigation controller at this point.
     // It is initially set as a User Defined Runtime Attributes in storyboards.
     // We keep a reference to this instance so that we can go back to it without losing its state.
     self.transitionsNavigationController = (UINavigationController *)self.slidingViewController.topViewController;
+    [self.controllers setObject:self.transitionsNavigationController forKey:@"Transitions"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -50,7 +53,7 @@
 - (NSArray *)menuItems {
     if (_menuItems) return _menuItems;
     
-    _menuItems = @[@"Transitions", @"Settings"];
+    _menuItems = @[@"Chat", @"Transitions"];
     
     return _menuItems;
 }
@@ -83,10 +86,25 @@
     // dynamically so everything needs to start in a consistent state.
     self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
     
+
     if ([menuItem isEqualToString:@"Transitions"]) {
+        UIViewController *vc = [self.controllers objectForKey:@"Transitions"];
+        
+        if (!vc){
+            vc = self.transitionsNavigationController;
+            [self.controllers setObject:vc forKey:@"Transitions"];
+        }
+        
         self.slidingViewController.topViewController = self.transitionsNavigationController;
-    } else if ([menuItem isEqualToString:@"Settings"]) {
-        self.slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MESettingsNavigationController"];
+    } else if ([menuItem isEqualToString:@"Chat"]) {
+        UIViewController *vc = [self.controllers objectForKey:@"Chat"];
+        
+        if (!vc){
+            vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatNavigationController"];
+            [self.controllers setObject:vc forKey:@"Chat"];
+        }
+        
+        self.slidingViewController.topViewController = vc;
     }
     
         

@@ -8,6 +8,7 @@
 
 #import "ChatViewController.h"
 #import "Router.h"
+#import "UIViewController+ECSlidingViewController.h"
 
 @interface ChatViewController ()
 {
@@ -16,17 +17,18 @@
     NSString *room;
 }
 
-- (void)addUser:(id)user exists:(BOOL)exists;
+@property (nonatomic, strong) UIPanGestureRecognizer *dynamicTransitionPanGesture;
 
 @end
 
 @implementation ChatViewController
 
-@synthesize messageField, messageTable;
+//@synthesize messageField, messageTable;
 
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    [self connect];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,7 +51,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self reconnect];
     [super viewWillAppear:animated];
 }
 
@@ -68,9 +69,15 @@
     [super viewDidLoad];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	return YES;
+#pragma mark -
+#pragma mark Navigation
+
+- (IBAction)menuButtonTapped:(id)sender {
+    [self.slidingViewController anchorTopViewToRightAnimated:YES];
+}
+
+- (IBAction)reconnectButtonTapped:(id)sender {
+    [self reconnect];
 }
 
 #pragma mark -
@@ -83,7 +90,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
 {
-    return [messagesReceived count];
+    return [self.messagesReceived count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
@@ -95,7 +102,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = messagesReceived[indexPath.row];
+    cell.textLabel.text = self.messagesReceived[indexPath.row];
     
     return cell;
 }
@@ -103,13 +110,8 @@
 #pragma mark - 
 #pragma mark View Actions
 
-- (void)reconnect
+- (void)makeConnection
 {
-    [connection stop];
-    hub = nil;
-    connection.delegate = nil;
-    connection = nil;
-    
     NSString *authToken = [self getCachedAuthToken];
     if (authToken) {
         [self connectWithAuthToken:authToken];
@@ -149,6 +151,24 @@
     }
 }
 
+- (void)reconnect
+{
+    [self.connection stop];
+    self.hub = nil;
+    self.connection.delegate = nil;
+    self.connection = nil;
+    [self makeConnection];
+}
+
+
+- (void)connect
+{
+    if (!self.connection)
+    {
+        [self makeConnection];
+    }
+}
+
 - (IBAction)connectClicked:(id)sender
 {
     [self reconnect];
@@ -170,36 +190,36 @@
     
     
     NSString *server = [Router sharedRouter].server_url;
-    connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"token=%@", authToken]];
+    self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"token=%@", authToken]];
     
-    hub = [connection createHubProxy:@"Chat"];
+    self.hub = [self.connection createHubProxy:@"Chat"];
     
-    [hub on:@"logOn" perform:self selector:@selector(logon:)];
-    [hub on:@"addUser" perform:self selector:@selector(addUser:)];
-    [hub on:@"leave" perform:self selector:@selector(leave:)];
+    [self.hub on:@"logOn" perform:self selector:@selector(logon:)];
+    [self.hub on:@"addUser" perform:self selector:@selector(addUser:)];
+    [self.hub on:@"leave" perform:self selector:@selector(leave:)];
     
-    [hub on:@"addMessage" perform:self selector:@selector(addMessage:)];
-    [hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
-    [hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
-    [hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
+    [self.hub on:@"addMessage" perform:self selector:@selector(addMessage:)];
+    [self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
+    [self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
+    [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
     
     //TOOD: fix subscriptions
-    [hub setMember:@"focus" object:@YES];
-    [hub setMember:@"unread" object:@0];
+    [self.hub setMember:@"focus" object:@YES];
+    [self.hub setMember:@"unread" object:@0];
     
-    [hub on:@"refreshRoom" perform:self selector:@selector(refreshRoom:)];
-    [hub on:@"showRooms" perform:self selector:@selector(showRooms:)];
-    [hub on:@"addMessageContent" perform:self selector:@selector(addMessageContent:content:)];
-    [hub on:@"changeUserName" perform:self selector:@selector(changeUserName:newUser:)];
+    [self.hub on:@"refreshRoom" perform:self selector:@selector(refreshRoom:)];
+    [self.hub on:@"showRooms" perform:self selector:@selector(showRooms:)];
+    [self.hub on:@"addMessageContent" perform:self selector:@selector(addMessageContent:content:)];
+    [self.hub on:@"changeUserName" perform:self selector:@selector(changeUserName:newUser:)];
 
-    [hub on:@"sendMeMessage" perform:self selector:@selector(sendMeMessage:message:)];
+    [self.hub on:@"sendMeMessage" perform:self selector:@selector(sendMeMessage:message:)];
    
-    [connection setDelegate:self];
-    [connection start];
+    [self.connection setDelegate:self];
+    [self.connection start];
     
-    if(messagesReceived == nil)
+    if(self.messagesReceived == nil)
     {
-        messagesReceived = [[NSMutableArray alloc] init];
+        self.messagesReceived = [[NSMutableArray alloc] init];
     }
 }
 
@@ -208,13 +228,13 @@
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
     [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
     
-    [messageData setObject:messageField.text forKey:@"content"];
+    [messageData setObject:self.messageField.text forKey:@"content"];
     
     //TODO: get room
     [messageData setObject:@"Welcome" forKey:@"room"];
     
-    [hub invoke:@"Send" withArgs:@[messageData]];
-    [messageField setText:@""];
+    [self.hub invoke:@"Send" withArgs:@[messageData]];
+    [self.messageField setText:@""];
 }
 
 #pragma mark - 
@@ -222,13 +242,13 @@
 
 - (void)clearMessages
 {
-    [messagesReceived removeAllObjects];
-    [messageTable reloadData];
+    [self.messagesReceived removeAllObjects];
+    [self.messageTable reloadData];
 }
 
 - (void)refreshMessages
 {
-    [messageTable reloadData];
+    [self.messageTable reloadData];
 }
 
 - (void)clearUsers
@@ -244,7 +264,7 @@
 
 - (void)addMessage:(NSString *)content type:(id)type
 {
-    [messagesReceived addObject:content];
+    [self.messagesReceived addObject:content];
     [self refreshMessages];
 }
 
@@ -253,11 +273,11 @@
     [self clearMessages];
     [self clearUsers];
     
-    [hub invoke:@"GetUsers" withArgs:@[] completionHandler:^(id users) {
+    [self.hub invoke:@"GetUsers" withArgs:@[] completionHandler:^(id users) {
         for(id user in users)
         {
             if([user isKindOfClass:[NSDictionary class]]){
-                [self addUser:user exists:TRUE];
+            //    [self addUser:user exists:TRUE];
             }
             [self refreshUsers];
         }
@@ -588,9 +608,9 @@
 
 - (void)SRConnectionDidOpen:(SRConnection *)connection
 {
-    [messagesReceived insertObject:@"Connection Opened" atIndex:0];
-    [hub invoke:@"Join" withArgs:@[]];
-    [messageTable reloadData];
+    [self.messagesReceived insertObject:@"Connection Opened" atIndex:0];
+    [self.hub invoke:@"Join" withArgs:@[]];
+    [self.messageTable reloadData];
 }
 
 - (void)SRConnection:(SRConnection *)connection didReceiveData:(id)data
@@ -601,8 +621,8 @@
 
 - (void)SRConnectionDidClose:(SRConnection *)connection
 {
-    [messagesReceived insertObject:@"Connection Closed" atIndex:0];
-    [messageTable reloadData];
+    [self.messagesReceived insertObject:@"Connection Closed" atIndex:0];
+    [self.messageTable reloadData];
 }
 
 - (void)SRConnection:(SRConnection *)connection didReceiveError:(NSError *)error

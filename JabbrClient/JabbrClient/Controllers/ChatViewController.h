@@ -10,15 +10,18 @@
 #import "SignalR.h"
 
 @interface ChatViewController : UIViewController <UISplitViewControllerDelegate, SRConnectionDelegate>
-{
-    SRHubConnection *connection;
-    SRHubProxy *hub;
-    NSMutableArray *messagesReceived;
-}
+
+@property (nonatomic, strong) SRHubConnection *connection;
+@property (nonatomic, strong) SRHubProxy *hub;
+@property (nonatomic, strong) NSMutableArray *messagesReceived;
+
 @property (nonatomic, strong) IBOutlet UITableView *messageTable;
 @property (nonatomic, strong) IBOutlet UITextField *messageField;
 
-- (IBAction)connectClicked:(id)sender;
-- (IBAction)sendClicked:(id)sender;
+//@property (nonatomic, strong) IBOutlet UITableView *messageTable;
 
+//- (IBAction)connectClicked:(id)sender;
+- (IBAction)sendClicked:(id)sender;
+- (IBAction)menuButtonTapped:(id)sender;
+- (IBAction)reconnectButtonTapped:(id)sender;
 @end

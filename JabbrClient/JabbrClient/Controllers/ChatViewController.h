@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SignalR.h"
 #import "ChatThread.h"
+#import <JSQMessagesViewController/JSQMessages.h> 
 
-@interface ChatViewController : UIViewController <UISplitViewControllerDelegate, SRConnectionDelegate>
+@interface ChatViewController : JSQMessagesViewController <SRConnectionDelegate>
 
 - (void)resetChatThread:(ChatThread *)chatThread;
 

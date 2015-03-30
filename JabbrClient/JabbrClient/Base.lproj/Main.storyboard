@@ -134,73 +134,7 @@
                     <view key="view" contentMode="scaleToFill" id="bCB-35-Luu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="50S-rZ-1GS" userLabel="MessageTable">
-                                <rect key="frame" x="0.0" y="64" width="320" height="451"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="vtJ-5i-UDw" id="yPu-uQ-zKW"/>
-                                    <outlet property="delegate" destination="vtJ-5i-UDw" id="1JG-PL-xFu"/>
-                                </connections>
-                            </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Typing Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odc-Qw-P0c" userLabel="TypingStatusLabel">
-                                <rect key="frame" x="0.0" y="495" width="320" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.21960784310000001" green="0.81960784310000001" blue="1" alpha="0.94999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJ0-L1-LCM" userLabel="BottomViewContainer">
-                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MuX-fq-D5W" userLabel="MessageField">
-                                        <rect key="frame" x="10" y="10" width="300" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="300" id="E4V-Ke-wR5"/>
-                                            <constraint firstAttribute="height" constant="30" id="skN-6e-We1"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="textFieldTextChanged:" destination="vtJ-5i-UDw" eventType="editingChanged" id="xwi-nE-iGB"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NW0-td-my9" userLabel="SendButton">
-                                        <rect key="frame" x="260" y="10" width="50" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="AHj-ig-Ev4"/>
-                                            <constraint firstAttribute="width" constant="50" id="ocN-ml-d2T"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" title="Send">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="sendClicked:" destination="vtJ-5i-UDw" eventType="touchUpInside" id="Vmf-Zu-nq2"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="0uI-Zp-nwU"/>
-                                    <constraint firstAttribute="centerY" secondItem="MuX-fq-D5W" secondAttribute="centerY" id="42a-su-RcW"/>
-                                    <constraint firstAttribute="centerY" secondItem="NW0-td-my9" secondAttribute="centerY" id="9XI-Rb-71x"/>
-                                    <constraint firstItem="MuX-fq-D5W" firstAttribute="leading" secondItem="vJ0-L1-LCM" secondAttribute="leading" constant="10" id="JiH-XC-dCI"/>
-                                    <constraint firstAttribute="trailing" secondItem="NW0-td-my9" secondAttribute="trailing" constant="10" id="yTf-nH-gjS"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="vJ0-L1-LCM" firstAttribute="width" secondItem="bCB-35-Luu" secondAttribute="width" id="21g-mi-Aya"/>
-                            <constraint firstItem="vJ0-L1-LCM" firstAttribute="top" secondItem="Odc-Qw-P0c" secondAttribute="bottom" constant="5" id="9wd-Sb-zOD"/>
-                            <constraint firstItem="50S-rZ-1GS" firstAttribute="leading" secondItem="vJ0-L1-LCM" secondAttribute="leading" id="DEL-fx-BFT"/>
-                            <constraint firstItem="Odc-Qw-P0c" firstAttribute="centerX" secondItem="vJ0-L1-LCM" secondAttribute="centerX" id="F35-qR-hOh"/>
-                            <constraint firstAttribute="centerX" secondItem="50S-rZ-1GS" secondAttribute="centerX" id="X0C-nh-Uk6"/>
-                            <constraint firstItem="50S-rZ-1GS" firstAttribute="top" secondItem="7uS-nx-P72" secondAttribute="bottom" id="Ylr-5E-OM3"/>
-                            <constraint firstAttribute="centerX" secondItem="vJ0-L1-LCM" secondAttribute="centerX" id="kFh-QX-tux"/>
-                            <constraint firstItem="hpH-vO-XbI" firstAttribute="top" secondItem="vJ0-L1-LCM" secondAttribute="bottom" id="pjq-4z-HaE"/>
-                            <constraint firstItem="vJ0-L1-LCM" firstAttribute="top" secondItem="50S-rZ-1GS" secondAttribute="bottom" constant="3" id="shk-js-Jac"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="iDk-6w-F7j" userLabel="NavigationItem">
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="zun-6c-983" userLabel="Menu">
@@ -217,12 +151,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="bottomViewContainer" destination="vJ0-L1-LCM" id="JBr-vM-e4u"/>
-                        <outlet property="messageField" destination="MuX-fq-D5W" id="J60-tJ-QQ3"/>
-                        <outlet property="messageTable" destination="50S-rZ-1GS" id="5Mn-5K-Fk9"/>
                         <outlet property="navifationItem" destination="iDk-6w-F7j" id="bS0-5R-DyH"/>
-                        <outlet property="sendMessageButton" destination="NW0-td-my9" id="Y2j-JY-ymw"/>
-                        <outlet property="tyepingStatusLabel" destination="Odc-Qw-P0c" id="Wqs-s2-pxo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KfC-cv-NP1" userLabel="First Responder" sceneMemberID="firstResponder"/>

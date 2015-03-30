@@ -96,7 +96,7 @@
     
 
     if ([menuItem isEqualToString:@"Transitions"]) {
-        UIViewController *vc = [self.controllers objectForKey:@"Transitions"];
+        UIViewController *vc = [self.controllers objectForKey:menuItem];
         
         if (!vc){
             vc = self.transitionsNavigationController;
@@ -105,11 +105,11 @@
         
         self.slidingViewController.topViewController = self.transitionsNavigationController;
     } else {
-        UINavigationController *chatViewNavController = [self.controllers objectForKey:@"Chat"];
+        UINavigationController *chatViewNavController = [self.controllers objectForKey:menuItem];
         
         if (!chatViewNavController){
             chatViewNavController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatNavigationController"];
-            [self.controllers setObject:chatViewNavController forKey:@"Chat"];
+            [self.controllers setObject:chatViewNavController forKey:menuItem];
             
         }
         
@@ -120,7 +120,7 @@
         
         ChatThread *chatThread = [[ChatThread alloc] init];
         chatThread.name = menuItem;
-        [chatViewController resetChatThread:chatThread];
+        [chatViewController switchToChatThread:chatThread];
     }
     
         

@@ -114,11 +114,14 @@ static NSString * const kJenifer = @"Jenifer";
     self.incomingBubbleImageView = [bubbleImageFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
 }
 
-- (void)resetChatThread:(ChatThread *)chatThread {
+- (void)switchToChatThread:(ChatThread *)chatThread {
     
     self.chatThread = chatThread;
     self.navifationItem.title = [NSString stringWithFormat:@"#%@", self.chatThread.name];
-    [self clearMessages];
+    
+    if (![self.chatThreadRepository objectForKey:self.chatThread.name]) {
+        [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.chatThread.name];
+    }
 }
 
 - (void)setupAvatars {
@@ -169,6 +172,7 @@ static NSString * const kJenifer = @"Jenifer";
     JSQMessage *message = [JSQMessage messageWithSenderId:senderId displayName:senderDisplayName text:text];
     [self sendMessage:message];
 }
+
 
 - (void)setupOutgoingTypingEventHandler {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -496,11 +500,6 @@ static NSString * const kJenifer = @"Jenifer";
 
 #pragma mark - 
 #pragma mark Chat actions
-
-- (void)clearMessages
-{
-    [[self getCurrentMessageThread] removeAllObjects];
-}
 
 - (void)receiveMessage:(id<JSQMessageData>)message {
     [[self getCurrentMessageThread] addObject:message];

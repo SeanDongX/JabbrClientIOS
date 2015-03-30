@@ -13,6 +13,6 @@
 
 @interface ChatViewController : JSQMessagesViewController <SRConnectionDelegate>
 
-- (void)resetChatThread:(ChatThread *)chatThread;
+- (void)switchToChatThread:(ChatThread *)chatThread;
 
 @end

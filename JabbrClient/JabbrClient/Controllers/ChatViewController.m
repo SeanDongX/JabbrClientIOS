@@ -12,9 +12,11 @@
 #import "ChatThread.h"
 
 
+static NSString * const kDefaultChatThread = @"collabot";
 static NSString * const kMe = @"testclient";
 static NSString * const kSeanxd = @"seanxd";
 static NSString * const kJenifer = @"Jenifer";
+
 
 @interface ChatViewController ()
 
@@ -41,7 +43,6 @@ static NSString * const kJenifer = @"Jenifer";
 
 @implementation ChatViewController
 
-
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -63,6 +64,7 @@ static NSString * const kJenifer = @"Jenifer";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setupChatThread];
     [self setupChatRepository];
     [self setupUsernamePassword];
     [self setupBubbleImage];
@@ -94,6 +96,12 @@ static NSString * const kJenifer = @"Jenifer";
 
 #pragma mark - 
 #pragma initial setup
+
+- (void)setupChatThread {
+    self.chatThread = [[ChatThread alloc] init];
+    self.chatThread.name = kDefaultChatThread;
+}
+
 - (void)setupChatRepository {
     self.chatThreadRepository = [NSMutableDictionary dictionary];
 }
@@ -122,6 +130,8 @@ static NSString * const kJenifer = @"Jenifer";
     if (![self.chatThreadRepository objectForKey:self.chatThread.name]) {
         [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.chatThread.name];
     }
+    
+    [self.collectionView reloadData];
 }
 
 - (void)setupAvatars {
@@ -136,7 +146,7 @@ static NSString * const kJenifer = @"Jenifer";
     
     self.avatars = @{ kMe : avatorUser1,
                       kSeanxd : avatorUser2,
-                      kJenifer: avatorUser3};
+                      kJenifer: avatorUser3 };
     
 }
 
@@ -493,7 +503,7 @@ static NSString * const kJenifer = @"Jenifer";
     
     if([self getCurrentMessageThread] == nil)
     {
-        [self.chatThreadRepository setObject: [[NSMutableArray alloc] init]forKey:self.chatThread.name] ;
+        [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.chatThread.name] ;
     }
 }
 

@@ -28,7 +28,7 @@
 @interface MEMenuViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
 @property (nonatomic, strong) NSMutableDictionary *controllers;
-@property (nonatomic, strong) UINavigationController *transitionsNavigationController;
+@property (nonatomic, strong) UINavigationController *navigationController;
 @end
 
 @implementation MEMenuViewController
@@ -40,8 +40,8 @@
     // topViewController is the transitions navigation controller at this point.
     // It is initially set as a User Defined Runtime Attributes in storyboards.
     // We keep a reference to this instance so that we can go back to it without losing its state.
-    self.transitionsNavigationController = (UINavigationController *)self.slidingViewController.topViewController;
-    [self.controllers setObject:self.transitionsNavigationController forKey:@"Transitions"];
+    self.navigationController = (UINavigationController *)self.slidingViewController.topViewController;
+    [self.controllers setObject:self.navigationController forKey:@"PitchDemo"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -54,7 +54,7 @@
 - (NSArray *)menuItems {
     if (_menuItems) return _menuItems;
     
-    _menuItems = @[@"PitchDemo", @"FeaturePlanning", @"Transitions"];
+    _menuItems = @[@"PitchDemo", @"FeaturePlanning", @"collabot", @"Settings"];
     
     return _menuItems;
 }
@@ -72,7 +72,7 @@
     
     NSString *menuItem = self.menuItems[indexPath.row];
     
-    if (indexPath.row == 2) {
+    if (indexPath.row == 3) {
         cell.textLabel.text = menuItem;
     }
     else {
@@ -86,45 +86,45 @@
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *menuItem = self.menuItems[indexPath.row];
+- (void)setNavController:(NSString *)menuItem {
+    NSString *key = @"Chat";
+    NSString *viewControllerIdentifier = @"ChatNavigationController";
+    BOOL setThread = TRUE;
     
-    // This undoes the Zoom Transition's scale because it affects the other transitions.
-    // You normally wouldn't need to do anything like this, but we're changing transitions
-    // dynamically so everything needs to start in a consistent state.
-    self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
+    if ([menuItem isEqualToString:@"Settings"]) {
+        key = @"Settings";
+        viewControllerIdentifier = @"METransitionsNavigationController";
+        setThread = FALSE;
+    }
     
-
-    if ([menuItem isEqualToString:@"Transitions"]) {
-        UIViewController *vc = [self.controllers objectForKey:menuItem];
-        
-        if (!vc){
-            vc = self.transitionsNavigationController;
-            [self.controllers setObject:vc forKey:@"Transitions"];
-        }
-        
-        self.slidingViewController.topViewController = self.transitionsNavigationController;
-    } else {
-        UINavigationController *chatViewNavController = [self.controllers objectForKey:menuItem];
-        
-        if (!chatViewNavController){
-            chatViewNavController = [self.storyboard instantiateViewControllerWithIdentifier:@"ChatNavigationController"];
-            [self.controllers setObject:chatViewNavController forKey:menuItem];
-            
-        }
-        
-        
-        self.slidingViewController.topViewController = chatViewNavController;
-        
-        ChatViewController *chatViewController = [chatViewNavController.viewControllers objectAtIndex:0];
+    UINavigationController *navController = [self.controllers objectForKey:key];
+    
+    if (!navController){
+        navController = [self.storyboard instantiateViewControllerWithIdentifier:viewControllerIdentifier];
+        [self.controllers setObject:navController forKey:key];
+    }
+    
+    self.slidingViewController.topViewController = navController;
+    
+    if (setThread){
+        ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
         
         ChatThread *chatThread = [[ChatThread alloc] init];
         chatThread.name = menuItem;
         [chatViewController switchToChatThread:chatThread];
     }
     
-        
     [self.slidingViewController resetTopViewAnimated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // This undoes the Zoom Transition's scale because it affects the other transitions.
+    // You normally wouldn't need to do anything like this, but we're changing transitions
+    // dynamically so everything needs to start in a consistent state.
+    self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
+
+    NSString *menuItem = self.menuItems[indexPath.row];
+    [self setNavController:menuItem];
 }
 
 @end

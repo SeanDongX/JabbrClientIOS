@@ -25,11 +25,6 @@
 		14B5159F1ABF14BB0000CC4F /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14B5159C1ABF14BB0000CC4F /* MainStoryboard_iPhone.storyboard */; };
 		14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515A21ABF14C90000CC4F /* AppDelegate.m */; };
 		14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515A41ABF14C90000CC4F /* ChatViewController.m */; };
-		14B515B11ABF14C90000CC4F /* ConnectionStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515A61ABF14C90000CC4F /* ConnectionStatusViewController.m */; };
-		14B515B21ABF14C90000CC4F /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515A81ABF14C90000CC4F /* MasterViewController.m */; };
-		14B515B31ABF14C90000CC4F /* MouseTrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515AA1ABF14C90000CC4F /* MouseTrackingViewController.m */; };
-		14B515B41ABF14C90000CC4F /* RawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515AC1ABF14C90000CC4F /* RawViewController.m */; };
-		14B515B51ABF14C90000CC4F /* StreamingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515AE1ABF14C90000CC4F /* StreamingViewController.m */; };
 		14B515B81ABF15330000CC4F /* Router.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515B71ABF15330000CC4F /* Router.m */; };
 		14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB4B1ACB352300E5B5A5 /* RightMenuViewController.m */; };
 		14B6FB4F1ACB397700E5B5A5 /* ChatThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB4E1ACB397700E5B5A5 /* ChatThread.m */; };
@@ -78,16 +73,6 @@
 		14B515A21ABF14C90000CC4F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		14B515A31ABF14C90000CC4F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		14B515A41ABF14C90000CC4F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
-		14B515A51ABF14C90000CC4F /* ConnectionStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionStatusViewController.h; sourceTree = "<group>"; };
-		14B515A61ABF14C90000CC4F /* ConnectionStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionStatusViewController.m; sourceTree = "<group>"; };
-		14B515A71ABF14C90000CC4F /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		14B515A81ABF14C90000CC4F /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		14B515A91ABF14C90000CC4F /* MouseTrackingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTrackingViewController.h; sourceTree = "<group>"; };
-		14B515AA1ABF14C90000CC4F /* MouseTrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseTrackingViewController.m; sourceTree = "<group>"; };
-		14B515AB1ABF14C90000CC4F /* RawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawViewController.h; sourceTree = "<group>"; };
-		14B515AC1ABF14C90000CC4F /* RawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RawViewController.m; sourceTree = "<group>"; };
-		14B515AD1ABF14C90000CC4F /* StreamingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamingViewController.h; sourceTree = "<group>"; };
-		14B515AE1ABF14C90000CC4F /* StreamingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamingViewController.m; sourceTree = "<group>"; };
 		14B515B61ABF15330000CC4F /* Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
 		14B515B71ABF15330000CC4F /* Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Router.m; sourceTree = "<group>"; };
 		14B6FB4A1ACB352300E5B5A5 /* RightMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightMenuViewController.h; sourceTree = "<group>"; };
@@ -233,16 +218,6 @@
 				14B515B71ABF15330000CC4F /* Router.m */,
 				14B515A31ABF14C90000CC4F /* ChatViewController.h */,
 				14B515A41ABF14C90000CC4F /* ChatViewController.m */,
-				14B515A51ABF14C90000CC4F /* ConnectionStatusViewController.h */,
-				14B515A61ABF14C90000CC4F /* ConnectionStatusViewController.m */,
-				14B515A71ABF14C90000CC4F /* MasterViewController.h */,
-				14B515A81ABF14C90000CC4F /* MasterViewController.m */,
-				14B515A91ABF14C90000CC4F /* MouseTrackingViewController.h */,
-				14B515AA1ABF14C90000CC4F /* MouseTrackingViewController.m */,
-				14B515AB1ABF14C90000CC4F /* RawViewController.h */,
-				14B515AC1ABF14C90000CC4F /* RawViewController.m */,
-				14B515AD1ABF14C90000CC4F /* StreamingViewController.h */,
-				14B515AE1ABF14C90000CC4F /* StreamingViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -405,21 +380,16 @@
 			files = (
 				149F99461AC4D0A200525EA7 /* METransitions.m in Sources */,
 				149F99481AC4D0A200525EA7 /* MEZoomAnimationController.m in Sources */,
-				14B515B11ABF14C90000CC4F /* ConnectionStatusViewController.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
 				14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */,
 				149F99421AC4D0A200525EA7 /* MEDynamicTransition.m in Sources */,
 				149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */,
 				149F99471AC4D0A200525EA7 /* METransitionsViewController.m in Sources */,
-				14B515B41ABF14C90000CC4F /* RawViewController.m in Sources */,
 				14B6FB4F1ACB397700E5B5A5 /* ChatThread.m in Sources */,
 				149F99431AC4D0A200525EA7 /* MEFoldAnimationController.m in Sources */,
-				14B515B21ABF14C90000CC4F /* MasterViewController.m in Sources */,
 				14B515741ABF138A0000CC4F /* main.m in Sources */,
-				14B515B51ABF14C90000CC4F /* StreamingViewController.m in Sources */,
 				14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */,
 				14B515B81ABF15330000CC4F /* Router.m in Sources */,
-				14B515B31ABF14C90000CC4F /* MouseTrackingViewController.m in Sources */,
 				14679E961AC8838900316C9C /* ObjectThread.m in Sources */,
 				14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */,
 			);

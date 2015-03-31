@@ -23,6 +23,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MEMenuViewController : UIViewController <UITableViewDataSource>
+@interface LeftMenuViewController : UIViewController <UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end

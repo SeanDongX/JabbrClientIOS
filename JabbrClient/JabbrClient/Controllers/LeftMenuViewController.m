@@ -21,17 +21,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "MEMenuViewController.h"
+#import "LeftMenuViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "ChatViewController.h"
 
-@interface MEMenuViewController ()
+@interface LeftMenuViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
 @property (nonatomic, strong) NSMutableDictionary *controllers;
 @property (nonatomic, strong) UINavigationController *navigationController;
 @end
 
-@implementation MEMenuViewController
+@implementation LeftMenuViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

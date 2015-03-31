@@ -11,7 +11,7 @@
 		14679E961AC8838900316C9C /* ChatThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14679E951AC8838900316C9C /* ChatThread.m */; };
 		149F99421AC4D0A200525EA7 /* MEDynamicTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99331AC4D0A200525EA7 /* MEDynamicTransition.m */; };
 		149F99431AC4D0A200525EA7 /* MEFoldAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99351AC4D0A200525EA7 /* MEFoldAnimationController.m */; };
-		149F99441AC4D0A200525EA7 /* MEMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99371AC4D0A200525EA7 /* MEMenuViewController.m */; };
+		149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */; };
 		149F99461AC4D0A200525EA7 /* METransitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F993B1AC4D0A200525EA7 /* METransitions.m */; };
 		149F99471AC4D0A200525EA7 /* METransitionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F993D1AC4D0A200525EA7 /* METransitionsViewController.m */; };
 		149F99481AC4D0A200525EA7 /* MEZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F993F1AC4D0A200525EA7 /* MEZoomAnimationController.m */; };
@@ -51,8 +51,8 @@
 		149F99331AC4D0A200525EA7 /* MEDynamicTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDynamicTransition.m; sourceTree = "<group>"; };
 		149F99341AC4D0A200525EA7 /* MEFoldAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEFoldAnimationController.h; sourceTree = "<group>"; };
 		149F99351AC4D0A200525EA7 /* MEFoldAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEFoldAnimationController.m; sourceTree = "<group>"; };
-		149F99361AC4D0A200525EA7 /* MEMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEMenuViewController.h; sourceTree = "<group>"; };
-		149F99371AC4D0A200525EA7 /* MEMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEMenuViewController.m; sourceTree = "<group>"; };
+		149F99361AC4D0A200525EA7 /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
+		149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		149F993A1AC4D0A200525EA7 /* METransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METransitions.h; sourceTree = "<group>"; };
 		149F993B1AC4D0A200525EA7 /* METransitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METransitions.m; sourceTree = "<group>"; };
 		149F993C1AC4D0A200525EA7 /* METransitionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METransitionsViewController.h; sourceTree = "<group>"; };
@@ -126,8 +126,8 @@
 				149F99331AC4D0A200525EA7 /* MEDynamicTransition.m */,
 				149F99341AC4D0A200525EA7 /* MEFoldAnimationController.h */,
 				149F99351AC4D0A200525EA7 /* MEFoldAnimationController.m */,
-				149F99361AC4D0A200525EA7 /* MEMenuViewController.h */,
-				149F99371AC4D0A200525EA7 /* MEMenuViewController.m */,
+				149F99361AC4D0A200525EA7 /* LeftMenuViewController.h */,
+				149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */,
 				149F993A1AC4D0A200525EA7 /* METransitions.h */,
 				149F993B1AC4D0A200525EA7 /* METransitions.m */,
 				149F993C1AC4D0A200525EA7 /* METransitionsViewController.h */,
@@ -393,7 +393,7 @@
 				14B515B11ABF14C90000CC4F /* ConnectionStatusViewController.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
 				149F99421AC4D0A200525EA7 /* MEDynamicTransition.m in Sources */,
-				149F99441AC4D0A200525EA7 /* MEMenuViewController.m in Sources */,
+				149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */,
 				149F99471AC4D0A200525EA7 /* METransitionsViewController.m in Sources */,
 				14B515B41ABF14C90000CC4F /* RawViewController.m in Sources */,
 				149F99431AC4D0A200525EA7 /* MEFoldAnimationController.m in Sources */,

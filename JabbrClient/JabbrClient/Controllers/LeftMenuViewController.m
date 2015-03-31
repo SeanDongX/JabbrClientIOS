@@ -42,6 +42,11 @@
     // We keep a reference to this instance so that we can go back to it without losing its state.
     self.navigationController = (UINavigationController *)self.slidingViewController.topViewController;
     [self.controllers setObject:self.navigationController forKey:@"PitchDemo"];
+    
+    [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    
+    self.slidingViewController.topViewAnchoredGesture = ECSlidingViewControllerAnchoredGestureTapping | ECSlidingViewControllerAnchoredGesturePanning;
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -101,6 +106,7 @@
     
     if (!navController){
         navController = [self.storyboard instantiateViewControllerWithIdentifier:viewControllerIdentifier];
+        [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
         [self.controllers setObject:navController forKey:key];
     }
     

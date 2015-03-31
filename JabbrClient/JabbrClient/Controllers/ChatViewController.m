@@ -9,7 +9,7 @@
 #import "ChatViewController.h"
 #import "Router.h"
 #import "UIViewController+ECSlidingViewController.h"
-#import "ChatThread.h"
+#import "ObjectThread.h"
 
 
 static NSString * const kDefaultChatThread = @"collabot";

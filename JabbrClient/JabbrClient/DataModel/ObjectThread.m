@@ -1,13 +1,13 @@
 //
-//  ChatThread.h
+//  ObjectThread.m
 //  JabbrClient
 //
-//  Created by Sean on 31/03/15.
+//  Created by Sean on 29/03/15.
 //  Copyright (c) 2015 Colla. All rights reserved.
 //
 
 #import "ObjectThread.h"
 
-@interface ChatThread : ObjectThread
+@implementation ObjectThread
 
 @end

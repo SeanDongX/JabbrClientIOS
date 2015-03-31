@@ -80,7 +80,84 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HHl-XJ-irH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-244" y="180"/>
+            <point key="canvasLocation" x="-195" y="188"/>
+        </scene>
+        <!--Right Menu View Controller-->
+        <scene sceneID="yWF-eS-OBU">
+            <objects>
+                <viewController storyboardIdentifier="RightMenuViewController" id="pcT-6d-B6d" userLabel="Right Menu View Controller" customClass="RightMenuViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="udF-ar-0Uz"/>
+                        <viewControllerLayoutGuide type="bottom" id="Wwn-La-cNx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pfL-8Y-QdK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu-background" translatesAutoresizingMaskIntoConstraints="NO" id="mF4-jb-dFm">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XME-Dq-VKo">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MenuCell" textLabel="L7X-7J-R9j" style="IBUITableViewCellStyleDefault" id="vQk-wK-Ka7">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vQk-wK-Ka7" id="o2X-D8-cpA">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="L7X-7J-R9j">
+                                                    <rect key="frame" x="15" y="0.0" width="290" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="pcT-6d-B6d" id="fai-1O-x4z"/>
+                                    <outlet property="delegate" destination="pcT-6d-B6d" id="hdN-JI-Tsr"/>
+                                </connections>
+                            </tableView>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Es4-fr-e9F">
+                                <rect key="frame" x="0.0" y="20" width="276" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Ljf-0V-VwZ"/>
+                                    <constraint firstAttribute="width" constant="276" id="e2O-aV-9eq"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="XME-Dq-VKo" secondAttribute="trailing" id="5O7-XT-56U"/>
+                            <constraint firstItem="XME-Dq-VKo" firstAttribute="top" secondItem="Es4-fr-e9F" secondAttribute="bottom" id="Fm6-4t-f25"/>
+                            <constraint firstItem="mF4-jb-dFm" firstAttribute="top" secondItem="pfL-8Y-QdK" secondAttribute="top" id="Hec-Qb-pGJ"/>
+                            <constraint firstItem="Es4-fr-e9F" firstAttribute="top" secondItem="udF-ar-0Uz" secondAttribute="bottom" id="JIq-3N-dx9"/>
+                            <constraint firstItem="XME-Dq-VKo" firstAttribute="leading" secondItem="pfL-8Y-QdK" secondAttribute="leading" id="KCo-39-LcF"/>
+                            <constraint firstItem="mF4-jb-dFm" firstAttribute="leading" secondItem="pfL-8Y-QdK" secondAttribute="leading" id="a19-He-yLy"/>
+                            <constraint firstAttribute="trailing" secondItem="mF4-jb-dFm" secondAttribute="trailing" id="bD9-Lq-R71"/>
+                            <constraint firstItem="Wwn-La-cNx" firstAttribute="top" secondItem="XME-Dq-VKo" secondAttribute="bottom" id="e5f-fx-kxP"/>
+                            <constraint firstItem="Es4-fr-e9F" firstAttribute="leading" secondItem="pfL-8Y-QdK" secondAttribute="leading" id="hAK-gF-K2a"/>
+                            <constraint firstAttribute="bottom" secondItem="mF4-jb-dFm" secondAttribute="bottom" id="oWj-rD-G5w"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="XME-Dq-VKo" id="Z9u-ly-mIU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NYy-Xf-hZP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="854" y="183"/>
         </scene>
         <!--Sliding View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -98,11 +175,12 @@
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="underLeftViewControllerStoryboardId" value="LeftMenuViewController"/>
                         <userDefinedRuntimeAttribute type="string" keyPath="topViewControllerStoryboardId" value="ChatNavigationController"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="underRightViewControllerStoryboardId" value="RightMenuViewController"/>
                     </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277" y="180"/>
+            <point key="canvasLocation" x="277" y="183"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="C8G-31-ClJ">
@@ -189,7 +267,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XK0-nm-RIH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="811" y="873"/>
+            <point key="canvasLocation" x="795" y="873"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HfK-3h-wmj">

@@ -1,4 +1,4 @@
-// MEMenuViewController.h
+// LeftMenuViewController.h
 // TransitionFun
 //
 // Copyright (c) 2013, Michael Enriquez (http://enriquez.me)

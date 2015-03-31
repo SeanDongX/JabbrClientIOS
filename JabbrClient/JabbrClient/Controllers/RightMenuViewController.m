@@ -1,37 +1,22 @@
-// LeftMenuViewController.m
-// TransitionFun
 //
-// Copyright (c) 2013, Michael Enriquez (http://enriquez.me)
+//  RightMenuViewController.hViewController
+//  JabbrClient
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Created by Sean on 31/03/15.
+//  Copyright (c) 2015 Colla. All rights reserved.
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
 
-#import "LeftMenuViewController.h"
+#import "RightMenuViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "ChatViewController.h"
 
-@interface LeftMenuViewController ()
+@interface RightMenuViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
 @property (nonatomic, strong) NSMutableDictionary *controllers;
 @property (nonatomic, strong) UINavigationController *navigationController;
 @end
 
-@implementation LeftMenuViewController
+@implementation RightMenuViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,15 +26,12 @@
     // It is initially set as a User Defined Runtime Attributes in storyboards.
     // We keep a reference to this instance so that we can go back to it without losing its state.
     self.navigationController = (UINavigationController *)self.slidingViewController.topViewController;
-    [self.controllers setObject:self.navigationController forKey:@"PitchDemo"];
+    [self.controllers setObject:self.navigationController forKey:@"PitchSpeech"];
     
     [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
-    
-    self.slidingViewController.topViewAnchoredGesture = ECSlidingViewControllerAnchoredGestureTapping | ECSlidingViewControllerAnchoredGesturePanning;
-    
-    self.slidingViewController.anchorLeftPeekAmount  = 50.0;
-    self.slidingViewController.anchorRightPeekAmount = 50.0;
 
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 200, 0, 0);
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -62,7 +44,7 @@
 - (NSArray *)menuItems {
     if (_menuItems) return _menuItems;
     
-    _menuItems = @[@"PitchDemo", @"FeaturePlanning", @"collabot", @"Settings"];
+    _menuItems = @[@"PitchSpeech", @"FeatureDocument"];
     
     return _menuItems;
 }
@@ -84,7 +66,7 @@
         cell.textLabel.text = menuItem;
     }
     else {
-        cell.textLabel.text = [NSString stringWithFormat:@"#%@", menuItem];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", menuItem];
     }
     
     [cell setBackgroundColor:[UIColor clearColor]];
@@ -95,15 +77,8 @@
 #pragma mark - UITableViewDelegate
 
 - (void)setNavController:(NSString *)menuItem {
-    NSString *key = @"Chat";
-    NSString *viewControllerIdentifier = @"ChatNavigationController";
-    BOOL setThread = TRUE;
-    
-    if ([menuItem isEqualToString:@"Settings"]) {
-        key = @"Settings";
-        viewControllerIdentifier = @"METransitionsNavigationController";
-        setThread = FALSE;
-    }
+    NSString *key = @"Docs";
+    NSString *viewControllerIdentifier = @"DocumentNavigationController";
     
     UINavigationController *navController = [self.controllers objectForKey:key];
     
@@ -114,14 +89,12 @@
     }
     
     self.slidingViewController.topViewController = navController;
+
+    ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
-    if (setThread){
-        ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
-        
-        ChatThread *chatThread = [[ChatThread alloc] init];
-        chatThread.name = menuItem;
-        [chatViewController switchToChatThread:chatThread];
-    }
+    ChatThread *chatThread = [[ChatThread alloc] init];
+    chatThread.name = menuItem;
+    [chatViewController switchToChatThread:chatThread];
     
     [self.slidingViewController resetTopViewAnimated:YES];
 }
@@ -131,7 +104,7 @@
     // You normally wouldn't need to do anything like this, but we're changing transitions
     // dynamically so everything needs to start in a consistent state.
     self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
-
+    
     NSString *menuItem = self.menuItems[indexPath.row];
     [self setNavController:menuItem];
 }

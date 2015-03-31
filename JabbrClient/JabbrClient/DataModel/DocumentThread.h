@@ -1,13 +1,13 @@
 //
-//  ChatThread.m
+//  DocumentThread.h
 //  JabbrClient
 //
 //  Created by Sean on 31/03/15.
 //  Copyright (c) 2015 Colla. All rights reserved.
 //
 
-#import "ChatThread.h"
+#import "ObjectThread.h"
 
-@implementation ChatThread
+@interface DocumentThread : ObjectThread
 
 @end

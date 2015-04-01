@@ -9,5 +9,5 @@
 #import "ObjectThread.h"
 
 @interface ChatThread : ObjectThread
-
+@property  (nonatomic) BOOL isDirectMessageThread;
 @end

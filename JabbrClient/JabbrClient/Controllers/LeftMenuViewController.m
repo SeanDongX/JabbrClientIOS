@@ -24,9 +24,15 @@
 #import "LeftMenuViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "ChatViewController.h"
+#import "DemoData.h"
+#import "ChatThread+Category.h"
+
+static NSString * const kChat = @"chat";
+static NSString * const kSettings = @"settings";
+
 
 @interface LeftMenuViewController ()
-@property (nonatomic, strong) NSArray *menuItems;
+@property (nonatomic, strong) NSArray *chatThreads;
 @property (nonatomic, strong) NSMutableDictionary *controllers;
 @property (nonatomic, strong) UINavigationController *navigationController;
 @end
@@ -35,13 +41,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.controllers = [NSMutableDictionary dictionaryWithCapacity:self.menuItems.count];
+    self.controllers = [NSMutableDictionary dictionaryWithCapacity:self.chatThreads.count];
     
     // topViewController is the transitions navigation controller at this point.
     // It is initially set as a User Defined Runtime Attributes in storyboards.
     // We keep a reference to this instance so that we can go back to it without losing its state.
     self.navigationController = (UINavigationController *)self.slidingViewController.topViewController;
-    [self.controllers setObject:self.navigationController forKey:@"PitchDemo"];
+    [self.controllers setObject:self.navigationController forKey:kChat];
     
     [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
     
@@ -59,32 +65,27 @@
 
 #pragma mark - Properties
 
-- (NSArray *)menuItems {
-    if (_menuItems) return _menuItems;
-    
-    _menuItems = @[@"PitchDemo", @"FeaturePlanning", @"collabot", @"Settings"];
-    
-    return _menuItems;
+- (NSArray *)chatThreads {
+    return [DemoData sharedDemoData].chatThreads;
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return self.menuItems.count;
+    //Last one for settings
+    return self.chatThreads.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    NSString *menuItem = self.menuItems[indexPath.row];
-    
-    if (indexPath.row == 3) {
-        cell.textLabel.text = menuItem;
+    if (indexPath.row >= self.chatThreads.count) {
+        cell.textLabel.text = @"Settings";
     }
     else {
-        cell.textLabel.text = [NSString stringWithFormat:@"#%@", menuItem];
+        ChatThread *chatThread = self.chatThreads[indexPath.row];
+        cell.textLabel.text = [chatThread getDisplayTitle];
     }
     
     [cell setBackgroundColor:[UIColor clearColor]];
@@ -94,35 +95,19 @@
 
 #pragma mark - UITableViewDelegate
 
-- (void)setNavController:(NSString *)menuItem {
-    NSString *key = @"Chat";
+- (void)setNavController:(ChatThread *)chatThread {
     NSString *viewControllerIdentifier = @"ChatNavigationController";
-    BOOL setThread = TRUE;
-    
-    if ([menuItem isEqualToString:@"Settings"]) {
-        key = @"Settings";
-        viewControllerIdentifier = @"METransitionsNavigationController";
-        setThread = FALSE;
-    }
-    
-    UINavigationController *navController = [self.controllers objectForKey:key];
+    UINavigationController *navController = [self.controllers objectForKey:kChat];
     
     if (!navController){
-        navController = [self.storyboard instantiateViewControllerWithIdentifier:viewControllerIdentifier];
         [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
-        [self.controllers setObject:navController forKey:key];
+        [self.controllers setObject:navController forKey:kChat];
     }
     
     self.slidingViewController.topViewController = navController;
     
-    if (setThread){
-        ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
-        
-        ChatThread *chatThread = [[ChatThread alloc] init];
-        chatThread.name = menuItem;
-        [chatViewController switchToChatThread:chatThread];
-    }
-    
+    ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
+    [chatViewController switchToChatThread:chatThread];
     [self.slidingViewController resetTopViewAnimated:YES];
 }
 
@@ -132,8 +117,24 @@
     // dynamically so everything needs to start in a consistent state.
     self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
 
-    NSString *menuItem = self.menuItems[indexPath.row];
-    [self setNavController:menuItem];
+    if (indexPath.row > self.chatThreads.count) {
+        
+        NSString *viewControllerIdentifier = @"METransitionsNavigationController";
+        
+        UINavigationController *navController = [self.controllers objectForKey:kSettings];
+        
+        if (!navController){
+            navController = [self.storyboard instantiateViewControllerWithIdentifier:viewControllerIdentifier];
+            [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+            [self.controllers setObject:navController forKey:kSettings];
+        }
+        
+        self.slidingViewController.topViewController = navController;
+        [self.slidingViewController resetTopViewAnimated:YES];
+    }
+    else {
+        [self setNavController:self.chatThreads[indexPath.row]];
+    }
 }
 
 @end

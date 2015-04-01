@@ -8,10 +8,13 @@
 
 #import "RightMenuViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
-#import "ChatViewController.h"
+#import "DocumentViewController.h"
+#import "DemoData.h"
+
+static NSString * const kDoc = @"doc";
 
 @interface RightMenuViewController ()
-@property (nonatomic, strong) NSArray *menuItems;
+@property (nonatomic, strong) NSArray *documentThreads;
 @property (nonatomic, strong) NSMutableDictionary *controllers;
 @property (nonatomic, strong) UINavigationController *navigationController;
 @end
@@ -20,18 +23,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.controllers = [NSMutableDictionary dictionaryWithCapacity:self.menuItems.count];
+    self.controllers = [NSMutableDictionary dictionaryWithCapacity:self.documentThreads.count];
     
-    // topViewController is the transitions navigation controller at this point.
-    // It is initially set as a User Defined Runtime Attributes in storyboards.
-    // We keep a reference to this instance so that we can go back to it without losing its state.
-    self.navigationController = (UINavigationController *)self.slidingViewController.topViewController;
-    [self.controllers setObject:self.navigationController forKey:@"PitchSpeech"];
-    
-    [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
+//    self.navigationController = (UINavigationController *)self.slidingViewController.topViewController;
+//    [self.controllers setObject:self.navigationController forKey:kDoc];
+//    
+    //[self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
 
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 200, 0, 0);
-    
+    //self.tableView.contentInset = UIEdgeInsetsMake(0, 200, 0, 0);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -41,34 +40,24 @@
 
 #pragma mark - Properties
 
-- (NSArray *)menuItems {
-    if (_menuItems) return _menuItems;
-    
-    _menuItems = @[@"PitchSpeech", @"FeatureDocument"];
-    
-    return _menuItems;
+- (NSArray *)documentThreads {
+    return[DemoData sharedDemoData].documentThreads;
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.menuItems.count;
+    return self.documentThreads.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    NSString *menuItem = self.menuItems[indexPath.row];
+    DocumentThread *documentThread = self.documentThreads[indexPath.row];
     
-    if (indexPath.row == 3) {
-        cell.textLabel.text = menuItem;
-    }
-    else {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", menuItem];
-    }
-    
+    cell.textLabel.text = documentThread.title;
     [cell setBackgroundColor:[UIColor clearColor]];
     
     return cell;
@@ -76,25 +65,23 @@
 
 #pragma mark - UITableViewDelegate
 
-- (void)setNavController:(NSString *)menuItem {
-    NSString *key = @"Docs";
+- (void)setNavController:(DocumentThread *)documentThread {
+    
     NSString *viewControllerIdentifier = @"DocumentNavigationController";
     
-    UINavigationController *navController = [self.controllers objectForKey:key];
+    UINavigationController *navController = [self.controllers objectForKey:kDoc];
     
     if (!navController){
         navController = [self.storyboard instantiateViewControllerWithIdentifier:viewControllerIdentifier];
         [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
-        [self.controllers setObject:navController forKey:key];
+        [self.controllers setObject:navController forKey:kDoc];
     }
     
     self.slidingViewController.topViewController = navController;
 
-    ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
+    DocumentViewController *documentViewController = [navController.viewControllers objectAtIndex:0];
     
-    ChatThread *chatThread = [[ChatThread alloc] init];
-    chatThread.name = menuItem;
-    [chatViewController switchToChatThread:chatThread];
+    [documentViewController loadDocumentThread:documentThread];
     
     [self.slidingViewController resetTopViewAnimated:YES];
 }
@@ -105,8 +92,8 @@
     // dynamically so everything needs to start in a consistent state.
     self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
     
-    NSString *menuItem = self.menuItems[indexPath.row];
-    [self setNavController:menuItem];
+    DocumentThread *documenThread = self.documentThreads[indexPath.row];
+    [self setNavController:documenThread];
 }
 
 @end

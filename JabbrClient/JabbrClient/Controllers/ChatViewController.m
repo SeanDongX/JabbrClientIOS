@@ -10,12 +10,14 @@
 #import "Router.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "ObjectThread.h"
+#import "ChatThread+Category.h"
+#import "DemoData.h"
 
 
 static NSString * const kDefaultChatThread = @"collabot";
-static NSString * const kMe = @"testclient";
-static NSString * const kSeanxd = @"seanxd";
-static NSString * const kJenifer = @"Jenifer";
+
+static NSString * const kAuthToken = @"authToken";
+static NSString * const kLastAuthDate = @"lastAuthDate";
 
 
 @interface ChatViewController ()
@@ -23,8 +25,8 @@ static NSString * const kJenifer = @"Jenifer";
 @property (nonatomic, strong) UIPanGestureRecognizer *dynamicTransitionPanGesture;
 
 @property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *password;
-@property (nonatomic, strong) ChatThread *chatThread;
+
+@property (nonatomic, strong) ChatThread *currentChatThread;
 
 
 @property (nonatomic, strong) SRHubConnection *connection;
@@ -32,12 +34,8 @@ static NSString * const kJenifer = @"Jenifer";
 
 @property (nonatomic, strong) NSMutableDictionary *chatThreadRepository;
 
-@property (weak, nonatomic) IBOutlet UINavigationItem *navifationItem;
-
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImageView;
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImageView;
-
-@property (strong, nonatomic) NSDictionary *avatars;
 
 @end
 
@@ -66,9 +64,9 @@ static NSString * const kJenifer = @"Jenifer";
     [super viewDidLoad];
     [self setupChatThread];
     [self setupChatRepository];
-    [self setupUsernamePassword];
-    [self setupBubbleImage];
-    [self setupAvatars];
+    [self setupUsername];
+    [self configJSQMessage];
+    
     [self setupOutgoingTypingEventHandler];
     [self connect];
 }
@@ -98,72 +96,80 @@ static NSString * const kJenifer = @"Jenifer";
 #pragma initial setup
 
 - (void)setupChatThread {
-    self.chatThread = [[ChatThread alloc] init];
-    self.chatThread.name = kDefaultChatThread;
+    //Set deafult as collabot thread
+    ChatThread *initialThread = [[DemoData sharedDemoData].chatThreads objectAtIndex:2];
+    
+    self.currentChatThread = initialThread;
+    self.navigationItem.title  = [initialThread getDisplayTitle];
 }
 
 - (void)setupChatRepository {
     self.chatThreadRepository = [NSMutableDictionary dictionary];
 }
 
-- (void)setupUsernamePassword {
-    self.username = @"testclient";
-    self.password = @"password";
-    
-    self.senderDisplayName = self.username;
-    self.senderId = self.username;
+- (void)setupUsername{
+    self.username = [DemoData sharedDemoData].myUsername;
+    self.senderDisplayName = [DemoData sharedDemoData].myUsername;
+    self.senderId = [DemoData sharedDemoData].mySenderId;
 }
 
-- (void)setupBubbleImage {
+- (void)configJSQMessage {
+    
+    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     
     JSQMessagesBubbleImageFactory *bubbleImageFactory = [[JSQMessagesBubbleImageFactory alloc] init];
-    
     self.outgoingBubbleImageView = [bubbleImageFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
     self.incomingBubbleImageView = [bubbleImageFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+    
 }
-
 - (void)switchToChatThread:(ChatThread *)chatThread {
     
-    self.chatThread = chatThread;
-    self.navifationItem.title = [NSString stringWithFormat:@"#%@", self.chatThread.name];
+    self.currentChatThread = chatThread;
+    self.navigationItem.title = [NSString stringWithFormat:@"#%@", self.currentChatThread.title];
     
-    if (![self.chatThreadRepository objectForKey:self.chatThread.name]) {
-        [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.chatThread.name];
+    if (![self.chatThreadRepository objectForKey:self.currentChatThread.title]) {
+        [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.currentChatThread.title];
     }
     
     [self.collectionView reloadData];
 }
 
-- (void)setupAvatars {
-
-    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
-    
-    JSQMessagesAvatarImage *avatorUser1 = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"Avator_User1"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    
-    JSQMessagesAvatarImage *avatorUser2 = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"Avator_User2"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    
-    JSQMessagesAvatarImage *avatorUser3 = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"Avator_User3"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    
-    self.avatars = @{ kMe : avatorUser1,
-                      kSeanxd : avatorUser2,
-                      kJenifer: avatorUser3 };
-    
+- (NSMutableArray *)getCurrentMessageThread {
+    return (NSMutableArray *)[self.chatThreadRepository objectForKey:self.currentChatThread.title];
 }
 
-- (NSMutableArray *)getCurrentMessageThread {
-    return (NSMutableArray *)[self.chatThreadRepository objectForKey:self.chatThread.name];
+- (void)addMessage:(id<JSQMessageData>)message toThread: (NSString*)threadTitle {
+    if (!message) {
+        return;
+    }
+    
+    //default to current thead
+    if (!threadTitle) {
+        [[self getCurrentMessageThread] addObject:message];
+    }
+    else {
+        //TODO:user dictionary to store message
+        NSMutableArray* messages = [self.chatThreadRepository objectForKey:threadTitle];
+        if (!message) {
+            messages = [NSMutableArray array];
+            [self.chatThreadRepository setObject:messages forKey:threadTitle];
+        }
+        
+        [messages addObject:message];
+    }
 }
 
 #pragma mark -
 #pragma mark Navigation
 
-- (IBAction)menuButtonTapped:(id)sender {
+- (IBAction)leftMenuButtonTapped:(id)sender {
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
 }
 
-- (IBAction)reconnectButtonTapped:(id)sender {
-    [self reconnect];
+- (IBAction)rightMenuButtonTapped:(id)sender {
+    [self.slidingViewController anchorTopViewToLeftAnimated:YES];
 }
+
 
 #pragma mark -
 #pragma mark Event handlers
@@ -192,7 +198,7 @@ static NSString * const kJenifer = @"Jenifer";
 }
 
 - (void)textFieldTextChanged:(id)sender {
-   [self.hub invoke:@"Typing" withArgs:@[self.chatThread.name]];
+   [self.hub invoke:@"Typing" withArgs:@[self.currentChatThread.title]];
 }
 
 #pragma mark -
@@ -225,11 +231,11 @@ static NSString * const kJenifer = @"Jenifer";
     
     JSQMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
     
-    if ([message.senderId isEqualToString:self.senderId]) {
+    if ([[message.senderId lowercaseString] isEqualToString:[self.senderId lowercaseString]]) {
         return nil;
     }
     else {
-        return [self.avatars objectForKey:message.senderId];
+        return [[DemoData sharedDemoData].avatars objectForKey:[message.senderId lowercaseString]];
     }
 }
 
@@ -401,44 +407,14 @@ static NSString * const kJenifer = @"Jenifer";
 #pragma mark - 
 #pragma mark View Actions
 
-- (void)makeConnection {
-
-    NSString *authToken = [self getCachedAuthToken];
-    if (authToken) {
-        [self connectWithAuthToken:authToken];
-    }
-    else {
-        
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@account/login?ReturnUrl=/account/tokenr", [Router sharedRouter].server_url]]];
-        
-        [request setHTTPMethod:@"POST"];
-        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
-        NSString *postString = [NSString stringWithFormat: @"username=%@&password=%@", self.username, self.password];
-        
-        NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
-        [request setHTTPBody:data];
-        
-        [request setValue:[NSString stringWithFormat:@"%ld", [data length]] forHTTPHeaderField:@"Content-Length"];
-        
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                                   if (httpResponse && [httpResponse statusCode] != 200) {
-                                       NSLog(@"Token request error with code: %ld", [httpResponse statusCode]);
-                                   }
-                                   else if (data){
-                                       NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                       //remove "" from returned json string
-                                       authToken = [authToken substringFromIndex:1];
-                                       authToken = [authToken substringToIndex: [authToken length] - 1];
-                                       [self cacheAuthToken:authToken];
-                                       [self connectWithAuthToken:authToken];
-                                       NSLog(@"Start conection using authtoken: %@", authToken);
-                                   }
-                               }];
+- (void)connect
+{
+    if (!self.connection)
+    {
+        [self makeConnection: FALSE];
     }
 }
+
 
 - (void)reconnect
 {
@@ -446,27 +422,95 @@ static NSString * const kJenifer = @"Jenifer";
     self.hub = nil;
     self.connection.delegate = nil;
     self.connection = nil;
-    [self makeConnection];
+    [self makeConnection:TRUE];
 }
 
+- (void)makeConnection:(BOOL)refreshToken {
 
-- (void)connect
-{
-    if (!self.connection)
-    {
-        [self makeConnection];
+    NSString *authToken = [self getCachedAuthToken];
+    if (authToken && !refreshToken) {
+        [self connectWithAuthToken:authToken];
+    }
+    else {
+        
+        [self clearCookie];
+        [self makeCoonectionRequest];
+    }
+}
+
+- (NSString *)fetchAuthToken:(NSData *)data {
+    NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    //remove "" from returned json string
+    authToken = [authToken substringFromIndex:1];
+    authToken = [authToken substringToIndex: [authToken length] - 1];
+    return authToken;
+}
+
+- (void)makeCoonectionRequest {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@account/login?ReturnUrl=/account/tokenr", [Router sharedRouter].server_url]]];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    
+    NSString *postString = [NSString stringWithFormat: @"username=%@&password=%@", [DemoData sharedDemoData].myUsername, [DemoData sharedDemoData].myPassword];
+    
+    NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
+    [request setHTTPBody:data];
+    
+    [request setValue:[NSString stringWithFormat:@"%ld", [data length]] forHTTPHeaderField:@"Content-Length"];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                               NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                               
+                               NSString *actualResponseUrl = [httpResponse.URL absoluteString];
+                               NSString *expectedResponseUrl = [NSString stringWithFormat: @"%@account/tokenr", [Router sharedRouter].server_url];
+                               
+                               if ([actualResponseUrl rangeOfString:expectedResponseUrl options:NSCaseInsensitiveSearch].location == NSNotFound) {
+                                   NSLog(@"Token request error. Expect response url '%@', but get '%@'", expectedResponseUrl, actualResponseUrl);
+                               }
+                               else {
+                                   NSString *authToken = [self fetchAuthToken:data];
+                                   [self cacheAuthToken:authToken];
+                                   [self connectWithAuthToken:authToken];
+                                   NSLog(@"Start conection using authtoken: %@", authToken);
+                               }
+                           }];
+}
+
+- (void)clearCookie {
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *each in cookieStorage.cookies) {
+        [cookieStorage deleteCookie:each];
     }
 }
 
 - (NSString *)getCachedAuthToken {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [defaults objectForKey:@"authToken"];
+    NSDate *authDate = [defaults objectForKey:kLastAuthDate];
+    
+    if (!authDate){
+        return nil;
+    }
+    else if (authDate) {
+        
+        NSComparisonResult result;
+        result = [[NSDate date] compare:[authDate dateByAddingTimeInterval:60*60*24*7]];
+        
+        if (result == NSOrderedDescending){
+            return nil;
+        }
+    }
+    
+    return [defaults objectForKey:kAuthToken];
 }
 
 - (void)cacheAuthToken: (NSString *)authToken {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:authToken forKey:@"authToken"];
+    [defaults setObject:authToken forKey:kAuthToken];
+    [defaults setObject:[NSDate date] forKey:kLastAuthDate];
     [defaults synchronize];
 }
 
@@ -474,6 +518,8 @@ static NSString * const kJenifer = @"Jenifer";
     
     
     NSString *server = [Router sharedRouter].server_url;
+    
+    //TODO: handle possible exception and show login screen
     self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"token=%@", authToken]];
     
     self.hub = [self.connection createHubProxy:@"Chat"];
@@ -503,7 +549,7 @@ static NSString * const kJenifer = @"Jenifer";
     
     if([self getCurrentMessageThread] == nil)
     {
-        [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.chatThread.name] ;
+        [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.currentChatThread.title] ;
     }
 }
 
@@ -511,9 +557,15 @@ static NSString * const kJenifer = @"Jenifer";
 #pragma mark - 
 #pragma mark Chat actions
 
-- (void)receiveMessage:(id<JSQMessageData>)message {
-    [[self getCurrentMessageThread] addObject:message];
-    [self finishReceivingMessageAnimated:TRUE];
+- (void)receiveMessage:(id<JSQMessageData>)message atThread: (NSString *)threadTitle {
+    
+    [self addMessage:message toThread:threadTitle];
+    
+    //TODO: also show messages of the same user from other client in current thread
+    if (message.senderId != self.username &&
+        [[self.currentChatThread.title lowercaseString] isEqualToString:[threadTitle lowercaseString]]) {
+        [self finishReceivingMessageAnimated:TRUE];
+    }
 }
 
 - (void)sendMessage: (id<JSQMessageData>)message {
@@ -529,7 +581,7 @@ static NSString * const kJenifer = @"Jenifer";
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
     [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
     [messageData setObject:message.text forKey:@"content"];
-    [messageData setObject:self.chatThread.name forKey:@"room"];
+    [messageData setObject:self.currentChatThread.title forKey:@"room"];
     [self.hub invoke:@"Send" withArgs:@[messageData]];
 }
 
@@ -579,7 +631,7 @@ static NSString * const kJenifer = @"Jenifer";
     }
     
     NSString* room = [data objectForKey:@"room"];
-    if (room && ![room isEqualToString:self.chatThread.name])
+    if (room && ![room isEqualToString:self.currentChatThread.title])
     {
         return true;
     }
@@ -676,29 +728,34 @@ static NSString * const kJenifer = @"Jenifer";
     NSDictionary *userData = [messageDictionary objectForKey:@"User"];
     
     NSString *dateString = [messageDictionary objectForKey:@"When"];
-    NSDate *date = [NSDate date];
-    //TODO: parse date string
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+    // Always use this locale when parsing fixed format date strings
+    NSLocale *posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [formatter setLocale:posix];
+    NSDate *date = [formatter dateFromString:dateString];
     
     if (userData && [userData objectForKey:@"Name"])
     {
         userName = [userData objectForKey:@"Name"];
     }
+    //TODO: add messageId
+    NSString *messageId = [messageDictionary objectForKey:@"Id"];
+    
+    //TOOD: get real sendId
+    NSString *senderId = userName;
     
     NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
     [ignoreParamDictionary setObject:room forKey:@"room"];
     [ignoreParamDictionary setObject:userName forKey:@"username"];
+
     
-    if ([self shoudIgnoreIncoming:ignoreParamDictionary])
-    {
-        return;
-    }
-    
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:userName
+    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
                                              senderDisplayName:userName
                                                           date:date
                                                           text:[messageDictionary objectForKey:@"Content"]];
     
-    [self receiveMessage: message];
+    [self receiveMessage: message atThread:room];
 }
 
 - (void)updateActivity:(NSArray *)data
@@ -898,7 +955,7 @@ static NSString * const kJenifer = @"Jenifer";
     
     NSString *room = data[1];
     
-    if (!room || ![room isEqualToString:self.chatThread.name])
+    if (!room || ![room isEqualToString:self.currentChatThread.title])
     {
         return;
     }
@@ -933,7 +990,7 @@ static NSString * const kJenifer = @"Jenifer";
                                              senderDisplayName:@"Colla Bot"
                                                           date:[NSDate date]
                                                           text:[NSString stringWithFormat:@"Welcom %@", self.username]];
-    [self receiveMessage:message];
+    [self receiveMessage:message atThread:self.currentChatThread.title];
     [self.hub invoke:@"Join" withArgs:@[]];
 }
 
@@ -949,7 +1006,7 @@ static NSString * const kJenifer = @"Jenifer";
                                              senderDisplayName:@"Colla Bot"
                                                          date:[NSDate date]
                                                          text:[NSString stringWithFormat:@"Goodbye %@", self.username]];
-    [self receiveMessage:message];
+    [self receiveMessage:message atThread:self.currentChatThread.title];
 }
 
 - (void)SRConnection:(SRConnection *)connection didReceiveError:(NSError *)error

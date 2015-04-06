@@ -26,6 +26,7 @@
 #import "ChatViewController.h"
 #import "DemoData.h"
 #import "ChatThread+Category.h"
+#import "Constants.h"
 
 static NSString * const kChat = @"chat";
 static NSString * const kSettings = @"settings";
@@ -34,7 +35,6 @@ static NSString * const kSettings = @"settings";
 @interface LeftMenuViewController ()
 @property (nonatomic, strong) NSArray *chatThreads;
 @property (nonatomic, strong) NSMutableDictionary *controllers;
-@property (nonatomic, strong) UINavigationController *navigationController;
 @end
 
 @implementation LeftMenuViewController
@@ -43,13 +43,13 @@ static NSString * const kSettings = @"settings";
     [super viewDidLoad];
     self.controllers = [NSMutableDictionary dictionaryWithCapacity:self.chatThreads.count];
     
-    // topViewController is the transitions navigation controller at this point.
-    // It is initially set as a User Defined Runtime Attributes in storyboards.
-    // We keep a reference to this instance so that we can go back to it without losing its state.
-    self.navigationController = (UINavigationController *)self.slidingViewController.topViewController;
-    [self.controllers setObject:self.navigationController forKey:kChat];
+    UINavigationController *topNavigaionController = (UINavigationController *)self.slidingViewController.topViewController;
     
-    [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    if ([topNavigaionController.visibleViewController isKindOfClass:[ChatViewController class]])
+    {
+        [self.controllers setObject:topNavigaionController forKey:kChat];
+        [topNavigaionController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    }
     
     self.slidingViewController.topViewAnchoredGesture = ECSlidingViewControllerAnchoredGestureTapping | ECSlidingViewControllerAnchoredGesturePanning;
     
@@ -67,6 +67,18 @@ static NSString * const kSettings = @"settings";
 
 - (NSArray *)chatThreads {
     return [DemoData sharedDemoData].chatThreads;
+}
+
+
+- (void)resetTopViewController {
+    UINavigationController *navController = [self.controllers objectForKey:kChat];
+    
+    if (navController != nil)
+    {
+        [self.controllers removeObjectForKey:kChat];
+    }
+    
+    [self.controllers setObject:self.slidingViewController.topViewController forKey:kChat];
 }
 
 #pragma mark - UITableViewDataSource
@@ -93,23 +105,30 @@ static NSString * const kSettings = @"settings";
     return cell;
 }
 
-#pragma mark - UITableViewDelegate
-
 - (void)setNavController:(ChatThread *)chatThread {
-    NSString *viewControllerIdentifier = @"ChatNavigationController";
     UINavigationController *navController = [self.controllers objectForKey:kChat];
     
-    if (!navController){
-        [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
-        [self.controllers setObject:navController forKey:kChat];
+    if (navController == nil)
+    {
+        NSLog(@"No chat navigation view controller found in its controllers array");
+        return;
     }
+    
+    [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    [self.controllers setObject:navController forKey:kChat];
+    
     
     self.slidingViewController.topViewController = navController;
     
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
-    [chatViewController switchToChatThread:chatThread];
-    [self.slidingViewController resetTopViewAnimated:YES];
+    
+    if (chatViewController != nil) {
+        [chatViewController switchToChatThread:chatThread];
+        [self.slidingViewController resetTopViewAnimated:YES];
+    }
 }
+
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // This undoes the Zoom Transition's scale because it affects the other transitions.

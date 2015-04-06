@@ -7,7 +7,7 @@
 //
 
 #import "ChatViewController.h"
-#import "Router.h"
+#import "AuthManager.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "ObjectThread.h"
 #import "ChatThread+Category.h"
@@ -22,7 +22,7 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
 
 @interface ChatViewController ()
 
-@property (nonatomic, strong) UIPanGestureRecognizer *dynamicTransitionPanGesture;
+//@property (nonatomic, strong) UIPanGestureRecognizer *dynamicTransitionPanGesture;
 
 @property (nonatomic, strong) NSString *username;
 
@@ -447,7 +447,7 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
 }
 
 - (void)makeCoonectionRequest {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@account/login?ReturnUrl=/account/tokenr", [Router sharedRouter].server_url]]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@account/login?ReturnUrl=/account/tokenr", [AuthManager sharedInstance].server_url]]];
     
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
@@ -465,7 +465,7 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
                                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                                
                                NSString *actualResponseUrl = [httpResponse.URL absoluteString];
-                               NSString *expectedResponseUrl = [NSString stringWithFormat: @"%@account/tokenr", [Router sharedRouter].server_url];
+                               NSString *expectedResponseUrl = [NSString stringWithFormat: @"%@account/tokenr", [AuthManager sharedInstance].server_url];
                                
                                if ([actualResponseUrl rangeOfString:expectedResponseUrl options:NSCaseInsensitiveSearch].location == NSNotFound) {
                                    NSLog(@"Token request error. Expect response url '%@', but get '%@'", expectedResponseUrl, actualResponseUrl);
@@ -517,7 +517,7 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
 - (void)connectWithAuthToken:(NSString *)authToken {
     
     
-    NSString *server = [Router sharedRouter].server_url;
+    NSString *server = [AuthManager sharedInstance].server_url;
     
     //TODO: handle possible exception and show login screen
     self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"token=%@", authToken]];

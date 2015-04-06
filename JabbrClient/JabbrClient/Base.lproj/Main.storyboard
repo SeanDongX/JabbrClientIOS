@@ -158,12 +158,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NYy-Xf-hZP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="854" y="183"/>
+            <point key="canvasLocation" x="703" y="183"/>
         </scene>
         <!--Sliding View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ECSlidingViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="SlidingViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="94E-yS-cG6"/>
                         <viewControllerLayoutGuide type="bottom" id="Ybi-ro-oJx"/>
@@ -173,11 +173,6 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="underLeftViewControllerStoryboardId" value="LeftMenuViewController"/>
-                        <userDefinedRuntimeAttribute type="string" keyPath="topViewControllerStoryboardId" value="ChatNavigationController"/>
-                        <userDefinedRuntimeAttribute type="string" keyPath="underRightViewControllerStoryboardId" value="RightMenuViewController"/>
-                    </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -189,7 +184,7 @@
                 <navigationController storyboardIdentifier="ChatNavigationController" definesPresentationContext="YES" id="ClZ-r3-7Fa" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zBW-Xd-mzi">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.2421875" green="0.41135378649999998" blue="0.74942974449999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -201,7 +196,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RIN-Nv-f4a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277" y="1553"/>
+            <point key="canvasLocation" x="713" y="1625"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zze-dJ-8FE">
@@ -209,7 +204,7 @@
                 <navigationController storyboardIdentifier="DocumentNavigationController" definesPresentationContext="YES" id="Als-eC-PMv" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XZi-fp-Ae6">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.2421875" green="0.41135378649999998" blue="0.74942974449999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -221,7 +216,108 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P0y-iK-Epw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277" y="2239"/>
+            <point key="canvasLocation" x="713" y="2311"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="sA9-jl-s0l">
+            <objects>
+                <navigationController storyboardIdentifier="SignInNavigationController" definesPresentationContext="YES" id="gGq-qN-s5Y" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" id="aBs-C2-2pU">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="DHK-1X-jo0" kind="relationship" relationship="rootViewController" id="FJg-JA-gG5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="39U-Lg-S7H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-175" y="945"/>
+        </scene>
+        <!--Signin Controller-->
+        <scene sceneID="DKb-nf-Jku">
+            <objects>
+                <viewController id="DHK-1X-jo0" userLabel="Signin Controller" customClass="SignInViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6E6-IB-rfS"/>
+                        <viewControllerLayoutGuide type="bottom" id="M7Z-WV-B4k"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xl6-ah-UKG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collara" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NvZ-hv-C6k" userLabel="Logo">
+                                <rect key="frame" x="75" y="169" width="170" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="IMz-Sy-P3C"/>
+                                    <constraint firstAttribute="width" constant="170" id="OI4-kG-hCf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Axg-ob-q0b">
+                                <rect key="frame" x="75" y="319" width="170" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="170" id="19G-Dg-exh"/>
+                                    <constraint firstAttribute="height" constant="30" id="jiv-mn-WyL"/>
+                                </constraints>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eoW-RA-sJz">
+                                <rect key="frame" x="75" y="372" width="170" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="YSu-Fz-gcW"/>
+                                    <constraint firstAttribute="width" constant="170" id="er2-Ce-tXf"/>
+                                </constraints>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wN-Ke-SEM">
+                                <rect key="frame" x="75" y="430" width="170" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="170" id="AqX-d5-EHL"/>
+                                    <constraint firstAttribute="height" constant="30" id="eQD-mo-NMD"/>
+                                </constraints>
+                                <state key="normal" title="Sign In">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInClicked:" destination="DHK-1X-jo0" eventType="touchUpInside" id="6tV-kA-3J0"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="eoW-RA-sJz" secondAttribute="centerX" id="3DH-Td-N1p"/>
+                            <constraint firstItem="M7Z-WV-B4k" firstAttribute="top" secondItem="9wN-Ke-SEM" secondAttribute="bottom" constant="108" id="8Te-1v-wPh"/>
+                            <constraint firstAttribute="centerX" secondItem="Axg-ob-q0b" secondAttribute="centerX" constant="-0.5" id="8a5-XS-fHs"/>
+                            <constraint firstAttribute="centerX" secondItem="NvZ-hv-C6k" secondAttribute="centerX" constant="-0.5" id="Hpa-Jl-faM"/>
+                            <constraint firstItem="NvZ-hv-C6k" firstAttribute="top" secondItem="6E6-IB-rfS" secondAttribute="bottom" constant="105" id="L1X-3X-thd"/>
+                            <constraint firstAttribute="centerX" secondItem="9wN-Ke-SEM" secondAttribute="centerX" id="cOR-fM-cxc"/>
+                            <constraint firstItem="eoW-RA-sJz" firstAttribute="top" secondItem="Axg-ob-q0b" secondAttribute="bottom" constant="23" id="ceu-kg-Hat"/>
+                            <constraint firstAttribute="centerX" secondItem="eoW-RA-sJz" secondAttribute="centerX" id="fft-Dh-bcP"/>
+                            <constraint firstItem="9wN-Ke-SEM" firstAttribute="top" secondItem="eoW-RA-sJz" secondAttribute="bottom" constant="28" id="oW1-Q4-lwY"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="u0d-2I-NZw"/>
+                    <connections>
+                        <outlet property="passwordTextField" destination="eoW-RA-sJz" id="ee4-Oi-Vam"/>
+                        <outlet property="signInButton" destination="9wN-Ke-SEM" id="FS1-MS-nbV"/>
+                        <outlet property="usernameTextField" destination="Axg-ob-q0b" id="jSv-Ah-mva"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HdH-RX-cGk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="256" y="945"/>
         </scene>
         <!--Chat-->
         <scene sceneID="WDy-qq-umt">
@@ -238,13 +334,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="iDk-6w-F7j" userLabel="NavigationItem">
                         <barButtonItem key="leftBarButtonItem" title="Chat" id="zun-6c-983">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="leftMenuButtonTapped:" destination="vtJ-5i-UDw" id="3aj-QZ-Fi2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Doc" id="eIt-t0-87j">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <barButtonItem key="rightBarButtonItem" title="Docs" id="eIt-t0-87j">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="rightMenuButtonTapped:" destination="vtJ-5i-UDw" id="ykf-R6-eVQ"/>
                             </connections>
@@ -253,7 +349,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KfC-cv-NP1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="795" y="1552"/>
+            <point key="canvasLocation" x="1231" y="1624"/>
         </scene>
         <!--Document-->
         <scene sceneID="bgt-a0-tA2">
@@ -282,13 +378,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Document" id="USF-5o-XfX" userLabel="NavigationItem">
                         <barButtonItem key="leftBarButtonItem" title="Chat" id="SNL-za-AqO" userLabel="Chat">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="leftMenuButtonTapped:" destination="2Xq-Rf-xxU" id="wMJ-Vy-n7C"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Docs" id="bRO-fd-KOx" userLabel="Doc">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="rightMenuButtonTapped:" destination="2Xq-Rf-xxU" id="v12-PC-iX1"/>
                             </connections>
@@ -300,7 +396,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l31-8k-DAE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="795" y="2239"/>
+            <point key="canvasLocation" x="1231" y="2311"/>
         </scene>
         <!--Transitions-->
         <scene sceneID="4cU-nh-c5P">
@@ -332,7 +428,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XK0-nm-RIH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="795" y="873"/>
+            <point key="canvasLocation" x="1231" y="945"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HfK-3h-wmj">
@@ -340,7 +436,7 @@
                 <navigationController storyboardIdentifier="METransitionsNavigationController" definesPresentationContext="YES" id="zAf-9I-xrz" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fXh-mW-8ta">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.2421875" green="0.41135378649999998" blue="0.74942974449999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.10196078431372549" green="0.70196078431372544" blue="0.58039215686274515" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="0.90000000000000002" colorSpace="calibratedWhite"/>
                             <color key="textShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -353,7 +449,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lnc-IQ-qO1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277" y="873"/>
+            <point key="canvasLocation" x="713" y="945"/>
         </scene>
     </scenes>
     <resources>

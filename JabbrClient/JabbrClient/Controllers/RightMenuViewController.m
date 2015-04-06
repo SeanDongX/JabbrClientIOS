@@ -16,7 +16,6 @@ static NSString * const kDoc = @"doc";
 @interface RightMenuViewController ()
 @property (nonatomic, strong) NSArray *documentThreads;
 @property (nonatomic, strong) NSMutableDictionary *controllers;
-@property (nonatomic, strong) UINavigationController *navigationController;
 @end
 
 @implementation RightMenuViewController

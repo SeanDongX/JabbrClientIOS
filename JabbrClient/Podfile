@@ -3,6 +3,7 @@
 
 target 'JabbrClient' do
   platform :ios, '7.0'
+  pod 'DateTools'
   pod 'NJKWebViewProgress'
   pod 'JSQMessagesViewController'
   pod 'ECSlidingViewController', :path => '~/Documents/workspace/ECSlidingViewController/'

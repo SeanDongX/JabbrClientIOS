@@ -46,7 +46,7 @@
 - (void)initNavControllerCache {
     
     self.mainViewControllersCache = [NSMutableDictionary dictionary];
-    NSString *key = self.topViewControllerStoryboardId = kChatNavigationController;
+    NSString *key = self.topViewControllerStoryboardId;
     [self.mainViewControllersCache setObject:self.topViewController forKeyedSubscript:key];
 }
 

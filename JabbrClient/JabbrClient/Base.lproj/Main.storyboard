@@ -320,6 +320,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="menuItem" destination="ZxX-xc-zh0" id="7PI-ec-EPP"/>
                         <outlet property="nameLabel" destination="qeo-G0-hFE" id="sT7-4V-bPX"/>
                         <outlet property="profileImageView" destination="hQj-jR-e2C" id="HyV-GL-ttn"/>
                     </connections>

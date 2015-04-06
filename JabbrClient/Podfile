@@ -3,6 +3,7 @@
 
 target 'JabbrClient' do
   platform :ios, '7.0'
+  pod 'FontAwesomeKit/IonIcons'
   pod 'DateTools'
   pod 'NJKWebViewProgress'
   pod 'JSQMessagesViewController'

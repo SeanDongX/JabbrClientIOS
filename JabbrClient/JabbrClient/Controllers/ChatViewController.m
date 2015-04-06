@@ -13,6 +13,7 @@
 #import "ChatThread+Category.h"
 #import "DemoData.h"
 #import "Constants.h"
+#import "DateTools.h"
 
 static NSString * const kDefaultChatThread = @"collabot";
 
@@ -71,6 +72,7 @@ static NSString * const kDefaultChatThread = @"collabot";
 {
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
+    self.showLoadEarlierMessagesHeader = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -377,6 +379,8 @@ static NSString * const kDefaultChatThread = @"collabot";
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
 {
+    //TODO:cache CLAMessage, init with message id
+    //[self.hub invoke:@"GetPreviousMessages" withArgs:@[@[firstMessageId]]];
     NSLog(@"Load earlier messages!");
 }
 
@@ -463,10 +467,15 @@ static NSString * const kDefaultChatThread = @"collabot";
     
     [self addMessage:message toThread:threadTitle];
     
+    NSInteger secondApart = [message.date secondsFrom:[NSDate date]];
+    
+    BOOL animated = secondApart > -1 * kMessageLoadAnimateTimeThreshold ? TRUE : FALSE;
+    
     //TODO: also show messages of the same user from other client in current thread
     if (message.senderId != self.username &&
         [[self.currentChatThread.title lowercaseString] isEqualToString:[threadTitle lowercaseString]]) {
-        [self finishReceivingMessageAnimated:TRUE];
+        
+        [self finishReceivingMessageAnimated:animated];
     }
 }
 
@@ -541,12 +550,14 @@ static NSString * const kDefaultChatThread = @"collabot";
     NSString* room = [data objectForKey:@"room"];
     if (room && ![[room lowercaseString] isEqualToString:[self.currentChatThread.title lowercaseString]])
     {
+        NSLog(@"Incoming message ingored since it is for a thread thread");
         return true;
     }
     
     NSString* username = [data objectForKey:@"username"];
     if (username && [[username lowercaseString] isEqualToString:[self.username lowercaseString]])
     {
+        NSLog(@"Incoming message ingored since from current user");
         return true;
     }
     
@@ -612,6 +623,7 @@ static NSString * const kDefaultChatThread = @"collabot";
         userName = [[userData objectForKey:@"Name"] lowercaseString];
     }
     
+    //add message id to data
     NSString *messageId = [messageDictionary objectForKey:@"Id"];
     
     //TOOD: get real sendId
@@ -852,13 +864,13 @@ static NSString * const kDefaultChatThread = @"collabot";
     
     NSArray *recentMessageArray = [roomInfoDictionary objectForKey:@"RecentMessages"];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+   dispatch_async(dispatch_get_main_queue(), ^{
         for(NSDictionary *messageDictionary in recentMessageArray) {
             [self addRawMessage:messageDictionary toThread:self.currentChatThread.title];
         }
         
         //TOOD: load users
-    });
+   });
     
 }
 

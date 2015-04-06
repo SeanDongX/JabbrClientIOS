@@ -34,6 +34,7 @@
 		14B6FB551ACB4CF500E5B5A5 /* DocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB541ACB4CF500E5B5A5 /* DocumentViewController.m */; };
 		14B6FB581ACB5AC700E5B5A5 /* DemoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB571ACB5AC700E5B5A5 /* DemoData.m */; };
 		14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990A1AD317BC00776556 /* ProfileViewController.m */; };
+		14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990D1AD33D1000776556 /* CLAMessage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,8 @@
 		14B6FB571ACB5AC700E5B5A5 /* DemoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoData.m; path = JabbrClient/DataModel/DemoData.m; sourceTree = SOURCE_ROOT; };
 		14BA99091AD317BC00776556 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		14BA990A1AD317BC00776556 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		14BA990C1AD33D1000776556 /* CLAMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMessage.h; path = JabbrClient/DataModel/CLAMessage.h; sourceTree = SOURCE_ROOT; };
+		14BA990D1AD33D1000776556 /* CLAMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMessage.m; path = JabbrClient/DataModel/CLAMessage.m; sourceTree = SOURCE_ROOT; };
 		3ED0782C5C44919FA936A1B4 /* Pods-JabbrClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.release.xcconfig"; sourceTree = "<group>"; };
 		3FF416E318022D2101E2CBE9 /* Pods-JabbrClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,6 +148,8 @@
 				14B6FB571ACB5AC700E5B5A5 /* DemoData.m */,
 				1479A80E1ACC372800A31A7E /* ChatThread+Category.h */,
 				1479A80F1ACC372800A31A7E /* ChatThread+Category.m */,
+				14BA990C1AD33D1000776556 /* CLAMessage.h */,
+				14BA990D1AD33D1000776556 /* CLAMessage.m */,
 			);
 			name = DataModel;
 			path = Controllers;
@@ -426,6 +431,7 @@
 				1479A8101ACC372800A31A7E /* ChatThread+Category.m in Sources */,
 				14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */,
 				149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */,
+				14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */,
 				149F99471AC4D0A200525EA7 /* METransitionsViewController.m in Sources */,
 				14B6FB4F1ACB397700E5B5A5 /* ChatThread.m in Sources */,
 				149F99431AC4D0A200525EA7 /* MEFoldAnimationController.m in Sources */,

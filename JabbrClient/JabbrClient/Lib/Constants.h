@@ -20,4 +20,7 @@ FOUNDATION_EXPORT NSString *const kMETransitionsNavigationController;
 FOUNDATION_EXPORT NSString * const kUsername;
 FOUNDATION_EXPORT NSString * const kAuthToken;
 FOUNDATION_EXPORT NSString * const kLastAuthDate;
+
+
+FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;
 @end

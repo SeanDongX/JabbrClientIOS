@@ -17,7 +17,9 @@ NSString *const kLeftMenuViewController = @"LeftMenuViewController";
 NSString *const kRightMenuViewController = @"RightMenuViewController";
 NSString *const kMETransitionsNavigationController = @"METransitionsNavigationController";
 
-NSString * const kUsername = @"Username";
-NSString * const kAuthToken = @"AuthToken";
-NSString * const kLastAuthDate = @"LastAuthDate";
+NSString *const kUsername = @"Username";
+NSString *const kAuthToken = @"AuthToken";
+NSString *const kLastAuthDate = @"LastAuthDate";
+
+int const kMessageLoadAnimateTimeThreshold = 60;
 @end

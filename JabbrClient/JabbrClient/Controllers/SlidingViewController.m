@@ -21,7 +21,7 @@
     self.underLeftViewControllerStoryboardId = kLeftMenuViewController;
     self.underRightViewControllerStoryboardId = kRightMenuViewController;
     
-    if ([AuthManager sharedInstance].isAuthenticated) {
+    if ([[AuthManager sharedInstance] isAuthenticated]) {
         self.topViewControllerStoryboardId = kChatNavigationController;
     }
     else {

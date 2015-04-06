@@ -12,10 +12,10 @@
 
 //TODO: remove
 @property (strong, nonatomic, readonly) NSString *server_url;
-@property (nonatomic, readonly) BOOL *isAuthenticated;
 
 + (AuthManager *)sharedInstance;
 
+- (BOOL)isAuthenticated;
 - (void)signInWithUsername:(NSString *)username password: (NSString *)password completion:(void (^)(NSError *error))completionBlock;
 - (NSString *)getCachedAuthToken;
 - (NSString *)getUsername;

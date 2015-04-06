@@ -26,7 +26,6 @@
     self = [super init];
     if (self) {
         _server_url = @"http://www.collara.co/";
-        _isAuthenticated = FALSE;
     }
     return self;
 }
@@ -34,6 +33,9 @@
 #pragma -
 #pragma Public Methods
 
+- (BOOL)isAuthenticated {
+    return [self getCachedAuthToken] != nil;
+}
 
 - (NSString *)getCachedAuthToken {
     

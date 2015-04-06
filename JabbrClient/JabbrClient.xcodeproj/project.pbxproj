@@ -26,8 +26,6 @@
 		14B515821ABF138A0000CC4F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14B515811ABF138A0000CC4F /* Images.xcassets */; };
 		14B515851ABF138A0000CC4F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14B515831ABF138A0000CC4F /* LaunchScreen.xib */; };
 		14B515911ABF138A0000CC4F /* JabbrClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515901ABF138A0000CC4F /* JabbrClientTests.m */; };
-		14B5159E1ABF14BB0000CC4F /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14B5159A1ABF14BB0000CC4F /* MainStoryboard_iPad.storyboard */; };
-		14B5159F1ABF14BB0000CC4F /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14B5159C1ABF14BB0000CC4F /* MainStoryboard_iPhone.storyboard */; };
 		14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515A21ABF14C90000CC4F /* AppDelegate.m */; };
 		14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515A41ABF14C90000CC4F /* ChatViewController.m */; };
 		14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB4B1ACB352300E5B5A5 /* RightMenuViewController.m */; };
@@ -83,8 +81,6 @@
 		14B5158A1ABF138A0000CC4F /* JabbrClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JabbrClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14B5158F1ABF138A0000CC4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14B515901ABF138A0000CC4F /* JabbrClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JabbrClientTests.m; sourceTree = "<group>"; };
-		14B5159B1ABF14BB0000CC4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		14B5159D1ABF14BB0000CC4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		14B515A11ABF14C90000CC4F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		14B515A21ABF14C90000CC4F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		14B515A31ABF14C90000CC4F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -177,8 +173,6 @@
 		149F994A1AC4D0FD00525EA7 /* StoryBoards */ = {
 			isa = PBXGroup;
 			children = (
-				14B5159A1ABF14BB0000CC4F /* MainStoryboard_iPad.storyboard */,
-				14B5159C1ABF14BB0000CC4F /* MainStoryboard_iPhone.storyboard */,
 				14B5157E1ABF138A0000CC4F /* Main.storyboard */,
 				149F994B1AC4D11800525EA7 /* Main-iPad.storyboard */,
 			);
@@ -361,8 +355,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14B5159F1ABF14BB0000CC4F /* MainStoryboard_iPhone.storyboard in Resources */,
-				14B5159E1ABF14BB0000CC4F /* MainStoryboard_iPad.storyboard in Resources */,
 				14B515801ABF138A0000CC4F /* Main.storyboard in Resources */,
 				14B515851ABF138A0000CC4F /* LaunchScreen.xib in Resources */,
 				14B515821ABF138A0000CC4F /* Images.xcassets in Resources */,
@@ -482,24 +474,6 @@
 				14B515841ABF138A0000CC4F /* Base */,
 			);
 			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		14B5159A1ABF14BB0000CC4F /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				14B5159B1ABF14BB0000CC4F /* Base */,
-			);
-			name = MainStoryboard_iPad.storyboard;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		14B5159C1ABF14BB0000CC4F /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				14B5159D1ABF14BB0000CC4F /* Base */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

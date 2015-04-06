@@ -76,7 +76,7 @@
         }
 
         if (signInSuccessful) {
-            [self cacheObject:username forKey:kUsername];
+            [self cacheObject:[username lowercaseString] forKey:kUsername];
             if (completionBlock != nil) {
                 completionBlock(nil);
             }

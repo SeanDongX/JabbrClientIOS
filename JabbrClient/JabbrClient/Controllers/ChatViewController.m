@@ -70,12 +70,11 @@ static NSString * const kDefaultChatThread = @"collabot";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.collectionView.collectionViewLayout.springinessEnabled = YES;
+    self.collectionView.collectionViewLayout.springinessEnabled = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
     [super viewWillAppear:animated];
 }
 
@@ -123,6 +122,8 @@ static NSString * const kDefaultChatThread = @"collabot";
     }
     
     [self.collectionView reloadData];
+    
+    [self loadCurrentThread];
 }
 
 - (NSMutableArray *)getCurrentMessageThread {
@@ -443,6 +444,9 @@ static NSString * const kDefaultChatThread = @"collabot";
     [self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
     [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
     
+    [self.hub on:@"roomLoaded" perform:self selector:@selector(threadLoaded:)];
+    
+    
     [self.connection setDelegate:self];
     [self.connection start];
     
@@ -481,6 +485,12 @@ static NSString * const kDefaultChatThread = @"collabot";
     [messageData setObject:message.text forKey:@"content"];
     [messageData setObject:self.currentChatThread.title forKey:@"room"];
     [self.hub invoke:@"Send" withArgs:@[messageData]];
+}
+
+
+-(void)loadCurrentThread {
+
+    [self.hub invoke:@"LoadRooms" withArgs:@[@[self.currentChatThread.title]]];
 }
 
 //-(void)refreshRoom:(id)inRoom
@@ -529,13 +539,13 @@ static NSString * const kDefaultChatThread = @"collabot";
     }
     
     NSString* room = [data objectForKey:@"room"];
-    if (room && ![room isEqualToString:self.currentChatThread.title])
+    if (room && ![[room lowercaseString] isEqualToString:[self.currentChatThread.title lowercaseString]])
     {
         return true;
     }
     
     NSString* username = [data objectForKey:@"username"];
-    if (username && [username isEqualToString:self.username])
+    if (username && [[username lowercaseString] isEqualToString:[self.username lowercaseString]])
     {
         return true;
     }
@@ -584,6 +594,42 @@ static NSString * const kDefaultChatThread = @"collabot";
 //)
 }
 
+- (void)addRawMessage:(NSDictionary *)messageDictionary toThread:(NSString *)thread
+{
+    NSString *userName = @"Unknown";
+    NSDictionary *userData = [messageDictionary objectForKey:@"User"];
+    
+    NSString *dateString = [messageDictionary objectForKey:@"When"];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+    // Always use this locale when parsing fixed format date strings
+    NSLocale *posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [formatter setLocale:posix];
+    NSDate *date = [formatter dateFromString:dateString];
+    
+    if (userData && [userData objectForKey:@"Name"])
+    {
+        userName = [[userData objectForKey:@"Name"] lowercaseString];
+    }
+    
+    NSString *messageId = [messageDictionary objectForKey:@"Id"];
+    
+    //TOOD: get real sendId
+    NSString *senderId = userName;
+    
+    NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
+    [ignoreParamDictionary setObject:thread forKey:@"room"];
+    [ignoreParamDictionary setObject:userName forKey:@"username"];
+    
+    
+    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
+                                             senderDisplayName:userName
+                                                          date:date
+                                                          text:[messageDictionary objectForKey:@"Content"]];
+    
+    [self receiveMessage: message atThread:thread];
+}
+
 - (void)incomingMessage:(NSArray *)data
 {
     //Message data example
@@ -619,41 +665,10 @@ static NSString * const kDefaultChatThread = @"collabot";
         return;
     }
     
-    NSString *room = data[1];
+    NSString *thread = data[1];
     
     NSDictionary *messageDictionary = data[0];
-    NSString *userName = @"Unknown";
-    NSDictionary *userData = [messageDictionary objectForKey:@"User"];
-    
-    NSString *dateString = [messageDictionary objectForKey:@"When"];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-    // Always use this locale when parsing fixed format date strings
-    NSLocale *posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    [formatter setLocale:posix];
-    NSDate *date = [formatter dateFromString:dateString];
-    
-    if (userData && [userData objectForKey:@"Name"])
-    {
-        userName = [userData objectForKey:@"Name"];
-    }
-    //TODO: add messageId
-    NSString *messageId = [messageDictionary objectForKey:@"Id"];
-    
-    //TOOD: get real sendId
-    NSString *senderId = userName;
-    
-    NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
-    [ignoreParamDictionary setObject:room forKey:@"room"];
-    [ignoreParamDictionary setObject:userName forKey:@"username"];
-
-    
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
-                                             senderDisplayName:userName
-                                                          date:date
-                                                          text:[messageDictionary objectForKey:@"Content"]];
-    
-    [self receiveMessage: message atThread:room];
+    [self addRawMessage:messageDictionary toThread:thread];
 }
 
 - (void)updateActivity:(NSArray *)data
@@ -733,6 +748,120 @@ static NSString * const kDefaultChatThread = @"collabot";
     }
 }
 
+- (void)threadLoaded:(NSArray *)data
+{
+    
+//    <__NSCFArray 0x7fb214346e20>(
+//    {
+//        Closed = 0;
+//        Count = 0;
+//        Name = PitchDemo;
+//        Owners =     (
+//                      seanxd
+//                      );
+//        Private = 0;
+//        RecentMessages =     (
+//                              {
+//                                  Content = send;
+//                                  HtmlContent = "<null>";
+//                                  HtmlEncoded = 0;
+//                                  Id = "182be5ef-d8a6-44b6-a18f-ea42f1a38813";
+//                                  ImageUrl = "<null>";
+//                                  MessageType = 0;
+//                                  Source = "<null>";
+//                                  User =             {
+//                                      Active = 0;
+//                                      AfkNote = "<null>";
+//                                      Country = "<null>";
+//                                      Flag = "<null>";
+//                                      Hash = "<null>";
+//                                      IsAdmin = 0;
+//                                      IsAfk = 0;
+//                                      LastActivity = "2015-04-03T01:11:59.493Z";
+//                                      Name = kate;
+//                                      Note = "<null>";
+//                                      Status = Offline;
+//                                  };
+//                                  UserRoomPresence = present;
+//                                  When = "2015-04-01T13:21:12.9563522+00:00";
+//                              },
+//                              {
+//                                  Content = "Boom! Check your docs, just created from my phone!";
+//                                  HtmlContent = "<null>";
+//                                  HtmlEncoded = 0;
+//                                  Id = "661e9b16-7831-443f-a41e-c66c4de03027";
+//                                  ImageUrl = "<null>";
+//                                  MessageType = 0;
+//                                  Source = "<null>";
+//                                  User =             {
+//                                      Active = 1;
+//                                      AfkNote = "<null>";
+//                                      Country = "<null>";
+//                                      Flag = "<null>";
+//                                      Hash = "<null>";
+//                                      IsAdmin = 0;
+//                                      IsAfk = 0;
+//                                      LastActivity = "2015-04-06T14:11:57.707Z";
+//                                      Name = Mike;
+//                                      Note = "<null>";
+//                                      Status = Active;
+//                                  };
+//                                  UserRoomPresence = present;
+//                                  When = "2015-04-03T14:52:25.9471504+00:00";
+//                              }
+//                              );
+//        Topic = "";
+//        Users =     (
+//                     {
+//                         Active = 0;
+//                         AfkNote = "<null>";
+//                         Country = "<null>";
+//                         Flag = "<null>";
+//                         Hash = "<null>";
+//                         IsAdmin = 1;
+//                         IsAfk = 0;
+//                         LastActivity = "2015-04-06T13:41:18.517Z";
+//                         Name = seanxd;
+//                         Note = "some note, help";
+//                         Status = Inactive;
+//                     },
+//                     {
+//                         Active = 1;
+//                         AfkNote = "<null>";
+//                         Country = "<null>";
+//                         Flag = "<null>";
+//                         Hash = "<null>";
+//                         IsAdmin = 0;
+//                         IsAfk = 0;
+//                         LastActivity = "2015-04-06T14:11:57.707Z";
+//                         Name = Mike;
+//                         Note = "<null>";
+//                         Status = Active;
+//                     }
+//                     );
+//        Welcome = "";
+//    }
+//                                 )
+//    
+    if (data == nil)
+    {
+        return;
+    }
+    
+    NSDictionary *roomInfoDictionary = data[0];
+    
+    NSArray *recentMessageArray = [roomInfoDictionary objectForKey:@"RecentMessages"];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for(NSDictionary *messageDictionary in recentMessageArray) {
+            [self addRawMessage:messageDictionary toThread:self.currentChatThread.title];
+        }
+        
+        //TOOD: load users
+    });
+    
+}
+
 - (void)markInactive:(NSArray *)data
 {
 //    {
@@ -750,7 +879,7 @@ static NSString * const kDefaultChatThread = @"collabot";
 //    }
 //    )
     
-    if (!data && data.count <1)
+    if (data == nil || data.count <1)
     {
         return;
     }
@@ -785,7 +914,7 @@ static NSString * const kDefaultChatThread = @"collabot";
 //    1
 //    )
 
-    if (!data && data.count <3)
+    if (data == nil || data.count <3)
     {
         return;
     }

@@ -15,4 +15,7 @@ NSString *const kSignInNavigationController = @"SignInNavigationController";
 NSString *const kLeftMenuViewController = @"LeftMenuViewController";
 NSString *const kRightMenuViewController = @"RightMenuViewController";
 
+NSString * const kUsername = @"Username";
+NSString * const kAuthToken = @"AuthToken";
+NSString * const kLastAuthDate = @"LastAuthDate";
 @end

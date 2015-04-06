@@ -54,8 +54,8 @@
 - (IBAction)signInClicked:(id)sender {
     //TOOD: check user name and password
     
-    [[AuthManager sharedInstance]signInWithUsername:self.usernameTextField.text
-                                           password:self.passwordTextField.text
+    [[AuthManager sharedInstance]signInWithUsername:[self.usernameTextField text]
+                                           password:[self.passwordTextField text]
                                          completion:^(NSError *error){
         [self processSignInResult:error];
     }];
@@ -68,7 +68,7 @@
     }
     else {
         //TODO: show error on UI
-        NSLog(@"Error domain: %@, error code: %ld", error.domain, (long)error.code);
+        NSLog(@"Sign in error, error domain: %@, error code: %ld", error.domain, (long)error.code);
     }
 }
 

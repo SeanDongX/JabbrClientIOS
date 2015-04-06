@@ -12,12 +12,9 @@
 #import "ObjectThread.h"
 #import "ChatThread+Category.h"
 #import "DemoData.h"
-
+#import "Constants.h"
 
 static NSString * const kDefaultChatThread = @"collabot";
-
-static NSString * const kAuthToken = @"authToken";
-static NSString * const kLastAuthDate = @"lastAuthDate";
 
 
 @interface ChatViewController ()
@@ -64,7 +61,6 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
     [super viewDidLoad];
     [self setupChatThread];
     [self setupChatRepository];
-    [self setupUsername];
     [self configJSQMessage];
     
     [self setupOutgoingTypingEventHandler];
@@ -79,6 +75,7 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
     [super viewWillAppear:animated];
 }
 
@@ -105,12 +102,6 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
 
 - (void)setupChatRepository {
     self.chatThreadRepository = [NSMutableDictionary dictionary];
-}
-
-- (void)setupUsername{
-    self.username = [DemoData sharedDemoData].myUsername;
-    self.senderDisplayName = [DemoData sharedDemoData].myUsername;
-    self.senderId = [DemoData sharedDemoData].mySenderId;
 }
 
 - (void)configJSQMessage {
@@ -411,10 +402,9 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
 {
     if (!self.connection)
     {
-        [self makeConnection: FALSE];
+        [self makeConnection];
     }
 }
-
 
 - (void)reconnect
 {
@@ -422,104 +412,24 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
     self.hub = nil;
     self.connection.delegate = nil;
     self.connection = nil;
-    [self makeConnection:TRUE];
+    [self makeConnection];
 }
 
-- (void)makeConnection:(BOOL)refreshToken {
-
-    NSString *authToken = [self getCachedAuthToken];
-    if (authToken && !refreshToken) {
-        [self connectWithAuthToken:authToken];
-    }
-    else {
+- (void)makeConnection {
         
-        [self clearCookie];
-        [self makeCoonectionRequest];
-    }
-}
-
-- (NSString *)fetchAuthToken:(NSData *)data {
-    NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    //remove "" from returned json string
-    authToken = [authToken substringFromIndex:1];
-    authToken = [authToken substringToIndex: [authToken length] - 1];
-    return authToken;
-}
-
-- (void)makeCoonectionRequest {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@account/login?ReturnUrl=/account/tokenr", [AuthManager sharedInstance].server_url]]];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
-    
-    NSString *postString = [NSString stringWithFormat: @"username=%@&password=%@", [DemoData sharedDemoData].myUsername, [DemoData sharedDemoData].myPassword];
-    
-    NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
-    [request setHTTPBody:data];
-    
-    [request setValue:[NSString stringWithFormat:@"%ld", [data length]] forHTTPHeaderField:@"Content-Length"];
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                               NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                               
-                               NSString *actualResponseUrl = [httpResponse.URL absoluteString];
-                               NSString *expectedResponseUrl = [NSString stringWithFormat: @"%@account/tokenr", [AuthManager sharedInstance].server_url];
-                               
-                               if ([actualResponseUrl rangeOfString:expectedResponseUrl options:NSCaseInsensitiveSearch].location == NSNotFound) {
-                                   NSLog(@"Token request error. Expect response url '%@', but get '%@'", expectedResponseUrl, actualResponseUrl);
-                               }
-                               else {
-                                   NSString *authToken = [self fetchAuthToken:data];
-                                   [self cacheAuthToken:authToken];
-                                   [self connectWithAuthToken:authToken];
-                                   NSLog(@"Start conection using authtoken: %@", authToken);
-                               }
-                           }];
-}
-
-- (void)clearCookie {
-    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie *each in cookieStorage.cookies) {
-        [cookieStorage deleteCookie:each];
-    }
-}
-
-- (NSString *)getCachedAuthToken {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *authDate = [defaults objectForKey:kLastAuthDate];
-    
-    if (!authDate){
-        return nil;
-    }
-    else if (authDate) {
-        
-        NSComparisonResult result;
-        result = [[NSDate date] compare:[authDate dateByAddingTimeInterval:60*60*24*7]];
-        
-        if (result == NSOrderedDescending){
-            return nil;
-        }
-    }
-    
-    return [defaults objectForKey:kAuthToken];
-}
-
-- (void)cacheAuthToken: (NSString *)authToken {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:authToken forKey:kAuthToken];
-    [defaults setObject:[NSDate date] forKey:kLastAuthDate];
-    [defaults synchronize];
-}
-
-- (void)connectWithAuthToken:(NSString *)authToken {
-    
-    
     NSString *server = [AuthManager sharedInstance].server_url;
+    NSString *authToken = [[AuthManager sharedInstance] getCachedAuthToken];
     
-    //TODO: handle possible exception and show login screen
+    if (authToken == nil) {
+        //TODO: show login screen
+    }
+    
+    self.username = [[AuthManager sharedInstance] getUsername];
+    
+    //TODO:get senderid and dispaly name from server
+    self.senderId = self.username;
+    self.senderDisplayName = self.username;
+    
     self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"token=%@", authToken]];
     
     self.hub = [self.connection createHubProxy:@"Chat"];
@@ -533,17 +443,6 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
     [self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
     [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
     
-    //TOOD: fix subscriptions
-    [self.hub setMember:@"focus" object:@YES];
-    [self.hub setMember:@"unread" object:@0];
-    
-//    [self.hub on:@"refreshRoom" perform:self selector:@selector(refreshRoom:)];
-//    [self.hub on:@"showRooms" perform:self selector:@selector(showRooms:)];
-//    [self.hub on:@"addMessageContent" perform:self selector:@selector(addMessageContent:content:)];
-//    [self.hub on:@"changeUserName" perform:self selector:@selector(changeUserName:newUser:)];
-//
-//    [self.hub on:@"sendMeMessage" perform:self selector:@selector(sendMeMessage:message:)];
-//   
     [self.connection setDelegate:self];
     [self.connection start];
     
@@ -552,7 +451,6 @@ static NSString * const kLastAuthDate = @"lastAuthDate";
         [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.currentChatThread.title] ;
     }
 }
-
 
 #pragma mark - 
 #pragma mark Chat actions

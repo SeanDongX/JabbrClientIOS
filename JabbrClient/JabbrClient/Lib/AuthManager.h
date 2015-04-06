@@ -17,4 +17,6 @@
 + (AuthManager *)sharedInstance;
 
 - (void)signInWithUsername:(NSString *)username password: (NSString *)password completion:(void (^)(NSError *error))completionBlock;
+- (NSString *)getCachedAuthToken;
+- (NSString *)getUsername;
 @end

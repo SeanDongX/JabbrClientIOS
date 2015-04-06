@@ -12,8 +12,10 @@
 
 NSString *const kChatNavigationController = @"ChatNavigationController";
 NSString *const kSignInNavigationController = @"SignInNavigationController";
+NSString *const kProfileNavigationController = @"ProfileNavigationController";
 NSString *const kLeftMenuViewController = @"LeftMenuViewController";
 NSString *const kRightMenuViewController = @"RightMenuViewController";
+NSString *const kMETransitionsNavigationController = @"METransitionsNavigationController";
 
 NSString * const kUsername = @"Username";
 NSString * const kAuthToken = @"AuthToken";

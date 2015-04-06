@@ -9,5 +9,10 @@
 #import "ECSlidingViewController.h"
 
 @interface SlidingViewController : ECSlidingViewController
+@property  NSMutableDictionary *mainViewControllersCache;
 
+- (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier;
+- (void)switchToMainView;
+- (void)switchToSignInView;
+    
 @end

@@ -33,6 +33,7 @@
 		14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB511ACB399400E5B5A5 /* DocumentThread.m */; };
 		14B6FB551ACB4CF500E5B5A5 /* DocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB541ACB4CF500E5B5A5 /* DocumentViewController.m */; };
 		14B6FB581ACB5AC700E5B5A5 /* DemoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB571ACB5AC700E5B5A5 /* DemoData.m */; };
+		14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990A1AD317BC00776556 /* ProfileViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,8 @@
 		14B6FB541ACB4CF500E5B5A5 /* DocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentViewController.m; sourceTree = "<group>"; };
 		14B6FB561ACB5AC700E5B5A5 /* DemoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoData.h; path = JabbrClient/DataModel/DemoData.h; sourceTree = SOURCE_ROOT; };
 		14B6FB571ACB5AC700E5B5A5 /* DemoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoData.m; path = JabbrClient/DataModel/DemoData.m; sourceTree = SOURCE_ROOT; };
+		14BA99091AD317BC00776556 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		14BA990A1AD317BC00776556 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		3ED0782C5C44919FA936A1B4 /* Pods-JabbrClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.release.xcconfig"; sourceTree = "<group>"; };
 		3FF416E318022D2101E2CBE9 /* Pods-JabbrClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -251,6 +254,8 @@
 				14B6FB541ACB4CF500E5B5A5 /* DocumentViewController.m */,
 				142046441AD1F866006143D5 /* SignInViewController.h */,
 				142046451AD1F866006143D5 /* SignInViewController.m */,
+				14BA99091AD317BC00776556 /* ProfileViewController.h */,
+				14BA990A1AD317BC00776556 /* ProfileViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -413,6 +418,7 @@
 				149F99461AC4D0A200525EA7 /* METransitions.m in Sources */,
 				149F99481AC4D0A200525EA7 /* MEZoomAnimationController.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
+				14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */,
 				14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */,
 				14B6FB581ACB5AC700E5B5A5 /* DemoData.m in Sources */,
 				149F99421AC4D0A200525EA7 /* MEDynamicTransition.m in Sources */,

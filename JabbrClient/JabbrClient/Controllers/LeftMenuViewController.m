@@ -27,29 +27,16 @@
 #import "DemoData.h"
 #import "ChatThread+Category.h"
 #import "Constants.h"
-
-static NSString * const kChat = @"chat";
-static NSString * const kSettings = @"settings";
-
+#import "SlidingViewController.h"
 
 @interface LeftMenuViewController ()
 @property (nonatomic, strong) NSArray *chatThreads;
-@property (nonatomic, strong) NSMutableDictionary *controllers;
 @end
 
 @implementation LeftMenuViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.controllers = [NSMutableDictionary dictionaryWithCapacity:self.chatThreads.count];
-    
-    UINavigationController *topNavigaionController = (UINavigationController *)self.slidingViewController.topViewController;
-    
-    if ([topNavigaionController.visibleViewController isKindOfClass:[ChatViewController class]])
-    {
-        [self.controllers setObject:topNavigaionController forKey:kChat];
-        [topNavigaionController.view addGestureRecognizer:self.slidingViewController.panGesture];
-    }
     
     self.slidingViewController.topViewAnchoredGesture = ECSlidingViewControllerAnchoredGestureTapping | ECSlidingViewControllerAnchoredGesturePanning;
     
@@ -65,34 +52,35 @@ static NSString * const kSettings = @"settings";
 
 #pragma mark - Properties
 
-- (NSArray *)chatThreads {
-    return [DemoData sharedDemoData].chatThreads;
-}
-
-
-- (void)resetTopViewController {
-    UINavigationController *navController = [self.controllers objectForKey:kChat];
-    
-    if (navController != nil)
-    {
-        [self.controllers removeObjectForKey:kChat];
+- (NSMutableDictionary *)controllers {
+    SlidingViewController *slidingViewConroller = (SlidingViewController *)self.slidingViewController;
+    if (slidingViewConroller != nil) {
+        return slidingViewConroller.mainViewControllersCache;
     }
     
-    [self.controllers setObject:self.slidingViewController.topViewController forKey:kChat];
+    NSLog(@"Error: no main view controllers found in sliding view controller");
+    return nil;
+}
+
+- (NSArray *)chatThreads {
+    return [DemoData sharedDemoData].chatThreads;
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //Last one for settings
-    return self.chatThreads.count + 1;
+    return self.chatThreads.count + 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (indexPath.row >= self.chatThreads.count) {
+    if (indexPath.row == self.chatThreads.count) {
+        cell.textLabel.text = @"Profile";
+    }
+    else if (indexPath.row == self.chatThreads.count + 1) {
         cell.textLabel.text = @"Settings";
     }
     else {
@@ -105,29 +93,6 @@ static NSString * const kSettings = @"settings";
     return cell;
 }
 
-- (void)setNavController:(ChatThread *)chatThread {
-    UINavigationController *navController = [self.controllers objectForKey:kChat];
-    
-    if (navController == nil)
-    {
-        NSLog(@"No chat navigation view controller found in its controllers array");
-        return;
-    }
-    
-    [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
-    [self.controllers setObject:navController forKey:kChat];
-    
-    
-    self.slidingViewController.topViewController = navController;
-    
-    ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
-    
-    if (chatViewController != nil) {
-        [chatViewController switchToChatThread:chatThread];
-        [self.slidingViewController resetTopViewAnimated:YES];
-    }
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -136,24 +101,32 @@ static NSString * const kSettings = @"settings";
     // dynamically so everything needs to start in a consistent state.
     self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
 
-    if (indexPath.row > self.chatThreads.count) {
+    UINavigationController *navController = nil;
+    
+    if (indexPath.row == self.chatThreads.count) {
         
-        NSString *viewControllerIdentifier = @"METransitionsNavigationController";
-        
-        UINavigationController *navController = [self.controllers objectForKey:kSettings];
-        
-        if (!navController){
-            navController = [self.storyboard instantiateViewControllerWithIdentifier:viewControllerIdentifier];
-            [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
-            [self.controllers setObject:navController forKey:kSettings];
-        }
-        
-        self.slidingViewController.topViewController = navController;
+        navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kProfileNavigationController];
+
+        [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
         [self.slidingViewController resetTopViewAnimated:YES];
     }
+    else if (indexPath.row == self.chatThreads.count + 1) {
+        navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kMETransitionsNavigationController];
+        
+            }
     else {
-        [self setNavController:self.chatThreads[indexPath.row]];
+        
+        navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
+        
+        ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
+        
+        if (chatViewController != nil) {
+            [chatViewController switchToChatThread:self.chatThreads[indexPath.row]];
+        }
     }
+        
+    [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    [self.slidingViewController resetTopViewAnimated:YES];
 }
 
 @end

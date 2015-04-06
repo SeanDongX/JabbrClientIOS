@@ -10,7 +10,7 @@
 #import "AuthManager.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "Constants.h"
-#import "LeftMenuViewController.h"
+#import "SlidingViewController.h"
 
 @interface SignInViewController ()
 
@@ -73,14 +73,7 @@
 }
 
 - (void)switchToMainView {
-    ECSlidingViewController *slidingViewController = self.navigationController.slidingViewController;
-    slidingViewController.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:kChatNavigationController];
-    [slidingViewController.topViewController.view addGestureRecognizer:slidingViewController.panGesture];
-    
-    LeftMenuViewController *leftMenuViewController = (LeftMenuViewController *)slidingViewController.underLeftViewController;
-    [leftMenuViewController resetTopViewController];
-    
-    [slidingViewController resetTopViewAnimated:TRUE];
+    [((SlidingViewController *)self.navigationController.slidingViewController) switchToMainView];
 }
 
 @end

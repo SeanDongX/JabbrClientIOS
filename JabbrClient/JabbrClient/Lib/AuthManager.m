@@ -88,6 +88,19 @@
     }];
 }
 
+- (void)signOut {
+    [self clearCookie];
+    [self clearCache];
+}
+
+- (void)clearCache {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:kUsername];
+    [defaults removeObjectForKey:kAuthToken];
+    [defaults removeObjectForKey:kLastAuthDate];
+    [defaults synchronize];
+}
+
 - (void)cacheObject: (NSObject*)object forKey:(NSString *)key {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:object forKey:key];

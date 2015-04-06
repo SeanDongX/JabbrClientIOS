@@ -8,7 +8,6 @@
 
 #import "SlidingViewController.h"
 #import "AuthManager.h"
-#import "SignInViewController.h"
 #import "Constants.h"
 
 @interface SlidingViewController ()
@@ -33,21 +32,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initNavControllerCache];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)initNavControllerCache {
+    
+    self.mainViewControllersCache = [NSMutableDictionary dictionary];
+    NSString *key = self.topViewControllerStoryboardId = kChatNavigationController;
+    [self.mainViewControllersCache setObject:self.topViewController forKeyedSubscript:key];
 }
-*/
 
+- (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier {
+    UINavigationController *navigaionController = (UINavigationController *)[self.mainViewControllersCache objectForKey:keyIdentifier];
+    
+    if (navigaionController == nil) {
+        navigaionController = (UINavigationController *)[self.storyboard instantiateViewControllerWithIdentifier:keyIdentifier];
+        [self.mainViewControllersCache setObject:navigaionController forKey:keyIdentifier];
+    }
+    
+    self.topViewController = navigaionController;
+    
+    return navigaionController;
+}
+
+- (void)switchToMainView {
+    
+    [self setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
+    [self.topViewController.view addGestureRecognizer:self.panGesture];
+    [self resetTopViewAnimated:TRUE];
+}
+
+- (void)switchToSignInView {
+    [self setTopNavigationControllerWithKeyIdentifier:kSignInNavigationController];
+    [self resetTopViewAnimated:TRUE];
+}
 @end

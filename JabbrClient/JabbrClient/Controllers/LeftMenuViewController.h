@@ -25,6 +25,4 @@
 
 @interface LeftMenuViewController : UIViewController <UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-- (void)resetTopViewController;
 @end

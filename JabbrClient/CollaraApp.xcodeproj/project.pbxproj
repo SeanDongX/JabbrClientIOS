@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B4BD3682C7FD3D36AD8832C /* libPods-JabbrClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1090D86306F7E103B79E7158 /* libPods-JabbrClient.a */; };
 		142046431AD1EC91006143D5 /* AuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* AuthManager.m */; };
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
@@ -31,6 +30,7 @@
 		14B6FB581ACB5AC700E5B5A5 /* DemoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB571ACB5AC700E5B5A5 /* DemoData.m */; };
 		14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990A1AD317BC00776556 /* ProfileViewController.m */; };
 		14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990D1AD33D1000776556 /* CLAMessage.m */; };
+		658D3D39FEDD6FCE59F24906 /* libPods-CollaraApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B411F46C7557CDA2DFE00735 /* libPods-CollaraApp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,13 +62,13 @@
 		149F994C1AC4D11800525EA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "JabbrClient/Base.lproj/Main-iPad.storyboard"; sourceTree = SOURCE_ROOT; };
 		14A836011AD177E4001F33E4 /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingViewController.h; sourceTree = "<group>"; };
 		14A836021AD177E4001F33E4 /* SlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidingViewController.m; sourceTree = "<group>"; };
-		14B5156E1ABF138A0000CC4F /* JabbrClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JabbrClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		14B5156E1ABF138A0000CC4F /* CollaraApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollaraApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14B515721ABF138A0000CC4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14B515731ABF138A0000CC4F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		14B5157F1ABF138A0000CC4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		14B515811ABF138A0000CC4F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		14B515841ABF138A0000CC4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		14B5158A1ABF138A0000CC4F /* JabbrClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JabbrClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		14B5158A1ABF138A0000CC4F /* CollaraAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollaraAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14B5158F1ABF138A0000CC4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14B515901ABF138A0000CC4F /* JabbrClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JabbrClientTests.m; sourceTree = "<group>"; };
 		14B515A11ABF14C90000CC4F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,6 +91,9 @@
 		14BA990D1AD33D1000776556 /* CLAMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMessage.m; path = JabbrClient/DataModel/CLAMessage.m; sourceTree = SOURCE_ROOT; };
 		3ED0782C5C44919FA936A1B4 /* Pods-JabbrClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.release.xcconfig"; sourceTree = "<group>"; };
 		3FF416E318022D2101E2CBE9 /* Pods-JabbrClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.debug.xcconfig"; sourceTree = "<group>"; };
+		89602FA4A33435EA32E1D254 /* Pods-CollaraApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollaraApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollaraApp/Pods-CollaraApp.debug.xcconfig"; sourceTree = "<group>"; };
+		B411F46C7557CDA2DFE00735 /* libPods-CollaraApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CollaraApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C88ADD9EB62F1CEB51E0F387 /* Pods-CollaraApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollaraApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollaraApp/Pods-CollaraApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B4BD3682C7FD3D36AD8832C /* libPods-JabbrClient.a in Frameworks */,
+				658D3D39FEDD6FCE59F24906 /* libPods-CollaraApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,8 +184,8 @@
 		14B5156F1ABF138A0000CC4F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				14B5156E1ABF138A0000CC4F /* JabbrClient.app */,
-				14B5158A1ABF138A0000CC4F /* JabbrClientTests.xctest */,
+				14B5156E1ABF138A0000CC4F /* CollaraApp.app */,
+				14B5158A1ABF138A0000CC4F /* CollaraAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -250,6 +253,8 @@
 			children = (
 				3FF416E318022D2101E2CBE9 /* Pods-JabbrClient.debug.xcconfig */,
 				3ED0782C5C44919FA936A1B4 /* Pods-JabbrClient.release.xcconfig */,
+				89602FA4A33435EA32E1D254 /* Pods-CollaraApp.debug.xcconfig */,
+				C88ADD9EB62F1CEB51E0F387 /* Pods-CollaraApp.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				1090D86306F7E103B79E7158 /* libPods-JabbrClient.a */,
+				B411F46C7557CDA2DFE00735 /* libPods-CollaraApp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -265,9 +271,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		14B5156D1ABF138A0000CC4F /* JabbrClient */ = {
+		14B5156D1ABF138A0000CC4F /* CollaraApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 14B515941ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "JabbrClient" */;
+			buildConfigurationList = 14B515941ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraApp" */;
 			buildPhases = (
 				CD6FC53FC7C9FA404B7EA421 /* Check Pods Manifest.lock */,
 				14B5156A1ABF138A0000CC4F /* Sources */,
@@ -279,14 +285,14 @@
 			);
 			dependencies = (
 			);
-			name = JabbrClient;
+			name = CollaraApp;
 			productName = JabbrClient;
-			productReference = 14B5156E1ABF138A0000CC4F /* JabbrClient.app */;
+			productReference = 14B5156E1ABF138A0000CC4F /* CollaraApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		14B515891ABF138A0000CC4F /* JabbrClientTests */ = {
+		14B515891ABF138A0000CC4F /* CollaraAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 14B515971ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "JabbrClientTests" */;
+			buildConfigurationList = 14B515971ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraAppTests" */;
 			buildPhases = (
 				14B515861ABF138A0000CC4F /* Sources */,
 				14B515871ABF138A0000CC4F /* Frameworks */,
@@ -297,9 +303,9 @@
 			dependencies = (
 				14B5158C1ABF138A0000CC4F /* PBXTargetDependency */,
 			);
-			name = JabbrClientTests;
+			name = CollaraAppTests;
 			productName = JabbrClientTests;
-			productReference = 14B5158A1ABF138A0000CC4F /* JabbrClientTests.xctest */;
+			productReference = 14B5158A1ABF138A0000CC4F /* CollaraAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -308,8 +314,9 @@
 		14B515661ABF138A0000CC4F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = CLA;
 				LastUpgradeCheck = 0620;
-				ORGANIZATIONNAME = Colla;
+				ORGANIZATIONNAME = Collara;
 				TargetAttributes = {
 					14B5156D1ABF138A0000CC4F = {
 						CreatedOnToolsVersion = 6.2;
@@ -321,7 +328,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 14B515691ABF138A0000CC4F /* Build configuration list for PBXProject "JabbrClient" */;
+			buildConfigurationList = 14B515691ABF138A0000CC4F /* Build configuration list for PBXProject "CollaraApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -334,8 +341,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				14B5156D1ABF138A0000CC4F /* JabbrClient */,
-				14B515891ABF138A0000CC4F /* JabbrClientTests */,
+				14B5156D1ABF138A0000CC4F /* CollaraApp */,
+				14B515891ABF138A0000CC4F /* CollaraAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -374,7 +381,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CollaraApp/Pods-CollaraApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CD6FC53FC7C9FA404B7EA421 /* Check Pods Manifest.lock */ = {
@@ -433,7 +440,7 @@
 /* Begin PBXTargetDependency section */
 		14B5158C1ABF138A0000CC4F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 14B5156D1ABF138A0000CC4F /* JabbrClient */;
+			target = 14B5156D1ABF138A0000CC4F /* CollaraApp */;
 			targetProxy = 14B5158B1ABF138A0000CC4F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -547,7 +554,7 @@
 		};
 		14B515951ABF138A0000CC4F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FF416E318022D2101E2CBE9 /* Pods-JabbrClient.debug.xcconfig */;
+			baseConfigurationReference = 89602FA4A33435EA32E1D254 /* Pods-CollaraApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -555,14 +562,14 @@
 				INFOPLIST_FILE = JabbrClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CollaraApp;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		14B515961ABF138A0000CC4F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3ED0782C5C44919FA936A1B4 /* Pods-JabbrClient.release.xcconfig */;
+			baseConfigurationReference = C88ADD9EB62F1CEB51E0F387 /* Pods-CollaraApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -570,7 +577,7 @@
 				INFOPLIST_FILE = JabbrClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CollaraApp;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -589,8 +596,7 @@
 				);
 				INFOPLIST_FILE = JabbrClientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JabbrClient.app/JabbrClient";
+				PRODUCT_NAME = CollaraAppTests;
 			};
 			name = Debug;
 		};
@@ -604,15 +610,14 @@
 				);
 				INFOPLIST_FILE = JabbrClientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JabbrClient.app/JabbrClient";
+				PRODUCT_NAME = CollaraAppTests;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		14B515691ABF138A0000CC4F /* Build configuration list for PBXProject "JabbrClient" */ = {
+		14B515691ABF138A0000CC4F /* Build configuration list for PBXProject "CollaraApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				14B515921ABF138A0000CC4F /* Debug */,
@@ -621,7 +626,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		14B515941ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "JabbrClient" */ = {
+		14B515941ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				14B515951ABF138A0000CC4F /* Debug */,
@@ -630,7 +635,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		14B515971ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "JabbrClientTests" */ = {
+		14B515971ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				14B515981ABF138A0000CC4F /* Debug */,

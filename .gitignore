@@ -10,3 +10,5 @@ JabbrClient/Podfile.lock
 *.xcsettings
 
 *.xcbkptlist
+
+*.xcworkspace

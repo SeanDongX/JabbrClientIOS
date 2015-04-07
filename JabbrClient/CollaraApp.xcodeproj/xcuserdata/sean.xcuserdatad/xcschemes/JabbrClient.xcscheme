@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14B5156D1ABF138A0000CC4F"
-               BuildableName = "JabbrClient.app"
-               BlueprintName = "JabbrClient"
-               ReferencedContainer = "container:JabbrClient.xcodeproj">
+               BuildableName = "CollaraApp.app"
+               BlueprintName = "CollaraApp"
+               ReferencedContainer = "container:CollaraApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14B515891ABF138A0000CC4F"
-               BuildableName = "JabbrClientTests.xctest"
-               BlueprintName = "JabbrClientTests"
-               ReferencedContainer = "container:JabbrClient.xcodeproj">
+               BuildableName = "CollaraAppTests.xctest"
+               BlueprintName = "CollaraAppTests"
+               ReferencedContainer = "container:CollaraApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14B515891ABF138A0000CC4F"
-               BuildableName = "JabbrClientTests.xctest"
-               BlueprintName = "JabbrClientTests"
-               ReferencedContainer = "container:JabbrClient.xcodeproj">
+               BuildableName = "CollaraAppTests.xctest"
+               BlueprintName = "CollaraAppTests"
+               ReferencedContainer = "container:CollaraApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14B5156D1ABF138A0000CC4F"
-            BuildableName = "JabbrClient.app"
-            BlueprintName = "JabbrClient"
-            ReferencedContainer = "container:JabbrClient.xcodeproj">
+            BuildableName = "CollaraApp.app"
+            BlueprintName = "CollaraApp"
+            ReferencedContainer = "container:CollaraApp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14B5156D1ABF138A0000CC4F"
-            BuildableName = "JabbrClient.app"
-            BlueprintName = "JabbrClient"
-            ReferencedContainer = "container:JabbrClient.xcodeproj">
+            BuildableName = "CollaraApp.app"
+            BlueprintName = "CollaraApp"
+            ReferencedContainer = "container:CollaraApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14B5156D1ABF138A0000CC4F"
-            BuildableName = "JabbrClient.app"
-            BlueprintName = "JabbrClient"
-            ReferencedContainer = "container:JabbrClient.xcodeproj">
+            BuildableName = "CollaraApp.app"
+            BlueprintName = "CollaraApp"
+            ReferencedContainer = "container:CollaraApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

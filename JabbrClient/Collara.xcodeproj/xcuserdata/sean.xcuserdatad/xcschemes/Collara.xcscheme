@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14B5156D1ABF138A0000CC4F"
-               BuildableName = "CollaraApp.app"
-               BlueprintName = "CollaraApp"
-               ReferencedContainer = "container:CollaraApp.xcodeproj">
+               BuildableName = "Collara App.app"
+               BlueprintName = "Collara"
+               ReferencedContainer = "container:Collara.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14B515891ABF138A0000CC4F"
-               BuildableName = "CollaraAppTests.xctest"
-               BlueprintName = "CollaraAppTests"
-               ReferencedContainer = "container:CollaraApp.xcodeproj">
+               BuildableName = "Collara AppTests.xctest"
+               BlueprintName = "CollaraTests"
+               ReferencedContainer = "container:Collara.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "14B515891ABF138A0000CC4F"
-               BuildableName = "CollaraAppTests.xctest"
-               BlueprintName = "CollaraAppTests"
-               ReferencedContainer = "container:CollaraApp.xcodeproj">
+               BuildableName = "Collara AppTests.xctest"
+               BlueprintName = "CollaraTests"
+               ReferencedContainer = "container:Collara.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14B5156D1ABF138A0000CC4F"
-            BuildableName = "CollaraApp.app"
-            BlueprintName = "CollaraApp"
-            ReferencedContainer = "container:CollaraApp.xcodeproj">
+            BuildableName = "Collara App.app"
+            BlueprintName = "Collara"
+            ReferencedContainer = "container:Collara.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14B5156D1ABF138A0000CC4F"
-            BuildableName = "CollaraApp.app"
-            BlueprintName = "CollaraApp"
-            ReferencedContainer = "container:CollaraApp.xcodeproj">
+            BuildableName = "Collara App.app"
+            BlueprintName = "Collara"
+            ReferencedContainer = "container:Collara.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "14B5156D1ABF138A0000CC4F"
-            BuildableName = "CollaraApp.app"
-            BlueprintName = "CollaraApp"
-            ReferencedContainer = "container:CollaraApp.xcodeproj">
+            BuildableName = "Collara App.app"
+            BlueprintName = "Collara"
+            ReferencedContainer = "container:Collara.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -62,13 +62,13 @@
 		149F994C1AC4D11800525EA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "JabbrClient/Base.lproj/Main-iPad.storyboard"; sourceTree = SOURCE_ROOT; };
 		14A836011AD177E4001F33E4 /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingViewController.h; sourceTree = "<group>"; };
 		14A836021AD177E4001F33E4 /* SlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidingViewController.m; sourceTree = "<group>"; };
-		14B5156E1ABF138A0000CC4F /* CollaraApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollaraApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		14B5156E1ABF138A0000CC4F /* Collara.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collara.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14B515721ABF138A0000CC4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14B515731ABF138A0000CC4F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		14B5157F1ABF138A0000CC4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		14B515811ABF138A0000CC4F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		14B515841ABF138A0000CC4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		14B5158A1ABF138A0000CC4F /* CollaraAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollaraAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		14B5158A1ABF138A0000CC4F /* CollaraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollaraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14B5158F1ABF138A0000CC4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14B515901ABF138A0000CC4F /* JabbrClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JabbrClientTests.m; sourceTree = "<group>"; };
 		14B515A11ABF14C90000CC4F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -184,8 +184,8 @@
 		14B5156F1ABF138A0000CC4F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				14B5156E1ABF138A0000CC4F /* CollaraApp.app */,
-				14B5158A1ABF138A0000CC4F /* CollaraAppTests.xctest */,
+				14B5156E1ABF138A0000CC4F /* Collara.app */,
+				14B5158A1ABF138A0000CC4F /* CollaraTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -271,9 +271,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		14B5156D1ABF138A0000CC4F /* CollaraApp */ = {
+		14B5156D1ABF138A0000CC4F /* Collara */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 14B515941ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraApp" */;
+			buildConfigurationList = 14B515941ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "Collara" */;
 			buildPhases = (
 				CD6FC53FC7C9FA404B7EA421 /* Check Pods Manifest.lock */,
 				14B5156A1ABF138A0000CC4F /* Sources */,
@@ -286,14 +286,14 @@
 			);
 			dependencies = (
 			);
-			name = CollaraApp;
+			name = Collara;
 			productName = JabbrClient;
-			productReference = 14B5156E1ABF138A0000CC4F /* CollaraApp.app */;
+			productReference = 14B5156E1ABF138A0000CC4F /* Collara.app */;
 			productType = "com.apple.product-type.application";
 		};
-		14B515891ABF138A0000CC4F /* CollaraAppTests */ = {
+		14B515891ABF138A0000CC4F /* CollaraTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 14B515971ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraAppTests" */;
+			buildConfigurationList = 14B515971ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraTests" */;
 			buildPhases = (
 				14B515861ABF138A0000CC4F /* Sources */,
 				14B515871ABF138A0000CC4F /* Frameworks */,
@@ -304,9 +304,9 @@
 			dependencies = (
 				14B5158C1ABF138A0000CC4F /* PBXTargetDependency */,
 			);
-			name = CollaraAppTests;
+			name = CollaraTests;
 			productName = JabbrClientTests;
-			productReference = 14B5158A1ABF138A0000CC4F /* CollaraAppTests.xctest */;
+			productReference = 14B5158A1ABF138A0000CC4F /* CollaraTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -321,7 +321,7 @@
 				TargetAttributes = {
 					14B5156D1ABF138A0000CC4F = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = F4YFEW457H;
+						DevelopmentTeam = YJK9294VWR;
 					};
 					14B515891ABF138A0000CC4F = {
 						CreatedOnToolsVersion = 6.2;
@@ -329,7 +329,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 14B515691ABF138A0000CC4F /* Build configuration list for PBXProject "CollaraApp" */;
+			buildConfigurationList = 14B515691ABF138A0000CC4F /* Build configuration list for PBXProject "Collara" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -342,8 +342,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				14B5156D1ABF138A0000CC4F /* CollaraApp */,
-				14B515891ABF138A0000CC4F /* CollaraAppTests */,
+				14B5156D1ABF138A0000CC4F /* Collara */,
+				14B515891ABF138A0000CC4F /* CollaraTests */,
 			);
 		};
 /* End PBXProject section */
@@ -454,7 +454,7 @@
 /* Begin PBXTargetDependency section */
 		14B5158C1ABF138A0000CC4F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 14B5156D1ABF138A0000CC4F /* CollaraApp */;
+			target = 14B5156D1ABF138A0000CC4F /* Collara */;
 			targetProxy = 14B5158B1ABF138A0000CC4F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -573,10 +573,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = JabbrClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = CollaraApp;
+				PRODUCT_NAME = Collara;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -588,10 +590,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = JabbrClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = CollaraApp;
+				PRODUCT_NAME = Collara;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -610,7 +614,7 @@
 				);
 				INFOPLIST_FILE = JabbrClientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = CollaraAppTests;
+				PRODUCT_NAME = CollaraTests;
 			};
 			name = Debug;
 		};
@@ -624,14 +628,14 @@
 				);
 				INFOPLIST_FILE = JabbrClientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = CollaraAppTests;
+				PRODUCT_NAME = CollaraTests;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		14B515691ABF138A0000CC4F /* Build configuration list for PBXProject "CollaraApp" */ = {
+		14B515691ABF138A0000CC4F /* Build configuration list for PBXProject "Collara" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				14B515921ABF138A0000CC4F /* Debug */,
@@ -640,7 +644,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		14B515941ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraApp" */ = {
+		14B515941ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "Collara" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				14B515951ABF138A0000CC4F /* Debug */,
@@ -649,7 +653,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		14B515971ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraAppTests" */ = {
+		14B515971ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "CollaraTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				14B515981ABF138A0000CC4F /* Debug */,

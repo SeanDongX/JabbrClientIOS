@@ -16,7 +16,6 @@ FOUNDATION_EXPORT NSString *const kSignInNavigationController;
 FOUNDATION_EXPORT NSString *const kProfileNavigationController;
 FOUNDATION_EXPORT NSString *const kLeftMenuViewController;
 FOUNDATION_EXPORT NSString *const kRightMenuViewController;
-FOUNDATION_EXPORT NSString *const kMETransitionsNavigationController;
 
 FOUNDATION_EXPORT NSString * const kUsername;
 FOUNDATION_EXPORT NSString * const kAuthToken;

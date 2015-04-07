@@ -70,7 +70,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //Last one for settings
-    return self.chatThreads.count + 2;
+    return self.chatThreads.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -79,9 +79,6 @@
     
     if (indexPath.row == self.chatThreads.count) {
         cell.textLabel.text = @"Profile";
-    }
-    else if (indexPath.row == self.chatThreads.count + 1) {
-        cell.textLabel.text = @"Settings";
     }
     else {
         ChatThread *chatThread = self.chatThreads[indexPath.row];
@@ -110,10 +107,6 @@
         [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
         [self.slidingViewController resetTopViewAnimated:YES];
     }
-    else if (indexPath.row == self.chatThreads.count + 1) {
-        navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kMETransitionsNavigationController];
-        
-            }
     else {
         
         navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];

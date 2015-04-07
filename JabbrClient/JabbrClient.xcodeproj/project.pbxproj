@@ -13,12 +13,8 @@
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
 		14679E961AC8838900316C9C /* ObjectThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14679E951AC8838900316C9C /* ObjectThread.m */; };
 		1479A8101ACC372800A31A7E /* ChatThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 1479A80F1ACC372800A31A7E /* ChatThread+Category.m */; };
-		149F99421AC4D0A200525EA7 /* MEDynamicTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99331AC4D0A200525EA7 /* MEDynamicTransition.m */; };
-		149F99431AC4D0A200525EA7 /* MEFoldAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99351AC4D0A200525EA7 /* MEFoldAnimationController.m */; };
+		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
 		149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */; };
-		149F99461AC4D0A200525EA7 /* METransitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F993B1AC4D0A200525EA7 /* METransitions.m */; };
-		149F99471AC4D0A200525EA7 /* METransitionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F993D1AC4D0A200525EA7 /* METransitionsViewController.m */; };
-		149F99481AC4D0A200525EA7 /* MEZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F993F1AC4D0A200525EA7 /* MEZoomAnimationController.m */; };
 		149F994F1AC4D11800525EA7 /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 149F994B1AC4D11800525EA7 /* Main-iPad.storyboard */; };
 		14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A836021AD177E4001F33E4 /* SlidingViewController.m */; };
 		14B515741ABF138A0000CC4F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515731ABF138A0000CC4F /* main.m */; };
@@ -59,18 +55,10 @@
 		14679E951AC8838900316C9C /* ObjectThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectThread.m; path = JabbrClient/DataModel/ObjectThread.m; sourceTree = SOURCE_ROOT; };
 		1479A80E1ACC372800A31A7E /* ChatThread+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ChatThread+Category.h"; path = "JabbrClient/DataModel/ChatThread+Category.h"; sourceTree = SOURCE_ROOT; };
 		1479A80F1ACC372800A31A7E /* ChatThread+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ChatThread+Category.m"; path = "JabbrClient/DataModel/ChatThread+Category.m"; sourceTree = SOURCE_ROOT; };
-		149F99321AC4D0A200525EA7 /* MEDynamicTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDynamicTransition.h; sourceTree = "<group>"; };
-		149F99331AC4D0A200525EA7 /* MEDynamicTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDynamicTransition.m; sourceTree = "<group>"; };
-		149F99341AC4D0A200525EA7 /* MEFoldAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEFoldAnimationController.h; sourceTree = "<group>"; };
-		149F99351AC4D0A200525EA7 /* MEFoldAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEFoldAnimationController.m; sourceTree = "<group>"; };
+		14938DE81AD4645E00BCC852 /* DocumentThread+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DocumentThread+Category.h"; path = "JabbrClient/DataModel/DocumentThread+Category.h"; sourceTree = SOURCE_ROOT; };
+		14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DocumentThread+Category.m"; path = "JabbrClient/DataModel/DocumentThread+Category.m"; sourceTree = SOURCE_ROOT; };
 		149F99361AC4D0A200525EA7 /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
 		149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
-		149F993A1AC4D0A200525EA7 /* METransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METransitions.h; sourceTree = "<group>"; };
-		149F993B1AC4D0A200525EA7 /* METransitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METransitions.m; sourceTree = "<group>"; };
-		149F993C1AC4D0A200525EA7 /* METransitionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METransitionsViewController.h; sourceTree = "<group>"; };
-		149F993D1AC4D0A200525EA7 /* METransitionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METransitionsViewController.m; sourceTree = "<group>"; };
-		149F993E1AC4D0A200525EA7 /* MEZoomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEZoomAnimationController.h; sourceTree = "<group>"; };
-		149F993F1AC4D0A200525EA7 /* MEZoomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEZoomAnimationController.m; sourceTree = "<group>"; };
 		149F994C1AC4D11800525EA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "JabbrClient/Base.lproj/Main-iPad.storyboard"; sourceTree = SOURCE_ROOT; };
 		14A836011AD177E4001F33E4 /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingViewController.h; sourceTree = "<group>"; };
 		14A836021AD177E4001F33E4 /* SlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidingViewController.m; sourceTree = "<group>"; };
@@ -146,10 +134,12 @@
 				14B6FB511ACB399400E5B5A5 /* DocumentThread.m */,
 				14B6FB561ACB5AC700E5B5A5 /* DemoData.h */,
 				14B6FB571ACB5AC700E5B5A5 /* DemoData.m */,
-				1479A80E1ACC372800A31A7E /* ChatThread+Category.h */,
-				1479A80F1ACC372800A31A7E /* ChatThread+Category.m */,
 				14BA990C1AD33D1000776556 /* CLAMessage.h */,
 				14BA990D1AD33D1000776556 /* CLAMessage.m */,
+				1479A80E1ACC372800A31A7E /* ChatThread+Category.h */,
+				1479A80F1ACC372800A31A7E /* ChatThread+Category.m */,
+				14938DE81AD4645E00BCC852 /* DocumentThread+Category.h */,
+				14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */,
 			);
 			name = DataModel;
 			path = Controllers;
@@ -164,16 +154,6 @@
 				149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */,
 				14B6FB4A1ACB352300E5B5A5 /* RightMenuViewController.h */,
 				14B6FB4B1ACB352300E5B5A5 /* RightMenuViewController.m */,
-				149F99321AC4D0A200525EA7 /* MEDynamicTransition.h */,
-				149F99331AC4D0A200525EA7 /* MEDynamicTransition.m */,
-				149F99341AC4D0A200525EA7 /* MEFoldAnimationController.h */,
-				149F99351AC4D0A200525EA7 /* MEFoldAnimationController.m */,
-				149F993A1AC4D0A200525EA7 /* METransitions.h */,
-				149F993B1AC4D0A200525EA7 /* METransitions.m */,
-				149F993C1AC4D0A200525EA7 /* METransitionsViewController.h */,
-				149F993D1AC4D0A200525EA7 /* METransitionsViewController.m */,
-				149F993E1AC4D0A200525EA7 /* MEZoomAnimationController.h */,
-				149F993F1AC4D0A200525EA7 /* MEZoomAnimationController.m */,
 			);
 			name = menu;
 			sourceTree = "<group>";
@@ -420,21 +400,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				142046461AD1F866006143D5 /* SignInViewController.m in Sources */,
-				149F99461AC4D0A200525EA7 /* METransitions.m in Sources */,
-				149F99481AC4D0A200525EA7 /* MEZoomAnimationController.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
+				14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */,
 				14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */,
 				14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */,
 				14B6FB581ACB5AC700E5B5A5 /* DemoData.m in Sources */,
-				149F99421AC4D0A200525EA7 /* MEDynamicTransition.m in Sources */,
 				142046431AD1EC91006143D5 /* AuthManager.m in Sources */,
 				1479A8101ACC372800A31A7E /* ChatThread+Category.m in Sources */,
 				14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */,
 				149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */,
 				14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */,
-				149F99471AC4D0A200525EA7 /* METransitionsViewController.m in Sources */,
 				14B6FB4F1ACB397700E5B5A5 /* ChatThread.m in Sources */,
-				149F99431AC4D0A200525EA7 /* MEFoldAnimationController.m in Sources */,
 				14B515741ABF138A0000CC4F /* main.m in Sources */,
 				142046491AD203FD006143D5 /* Constants.m in Sources */,
 				14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */,

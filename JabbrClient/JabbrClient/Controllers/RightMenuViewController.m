@@ -10,6 +10,7 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "DocumentViewController.h"
 #import "DemoData.h"
+#import "DocumentThread+Category.h"
 
 static NSString * const kDoc = @"doc";
 
@@ -56,7 +57,7 @@ static NSString * const kDoc = @"doc";
     
     DocumentThread *documentThread = self.documentThreads[indexPath.row];
     
-    cell.textLabel.text = documentThread.title;
+    cell.textLabel.text = [documentThread getDisplayTitle] ;
     [cell setBackgroundColor:[UIColor clearColor]];
     
     return cell;

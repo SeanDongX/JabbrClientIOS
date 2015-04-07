@@ -60,12 +60,12 @@ static NSString * const kKate = @"kate";
     self.documentThreads = [NSMutableArray array];
     
     DocumentThread *pitchSpeech = [[DocumentThread alloc] init];
-    pitchSpeech.title = @">PitchBrainstorm";
-    pitchSpeech.url = [NSURL URLWithString: [NSString stringWithFormat:@"http://colladox.cloudapp.net/p/878XT1YtTH?showChat=false&userName=%@", self.myUsername]];
+    pitchSpeech.title = @"PitchBrainstorm";
+    pitchSpeech.url = [NSURL URLWithString: [NSString stringWithFormat:@"http://doc.collara.co/p/878XT1YtTH?showChat=false&userName=%@", self.myUsername]];
     
     DocumentThread *featureDocument = [[DocumentThread alloc] init];
     featureDocument.title = @"FeatureDocument";
-    featureDocument.url = [NSURL URLWithString:[NSString stringWithFormat:@"http://colladox.cloudapp.net/p/DpfVMMrnEx?showChat=false&userName=%@", self.myUsername]];
+    featureDocument.url = [NSURL URLWithString:[NSString stringWithFormat:@"http://doc.collara.co/p/DpfVMMrnEx?showChat=false&userName=%@", self.myUsername]];
     
     
     [self.documentThreads addObject:pitchSpeech];

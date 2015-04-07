@@ -341,16 +341,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collara" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NvZ-hv-C6k" userLabel="Logo">
-                                <rect key="frame" x="75" y="169" width="170" height="49"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="IMz-Sy-P3C"/>
-                                    <constraint firstAttribute="width" constant="170" id="OI4-kG-hCf"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Axg-ob-q0b">
                                 <rect key="frame" x="75" y="319" width="170" height="30"/>
                                 <constraints>
@@ -385,17 +375,21 @@
                                     <action selector="signInClicked:" destination="DHK-1X-jo0" eventType="touchUpInside" id="6tV-kA-3J0"/>
                                 </connections>
                             </button>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="SplashImage" translatesAutoresizingMaskIntoConstraints="NO" id="krM-0y-fg8">
+                                <rect key="frame" x="4" y="123" width="320" height="141"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="eoW-RA-sJz" secondAttribute="centerX" id="3DH-Td-N1p"/>
                             <constraint firstItem="M7Z-WV-B4k" firstAttribute="top" secondItem="9wN-Ke-SEM" secondAttribute="bottom" constant="108" id="8Te-1v-wPh"/>
                             <constraint firstAttribute="centerX" secondItem="Axg-ob-q0b" secondAttribute="centerX" constant="-0.5" id="8a5-XS-fHs"/>
-                            <constraint firstAttribute="centerX" secondItem="NvZ-hv-C6k" secondAttribute="centerX" constant="-0.5" id="Hpa-Jl-faM"/>
-                            <constraint firstItem="NvZ-hv-C6k" firstAttribute="top" secondItem="6E6-IB-rfS" secondAttribute="bottom" constant="105" id="L1X-3X-thd"/>
+                            <constraint firstItem="krM-0y-fg8" firstAttribute="width" secondItem="xl6-ah-UKG" secondAttribute="width" id="W0I-Mt-UKd"/>
                             <constraint firstAttribute="centerX" secondItem="9wN-Ke-SEM" secondAttribute="centerX" id="cOR-fM-cxc"/>
                             <constraint firstItem="eoW-RA-sJz" firstAttribute="top" secondItem="Axg-ob-q0b" secondAttribute="bottom" constant="23" id="ceu-kg-Hat"/>
+                            <constraint firstAttribute="centerX" secondItem="krM-0y-fg8" secondAttribute="centerX" constant="-4" id="dau-uH-G2s"/>
                             <constraint firstAttribute="centerX" secondItem="eoW-RA-sJz" secondAttribute="centerX" id="fft-Dh-bcP"/>
+                            <constraint firstItem="krM-0y-fg8" firstAttribute="top" secondItem="6E6-IB-rfS" secondAttribute="bottom" constant="59" id="kzN-wS-lF6"/>
                             <constraint firstItem="9wN-Ke-SEM" firstAttribute="top" secondItem="eoW-RA-sJz" secondAttribute="bottom" constant="28" id="oW1-Q4-lwY"/>
                         </constraints>
                     </view>
@@ -491,6 +485,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="SplashImage" width="320" height="141"/>
         <image name="menu-background" width="520" height="763"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -14,6 +14,8 @@
 NSString *const kChatNavigationController = @"ChatNavigationController";
 NSString *const kSignInNavigationController = @"SignInNavigationController";
 NSString *const kProfileNavigationController = @"ProfileNavigationController";
+NSString *const kDocumentNavigationController = @"DocumentNavigationController";
+
 NSString *const kLeftMenuViewController = @"LeftMenuViewController";
 NSString *const kRightMenuViewController = @"RightMenuViewController";
 

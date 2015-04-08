@@ -14,6 +14,8 @@
 FOUNDATION_EXPORT NSString *const kChatNavigationController;
 FOUNDATION_EXPORT NSString *const kSignInNavigationController;
 FOUNDATION_EXPORT NSString *const kProfileNavigationController;
+FOUNDATION_EXPORT NSString *const kDocumentNavigationController;
+
 FOUNDATION_EXPORT NSString *const kLeftMenuViewController;
 FOUNDATION_EXPORT NSString *const kRightMenuViewController;
 

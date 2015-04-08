@@ -11,6 +11,8 @@
 #import "DocumentViewController.h"
 #import "DemoData.h"
 #import "DocumentThread+Category.h"
+#import "Constants.h"
+#import "SlidingViewController.h"
 
 static NSString * const kDoc = @"doc";
 
@@ -24,13 +26,6 @@ static NSString * const kDoc = @"doc";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.controllers = [NSMutableDictionary dictionaryWithCapacity:self.documentThreads.count];
-    
-//    self.navigationController = (UINavigationController *)self.slidingViewController.topViewController;
-//    [self.controllers setObject:self.navigationController forKey:kDoc];
-//    
-    //[self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
-
-    //self.tableView.contentInset = UIEdgeInsetsMake(0, 200, 0, 0);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -65,35 +60,18 @@ static NSString * const kDoc = @"doc";
 
 #pragma mark - UITableViewDelegate
 
-- (void)setNavController:(DocumentThread *)documentThread {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *viewControllerIdentifier = @"DocumentNavigationController";
+    UINavigationController *navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier: kDocumentNavigationController];
     
-    UINavigationController *navController = [self.controllers objectForKey:kDoc];
-    
-    if (!navController){
-        navController = [self.storyboard instantiateViewControllerWithIdentifier:viewControllerIdentifier];
-        [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
-        [self.controllers setObject:navController forKey:kDoc];
-    }
-    
-    self.slidingViewController.topViewController = navController;
-
     DocumentViewController *documentViewController = [navController.viewControllers objectAtIndex:0];
     
-    [documentViewController loadDocumentThread:documentThread];
+    if (documentViewController != nil) {
+        [documentViewController loadDocumentThread:self.documentThreads[indexPath.row]];
+    }
     
+    [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
     [self.slidingViewController resetTopViewAnimated:YES];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // This undoes the Zoom Transition's scale because it affects the other transitions.
-    // You normally wouldn't need to do anything like this, but we're changing transitions
-    // dynamically so everything needs to start in a consistent state.
-    self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
-    
-    DocumentThread *documenThread = self.documentThreads[indexPath.row];
-    [self setNavController:documenThread];
 }
 
 @end

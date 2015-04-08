@@ -45,6 +45,10 @@
 
 - (void)initNavControllerCache {
     
+    self.topViewController.view.layer.shadowOpacity = 0.75f;
+    self.topViewController.view.layer.shadowRadius = 10.0f;
+    self.topViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    
     self.mainViewControllersCache = [NSMutableDictionary dictionary];
     NSString *key = self.topViewControllerStoryboardId;
     [self.mainViewControllersCache setObject:self.topViewController forKeyedSubscript:key];
@@ -55,6 +59,11 @@
     
     if (navigaionController == nil) {
         navigaionController = (UINavigationController *)[self.storyboard instantiateViewControllerWithIdentifier:keyIdentifier];
+        
+        navigaionController.view.layer.shadowOpacity = 0.75f;
+        navigaionController.view.layer.shadowRadius = 10.0f;
+        navigaionController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+        
         [self.mainViewControllersCache setObject:navigaionController forKey:keyIdentifier];
     }
     

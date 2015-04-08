@@ -151,7 +151,7 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		149F99311AC4D07000525EA7 /* menu */ = {
+		149F99311AC4D07000525EA7 /* Menus */ = {
 			isa = PBXGroup;
 			children = (
 				14A836011AD177E4001F33E4 /* SlidingViewController.h */,
@@ -161,7 +161,8 @@
 				14B6FB4A1ACB352300E5B5A5 /* RightMenuViewController.h */,
 				14B6FB4B1ACB352300E5B5A5 /* RightMenuViewController.m */,
 			);
-			name = menu;
+			name = Menus;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		149F994A1AC4D0FD00525EA7 /* StoryBoards */ = {
@@ -200,6 +201,7 @@
 				142046401AD1EC58006143D5 /* Lib */,
 				14679E931AC8832900316C9C /* DataModel */,
 				149F994A1AC4D0FD00525EA7 /* StoryBoards */,
+				149F99311AC4D07000525EA7 /* Menus */,
 				14B515A01ABF14C90000CC4F /* Controllers */,
 				14B515811ABF138A0000CC4F /* Images.xcassets */,
 				14B515831ABF138A0000CC4F /* LaunchScreen.xib */,
@@ -237,7 +239,6 @@
 		14B515A01ABF14C90000CC4F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				149F99311AC4D07000525EA7 /* menu */,
 				14B515A11ABF14C90000CC4F /* AppDelegate.h */,
 				14B515A21ABF14C90000CC4F /* AppDelegate.m */,
 				14B515A31ABF14C90000CC4F /* ChatViewController.h */,

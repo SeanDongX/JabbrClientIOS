@@ -75,6 +75,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 {
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
+    
     //self.showLoadEarlierMessagesHeader = YES;
 }
 
@@ -203,6 +204,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self sendMessage:message];
 }
 
+
+- (void)didPressAccessoryButton:(UIButton *)sender {
+    //TODO:implement
+}
 
 - (void)setupOutgoingTypingEventHandler {
     [[NSNotificationCenter defaultCenter] addObserver:self

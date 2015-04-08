@@ -419,18 +419,22 @@
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="iDk-6w-F7j" userLabel="NavigationItem">
                         <barButtonItem key="leftBarButtonItem" title="Chat" id="zun-6c-983">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="leftMenuButtonTapped:" destination="vtJ-5i-UDw" id="3aj-QZ-Fi2"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Docs" id="eIt-t0-87j">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="rightMenuButtonTapped:" destination="vtJ-5i-UDw" id="ykf-R6-eVQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="leftMenuButton" destination="zun-6c-983" id="GHG-y2-Nxo"/>
+                        <outlet property="rightMenuButton" destination="eIt-t0-87j" id="sdC-xv-110"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KfC-cv-NP1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -463,13 +467,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Document" id="USF-5o-XfX" userLabel="NavigationItem">
                         <barButtonItem key="leftBarButtonItem" title="Chat" id="SNL-za-AqO" userLabel="Chat">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="leftMenuButtonTapped:" destination="2Xq-Rf-xxU" id="wMJ-Vy-n7C"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Docs" id="bRO-fd-KOx" userLabel="Doc">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="rightMenuButtonTapped:" destination="2Xq-Rf-xxU" id="v12-PC-iX1"/>
                             </connections>
@@ -477,6 +481,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="_webView" destination="3QR-Bp-xwQ" id="gJc-G0-60g"/>
+                        <outlet property="leftMenuButton" destination="SNL-za-AqO" id="AVO-wd-ReE"/>
+                        <outlet property="rightMenuButton" destination="bRO-fd-KOx" id="EJM-GN-oAh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l31-8k-DAE" userLabel="First Responder" sceneMemberID="firstResponder"/>

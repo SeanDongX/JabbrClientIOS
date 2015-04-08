@@ -15,12 +15,14 @@
 #import "Constants.h"
 #import "DateTools.h"
 
-static NSString * const kDefaultChatThread = @"collabot";
+static NSString * const kDefaultChatThread = @"collarabot";
 
 
 @interface ChatViewController ()
 
-//@property (nonatomic, strong) UIPanGestureRecognizer *dynamicTransitionPanGesture;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftMenuButton;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightMenuButton;
 
 @property (nonatomic, strong) NSString *username;
 
@@ -60,6 +62,7 @@ static NSString * const kDefaultChatThread = @"collabot";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initMenu];
     [self setupChatThread];
     [self setupChatRepository];
     [self configJSQMessage];
@@ -72,7 +75,7 @@ static NSString * const kDefaultChatThread = @"collabot";
 {
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
-    self.showLoadEarlierMessagesHeader = YES;
+    //self.showLoadEarlierMessagesHeader = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -90,8 +93,24 @@ static NSString * const kDefaultChatThread = @"collabot";
 	[super viewWillDisappear:animated];
 }
 
+
+#pragma mark -
+#pragma mark - Menu Setup
+
+- (void)initMenu {
+    
+    [self.leftMenuButton setTitle:@""];
+    [self.leftMenuButton setWidth:30];
+    [self.leftMenuButton setImage: [Constants chatIconImage]];
+    
+    
+    [self.rightMenuButton setTitle:@""];
+    [self.rightMenuButton setWidth:30];
+    [self.rightMenuButton setImage: [Constants docIconImage]];
+}
+
 #pragma mark - 
-#pragma initial setup
+#pragma mark - Initial Setup
 
 - (void)setupChatThread {
     //Set deafult as collabot thread
@@ -154,7 +173,7 @@ static NSString * const kDefaultChatThread = @"collabot";
 }
 
 #pragma mark -
-#pragma mark Navigation
+#pragma mark - Navigation
 
 - (IBAction)leftMenuButtonTapped:(id)sender {
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
@@ -166,10 +185,11 @@ static NSString * const kDefaultChatThread = @"collabot";
 
 
 #pragma mark -
-#pragma mark Event handlers
+#pragma mark - Event handlers
 
 - (IBAction)connectClicked:(id)sender
 {
+    //TODO: reconnect funcationality
     [self reconnect];
 }
 
@@ -864,7 +884,7 @@ static NSString * const kDefaultChatThread = @"collabot";
     
     NSArray *recentMessageArray = [roomInfoDictionary objectForKey:@"RecentMessages"];
     
-   dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         for(NSDictionary *messageDictionary in recentMessageArray) {
             [self addRawMessage:messageDictionary toThread:self.currentChatThread.title];
         }

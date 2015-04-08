@@ -8,8 +8,14 @@
 
 #import "DocumentViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
+#import "Constants.h"
+#import "DocumentThread+Category.h"
 
 @interface DocumentViewController()
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftMenuButton;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightMenuButton;
 
 @property (nonatomic, strong) DocumentThread* currentDocumentThread;
 
@@ -24,7 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self initMenu];
     [self initProgressDelegate];
     [self loadDocumentThread:self.currentDocumentThread];
 }
@@ -50,8 +56,24 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma -
-#pragma Menu Buttons
+#pragma mark -
+#pragma mark - Menu Setup
+
+- (void)initMenu {
+    
+    [self.leftMenuButton setTitle:@""];
+    [self.leftMenuButton setWidth:30];
+    [self.leftMenuButton setImage: [Constants chatIconImage]];
+    
+    
+    [self.rightMenuButton setTitle:@""];
+    [self.rightMenuButton setWidth:30];
+    [self.rightMenuButton setImage: [Constants docIconImage]];
+}
+
+
+#pragma mark -
+#pragma mark - Navigation
 
 - (IBAction)leftMenuButtonTapped:(id)sender {
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
@@ -83,7 +105,7 @@
     if (documentThread)
     {
         self.currentDocumentThread = documentThread;
-        self.navigationItem.title = self.currentDocumentThread.title;
+        self.navigationItem.title = [self.currentDocumentThread getDisplayTitle];
         
         if (self.currentDocumentThread.url)
         {

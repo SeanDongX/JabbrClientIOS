@@ -24,5 +24,7 @@ FOUNDATION_EXPORT NSString * const kLastAuthDate;
 FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;
 
 + (UIImage *)menuIconImage;
++ (UIImage *)chatIconImage;
++ (UIImage *)docIconImage;
 + (UIColor *)mainThemeColor;
 @end

@@ -29,6 +29,19 @@ int const kMessageLoadAnimateTimeThreshold = 60;
     return [menuIcon imageWithSize:CGSizeMake(30, 30)];
 }
 
++ (UIImage *)chatIconImage {
+    FAKIonIcons *chatIcon = [FAKIonIcons iosChatbubbleOutlineIconWithSize:30];
+    [chatIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [chatIcon imageWithSize:CGSizeMake(30, 30)];
+}
+
++ (UIImage *)docIconImage {
+    FAKIonIcons *docIcon = [FAKIonIcons iosPaperOutlineIconWithSize:30];
+    [docIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [docIcon imageWithSize:CGSizeMake(30, 30)];
+}
+
+
 + (UIColor*)mainThemeColor {
     return [UIColor colorWithRed:(26/255.0) green:(179/255.0) blue:(148/255.0) alpha:1];
 }

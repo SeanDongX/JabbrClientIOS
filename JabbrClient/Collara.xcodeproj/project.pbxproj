@@ -30,7 +30,7 @@
 		14B6FB581ACB5AC700E5B5A5 /* DemoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB571ACB5AC700E5B5A5 /* DemoData.m */; };
 		14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990A1AD317BC00776556 /* ProfileViewController.m */; };
 		14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990D1AD33D1000776556 /* CLAMessage.m */; };
-		658D3D39FEDD6FCE59F24906 /* libPods-CollaraApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B411F46C7557CDA2DFE00735 /* libPods-CollaraApp.a */; };
+		EE809097EABCDD6117E3CED2 /* libPods-Collara.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE68A76A0440538A1CFB906 /* libPods-Collara.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,11 +89,14 @@
 		14BA990A1AD317BC00776556 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		14BA990C1AD33D1000776556 /* CLAMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMessage.h; path = JabbrClient/DataModel/CLAMessage.h; sourceTree = SOURCE_ROOT; };
 		14BA990D1AD33D1000776556 /* CLAMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMessage.m; path = JabbrClient/DataModel/CLAMessage.m; sourceTree = SOURCE_ROOT; };
+		388092327DB112E57ACB1DF5 /* Pods-Collara.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Collara.release.xcconfig"; path = "Pods/Target Support Files/Pods-Collara/Pods-Collara.release.xcconfig"; sourceTree = "<group>"; };
 		3ED0782C5C44919FA936A1B4 /* Pods-JabbrClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.release.xcconfig"; sourceTree = "<group>"; };
 		3FF416E318022D2101E2CBE9 /* Pods-JabbrClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.debug.xcconfig"; sourceTree = "<group>"; };
 		89602FA4A33435EA32E1D254 /* Pods-CollaraApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollaraApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollaraApp/Pods-CollaraApp.debug.xcconfig"; sourceTree = "<group>"; };
 		B411F46C7557CDA2DFE00735 /* libPods-CollaraApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CollaraApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88ADD9EB62F1CEB51E0F387 /* Pods-CollaraApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollaraApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollaraApp/Pods-CollaraApp.release.xcconfig"; sourceTree = "<group>"; };
+		DFE68A76A0440538A1CFB906 /* libPods-Collara.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Collara.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9A307DB9FAE998089EC8968 /* Pods-Collara.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Collara.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Collara/Pods-Collara.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				658D3D39FEDD6FCE59F24906 /* libPods-CollaraApp.a in Frameworks */,
+				EE809097EABCDD6117E3CED2 /* libPods-Collara.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +258,8 @@
 				3ED0782C5C44919FA936A1B4 /* Pods-JabbrClient.release.xcconfig */,
 				89602FA4A33435EA32E1D254 /* Pods-CollaraApp.debug.xcconfig */,
 				C88ADD9EB62F1CEB51E0F387 /* Pods-CollaraApp.release.xcconfig */,
+				F9A307DB9FAE998089EC8968 /* Pods-Collara.debug.xcconfig */,
+				388092327DB112E57ACB1DF5 /* Pods-Collara.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 			children = (
 				1090D86306F7E103B79E7158 /* libPods-JabbrClient.a */,
 				B411F46C7557CDA2DFE00735 /* libPods-CollaraApp.a */,
+				DFE68A76A0440538A1CFB906 /* libPods-Collara.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -395,7 +401,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CollaraApp/Pods-CollaraApp-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Collara/Pods-Collara-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CD6FC53FC7C9FA404B7EA421 /* Check Pods Manifest.lock */ = {
@@ -568,7 +574,7 @@
 		};
 		14B515951ABF138A0000CC4F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89602FA4A33435EA32E1D254 /* Pods-CollaraApp.debug.xcconfig */;
+			baseConfigurationReference = F9A307DB9FAE998089EC8968 /* Pods-Collara.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -585,7 +591,7 @@
 		};
 		14B515961ABF138A0000CC4F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C88ADD9EB62F1CEB51E0F387 /* Pods-CollaraApp.release.xcconfig */;
+			baseConfigurationReference = 388092327DB112E57ACB1DF5 /* Pods-Collara.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

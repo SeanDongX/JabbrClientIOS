@@ -1,7 +1,7 @@
 # Uncomment this line to define a global platform for your project
 # platform :ios, '7.0'
 
-target 'CollaraApp' do
+target 'Collara' do
   platform :ios, '7.0'
   pod 'FontAwesomeKit/IonIcons'
   pod 'DateTools'
@@ -13,7 +13,7 @@ target 'CollaraApp' do
   #pod 'SignalR-ObjC', '2.0.0.alpha1'
 end
 
-target 'CollaraAppTests' do
+target 'CollaraTests' do
 
 end
 

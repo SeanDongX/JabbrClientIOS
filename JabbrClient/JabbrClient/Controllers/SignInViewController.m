@@ -78,7 +78,6 @@
     [[self.signInButton layer] setBorderColor:[UIColor whiteColor].CGColor];
 }
 
-
 #pragma mark -
 #pragma mark - Event Handler
 - (IBAction)signInClicked:(id)sender {

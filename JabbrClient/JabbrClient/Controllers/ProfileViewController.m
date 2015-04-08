@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *menuItem;
+@property (weak, nonatomic) IBOutlet UIButton *signOutButton;
 
 @end
 
@@ -29,6 +30,13 @@
 }
 
 - (void)initUI {
+    
+    [[self.signOutButton layer] setCornerRadius:5.0f];
+    [[self.signOutButton layer] setMasksToBounds:YES];
+    [[self.signOutButton layer] setBorderWidth:1.0f];
+    [[self.signOutButton layer] setBorderColor: [Constants mainThemeColor].CGColor];
+    
+    [self.signOutButton setTitleColor:[Constants mainThemeColor] forState:UIControlStateNormal];
     
     [self.menuItem setTitle:@""];
     [self.menuItem setWidth:30];
@@ -42,7 +50,7 @@
     [self.profileImageView setImage: [userIcon imageWithSize:CGSizeMake(50, 50)]];
     self.profileImageView.layer.cornerRadius = 50;
     self.profileImageView.layer.borderWidth = 2;
-    self.profileImageView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.profileImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.profileImageView.layer.backgroundColor = [Constants mainThemeColor].CGColor;
 }
 

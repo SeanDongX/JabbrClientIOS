@@ -13,6 +13,7 @@
 		14679E961AC8838900316C9C /* ObjectThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14679E951AC8838900316C9C /* ObjectThread.m */; };
 		1479A8101ACC372800A31A7E /* ChatThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 1479A80F1ACC372800A31A7E /* ChatThread+Category.m */; };
 		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
+		149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149718551ADABFE400785D11 /* CLAPadBaseViewController.m */; };
 		149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */; };
 		149F994F1AC4D11800525EA7 /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 149F994B1AC4D11800525EA7 /* Main-iPad.storyboard */; };
 		14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A836021AD177E4001F33E4 /* SlidingViewController.m */; };
@@ -57,6 +58,8 @@
 		1479A80F1ACC372800A31A7E /* ChatThread+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ChatThread+Category.m"; path = "JabbrClient/DataModel/ChatThread+Category.m"; sourceTree = SOURCE_ROOT; };
 		14938DE81AD4645E00BCC852 /* DocumentThread+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DocumentThread+Category.h"; path = "JabbrClient/DataModel/DocumentThread+Category.h"; sourceTree = SOURCE_ROOT; };
 		14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DocumentThread+Category.m"; path = "JabbrClient/DataModel/DocumentThread+Category.m"; sourceTree = SOURCE_ROOT; };
+		149718541ADABFE400785D11 /* CLAPadBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAPadBaseViewController.h; sourceTree = "<group>"; };
+		149718551ADABFE400785D11 /* CLAPadBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAPadBaseViewController.m; sourceTree = "<group>"; };
 		149F99361AC4D0A200525EA7 /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
 		149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		149F994C1AC4D11800525EA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "JabbrClient/Base.lproj/Main-iPad.storyboard"; sourceTree = SOURCE_ROOT; };
@@ -249,6 +252,8 @@
 				142046451AD1F866006143D5 /* SignInViewController.m */,
 				14BA99091AD317BC00776556 /* ProfileViewController.h */,
 				14BA990A1AD317BC00776556 /* ProfileViewController.m */,
+				149718541ADABFE400785D11 /* CLAPadBaseViewController.h */,
+				149718551ADABFE400785D11 /* CLAPadBaseViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -445,6 +450,7 @@
 				14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */,
 				14679E961AC8838900316C9C /* ObjectThread.m in Sources */,
 				14B6FB551ACB4CF500E5B5A5 /* DocumentViewController.m in Sources */,
+				149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */,
 				14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -515,6 +521,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -557,6 +564,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -598,7 +606,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hiveeo Aps (YJK9294VWR)";
 				INFOPLIST_FILE = JabbrClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

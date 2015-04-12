@@ -3,6 +3,7 @@
 
 target 'Collara' do
   platform :ios, '7.0'
+  pod 'SocketRocket'
   pod 'FontAwesomeKit/IonIcons'
   pod 'DateTools'
   pod 'NJKWebViewProgress'

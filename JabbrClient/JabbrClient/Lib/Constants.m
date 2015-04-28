@@ -11,6 +11,11 @@
 
 @implementation Constants
 
+NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
+//@"http://colla-team.azurewebsites.net/";
+
+//NSString *const kServerBaseUrl = @"http://www.collara.co/";
+
 NSString *const kChatNavigationController = @"ChatNavigationController";
 NSString *const kSignInNavigationController = @"SignInNavigationController";
 NSString *const kProfileNavigationController = @"ProfileNavigationController";
@@ -22,7 +27,7 @@ NSString *const kRightMenuViewController = @"RightMenuViewController";
 NSString *const kUsername = @"Username";
 NSString *const kAuthToken = @"AuthToken";
 NSString *const kLastAuthDate = @"LastAuthDate";
-
+NSString * const kTeamKey = @"TeamKey";
 int const kMessageLoadAnimateTimeThreshold = 60;
 
 + (UIImage *)menuIconImage {

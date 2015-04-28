@@ -25,7 +25,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _server_url = @"http://www.collara.co/";
+        _server_url = kServerBaseUrl;
     }
     return self;
 }

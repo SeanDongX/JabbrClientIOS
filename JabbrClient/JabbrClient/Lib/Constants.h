@@ -11,6 +11,8 @@
 
 @interface Constants : NSObject
 
+FOUNDATION_EXPORT NSString *const kServerBaseUrl;
+
 FOUNDATION_EXPORT NSString *const kChatNavigationController;
 FOUNDATION_EXPORT NSString *const kSignInNavigationController;
 FOUNDATION_EXPORT NSString *const kProfileNavigationController;
@@ -22,6 +24,7 @@ FOUNDATION_EXPORT NSString *const kRightMenuViewController;
 FOUNDATION_EXPORT NSString * const kUsername;
 FOUNDATION_EXPORT NSString * const kAuthToken;
 FOUNDATION_EXPORT NSString * const kLastAuthDate;
+FOUNDATION_EXPORT NSString * const kTeamKey;
 
 FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;
 

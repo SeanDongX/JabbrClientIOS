@@ -15,6 +15,10 @@
 #import "Constants.h"
 #import "DateTools.h"
 
+#import "CLATeam.h"
+#import "CLARoom.h"
+#import "CLAUser.h"
+
 static NSString * const kDefaultChatThread = @"collarabot";
 
 
@@ -450,6 +454,9 @@ static NSString * const kDefaultChatThread = @"collarabot";
     NSString *server = [AuthManager sharedInstance].server_url;
     NSString *authToken = [[AuthManager sharedInstance] getCachedAuthToken];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
+    
     if (authToken == nil) {
         //TODO: show login screen
     }
@@ -460,7 +467,12 @@ static NSString * const kDefaultChatThread = @"collarabot";
     self.senderId = self.username;
     self.senderDisplayName = self.username;
     
-    self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"token=%@", authToken]];
+    if (teamKey != nil && teamKey.intValue > 0){
+        self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"team=%d&token=%@", teamKey.intValue, authToken]];
+    }
+    else {
+        self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"token=%@", authToken]];
+    }
     
     self.hub = [self.connection createHubProxy:@"Chat"];
     
@@ -474,7 +486,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
     
     [self.hub on:@"roomLoaded" perform:self selector:@selector(threadLoaded:)];
-    
+    [self.hub on:@"teamsLoaded" perform:self selector:@selector(loadTeamData:)];
     
     [self.connection setDelegate:self];
     [self.connection start];
@@ -513,7 +525,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)sendMessageToServer: (id<JSQMessageData>)message {
-    
+
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
     [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
     [messageData setObject:message.text forKey:@"content"];
@@ -527,6 +539,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.hub invoke:@"LoadRooms" withArgs:@[@[self.currentChatThread.title]]];
 }
 
+-(void)getTeams {
+    
+    [self.hub invoke:@"GetTeams" withArgs:@[]];
+}
 //-(void)refreshRoom:(id)inRoom
 //{
 //    [self clearMessages];
@@ -563,6 +579,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 //    }
 //}
 
+
 #pragma mark -
 #pragma mark Incoming message handlers
 
@@ -590,6 +607,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)logon:(NSArray *)data {
+    [self getTeams];
 //    <__NSCFArray 0x7fae4162a260>(
 //    <__NSCFArray 0x7fae41625510>(
 //    {
@@ -899,6 +917,53 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
 }
 
+- (void)loadTeamData:(NSArray *)data
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
+    
+    if ((teamKey != nil && teamKey.intValue > 0) || data == nil || data.count == 0) {
+        return;
+    }
+    
+    NSArray *teamArray = data[0];
+    NSDictionary *teamDictionary = teamArray[0];
+    CLATeam *team = [[CLATeam alloc] init];
+    team.name = [teamDictionary objectForKey:@"Name"];
+    team.key = [teamDictionary objectForKey:@"Key"];
+
+    NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
+    if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0){
+        NSMutableArray *roomArray = [NSMutableArray array];
+        
+        for (id room in roomArrayFromDictionary) {
+            NSDictionary *roomDictionary = room;
+            CLARoom *room = [[CLARoom alloc] init];
+            room.name = [roomDictionary objectForKey:@"Name"];
+            [roomArray addObject:room];
+        }
+    }
+    
+    NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
+    if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0){
+        NSMutableArray *userArray = [NSMutableArray array];
+        
+        for (id user in userArrayFromDictionary) {
+            NSDictionary *userDictionary = user;
+            CLAUser *user = [[CLAUser alloc] init];
+            user.name = [userDictionary objectForKey:@"Name"];
+            [userArray addObject:user];
+        }
+    }
+    
+    //TODO:save some of the values
+    if (team != nil && team.key != nil && team.key.intValue > 0){
+        [defaults setObject:team.key forKey:kTeamKey];
+        [defaults synchronize];
+
+        [self reconnect];
+    }
+}
 - (void)markInactive:(NSArray *)data
 {
 //    {

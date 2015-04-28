@@ -30,7 +30,7 @@
 #import "SlidingViewController.h"
 
 @interface LeftMenuViewController ()
-@property (nonatomic, strong) NSArray *chatThreads;
+
 @end
 
 @implementation LeftMenuViewController
@@ -62,9 +62,9 @@
     return nil;
 }
 
-- (NSArray *)chatThreads {
-    return [DemoData sharedDemoData].chatThreads;
-}
+//- (NSArray *)chatThreads {
+//    return [DemoData sharedDemoData].chatThreads;
+//}
 
 #pragma mark - UITableViewDataSource
 

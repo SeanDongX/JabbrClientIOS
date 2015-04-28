@@ -9,6 +9,7 @@
 #import "ChatViewController.h"
 #import "AuthManager.h"
 #import "UIViewController+ECSlidingViewController.h"
+#import "LeftMenuViewController.h"
 #import "ObjectThread.h"
 #import "ChatThread+Category.h"
 #import "DemoData.h"
@@ -919,10 +920,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)loadTeamData:(NSArray *)data
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
-    
-    if ((teamKey != nil && teamKey.intValue > 0) || data == nil || data.count == 0) {
+    if (data == nil || data.count == 0) {
         return;
     }
     
@@ -932,15 +930,17 @@ static NSString * const kDefaultChatThread = @"collarabot";
     team.name = [teamDictionary objectForKey:@"Name"];
     team.key = [teamDictionary objectForKey:@"Key"];
 
+    
+    NSMutableArray *chatThreadArray = [NSMutableArray array];
     NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
     if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0){
-        NSMutableArray *roomArray = [NSMutableArray array];
         
         for (id room in roomArrayFromDictionary) {
             NSDictionary *roomDictionary = room;
-            CLARoom *room = [[CLARoom alloc] init];
-            room.name = [roomDictionary objectForKey:@"Name"];
-            [roomArray addObject:room];
+            ChatThread *chatThread = [[ChatThread alloc] init];
+            chatThread.title = [roomDictionary objectForKey:@"Name"];
+            
+            [chatThreadArray addObject:chatThread];
         }
     }
     
@@ -956,13 +956,21 @@ static NSString * const kDefaultChatThread = @"collarabot";
         }
     }
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
+    
     //TODO:save some of the values
-    if (team != nil && team.key != nil && team.key.intValue > 0){
+    if (team != nil && team.key != nil && team.key.intValue != teamKey.intValue){
+    
         [defaults setObject:team.key forKey:kTeamKey];
         [defaults synchronize];
 
         [self reconnect];
     }
+    
+    LeftMenuViewController *leftMenuViewController = self.slidingViewController.underLeftViewController;
+    leftMenuViewController.chatThreads = chatThreadArray;
+    
 }
 - (void)markInactive:(NSArray *)data
 {

@@ -16,7 +16,8 @@
 		144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEE1AF03668005EBAD2 /* CLAUser.m */; };
 		14679E961AC8838900316C9C /* ObjectThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14679E951AC8838900316C9C /* ObjectThread.m */; };
 		146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */; };
-		146D83DC1AF186A700855C59 /* CLANotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83DB1AF186A700855C59 /* CLANotificationHandler.m */; };
+		146D83DF1AF19BF500855C59 /* CLARoundFrameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83DE1AF19BF500855C59 /* CLARoundFrameButton.m */; };
+		146D83E31AF19F3300855C59 /* CLAKeyboardAwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */; };
 		1479A8101ACC372800A31A7E /* ChatThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 1479A80F1ACC372800A31A7E /* ChatThread+Category.m */; };
 		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
 		149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149718551ADABFE400785D11 /* CLAPadBaseViewController.m */; };
@@ -71,8 +72,10 @@
 		14679E951AC8838900316C9C /* ObjectThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectThread.m; path = JabbrClient/DataModel/ObjectThread.m; sourceTree = SOURCE_ROOT; };
 		146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLASignUpViewController.h; sourceTree = "<group>"; };
 		146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLASignUpViewController.m; sourceTree = "<group>"; };
-		146D83DA1AF186A700855C59 /* CLANotificationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLANotificationHandler.h; path = Lib/CLANotificationHandler.h; sourceTree = "<group>"; };
-		146D83DB1AF186A700855C59 /* CLANotificationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLANotificationHandler.m; path = Lib/CLANotificationHandler.m; sourceTree = "<group>"; };
+		146D83DD1AF19BF500855C59 /* CLARoundFrameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoundFrameButton.h; path = Lib/CLARoundFrameButton.h; sourceTree = "<group>"; };
+		146D83DE1AF19BF500855C59 /* CLARoundFrameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARoundFrameButton.m; path = Lib/CLARoundFrameButton.m; sourceTree = "<group>"; };
+		146D83E11AF19F3300855C59 /* CLAKeyboardAwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAKeyboardAwareViewController.h; sourceTree = "<group>"; };
+		146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAKeyboardAwareViewController.m; sourceTree = "<group>"; };
 		1479A80E1ACC372800A31A7E /* ChatThread+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ChatThread+Category.h"; path = "JabbrClient/DataModel/ChatThread+Category.h"; sourceTree = SOURCE_ROOT; };
 		1479A80F1ACC372800A31A7E /* ChatThread+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ChatThread+Category.m"; path = "JabbrClient/DataModel/ChatThread+Category.m"; sourceTree = SOURCE_ROOT; };
 		14938DE81AD4645E00BCC852 /* DocumentThread+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DocumentThread+Category.h"; path = "JabbrClient/DataModel/DocumentThread+Category.h"; sourceTree = SOURCE_ROOT; };
@@ -150,8 +153,8 @@
 				1404B5311AF10ED400363178 /* CLAMessageClient.h */,
 				1404B5341AF118BB00363178 /* CLASignalRMessageClient.h */,
 				1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */,
-				146D83DA1AF186A700855C59 /* CLANotificationHandler.h */,
-				146D83DB1AF186A700855C59 /* CLANotificationHandler.m */,
+				146D83DD1AF19BF500855C59 /* CLARoundFrameButton.h */,
+				146D83DE1AF19BF500855C59 /* CLARoundFrameButton.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -286,6 +289,8 @@
 				149718551ADABFE400785D11 /* CLAPadBaseViewController.m */,
 				146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */,
 				146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */,
+				146D83E11AF19F3300855C59 /* CLAKeyboardAwareViewController.h */,
+				146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -468,7 +473,6 @@
 				142046461AD1F866006143D5 /* SignInViewController.m in Sources */,
 				144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
-				146D83DC1AF186A700855C59 /* CLANotificationHandler.m in Sources */,
 				14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */,
 				14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */,
 				14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */,
@@ -482,12 +486,14 @@
 				14B6FB4F1ACB397700E5B5A5 /* ChatThread.m in Sources */,
 				14B515741ABF138A0000CC4F /* main.m in Sources */,
 				142046491AD203FD006143D5 /* Constants.m in Sources */,
+				146D83DF1AF19BF500855C59 /* CLARoundFrameButton.m in Sources */,
 				144D9EE91AF03528005EBAD2 /* CLATeam.m in Sources */,
 				146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */,
 				14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */,
 				14679E961AC8838900316C9C /* ObjectThread.m in Sources */,
 				1404B5361AF118BB00363178 /* CLASignalRMessageClient.m in Sources */,
 				14B6FB551ACB4CF500E5B5A5 /* DocumentViewController.m in Sources */,
+				146D83E31AF19F3300855C59 /* CLAKeyboardAwareViewController.m in Sources */,
 				149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */,
 				14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */,
 			);

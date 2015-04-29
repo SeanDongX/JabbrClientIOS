@@ -20,6 +20,8 @@
 #import "CLARoom.h"
 #import "CLAUser.h"
 
+#import "CLASignalRMessageClient.h"
+
 static NSString * const kDefaultChatThread = @"collarabot";
 
 
@@ -33,9 +35,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 @property (nonatomic, strong) ChatThread *currentChatThread;
 
-
-@property (nonatomic, strong) SRHubConnection *connection;
-@property (nonatomic, strong) SRHubProxy *hub;
+@property (nonatomic, strong) CLASignalRMessageClient *messageClient;
 
 @property (nonatomic, strong) NSMutableDictionary *chatThreadRepository;
 
@@ -99,6 +99,16 @@ static NSString * const kDefaultChatThread = @"collarabot";
 	[super viewWillDisappear:animated];
 }
 
+- (void)connect {
+    self.messageClient = [[CLASignalRMessageClient alloc] init];
+    self.messageClient.delegate = self;
+    [self.messageClient connect];
+    
+    
+    self.senderId = self.messageClient.username;
+    self.senderDisplayName = self.messageClient.username;
+    self.username = self.messageClient.username;
+}
 
 #pragma mark -
 #pragma mark - Menu Setup
@@ -153,18 +163,21 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
     if (![self.chatThreadRepository objectForKey:self.currentChatThread.title]) {
         [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.currentChatThread.title];
+        [self initialzeCurrentThread];
     }
     
     [self.collectionView reloadData];
-    
-    [self loadCurrentThread];
 }
 
 - (NSMutableArray *)getCurrentMessageThread {
     return (NSMutableArray *)[self.chatThreadRepository objectForKey:self.currentChatThread.title];
 }
 
-- (void)addMessage:(id<JSQMessageData>)message toThread: (NSString*)threadTitle {
+- (void)setCurrentMessageThread:(NSMutableArray *)messages  {
+    [self.chatThreadRepository setObject:messages forKey:self.currentChatThread.title];
+}
+
+- (void)addMessage:(CLAMessage *)message toThread: (NSString*)threadTitle {
     if (!message) {
         return;
     }
@@ -203,7 +216,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (IBAction)connectClicked:(id)sender
 {
     //TODO: reconnect funcationality
-    [self reconnect];
+    [self.messageClient reconnect];
 }
 
 - (void)didPressSendButton:(UIButton *)button
@@ -212,7 +225,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date
 {
-    JSQMessage *message = [JSQMessage messageWithSenderId:senderId displayName:senderDisplayName text:text];
+    CLAMessage *message = [CLAMessage messageWithOId:nil SenderId:senderId displayName:senderDisplayName text:text];
     [self sendMessage:message];
 }
 
@@ -229,13 +242,13 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)textFieldTextChanged:(id)sender {
-   [self.hub invoke:@"Typing" withArgs:@[self.currentChatThread.title]];
+    [self.messageClient sendTypingFromUser:self.username inRoom:self.currentChatThread.title];
 }
 
 #pragma mark -
 #pragma mark - JSQMessages CollectionView DataSource
 
-- (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
+- (CLAMessage *)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
 }
@@ -249,7 +262,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
      *  Otherwise, return your previously created bubble image data objects.
      */
     
-    JSQMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
         return self.outgoingBubbleImageView;
@@ -260,7 +273,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    JSQMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
     
     if ([[message.senderId lowercaseString] isEqualToString:[self.senderId lowercaseString]]) {
         return nil;
@@ -279,7 +292,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
      *  Show a timestamp for every 3rd message
      */
     if (indexPath.item % 3 == 0) {
-        JSQMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+        CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
         return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
     }
     
@@ -288,7 +301,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
-    JSQMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
     
     /**
      *  iOS7-style sender name labels
@@ -298,7 +311,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     if (indexPath.item - 1 > 0) {
-        JSQMessage *previousMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item - 1];
+        CLAMessage *previousMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId] isEqualToString:message.senderId]) {
             return nil;
         }
@@ -343,7 +356,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
      *  Instead, override the properties you want on `self.collectionView.collectionViewLayout` from `viewDidLoad`
      */
     
-    JSQMessage *msg = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *msg = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
     
     if (!msg.isMediaMessage) {
         
@@ -390,13 +403,13 @@ static NSString * const kDefaultChatThread = @"collarabot";
     /**
      *  iOS7-style sender name labels
      */
-    JSQMessage *currentMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *currentMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
     if ([[currentMessage senderId] isEqualToString:self.senderId]) {
         return 0.0f;
     }
     
     if (indexPath.item - 1 > 0) {
-        JSQMessage *previousMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item - 1];
+        CLAMessage *previousMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId] isEqualToString:[currentMessage senderId]]) {
             return 0.0f;
         }
@@ -417,16 +430,14 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
 {
-    //TODO:cache CLAMessage, init with message id
     NSMutableArray *chatThreads = [self getCurrentMessageThread];
     
     if (chatThreads != nil && chatThreads.count > 0){
-        ChatThread *firstChatThread = chatThreads[0];
-        if (firstChatThread != nil)
+        CLAMessage *earliestMessage = chatThreads[0];
+        if (earliestMessage != nil)
         {
-            [self.hub invoke:@"GetPreviousMessages" withArgs:@[@"d21c8c6a-ecec-4dec-876a-085ad3fa139c"] completionHandler:^(NSArray *data){
-                NSLog(@"%lu messages loaded", (unsigned long)data.count);
-            }];
+            self.showLoadEarlierMessagesHeader = false;
+            [self.messageClient getPreviousMessages:earliestMessage.oId inRoom:self.currentChatThread.title];
         }
     }
 }
@@ -446,79 +457,29 @@ static NSString * const kDefaultChatThread = @"collarabot";
     NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
 }
 
-#pragma mark - 
-#pragma mark View Actions
 
-- (void)connect
-{
-    if (!self.connection)
-    {
-        [self makeConnection];
-    }
-}
-
-- (void)reconnect
-{
-    [self.connection stop];
-    self.hub = nil;
-    self.connection.delegate = nil;
-    self.connection = nil;
-    [self makeConnection];
-}
-
-- (void)makeConnection {
-        
-    NSString *server = [AuthManager sharedInstance].server_url;
-    NSString *authToken = [[AuthManager sharedInstance] getCachedAuthToken];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
-    
-    if (authToken == nil) {
-        //TODO: show login screen
-    }
-    
-    self.username = [[AuthManager sharedInstance] getUsername];
-    
-    //TODO:get senderid and dispaly name from server
-    self.senderId = self.username;
-    self.senderDisplayName = self.username;
-    
-    if (teamKey != nil && teamKey.intValue > 0){
-        self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"team=%d&token=%@", teamKey.intValue, authToken]];
-    }
-    else {
-        self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"token=%@", authToken]];
-    }
-    
-    self.hub = [self.connection createHubProxy:@"Chat"];
-    
-    [self.hub on:@"logOn" perform:self selector:@selector(logon:)];
-    [self.hub on:@"addUser" perform:self selector:@selector(addUser:)];
-    [self.hub on:@"leave" perform:self selector:@selector(leave:)];
-    
-    [self.hub on:@"addMessage" perform:self selector:@selector(incomingMessage:)];
-    [self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
-    [self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
-    [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
-    
-    [self.hub on:@"roomLoaded" perform:self selector:@selector(threadLoaded:)];
-    
-    [self.connection setDelegate:self];
-    [self.connection start];
-    
-    if([self getCurrentMessageThread] == nil)
-    {
-        [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.currentChatThread.title] ;
-    }
-}
 
 #pragma mark - 
 #pragma mark Chat actions
 
-- (void)receiveMessage:(id<JSQMessageData>)message atThread: (NSString *)threadTitle {
+- (void)didOpenConnection {
     
-    [self addMessage:message toThread:threadTitle];
+}
+
+- (void)didReceiveRooms: (NSArray *)rooms users:(NSArray *)users {
+    NSMutableArray *chatThreadArray = [NSMutableArray array];
+    for (CLARoom *room in rooms) {
+        ChatThread *thread= [[ChatThread alloc] init];
+        thread.title = room.name;
+        [chatThreadArray addObject:thread];
+    }
+    
+    LeftMenuViewController *leftMenuViewController = self.slidingViewController.underLeftViewController;
+    leftMenuViewController.chatThreads = chatThreadArray;
+}
+
+- (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room {
+    [self addMessage:message toThread:room];
     
     NSInteger secondApart = [message.date secondsFrom:[NSDate date]];
     
@@ -526,70 +487,72 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
     //TODO: also show messages of the same user from other client in current thread
     if (message.senderId != self.username &&
-        [[self.currentChatThread.title lowercaseString] isEqualToString:[threadTitle lowercaseString]]) {
+        [[self.currentChatThread.title lowercaseString] isEqualToString:[room lowercaseString]]) {
         
         [self finishReceivingMessageAnimated:animated];
     }
 }
+
+- (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
+    if (![[user lowercaseString] isEqualToString: [self.username lowercaseString]]  &&
+        [[self.currentChatThread.title lowercaseString] isEqualToString:[room lowercaseString]]) {
+        
+        self.showTypingIndicator = TRUE;
+        [self scrollToBottomAnimated:YES];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            self.showTypingIndicator = FALSE;
+        });
+    }
+}
+
+- (void)didLoadEarlierMessages:(NSArray *)earlierMessages inRoom:(NSString *)room {
+    if (room == nil || earlierMessages == nil || earlierMessages.count == 0){
+        self.showLoadEarlierMessagesHeader = FALSE;
+        return;
+    }
+    
+    NSArray *currentMessages = [self.chatThreadRepository objectForKey:room];
+    
+    NSMutableArray *aggregatedMessage = [NSMutableArray array];
+    
+    if (earlierMessages != nil && earlierMessages.count > 0) {
+        [aggregatedMessage addObjectsFromArray:earlierMessages];
+    }
+    
+    if (currentMessages != nil && currentMessages.count > 0) {
+
+        [aggregatedMessage addObjectsFromArray:currentMessages];
+    }
+    
+    earlierMessages = nil;
+    currentMessages = nil;
+    
+    [self.chatThreadRepository setObject:aggregatedMessage forKey:room];
+    
+    BOOL animated = false;
+    if ([[room lowercaseString] isEqualToString:[self.currentChatThread.title lowercaseString]])
+    {
+        animated = true;
+    }
+    
+    [self finishReceivingMessageAnimated:animated];
+    self.showLoadEarlierMessagesHeader = TRUE;
+}
+
 
 - (void)sendMessage: (id<JSQMessageData>)message {
     
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     [[self getCurrentMessageThread] addObject:message];
     [self finishSendingMessageAnimated:TRUE];
-    [self sendMessageToServer:message];
-}
-
-- (void)sendMessageToServer: (id<JSQMessageData>)message {
-
-    NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
-    [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
-    [messageData setObject:message.text forKey:@"content"];
-    [messageData setObject:self.currentChatThread.title forKey:@"room"];
-    [self.hub invoke:@"Send" withArgs:@[messageData]];
+    [self.messageClient sendMessage:message inRoom:self.currentChatThread.title];
 }
 
 
--(void)loadCurrentThread {
-
-    [self.hub invoke:@"LoadRooms" withArgs:@[@[self.currentChatThread.title]]];
+-(void)initialzeCurrentThread {
+    [self.messageClient loadRoom:self.currentChatThread.title];
 }
-
-//-(void)refreshRoom:(id)inRoom
-//{
-//    [self clearMessages];
-//    [self clearUsers];
-//    
-//    [self.hub invoke:@"GetUsers" withArgs:@[] completionHandler:^(id users) {
-//        for(id user in users)
-//        {
-//            if([user isKindOfClass:[NSDictionary class]]){
-//            //    [self addUser:user exists:TRUE];
-//            }
-//            [self refreshUsers];
-//        }
-//    }];
-//    
-//    [self addMessage:[NSString stringWithFormat:@"Entered %@",inRoom] type:@"notification"];
-//}
-
-//-(void)showRooms:(id)rooms
-//{
-//    if([rooms isKindOfClass:[NSArray class]])
-//    {
-//        if([rooms count] == 0)
-//        {
-//            [self addMessage:[NSString stringWithFormat:@"No rooms available"] type:@"notification"];
-//        }
-//        else
-//        {
-//            for (id r in rooms)
-//            {
-//                [self addMessage:[NSString stringWithFormat:@"%@ (%@)",r[@"Name"],r[@"Count"]] type:nil];
-//            }
-//        }
-//    }
-//}
 
 
 #pragma mark -
@@ -618,134 +581,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     return false;
 }
 
-- (void)logon:(NSArray *)data {
-    [self.hub invoke:@"GetTeams" withArgs:@[] completionHandler:^(id data){
-        [self loadTeamData:data];
-    }];
-}
-
-- (void)addRawMessage:(NSDictionary *)messageDictionary toThread:(NSString *)thread
-{
-    NSString *userName = @"Unknown";
-    NSDictionary *userData = [messageDictionary objectForKey:@"User"];
-    
-    NSString *dateString = [messageDictionary objectForKey:@"When"];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-    // Always use this locale when parsing fixed format date strings
-    NSLocale *posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    [formatter setLocale:posix];
-    NSDate *date = [formatter dateFromString:dateString];
-    
-    if (userData && [userData objectForKey:@"Name"])
-    {
-        userName = [[userData objectForKey:@"Name"] lowercaseString];
-    }
-    
-    //add message id to data
-    NSString *messageId = [messageDictionary objectForKey:@"Id"];
-    
-    //TOOD: get real sendId
-    NSString *senderId = userName;
-    
-    NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
-    [ignoreParamDictionary setObject:thread forKey:@"room"];
-    [ignoreParamDictionary setObject:userName forKey:@"username"];
-    
-    
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
-                                             senderDisplayName:userName
-                                                          date:date
-                                                          text:[messageDictionary objectForKey:@"Content"]];
-    
-    [self receiveMessage: message atThread:thread];
-}
-
-- (void)incomingMessage:(NSArray *)data
-{
-    //Message data example
-//    {
-//        Content = hi;
-//        HtmlContent = "<null>";
-//        HtmlEncoded = 0;
-//        Id = "8111d548-2db7-420b-bb2e-7494c6205f56";
-//        ImageUrl = "<null>";
-//        MessageType = 0;
-//        Source = "<null>";
-//        User =     {
-//            Active = 1;
-//            AfkNote = "<null>";
-//            Country = "<null>";
-//            Flag = "<null>";
-//            Hash = "<null>";
-//            IsAdmin = 1;
-//            IsAfk = 0;
-//            LastActivity = "2015-03-25T22:02:03.8653739Z";
-//            Name = seanxd;
-//            Note = "some note, help";
-//            Status = Active;
-//        };
-//        UserRoomPresence = present;
-//        When = "2015-03-25T22:02:03.8809978+00:00";
-//    },
-//    TestRoom
-//  }
-    
-    if (!data && data.count <2)
-    {
-        return;
-    }
-    
-    NSString *thread = data[1];
-    
-    NSDictionary *messageDictionary = data[0];
-    [self addRawMessage:messageDictionary toThread:thread];
-}
-
-- (void)updateActivity:(NSArray *)data
-{
-//    {
-//        Active = 1;
-//        AfkNote = "<null>";
-//        Country = "<null>";
-//        Flag = "<null>";
-//        Hash = "<null>";
-//        IsAdmin = 1;
-//        IsAfk = 0;
-//        LastActivity = "2015-03-25T23:48:24.2351142Z";
-//        Name = seanxd;
-//        Note = "some note, help";
-//        Status = Active;
-//    },
-//    Welcome
-//    )
-    
-    if (!data && data.count <2)
-    {
-        return;
-    }
-    
-    NSDictionary *userDictionary = data[0];
-    if (userDictionary && [userDictionary objectForKey:@"Name"])
-    {
-        NSString *room = data[1];
-        NSString *userName = [userDictionary objectForKey:@"Name"];
-        
-        NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
-        [ignoreParamDictionary setObject:room forKey:@"room"];
-        [ignoreParamDictionary setObject:userName forKey:@"username"];
-        
-        if ([self shoudIgnoreIncoming:ignoreParamDictionary])
-        {
-            return;
-        }
-        
-        //TODO: update status
-        
-        //[self addMessage:[NSString stringWithFormat: @"@%@: %@", userName, [userDictionary objectForKey:@"Status"]] type:@"UpdateActivity"];
-        //[self refreshMessages];
-    }
-}
 
 - (void)setTyping:(NSArray *)data
 {
@@ -779,360 +614,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
 }
 
-- (void)threadLoaded:(NSArray *)data
-{
-    
-//    <__NSCFArray 0x7fb214346e20>(
-//    {
-//        Closed = 0;
-//        Count = 0;
-//        Name = PitchDemo;
-//        Owners =     (
-//                      seanxd
-//                      );
-//        Private = 0;
-//        RecentMessages =     (
-//                              {
-//                                  Content = send;
-//                                  HtmlContent = "<null>";
-//                                  HtmlEncoded = 0;
-//                                  Id = "182be5ef-d8a6-44b6-a18f-ea42f1a38813";
-//                                  ImageUrl = "<null>";
-//                                  MessageType = 0;
-//                                  Source = "<null>";
-//                                  User =             {
-//                                      Active = 0;
-//                                      AfkNote = "<null>";
-//                                      Country = "<null>";
-//                                      Flag = "<null>";
-//                                      Hash = "<null>";
-//                                      IsAdmin = 0;
-//                                      IsAfk = 0;
-//                                      LastActivity = "2015-04-03T01:11:59.493Z";
-//                                      Name = kate;
-//                                      Note = "<null>";
-//                                      Status = Offline;
-//                                  };
-//                                  UserRoomPresence = present;
-//                                  When = "2015-04-01T13:21:12.9563522+00:00";
-//                              },
-//                              {
-//                                  Content = "Boom! Check your docs, just created from my phone!";
-//                                  HtmlContent = "<null>";
-//                                  HtmlEncoded = 0;
-//                                  Id = "661e9b16-7831-443f-a41e-c66c4de03027";
-//                                  ImageUrl = "<null>";
-//                                  MessageType = 0;
-//                                  Source = "<null>";
-//                                  User =             {
-//                                      Active = 1;
-//                                      AfkNote = "<null>";
-//                                      Country = "<null>";
-//                                      Flag = "<null>";
-//                                      Hash = "<null>";
-//                                      IsAdmin = 0;
-//                                      IsAfk = 0;
-//                                      LastActivity = "2015-04-06T14:11:57.707Z";
-//                                      Name = Mike;
-//                                      Note = "<null>";
-//                                      Status = Active;
-//                                  };
-//                                  UserRoomPresence = present;
-//                                  When = "2015-04-03T14:52:25.9471504+00:00";
-//                              }
-//                              );
-//        Topic = "";
-//        Users =     (
-//                     {
-//                         Active = 0;
-//                         AfkNote = "<null>";
-//                         Country = "<null>";
-//                         Flag = "<null>";
-//                         Hash = "<null>";
-//                         IsAdmin = 1;
-//                         IsAfk = 0;
-//                         LastActivity = "2015-04-06T13:41:18.517Z";
-//                         Name = seanxd;
-//                         Note = "some note, help";
-//                         Status = Inactive;
-//                     },
-//                     {
-//                         Active = 1;
-//                         AfkNote = "<null>";
-//                         Country = "<null>";
-//                         Flag = "<null>";
-//                         Hash = "<null>";
-//                         IsAdmin = 0;
-//                         IsAfk = 0;
-//                         LastActivity = "2015-04-06T14:11:57.707Z";
-//                         Name = Mike;
-//                         Note = "<null>";
-//                         Status = Active;
-//                     }
-//                     );
-//        Welcome = "";
-//    }
-//                                 )
-//    
-    if (data == nil)
-    {
-        return;
-    }
-    
-    NSDictionary *roomInfoDictionary = data[0];
-    
-    NSArray *recentMessageArray = [roomInfoDictionary objectForKey:@"RecentMessages"];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        for(NSDictionary *messageDictionary in recentMessageArray) {
-            [self addRawMessage:messageDictionary toThread:self.currentChatThread.title];
-        }
-        
-        //TOOD: load users
-   });
-    
-}
-
-- (void)loadTeamData:(NSArray *)data
-{
-    if (data == nil || data.count == 0) {
-        return;
-    }
-    
-    NSDictionary *teamDictionary = data[0];
-    CLATeam *team = [[CLATeam alloc] init];
-    team.name = [teamDictionary objectForKey:@"Name"];
-    team.key = [teamDictionary objectForKey:@"Key"];
-
-    
-    NSMutableArray *chatThreadArray = [NSMutableArray array];
-    NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
-    if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0){
-        
-        for (id room in roomArrayFromDictionary) {
-            NSDictionary *roomDictionary = room;
-            ChatThread *chatThread = [[ChatThread alloc] init];
-            chatThread.title = [roomDictionary objectForKey:@"Name"];
-            
-            [chatThreadArray addObject:chatThread];
-        }
-    }
-    
-    NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
-    if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0){
-        NSMutableArray *userArray = [NSMutableArray array];
-        
-        for (id user in userArrayFromDictionary) {
-            NSDictionary *userDictionary = user;
-            CLAUser *user = [[CLAUser alloc] init];
-            user.name = [userDictionary objectForKey:@"Name"];
-            [userArray addObject:user];
-        }
-    }
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
-    
-    //TODO:save some of the values
-    if (team != nil && team.key != nil && team.key.intValue != teamKey.intValue){
-    
-        [defaults setObject:team.key forKey:kTeamKey];
-        [defaults synchronize];
-
-        [self reconnect];
-    }
-    
-    LeftMenuViewController *leftMenuViewController = self.slidingViewController.underLeftViewController;
-    leftMenuViewController.chatThreads = chatThreadArray;
-    
-}
-- (void)markInactive:(NSArray *)data
-{
-//    {
-//        Active = 0;
-//        AfkNote = "<null>";
-//        Country = Barbados;
-//        Flag = bb;
-//        Hash = "<null>";
-//        IsAdmin = 0;
-//        IsAfk = 0;
-//        LastActivity = "2015-03-25T22:53:59.973Z";
-//        Name = testclient;
-//        Note = "<null>";
-//        Status = Inactive;
-//    }
-//    )
-    
-    if (data == nil || data.count <1)
-    {
-        return;
-    }
-    
-    NSDictionary *userDictionary = data[0];
-    if (userDictionary && [userDictionary objectForKey:@"Name"])
-    {
-        NSString *userName = [userDictionary objectForKey:@"Name"];
-    //TODO: update status
-        
-//        [self addMessage:[NSString stringWithFormat: @"@%@ is inactive", userName] type:@"UserStatus"],
-//        [self refreshMessages];
-    }
-}
-
-- (void)addUser:(NSArray *)data
-{
-//    {
-//        Active = 1;
-//        AfkNote = "<null>";
-//        Country = "<null>";
-//        Flag = "<null>";
-//        Hash = "<null>";
-//        IsAdmin = 1;
-//        IsAfk = 0;
-//        LastActivity = "2015-03-25T23:31:43.557Z";
-//        Name = seanxd;
-//        Note = "some note, help";
-//        Status = Active;
-//    },
-//    Welcome,
-//    1
-//    )
-
-    if (data == nil || data.count <3)
-    {
-        return;
-    }
-    
-    NSString *room = data[1];
-    
-    NSDictionary *userDictionary = data[0];
-    if (userDictionary && [userDictionary objectForKey:@"Name"])
-    {
-        
-        NSString *userName = [userDictionary objectForKey:@"Name"];
-        
-        NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
-        [ignoreParamDictionary setObject:room forKey:@"room"];
-        [ignoreParamDictionary setObject:userName forKey:@"username"];
-        
-        if ([self shoudIgnoreIncoming:ignoreParamDictionary])
-        {
-            return;
-        }
-        
-        //TODO: add user
-        //[self addMessage:[NSString stringWithFormat: @"@%@ has joined", userName] type:@"UserJoinRoom"],
-        //[self refreshMessages];
-    }
-}
-
-- (void)sendPrivateMessage:(NSArray *)data
-{
-//    seanxd,
-//    testclient,
-//    this is a pm
-    
-    if (!data && data.count <3)
-    {
-        return;
-    }
-    
-    //TODO: show in PM thread;
-    //[self addMessage:[NSString stringWithFormat: @"@%@ PM: %@", data[0], data[2]] type:@"PrivateMessage"],
-}
-
-- (void)leave:(NSArray *)data
-{
-//    {
-//        Active = 1;
-//        AfkNote = "<null>";
-//        Country = "<null>";
-//        Flag = "<null>";
-//        Hash = "<null>";
-//        IsAdmin = 1;
-//        IsAfk = 0;
-//        LastActivity = "2015-03-25T23:27:21.903Z";
-//        Name = seanxd;
-//        Note = "some note, help";
-//        Status = Active;
-//    },
-//    Welcome
-//    )
-    
-    if (!data && data.count <2)
-    {
-        return;
-    }
-    
-    NSString *room = data[1];
-    
-    if (!room || ![room isEqualToString:self.currentChatThread.title])
-    {
-        return;
-    }
-
-    NSDictionary *userDictionary = data[0];
-    if (userDictionary && [userDictionary objectForKey:@"Name"])
-    {
-        NSString *userName = [userDictionary objectForKey:@"Name"];
-        
-        NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];
-        [ignoreParamDictionary setObject:room forKey:@"room"];
-        [ignoreParamDictionary setObject:userName forKey:@"username"];
-        
-        if ([self shoudIgnoreIncoming:ignoreParamDictionary])
-        {
-            return;
-        }
-
-        //TOOD: udpate status;
-//        [self addMessage:[NSString stringWithFormat: @"@%@ has left", userName] type:@"UserLeaveRoom"],
-//        [self refreshMessages];
-    }
-}
-
-
-#pragma mark - 
-#pragma mark SRConnection Delegate
-
-- (void)SRConnectionDidOpen:(SRConnection *)connection
-{
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:@"Colla Bot"
-                                             senderDisplayName:@"Colla Bot"
-                                                          date:[NSDate date]
-                                                          text:[NSString stringWithFormat:@"Welcom %@", self.username]];
-    [self receiveMessage:message atThread:self.currentChatThread.title];
-    [self.hub invoke:@"Join" withArgs:@[]];
-}
-
-- (void)SRConnection:(SRConnection *)connection didReceiveData:(id)data
-{
-    //[messagesReceived insertObject:data atIndex:0];
-    //[messageTable reloadData];
-}
-
-- (void)SRConnectionDidClose:(SRConnection *)connection
-{
-   JSQMessage *message = [[JSQMessage alloc] initWithSenderId:@"Colla Bot"
-                                             senderDisplayName:@"Colla Bot"
-                                                         date:[NSDate date]
-                                                         text:[NSString stringWithFormat:@"Goodbye %@", self.username]];
-    [self receiveMessage:message atThread:self.currentChatThread.title];
-}
-
-- (void)SRConnection:(SRConnection *)connection didReceiveError:(NSError *)error
-{
-    //[messagesReceived insertObject:[NSString stringWithFormat:@"Connection Error: %@",error.localizedDescription] atIndex:0];
-    //[messageTable reloadData];
-}
-
-
 #pragma mark -
 #pragma mark View Controller Event Handlers
 
 - (void)ShowChatThreadSetupView {
     NSLog(@"Show Setup View");
-    //self presentViewController:<#(UIViewController *)#> animated:<#(BOOL)#> completion:<#^(void)completion#>
 }
 
 @end

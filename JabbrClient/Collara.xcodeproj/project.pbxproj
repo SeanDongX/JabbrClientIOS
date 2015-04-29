@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1404B5361AF118BB00363178 /* CLASignalRMessageClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */; };
 		142046431AD1EC91006143D5 /* AuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* AuthManager.m */; };
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
@@ -49,6 +50,9 @@
 
 /* Begin PBXFileReference section */
 		1090D86306F7E103B79E7158 /* libPods-JabbrClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JabbrClient.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1404B5311AF10ED400363178 /* CLAMessageClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMessageClient.h; path = Lib/CLAMessageClient.h; sourceTree = "<group>"; };
+		1404B5341AF118BB00363178 /* CLASignalRMessageClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLASignalRMessageClient.h; path = Lib/CLASignalRMessageClient.h; sourceTree = "<group>"; };
+		1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLASignalRMessageClient.m; path = Lib/CLASignalRMessageClient.m; sourceTree = "<group>"; };
 		142046411AD1EC91006143D5 /* AuthManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthManager.h; path = Lib/AuthManager.h; sourceTree = "<group>"; };
 		142046421AD1EC91006143D5 /* AuthManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthManager.m; path = Lib/AuthManager.m; sourceTree = "<group>"; };
 		142046441AD1F866006143D5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
@@ -137,6 +141,9 @@
 				142046421AD1EC91006143D5 /* AuthManager.m */,
 				142046471AD203FD006143D5 /* Constants.h */,
 				142046481AD203FD006143D5 /* Constants.m */,
+				1404B5311AF10ED400363178 /* CLAMessageClient.h */,
+				1404B5341AF118BB00363178 /* CLASignalRMessageClient.h */,
+				1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -467,6 +474,7 @@
 				144D9EE91AF03528005EBAD2 /* CLATeam.m in Sources */,
 				14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */,
 				14679E961AC8838900316C9C /* ObjectThread.m in Sources */,
+				1404B5361AF118BB00363178 /* CLASignalRMessageClient.m in Sources */,
 				14B6FB551ACB4CF500E5B5A5 /* DocumentViewController.m in Sources */,
 				149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */,
 				14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */,

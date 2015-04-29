@@ -11,7 +11,8 @@
 
 @implementation Constants
 
-NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
+NSString *const kServerBaseUrl =
+ @"http://192.168.31.202:16207/";
 //@"http://colla-team.azurewebsites.net/";
 
 //NSString *const kServerBaseUrl = @"http://www.collara.co/";
@@ -48,6 +49,11 @@ int const kMessageLoadAnimateTimeThreshold = 60;
     return [docIcon imageWithSize:CGSizeMake(30, 30)];
 }
 
++ (UIImage *)infoIconImage {
+    FAKIonIcons *cogIcon = [FAKIonIcons iosInformationOutlineIconWithSize:30];
+    [cogIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [cogIcon imageWithSize:CGSizeMake(30, 30)];
+}
 
 + (UIColor*)mainThemeColor {
     return [UIColor colorWithRed:(26/255.0) green:(179/255.0) blue:(148/255.0) alpha:1];

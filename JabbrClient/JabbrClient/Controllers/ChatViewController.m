@@ -81,7 +81,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
     
-    //self.showLoadEarlierMessagesHeader = YES;
+    self.showLoadEarlierMessagesHeader = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -113,6 +113,13 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.rightMenuButton setTitle:@""];
     [self.rightMenuButton setWidth:30];
     [self.rightMenuButton setImage: [Constants docIconImage]];
+    
+    
+    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(ShowChatThreadSetupView)];
+    [chatThreadSetupButon setTitle: @""];
+    [chatThreadSetupButon setTintColor:[UIColor whiteColor]];
+    
+    self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:chatThreadSetupButon];
 }
 
 #pragma mark - 
@@ -404,14 +411,24 @@ static NSString * const kDefaultChatThread = @"collarabot";
     return 0.0f;
 }
 
+#pragma mark - JSQ Message Events
 #pragma mark - Responding to collection view tap events
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
 {
     //TODO:cache CLAMessage, init with message id
-    //[self.hub invoke:@"GetPreviousMessages" withArgs:@[@[firstMessageId]]];
-    NSLog(@"Load earlier messages!");
+    NSMutableArray *chatThreads = [self getCurrentMessageThread];
+    
+    if (chatThreads != nil && chatThreads.count > 0){
+        ChatThread *firstChatThread = chatThreads[0];
+        if (firstChatThread != nil)
+        {
+            [self.hub invoke:@"GetPreviousMessages" withArgs:@[@"d21c8c6a-ecec-4dec-876a-085ad3fa139c"] completionHandler:^(NSArray *data){
+                NSLog(@"%lu messages loaded", (unsigned long)data.count);
+            }];
+        }
+    }
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath
@@ -428,7 +445,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
 {
     NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
 }
-
 
 #pragma mark - 
 #pragma mark View Actions
@@ -487,7 +503,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
     
     [self.hub on:@"roomLoaded" perform:self selector:@selector(threadLoaded:)];
-    [self.hub on:@"teamsLoaded" perform:self selector:@selector(loadTeamData:)];
     
     [self.connection setDelegate:self];
     [self.connection start];
@@ -540,10 +555,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.hub invoke:@"LoadRooms" withArgs:@[@[self.currentChatThread.title]]];
 }
 
--(void)getTeams {
-    
-    [self.hub invoke:@"GetTeams" withArgs:@[]];
-}
 //-(void)refreshRoom:(id)inRoom
 //{
 //    [self clearMessages];
@@ -608,45 +619,9 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)logon:(NSArray *)data {
-    [self getTeams];
-//    <__NSCFArray 0x7fae4162a260>(
-//    <__NSCFArray 0x7fae41625510>(
-//    {
-//        Closed = 0;
-//        Count = 0;
-//        Name = Welcome;
-//        Owners = "<null>";
-//        Private = 0;
-//        RecentMessages = "<null>";
-//        Topic = "<null>";
-//        Users = "<null>";
-//        Welcome = "<null>";
-//    },
-//    {
-//        Closed = 0;
-//        Count = 0;
-//        Name = TestRoom;
-//        Owners = "<null>";
-//        Private = 0;
-//        RecentMessages = "<null>";
-//        Topic = "<null>";
-//        Users = "<null>";
-//        Welcome = "<null>";
-//    }
-//    )
-//    ,
-//    <__NSArrayI 0x7fae41731c00>(
-//                                 
-//    )
-//    ,
-//    {
-//        TabOrder =     (
-//                        Lobby,
-//                        TestRoom,
-//                        Welcome
-//                        );
-//    }
-//)
+    [self.hub invoke:@"GetTeams" withArgs:@[] completionHandler:^(id data){
+        [self loadTeamData:data];
+    }];
 }
 
 - (void)addRawMessage:(NSDictionary *)messageDictionary toThread:(NSString *)thread
@@ -924,8 +899,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
         return;
     }
     
-    NSArray *teamArray = data[0];
-    NSDictionary *teamDictionary = teamArray[0];
+    NSDictionary *teamDictionary = data[0];
     CLATeam *team = [[CLATeam alloc] init];
     team.name = [teamDictionary objectForKey:@"Name"];
     team.key = [teamDictionary objectForKey:@"Key"];
@@ -1150,6 +1124,15 @@ static NSString * const kDefaultChatThread = @"collarabot";
 {
     //[messagesReceived insertObject:[NSString stringWithFormat:@"Connection Error: %@",error.localizedDescription] atIndex:0];
     //[messageTable reloadData];
+}
+
+
+#pragma mark -
+#pragma mark View Controller Event Handlers
+
+- (void)ShowChatThreadSetupView {
+    NSLog(@"Show Setup View");
+    //self presentViewController:<#(UIViewController *)#> animated:<#(BOOL)#> completion:<#^(void)completion#>
 }
 
 @end

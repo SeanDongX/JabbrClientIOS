@@ -31,5 +31,6 @@ FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;
 + (UIImage *)menuIconImage;
 + (UIImage *)chatIconImage;
 + (UIImage *)docIconImage;
++ (UIImage *)infoIconImage;
 + (UIColor *)mainThemeColor;
 @end

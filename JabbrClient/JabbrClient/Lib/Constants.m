@@ -8,6 +8,7 @@
 
 #import "Constants.h"
 #import <FontAwesomeKit/FAKIonIcons.h>
+#import "CRToast.h"
 
 @implementation Constants
 
@@ -19,6 +20,8 @@ NSString *const kServerBaseUrl =
 
 NSString *const kChatNavigationController = @"ChatNavigationController";
 NSString *const kSignInNavigationController = @"SignInNavigationController";
+NSString *const kSignUpController = @"SignUpController";
+
 NSString *const kProfileNavigationController = @"ProfileNavigationController";
 NSString *const kDocumentNavigationController = @"DocumentNavigationController";
 
@@ -30,6 +33,21 @@ NSString *const kAuthToken = @"AuthToken";
 NSString *const kLastAuthDate = @"LastAuthDate";
 NSString * const kTeamKey = @"TeamKey";
 int const kMessageLoadAnimateTimeThreshold = 60;
+
++ (NSDictionary *)toasOptions {
+    return @{
+             kCRToastFontKey: [UIFont systemFontOfSize:16],
+             kCRToastTextColorKey: [UIColor whiteColor],
+             kCRToastNotificationTypeKey : @(CRToastTypeNavigationBar),
+             kCRToastTextAlignmentKey: @(NSTextAlignmentLeft),
+             kCRToastBackgroundColorKey : [Constants warningColor],
+             kCRToastTimeIntervalKey: @3,
+             kCRToastAnimationInTypeKey: @(CRToastAnimationTypeGravity),
+             kCRToastAnimationOutTypeKey: @(CRToastAnimationTypeGravity),
+             kCRToastAnimationInDirectionKey: @(CRToastAnimationDirectionTop),
+             kCRToastAnimationOutDirectionKey: @(CRToastAnimationDirectionTop)
+            };
+}
 
 + (UIImage *)menuIconImage {
     FAKIonIcons *menuIcon = [FAKIonIcons iosMoreOutlineIconWithSize:30];
@@ -57,5 +75,13 @@ int const kMessageLoadAnimateTimeThreshold = 60;
 
 + (UIColor*)mainThemeColor {
     return [UIColor colorWithRed:(26/255.0) green:(179/255.0) blue:(148/255.0) alpha:1];
+}
+
++ (UIColor*)mainThemeContrastColor {
+    return [UIColor colorWithRed:(47/255.0) green:(64/255.0) blue:(80/255.0) alpha:1];
+}
+
++ (UIColor*)warningColor {
+    return [UIColor colorWithRed:(237/255.0) green:(85/255.0) blue:(101/255.0) alpha:1];
 }
 @end

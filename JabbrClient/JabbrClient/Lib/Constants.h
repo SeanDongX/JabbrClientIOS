@@ -15,6 +15,7 @@ FOUNDATION_EXPORT NSString *const kServerBaseUrl;
 
 FOUNDATION_EXPORT NSString *const kChatNavigationController;
 FOUNDATION_EXPORT NSString *const kSignInNavigationController;
+FOUNDATION_EXPORT NSString *const kSignUpController;
 FOUNDATION_EXPORT NSString *const kProfileNavigationController;
 FOUNDATION_EXPORT NSString *const kDocumentNavigationController;
 
@@ -28,9 +29,13 @@ FOUNDATION_EXPORT NSString * const kTeamKey;
 
 FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;
 
++ (NSDictionary *)toasOptions;
+
 + (UIImage *)menuIconImage;
 + (UIImage *)chatIconImage;
 + (UIImage *)docIconImage;
 + (UIImage *)infoIconImage;
 + (UIColor *)mainThemeColor;
++ (UIColor*)mainThemeContrastColor;
++ (UIColor*)warningColor;
 @end

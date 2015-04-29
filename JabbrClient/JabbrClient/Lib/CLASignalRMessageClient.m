@@ -57,9 +57,6 @@
     
     self.username = [[AuthManager sharedInstance] getUsername];
     
-//    self.senderId = self.username;
-//    self.senderDisplayName = self.username;
-    
     if (teamKey != nil && teamKey.intValue > 0){
         self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"team=%d&token=%@", teamKey.intValue, authToken]];
     }

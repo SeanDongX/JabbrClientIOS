@@ -12,6 +12,7 @@ target 'Collara' do
   #pod 'ECSlidingViewController', '~> 1.3'
   pod 'SignalR-ObjC', :path => '~/Documents/workspace/SignalR-ObjC/'
   #pod 'SignalR-ObjC', '2.0.0.alpha1'
+  pod 'CRToast', '~> 0.0.7'
 end
 
 target 'CollaraTests' do

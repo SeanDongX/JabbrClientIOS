@@ -11,12 +11,16 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "Constants.h"
 #import "SlidingViewController.h"
+#import "CLANotificationHandler.h"
+#import "CLASignUpViewController.h"
+#import "CRToast.h"
 
 @interface SignInViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
+@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 
 @end
 
@@ -34,9 +38,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    CLANotificationHandler *notificationHandler = [[CLANotificationHandler alloc] init];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:notificationHandler selector:@selector(keyboardWillShow:withView:) name:UIKeyboardWillShowNotification object:self.view];
+    [[NSNotificationCenter defaultCenter] addObserver:notificationHandler selector:@selector(keyboardWillHide:withView:) name:UIKeyboardWillHideNotification object:self.view];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -47,28 +52,6 @@
 }
 
 #pragma mark -
-#pragma mark - Keyboard Movements
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y = -keyboardSize.height;
-        self.view.frame = f;
-    }];
-}
-
--(void)keyboardWillHide:(NSNotification *)notification
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y = 0.0f;
-        self.view.frame = f;
-    }];
-}
-
-#pragma mark -
 #pragma mark - Set Button
 
 - (void)setButtonBorder {
@@ -76,20 +59,57 @@
     [[self.signInButton layer] setMasksToBounds:YES];
     [[self.signInButton layer] setBorderWidth:1.0f];
     [[self.signInButton layer] setBorderColor:[UIColor whiteColor].CGColor];
+    
+    [[self.signUpButton layer] setCornerRadius:5.0f];
+    [[self.signUpButton layer] setMasksToBounds:YES];
+    [[self.signUpButton layer] setBorderWidth:1.0f];
+    [[self.signUpButton layer] setBorderColor:[UIColor whiteColor].CGColor];
+
 }
 
 #pragma mark -
 #pragma mark - Event Handler
 - (IBAction)signInClicked:(id)sender {
     //TOOD: check user name and password
+    NSMutableDictionary *toasOptions = [Constants toasOptions].mutableCopy;
+    toasOptions[kCRToastImageKey] = [Constants infoIconImage];
     
-    [[AuthManager sharedInstance]signInWithUsername:[self.usernameTextField text]
-                                           password:[self.passwordTextField text]
+    NSString *username = [self.usernameTextField text];
+    NSString *password = [self.passwordTextField text];
+    
+    if (username == nil || username.length == 0) {
+        
+        [toasOptions setObject:@"Did you forget your username?" forKey:kCRToastTextKey];
+        [CRToastManager showNotificationWithOptions:toasOptions
+                                    completionBlock:nil];
+        
+        return;
+    }
+    
+    if (password == nil || password.length == 0) {
+        
+        [toasOptions setObject:@"OK, that password won't work." forKey:kCRToastTextKey];
+        [CRToastManager showNotificationWithOptions:toasOptions
+                                    completionBlock:nil];
+        
+        return;
+    }
+    
+    [[AuthManager sharedInstance]signInWithUsername:username
+                                           password:password
                                          completion:^(NSError *error){
         [self processSignInResult:error];
     }];
     
 }
+
+- (IBAction)signUpClicked:(id)sender {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    
+    CLASignUpViewController *signUpViewController = [storyBoard instantiateViewControllerWithIdentifier:kSignUpController];
+    [self presentViewController:signUpViewController animated:TRUE completion:nil];
+}
+
 
 - (void)processSignInResult: (NSError *)error {
     if (!error) {

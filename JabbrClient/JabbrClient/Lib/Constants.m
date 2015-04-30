@@ -31,8 +31,16 @@ NSString *const kRightMenuViewController = @"RightMenuViewController";
 NSString *const kUsername = @"Username";
 NSString *const kAuthToken = @"AuthToken";
 NSString *const kLastAuthDate = @"LastAuthDate";
-NSString * const kTeamKey = @"TeamKey";
+NSString *const kTeamKey = @"TeamKey";
 int const kMessageLoadAnimateTimeThreshold = 60;
+
+NSString *const kErrorDoamin = @"com.collara";
+NSString *const kErrorDescription = @"ErrorDescription";
+
+int const kErrorCodeSignInUsernameOrPasswordInvalid = 100;
+NSString *const kErrorMsgSignInUsernameOrPasswordInvalid = @"We can not sign you in with that username and password.";
+
+NSString *const kErrorMsgSignInFailureUnknown = @"Something went wrong. How about another try?";
 
 + (NSDictionary *)toasOptions {
     return @{

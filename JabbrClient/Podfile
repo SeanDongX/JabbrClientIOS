@@ -13,6 +13,7 @@ target 'Collara' do
   pod 'SignalR-ObjC', :path => '~/Documents/workspace/SignalR-ObjC/'
   #pod 'SignalR-ObjC', '2.0.0.alpha1'
   pod 'CRToast', '~> 0.0.7'
+  pod 'MBProgressHUD', '~> 0.8'
 end
 
 target 'CollaraTests' do

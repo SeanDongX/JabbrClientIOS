@@ -152,27 +152,33 @@
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
                                
-                               if (error != nil) {
-                                   completionBlock(nil, error);
-                                   return;
-                               }
+                               if (error == nil) {
                                    
-                               NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                               
-                               NSString *actualResponseUrl = [httpResponse.URL absoluteString];
-                               NSString *expectedResponseUrl = [NSString stringWithFormat: @"%@account/tokenr", self.server_url];
-                               
-                               NSString *authToken = nil;
-                               
-                               if ([actualResponseUrl rangeOfString:expectedResponseUrl options:NSCaseInsensitiveSearch].location == NSNotFound) {
-                                   NSLog(@"Token request error. Expect response url '%@', but get '%@'", expectedResponseUrl, actualResponseUrl);
+                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                   
+                                   NSString *actualResponseUrl = [httpResponse.URL absoluteString];
+                                   NSString *expectedResponseUrl = [NSString stringWithFormat: @"%@account/tokenr", self.server_url];
+                                   
+                                   NSString *authToken = nil;
+                                   
+                                   if ([actualResponseUrl rangeOfString:expectedResponseUrl options:NSCaseInsensitiveSearch].location == NSNotFound) {
+                                       
+                                       completionBlock(nil,
+                                                       [NSError errorWithDomain:kErrorDoamin
+                                                                           code:kErrorCodeSignInUsernameOrPasswordInvalid
+                                                                       userInfo:@{ kErrorDescription : kErrorMsgSignInUsernameOrPasswordInvalid }]);
+                                       
+                                       NSLog(@"Token request error. Expect response url '%@', but get '%@'", expectedResponseUrl, actualResponseUrl);
+                                   }
+                                   else {
+                                       authToken = [self fetchAuthToken:data];
+                                       NSLog(@"Authtoken acquried: %@", authToken);
+                                       completionBlock(authToken, nil);
+                                   }
                                }
                                else {
-                                   authToken = [self fetchAuthToken:data];
-                                   NSLog(@"Authtoken acquried: %@", authToken);
+                                   completionBlock(nil, error);
                                }
-                               
-                               completionBlock(authToken, nil);
                            }];
 
 }

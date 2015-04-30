@@ -22,12 +22,22 @@ FOUNDATION_EXPORT NSString *const kDocumentNavigationController;
 FOUNDATION_EXPORT NSString *const kLeftMenuViewController;
 FOUNDATION_EXPORT NSString *const kRightMenuViewController;
 
-FOUNDATION_EXPORT NSString * const kUsername;
-FOUNDATION_EXPORT NSString * const kAuthToken;
-FOUNDATION_EXPORT NSString * const kLastAuthDate;
-FOUNDATION_EXPORT NSString * const kTeamKey;
+FOUNDATION_EXPORT NSString *const kUsername;
+FOUNDATION_EXPORT NSString *const kAuthToken;
+FOUNDATION_EXPORT NSString *const kLastAuthDate;
+FOUNDATION_EXPORT NSString *const kTeamKey;
 
 FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;
+
+FOUNDATION_EXPORT NSString *const kErrorDoamin;
+FOUNDATION_EXPORT NSString *const kErrorDescription;
+
+FOUNDATION_EXPORT int const kErrorCodeSignInUsernameOrPasswordInvalid;
+
+FOUNDATION_EXPORT NSString *const kErrorMsgSignInUsernameOrPasswordInvalid;
+
+FOUNDATION_EXPORT NSString *const kErrorMsgSignInFailureUnknown;
+
 
 + (NSDictionary *)toasOptions;
 

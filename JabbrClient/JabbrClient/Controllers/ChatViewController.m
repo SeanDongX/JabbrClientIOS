@@ -19,6 +19,7 @@
 #import "CLATeam.h"
 #import "CLARoom.h"
 #import "CLAUser.h"
+#import "CLATeamViewModel.h"
 
 #import "CLASignalRMessageClient.h"
 
@@ -466,9 +467,20 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
 }
 
-- (void)didReceiveRooms: (NSArray *)rooms users:(NSArray *)users {
+- (void)didReceiveTeams:(NSArray *)teams {
+    
+    if (teams == nil || teams.count == 0) {
+        //TODO: show team creation page
+    }
+    
+    CLATeamViewModel *teamViewModel = teams[0];
+    
+    if (teamViewModel == nil) {
+        //TODO: show team creation page
+    }
+    
     NSMutableArray *chatThreadArray = [NSMutableArray array];
-    for (CLARoom *room in rooms) {
+    for (CLARoom *room in teamViewModel.rooms) {
         ChatThread *thread= [[ChatThread alloc] init];
         thread.title = room.name;
         [chatThreadArray addObject:thread];

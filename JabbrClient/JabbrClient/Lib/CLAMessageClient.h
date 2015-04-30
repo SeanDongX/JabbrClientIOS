@@ -59,7 +59,7 @@
  *
  **/
 - (void)didOpenConnection;
-- (void)didReceiveRooms: (NSArray *)rooms users:(NSArray *)users;
+- (void)didReceiveTeams: (NSArray *)teams;
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room;
 - (void)didLoadEarlierMessages: (NSArray *) earlierMessages inRoom:(NSString*)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;

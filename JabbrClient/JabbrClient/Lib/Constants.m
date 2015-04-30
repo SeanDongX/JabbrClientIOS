@@ -13,8 +13,8 @@
 @implementation Constants
 
 NSString *const kServerBaseUrl =
- //@"http://192.168.31.202:16207/";
-@"http://colla-team.azurewebsites.net/";
+@"http://192.168.31.202:16207/";
+//@"http://colla-team.azurewebsites.net/";
 
 //NSString *const kServerBaseUrl = @"http://www.collara.co/";
 

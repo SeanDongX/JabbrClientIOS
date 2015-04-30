@@ -13,6 +13,7 @@
 #import "CLATeam.h"
 #import "CLARoom.h"
 #import "CLAUser.h"
+#import "CLATeamViewModel.h"
 
 @interface CLASignalRMessageClient()
 
@@ -162,50 +163,65 @@
         return;
     }
     
-    NSDictionary *teamDictionary = data[0];
-    CLATeam *team = [[CLATeam alloc] init];
-    team.name = [teamDictionary objectForKey:@"Name"];
-    team.key = [teamDictionary objectForKey:@"Key"];
+    NSMutableArray *teamViewModelArray = [NSMutableArray arrayWithCapacity:data.count];
     
-    
-    NSMutableArray *roomArray = [NSMutableArray array];
-    NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
-    if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0){
+    for (NSDictionary *teamDictionary in data) {
         
-        for (id room in roomArrayFromDictionary) {
-            NSDictionary *roomDictionary = room;
-            CLARoom *claRoom = [[CLARoom alloc] init];
-            claRoom.name = [roomDictionary objectForKey:@"Name"];
+        CLATeam *team = [[CLATeam alloc] init];
+        team.name = [teamDictionary objectForKey:@"Name"];
+        team.key = [teamDictionary objectForKey:@"Key"];
+        
+        NSMutableArray *roomArray = [NSMutableArray array];
+        NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
+        if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0){
             
-            [roomArray addObject:claRoom];
+            for (id room in roomArrayFromDictionary) {
+                NSDictionary *roomDictionary = room;
+                CLARoom *claRoom = [[CLARoom alloc] init];
+                claRoom.name = [roomDictionary objectForKey:@"Name"];
+                
+                [roomArray addObject:claRoom];
+            }
+        }
+        
+        NSMutableArray *userArray = [NSMutableArray array];
+        NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
+        if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0){
+            
+            for (id user in userArrayFromDictionary) {
+                NSDictionary *userDictionary = user;
+                CLAUser *user = [[CLAUser alloc] init];
+                user.name = [userDictionary objectForKey:@"Name"];
+                [userArray addObject:user];
+            }
+        }
+        
+        CLATeamViewModel *teamViewModel = [[CLATeamViewModel alloc] init];
+        teamViewModel.team = team;
+        teamViewModel.rooms = roomArray;
+        teamViewModel.users = userArray;
+        [teamViewModelArray addObject:teamViewModel];
+    }
+    
+    
+    if (teamViewModelArray.count > 0) {
+        
+        CLATeamViewModel *teamViewModel = teamViewModelArray[0];
+        CLATeam *team = teamViewModel.team;
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *teamKey = [defaults objectForKey:kTeamKey];
+        
+        if (team != nil && team.key != nil && team.key.intValue != teamKey.intValue){
+            
+            [defaults setObject:team.key forKey:kTeamKey];
+            [defaults synchronize];
+            
+            [self reconnect];
         }
     }
     
-    NSMutableArray *userArray = [NSMutableArray array];
-    NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
-    if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0){
-        
-        for (id user in userArrayFromDictionary) {
-            NSDictionary *userDictionary = user;
-            CLAUser *user = [[CLAUser alloc] init];
-            user.name = [userDictionary objectForKey:@"Name"];
-            [userArray addObject:user];
-        }
-    }
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
-    
-    //TODO:save some of the values
-    if (team != nil && team.key != nil && team.key.intValue != teamKey.intValue){
-        
-        [defaults setObject:team.key forKey:kTeamKey];
-        [defaults synchronize];
-        
-        [self reconnect];
-    }
-    
-    [self.delegate didReceiveRooms:roomArray users:userArray];
+    [self.delegate didReceiveTeams:teamViewModelArray];
 }
 
 - (void)incomingMessage:(NSArray *)data

@@ -13,8 +13,8 @@
 @implementation Constants
 
 NSString *const kServerBaseUrl =
- @"http://192.168.31.202:16207/";
-//@"http://colla-team.azurewebsites.net/";
+ //@"http://192.168.31.202:16207/";
+@"http://colla-team.azurewebsites.net/";
 
 //NSString *const kServerBaseUrl = @"http://www.collara.co/";
 
@@ -82,6 +82,6 @@ int const kMessageLoadAnimateTimeThreshold = 60;
 }
 
 + (UIColor*)warningColor {
-    return [UIColor colorWithRed:(237/255.0) green:(85/255.0) blue:(101/255.0) alpha:1];
+    return [UIColor colorWithRed:(246/255.0) green:(95/255.0) blue:(77/255.0) alpha:1];
 }
 @end

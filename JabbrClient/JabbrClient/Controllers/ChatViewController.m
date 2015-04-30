@@ -23,6 +23,8 @@
 
 #import "CLASignalRMessageClient.h"
 
+#import "MBProgressHUD.h""
+
 static NSString * const kDefaultChatThread = @"collarabot";
 
 
@@ -88,6 +90,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -469,6 +472,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)didReceiveTeams:(NSArray *)teams {
     
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
     if (teams == nil || teams.count == 0) {
         //TODO: show team creation page
     }
@@ -478,6 +483,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     if (teamViewModel == nil) {
         //TODO: show team creation page
     }
+    
     
     NSMutableArray *chatThreadArray = [NSMutableArray array];
     for (CLARoom *room in teamViewModel.rooms) {

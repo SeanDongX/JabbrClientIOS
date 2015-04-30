@@ -12,9 +12,15 @@
 
 @implementation Constants
 
-NSString *const kServerBaseUrl =
-@"http://192.168.31.202:16207/";
-//@"http://colla-team.azurewebsites.net/";
+#if TARGET_IPHONE_SIMULATOR
+
+NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
+
+#else
+
+NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";
+
+#endif
 
 //NSString *const kServerBaseUrl = @"http://www.collara.co/";
 

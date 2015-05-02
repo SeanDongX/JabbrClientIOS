@@ -477,16 +477,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
-    if (teams == nil || teams.count == 0) {
+    if (teams == nil || teams.count == 0 || teams[0] == nil) {
         //TODO: show team creation page
     }
     
     CLATeamViewModel *teamViewModel = teams[0];
-    
-    if (teamViewModel == nil) {
-        //TODO: show team creation page
-    }
-    
     
     NSMutableArray *chatThreadArray = [NSMutableArray array];
     for (CLARoom *room in teamViewModel.rooms) {

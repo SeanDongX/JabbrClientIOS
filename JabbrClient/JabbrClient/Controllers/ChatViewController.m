@@ -23,7 +23,7 @@
 
 #import "CLASignalRMessageClient.h"
 
-#import "MBProgressHUD.h""
+#import "MBProgressHUD.h"
 
 static NSString * const kDefaultChatThread = @"collarabot";
 
@@ -492,7 +492,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
         [chatThreadArray addObject:thread];
     }
     
-    LeftMenuViewController *leftMenuViewController = self.slidingViewController.underLeftViewController;
+    LeftMenuViewController *leftMenuViewController = (LeftMenuViewController *)self.slidingViewController.underLeftViewController;
     leftMenuViewController.chatThreads = chatThreadArray;
 }
 

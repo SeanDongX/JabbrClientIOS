@@ -24,10 +24,10 @@
 
 #pragma mark - Initialization
 
-+ (instancetype)messageOId:(NSString *)oId
-              WithSenderId:(NSString *)senderId
-                        displayName:(NSString *)displayName
-                               text:(NSString *)text
++ (instancetype)messageWithOId:(NSString *)oId
+                      SenderId:(NSString *)senderId
+                   displayName:(NSString *)displayName
+                          text:(NSString *)text
 {
     return [[CLAMessage alloc] initWithOId:oId
                                   SenderId:senderId

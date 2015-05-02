@@ -17,7 +17,7 @@
 
 - (void)switchToChatThread:(ChatThread *)chatThread;
 
-- (void)didReceiveUserTeams: (NSArray *)userTeams;
+- (void)didReceiveTeams: (NSArray *)userTeams;
 
 - (void)didReceiveMessage: (id<JSQMessageData>) message inRoom:(NSString*)room;
 

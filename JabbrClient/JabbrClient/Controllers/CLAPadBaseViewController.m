@@ -28,7 +28,7 @@
 - (void)connectSocket {
     
     NSTimeInterval time = [NSDate date].timeIntervalSince1970 * 1000;
-    NSString *endpoint = [NSString stringWithFormat:@"http://192.168.31.194:9001/socket.io/?EIO=3&transport=polling&t=%ld-0", (NSInteger)time];
+    NSString *endpoint = [NSString stringWithFormat:@"http://192.168.31.194:9001/socket.io/?EIO=3&transport=polling&t=%ld-0", (long)time];
     
     //TOOD: use session http://www.teehanlax.com/blog/how-to-socket-io-swift/
     //and read cookie for later use
@@ -76,8 +76,6 @@
 }
 
 - (void)socketConnect: (NSString *)token {
-    
-    NSTimeInterval time = [NSDate date].timeIntervalSince1970 * 1000;
     
     SRWebSocket *socketio = [[SRWebSocket alloc] initWithURL: [NSURL URLWithString: [NSString stringWithFormat:@"ws://localhost:9001/socket.io/?EIO=3&transport=websocket&sid=%@", token]]];
     socketio.delegate = self;
@@ -143,7 +141,7 @@
     NSLog(@"error");
 }
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
-    NSLog(@"close with code %ld, reason: %@", code, reason);
+    NSLog(@"close with code %ld, reason: %@", (long)code, reason);
 }
 
 @end

@@ -53,7 +53,13 @@ static NSString * const kDoc = @"doc";
     DocumentThread *documentThread = self.documentThreads[indexPath.row];
     
     cell.textLabel.text = [documentThread getDisplayTitle] ;
+    
+    cell.textLabel.textColor = [UIColor whiteColor];
     [cell setBackgroundColor:[UIColor clearColor]];
+    
+    UIView *backgroundView = [UIView new];
+    backgroundView.backgroundColor = [Constants mainThemeColor];
+    cell.selectedBackgroundView = backgroundView;
     
     return cell;
 }

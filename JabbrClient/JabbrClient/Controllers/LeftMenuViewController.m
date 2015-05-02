@@ -85,7 +85,12 @@
         cell.textLabel.text = [chatThread getDisplayTitle];
     }
     
+    cell.textLabel.textColor = [UIColor whiteColor];
     [cell setBackgroundColor:[UIColor clearColor]];
+    
+    UIView *backgroundView = [UIView new];
+    backgroundView.backgroundColor = [Constants mainThemeColor];
+    cell.selectedBackgroundView = backgroundView;
     
     return cell;
 }

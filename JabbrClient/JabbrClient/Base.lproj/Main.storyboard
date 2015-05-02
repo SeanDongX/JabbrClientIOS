@@ -140,10 +140,10 @@
             </objects>
             <point key="canvasLocation" x="277" y="183"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Chat Navigation Controller-->
         <scene sceneID="C8G-31-ClJ">
             <objects>
-                <navigationController storyboardIdentifier="ChatNavigationController" definesPresentationContext="YES" id="ClZ-r3-7Fa" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ChatNavigationController" definesPresentationContext="YES" id="ClZ-r3-7Fa" userLabel="Chat Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zBW-Xd-mzi">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -160,10 +160,10 @@
             </objects>
             <point key="canvasLocation" x="713" y="1625"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Docuemnt Navigation Controller-->
         <scene sceneID="zze-dJ-8FE">
             <objects>
-                <navigationController storyboardIdentifier="DocumentNavigationController" definesPresentationContext="YES" id="Als-eC-PMv" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DocumentNavigationController" definesPresentationContext="YES" id="Als-eC-PMv" userLabel="Docuemnt Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XZi-fp-Ae6">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -178,12 +178,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P0y-iK-Epw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="713" y="2311"/>
+            <point key="canvasLocation" x="-262" y="2279"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--SignIn Navigation Controller-->
         <scene sceneID="sA9-jl-s0l">
             <objects>
-                <navigationController storyboardIdentifier="SignInNavigationController" definesPresentationContext="YES" id="gGq-qN-s5Y" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SignInNavigationController" definesPresentationContext="YES" id="gGq-qN-s5Y" userLabel="SignIn Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" id="aBs-C2-2pU">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -200,10 +200,10 @@
             </objects>
             <point key="canvasLocation" x="-169" y="945"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Profle Navigation Controller-->
         <scene sceneID="ucD-wA-2Ck">
             <objects>
-                <navigationController storyboardIdentifier="ProfileNavigationController" definesPresentationContext="YES" id="Qrp-PL-Ab6" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ProfileNavigationController" definesPresentationContext="YES" id="Qrp-PL-Ab6" userLabel="Profle Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hs2-e2-WxI">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -541,6 +541,24 @@
             </objects>
             <point key="canvasLocation" x="1231" y="1624"/>
         </scene>
+        <!--ChatInfo Controller-->
+        <scene sceneID="MR6-bR-3ki">
+            <objects>
+                <viewController storyboardIdentifier="ChatInfoViewController" id="hOH-rJ-uwa" userLabel="ChatInfo Controller" customClass="CLAChatInfoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="r9w-d8-y9F"/>
+                        <viewControllerLayoutGuide type="bottom" id="LHf-VF-hZj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Wo-jG-sRG">
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2cb-7O-o0C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1231" y="2262"/>
+        </scene>
         <!--Document-->
         <scene sceneID="bgt-a0-tA2">
             <objects>
@@ -588,7 +606,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l31-8k-DAE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1231" y="2311"/>
+            <point key="canvasLocation" x="256" y="2279"/>
         </scene>
     </scenes>
     <resources>

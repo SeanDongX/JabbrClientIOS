@@ -22,6 +22,8 @@ FOUNDATION_EXPORT NSString *const kDocumentNavigationController;
 FOUNDATION_EXPORT NSString *const kLeftMenuViewController;
 FOUNDATION_EXPORT NSString *const kRightMenuViewController;
 
+FOUNDATION_EXPORT NSString *const kChatInfoViewController;
+
 FOUNDATION_EXPORT NSString *const kUsername;
 FOUNDATION_EXPORT NSString *const kAuthToken;
 FOUNDATION_EXPORT NSString *const kLastAuthDate;
@@ -45,6 +47,7 @@ FOUNDATION_EXPORT NSString *const kErrorMsgSignInFailureUnknown;
 + (UIImage *)chatIconImage;
 + (UIImage *)docIconImage;
 + (UIImage *)infoIconImage;
++ (UIImage *)closeIconImage;
 + (UIColor *)mainThemeColor;
 + (UIColor*)mainThemeContrastColor;
 + (UIColor*)warningColor;

@@ -34,6 +34,8 @@ NSString *const kDocumentNavigationController = @"DocumentNavigationController";
 NSString *const kLeftMenuViewController = @"LeftMenuViewController";
 NSString *const kRightMenuViewController = @"RightMenuViewController";
 
+NSString *const kChatInfoViewController = @"ChatInfoViewController";
+
 NSString *const kUsername = @"Username";
 NSString *const kAuthToken = @"AuthToken";
 NSString *const kLastAuthDate = @"LastAuthDate";
@@ -85,6 +87,12 @@ NSString *const kErrorMsgSignInFailureUnknown = @"Something went wrong. How abou
     FAKIonIcons *cogIcon = [FAKIonIcons iosInformationOutlineIconWithSize:30];
     [cogIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
     return [cogIcon imageWithSize:CGSizeMake(30, 30)];
+}
+
++ (UIImage *)closeIconImage {
+    FAKIonIcons *closeIcon = [FAKIonIcons iosCloseOutlineIconWithSize:30];
+    [closeIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [closeIcon imageWithSize:CGSizeMake(30, 30)];
 }
 
 + (UIColor*)mainThemeColor {

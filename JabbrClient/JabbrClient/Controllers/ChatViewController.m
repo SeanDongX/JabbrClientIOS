@@ -10,6 +10,7 @@
 #import "AuthManager.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "LeftMenuViewController.h"
+#import "CLAChatInfoViewController.h"
 #import "ObjectThread.h"
 #import "ChatThread+Category.h"
 #import "DemoData.h"
@@ -132,7 +133,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.rightMenuButton setImage: [Constants docIconImage]];
     
     
-    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(ShowChatThreadSetupView)];
+    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(ShowChatInfoView)];
     [chatThreadSetupButon setTitle: @""];
     [chatThreadSetupButon setTintColor:[UIColor whiteColor]];
     
@@ -220,11 +221,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark -
 #pragma mark - Event handlers
 
-- (IBAction)connectClicked:(id)sender
-{
-    //TODO: reconnect funcationality
-    [self.messageClient reconnect];
-}
+//- (IBAction)connectClicked:(id)sender
+//{
+//    //TODO: reconnect funcationality
+//    [self.messageClient reconnect];
+//}
 
 - (void)didPressSendButton:(UIButton *)button
            withMessageText:(NSString *)text
@@ -627,8 +628,12 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark -
 #pragma mark View Controller Event Handlers
 
-- (void)ShowChatThreadSetupView {
-    NSLog(@"Show Setup View");
+- (void)ShowChatInfoView {
+    
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    
+    CLAChatInfoViewController *chatInfoViewController = [storyBoard instantiateViewControllerWithIdentifier:kChatInfoViewController];
+    [self presentViewController:chatInfoViewController animated:YES completion:nil];
 }
 
 @end

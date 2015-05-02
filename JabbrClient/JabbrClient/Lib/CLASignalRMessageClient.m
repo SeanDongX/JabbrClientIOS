@@ -159,7 +159,10 @@
 
 - (void)loadTeamData:(NSArray *)data
 {
+    self.roomsLoaded = TRUE;
+    
     if (data == nil || data.count == 0) {
+        [self.delegate didReceiveTeams:nil];
         return;
     }
     
@@ -220,6 +223,7 @@
             [self reconnect];
         }
     }
+    
     
     [self.delegate didReceiveTeams:teamViewModelArray];
 }

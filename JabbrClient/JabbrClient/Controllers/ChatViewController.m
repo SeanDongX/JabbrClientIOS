@@ -90,7 +90,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    if (self.messageClient == nil || self.messageClient.roomsLoaded == FALSE) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -548,13 +551,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
     [self.chatThreadRepository setObject:aggregatedMessage forKey:room];
     
-    BOOL animated = false;
-    if ([[room lowercaseString] isEqualToString:[self.currentChatThread.title lowercaseString]])
-    {
-        animated = true;
-    }
-    
-    [self finishReceivingMessageAnimated:animated];
+    [self finishReceivingMessageAnimated:FALSE];
     self.showLoadEarlierMessagesHeader = TRUE;
 }
 

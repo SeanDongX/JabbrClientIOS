@@ -32,6 +32,7 @@
 @property (nonatomic, weak) id<CLAMessageClientDelegate> delegate;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic) BOOL connected;
+@property (nonatomic) BOOL roomsLoaded;
 
 - (void)connect;
 - (void)reconnect;

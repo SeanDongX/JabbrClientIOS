@@ -66,6 +66,8 @@
 - (void)signInWithUsername:(NSString *)username password: (NSString *)password completion:(void (^)(NSError *error))completionBlock {
     
     [self clearCookie];
+    [self clearCache];
+    
     [self requestAuthTokenWithUsername:username password:password completion:^(NSString *authToken, NSError *requestError) {
 
         BOOL signInSuccessful = FALSE;
@@ -89,8 +91,7 @@
 }
 
 - (void)signOut {
-    [self clearCookie];
-    [self clearCache];
+
 }
 
 - (void)clearCache {
@@ -98,6 +99,7 @@
     [defaults removeObjectForKey:kUsername];
     [defaults removeObjectForKey:kAuthToken];
     [defaults removeObjectForKey:kLastAuthDate];
+    [defaults removeObjectForKey:kTeamKey];
     [defaults synchronize];
 }
 

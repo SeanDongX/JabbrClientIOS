@@ -12,6 +12,8 @@
 		142046431AD1EC91006143D5 /* AuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* AuthManager.m */; };
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
+		1430E00C1AF6DFF300F2D974 /* CLARoomViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */; };
+		1430E00F1AF6E0CE00F2D974 /* CLARoom+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 1430E00E1AF6E0CE00F2D974 /* CLARoom+Category.m */; };
 		144D9EE91AF03528005EBAD2 /* CLATeam.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EE81AF03528005EBAD2 /* CLATeam.m */; };
 		144D9EEC1AF035D6005EBAD2 /* CLARoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEB1AF035D6005EBAD2 /* CLARoom.m */; };
 		144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEE1AF03668005EBAD2 /* CLAUser.m */; };
@@ -66,6 +68,10 @@
 		142046451AD1F866006143D5 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		142046471AD203FD006143D5 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Lib/Constants.h; sourceTree = "<group>"; };
 		142046481AD203FD006143D5 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Lib/Constants.m; sourceTree = "<group>"; };
+		1430E00A1AF6DFF300F2D974 /* CLARoomViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoomViewModel.h; path = ViewModel/CLARoomViewModel.h; sourceTree = "<group>"; };
+		1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARoomViewModel.m; path = ViewModel/CLARoomViewModel.m; sourceTree = "<group>"; };
+		1430E00D1AF6E0CE00F2D974 /* CLARoom+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLARoom+Category.h"; path = "JabbrClient/DataModel/CLARoom+Category.h"; sourceTree = SOURCE_ROOT; };
+		1430E00E1AF6E0CE00F2D974 /* CLARoom+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLARoom+Category.m"; path = "JabbrClient/DataModel/CLARoom+Category.m"; sourceTree = SOURCE_ROOT; };
 		144D9EE71AF03528005EBAD2 /* CLATeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATeam.h; path = JabbrClient/DataModel/CLATeam.h; sourceTree = SOURCE_ROOT; };
 		144D9EE81AF03528005EBAD2 /* CLATeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLATeam.m; path = JabbrClient/DataModel/CLATeam.m; sourceTree = SOURCE_ROOT; };
 		144D9EEA1AF035D6005EBAD2 /* CLARoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoom.h; path = JabbrClient/DataModel/CLARoom.h; sourceTree = SOURCE_ROOT; };
@@ -188,6 +194,8 @@
 				144D9EEB1AF035D6005EBAD2 /* CLARoom.m */,
 				144D9EED1AF03668005EBAD2 /* CLAUser.h */,
 				144D9EEE1AF03668005EBAD2 /* CLAUser.m */,
+				1430E00D1AF6E0CE00F2D974 /* CLARoom+Category.h */,
+				1430E00E1AF6E0CE00F2D974 /* CLARoom+Category.m */,
 			);
 			name = DataModel;
 			path = Controllers;
@@ -309,6 +317,8 @@
 			children = (
 				14BEBC3D1AF2E67100F2470C /* CLATeamViewModel.h */,
 				14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */,
+				1430E00A1AF6DFF300F2D974 /* CLARoomViewModel.h */,
+				1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -489,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				142046461AD1F866006143D5 /* SignInViewController.m in Sources */,
+				1430E00F1AF6E0CE00F2D974 /* CLARoom+Category.m in Sources */,
 				144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
 				14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */,
@@ -511,6 +522,7 @@
 				146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */,
 				14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */,
 				14679E961AC8838900316C9C /* ObjectThread.m in Sources */,
+				1430E00C1AF6DFF300F2D974 /* CLARoomViewModel.m in Sources */,
 				1404B5361AF118BB00363178 /* CLASignalRMessageClient.m in Sources */,
 				14B6FB551ACB4CF500E5B5A5 /* DocumentViewController.m in Sources */,
 				146D83E31AF19F3300855C59 /* CLAKeyboardAwareViewController.m in Sources */,

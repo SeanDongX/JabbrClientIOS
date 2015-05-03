@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CLARoomViewModel.h"
 
-@interface CLAChatInfoViewController : UIViewController
+@interface CLAChatInfoViewController : UIViewController <UITableViewDataSource>
+
+@property (strong, nonatomic) CLARoomViewModel *roomViewModel;
 
 @end

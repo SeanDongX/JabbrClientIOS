@@ -7,11 +7,12 @@
 //
 
 #import "ChatThread+Category.h"
+#import "Constants.h"
 
 @implementation ChatThread (Category)
 
 - (NSString *)getDisplayTitle {
-    NSString *prefix = self.isDirectMessageThread ? @"@" : @"#";
+    NSString *prefix = self.isDirectMessageThread ? kUserPrefix : kRoomPrefix;
     
     return [NSString stringWithFormat:@"%@%@", prefix, self.title];
 }

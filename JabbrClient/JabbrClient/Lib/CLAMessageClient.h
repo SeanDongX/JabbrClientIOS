@@ -63,6 +63,7 @@
 - (void)didReceiveTeams: (NSArray *)teams;
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room;
 - (void)didLoadEarlierMessages: (NSArray *) earlierMessages inRoom:(NSString*)room;
+- (void)didLoadUsers: (NSArray *) users inRoom:(NSString*)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 
 @optional

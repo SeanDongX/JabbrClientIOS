@@ -21,6 +21,7 @@
 #import "CLARoom.h"
 #import "CLAUser.h"
 #import "CLATeamViewModel.h"
+#import "CLARoomViewModel.h"
 
 #import "CLASignalRMessageClient.h"
 
@@ -30,6 +31,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 
 @interface ChatViewController ()
+
+@property (strong, nonatomic) CLARoomViewModel *roomViewModel;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftMenuButton;
 
@@ -523,6 +526,14 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
 }
 
+- (void)didLoadUsers:(NSArray *)users inRoom:(NSString *)room {
+    if (room == nil || users == nil || users.count == 0){
+        return;
+    }
+    
+    self.roomViewModel.users = users;
+}
+
 - (void)didLoadEarlierMessages:(NSArray *)earlierMessages inRoom:(NSString *)room {
     if (room == nil || earlierMessages == nil || earlierMessages.count == 0){
         self.showLoadEarlierMessagesHeader = FALSE;
@@ -562,6 +573,13 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 
 -(void)initialzeCurrentThread {
+    self.roomViewModel = [[CLARoomViewModel alloc] init];
+    
+    CLARoom *room = [[CLARoom alloc] init];
+    room.name = self.currentChatThread.title;
+    
+    self.roomViewModel.room = room;
+    
     [self.messageClient loadRoom:self.currentChatThread.title];
 }
 
@@ -633,6 +651,9 @@ static NSString * const kDefaultChatThread = @"collarabot";
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     
     CLAChatInfoViewController *chatInfoViewController = [storyBoard instantiateViewControllerWithIdentifier:kChatInfoViewController];
+    
+    chatInfoViewController.roomViewModel = self.roomViewModel;
+    
     [self presentViewController:chatInfoViewController animated:YES completion:nil];
 }
 

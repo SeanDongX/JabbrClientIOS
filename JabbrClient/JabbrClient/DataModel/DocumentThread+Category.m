@@ -7,11 +7,12 @@
 //
 
 #import "DocumentThread+Category.h"
+#import "Constants.h"
 
 @implementation DocumentThread (Category)
 
 - (NSString *)getDisplayTitle {
-    return [NSString stringWithFormat:@">%@", self.title];
+    return [NSString stringWithFormat:@"%@%@", kDocPrefix, self.title];
 }
 
 @end

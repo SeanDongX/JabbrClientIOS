@@ -36,11 +36,17 @@ NSString *const kRightMenuViewController = @"RightMenuViewController";
 
 NSString *const kChatInfoViewController = @"ChatInfoViewController";
 
+NSString *const kUserPrefix = @"@";
+NSString *const kRoomPrefix = @"#";
+NSString *const kDocPrefix = @">";
+
 NSString *const kUsername = @"Username";
 NSString *const kAuthToken = @"AuthToken";
 NSString *const kLastAuthDate = @"LastAuthDate";
 NSString *const kTeamKey = @"TeamKey";
 int const kMessageLoadAnimateTimeThreshold = 60;
+
+float const kStatusBarHeight = 64.0;
 
 NSString *const kErrorDoamin = @"com.collara";
 NSString *const kErrorDescription = @"ErrorDescription";

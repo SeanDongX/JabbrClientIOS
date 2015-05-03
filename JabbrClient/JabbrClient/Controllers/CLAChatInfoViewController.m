@@ -8,23 +8,30 @@
 
 #import "CLAChatInfoViewController.h"
 #import "Constants.h"
+#import "CLARoomViewModel.h"
+#import "CLAUser.h"
+#import "CLARoom+Category.h"
 
 @interface CLAChatInfoViewController()
+
+@property (weak, nonatomic) IBOutlet UILabel *topicLabel;
 
 @end
 
 @implementation CLAChatInfoViewController
 
 - (void)viewDidLoad {
-
+    
+    //TODO: thorw if roomViewModel is nil
+    
     [super viewDidLoad];
     [self setupNavBar];
-    
+    [self initRoomInfo];
 }
 
 - (void)setupNavBar {
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0)];
+    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), kStatusBarHeight)];
     navBar.barTintColor = [Constants mainThemeColor];
     navBar.translucent = NO;
     navBar.titleTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
@@ -41,10 +48,53 @@
     [self.view addSubview:navBar];
 }
 
+- (void)initRoomInfo {
+    
+    [self.topicLabel setText:[self.roomViewModel.room getDisplayTitle]];
+}
+
+#pragma mark -
+#pragma mark - Event Handlers
+
 - (void)closeButtonClicked:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
 
 }
+
+- (IBAction)inviteButtonClicked:(id)sender {
+}
+
+- (IBAction)leaveButtonClicked:(id)sender {
+}
+
+#pragma mark -
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.roomViewModel.users == nil ? 0 : self.roomViewModel.users.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"ParticipantCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    CLAUser *user = self.roomViewModel.users[indexPath.row];
+    
+    if (user != nil) {
+        cell.textLabel.text = user.name;
+    }
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 
 @end

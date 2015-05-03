@@ -191,11 +191,8 @@
         NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
         if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0){
             
-            for (id user in userArrayFromDictionary) {
-                NSDictionary *userDictionary = user;
-                CLAUser *user = [[CLAUser alloc] init];
-                user.name = [userDictionary objectForKey:@"Name"];
-                [userArray addObject:user];
+            for (id userDictionary in userArrayFromDictionary) {
+                [userArray addObject:[self getUserFromRawData:userDictionary]];
             }
         }
         
@@ -296,6 +293,13 @@
                         senderDisplayName:userName
                                      date:date
                                      text:[messageDictionary objectForKey:@"Content"]];
+}
+
+- (CLAUser *)getUserFromRawData:(NSDictionary *)userDictionary
+{
+    CLAUser *user = [[CLAUser alloc] init];
+    user.name = [userDictionary objectForKey:@"Name"];
+    return  user;
 }
 
 - (void)setTyping:(NSArray *)data
@@ -418,13 +422,24 @@
     
     NSDictionary *roomInfoDictionary = data[0];
     NSString *room = [roomInfoDictionary objectForKey:@"Name"];
+    
+    
+    NSArray *usersArray = [roomInfoDictionary objectForKey:@"Users"];
+    NSMutableArray *users = [NSMutableArray array];
+    
+    for(NSDictionary *userDictionary in usersArray) {
+        [users addObject:[self getUserFromRawData:userDictionary]];
+    }
+    
+    [self.delegate didLoadUsers:users inRoom:room];
+    
     NSArray *recentMessageArray = [roomInfoDictionary objectForKey:@"RecentMessages"];
-
     NSMutableArray *earlierMessageArray = [NSMutableArray array];
+    
     for(NSDictionary *messageDictionary in recentMessageArray) {
         [earlierMessageArray addObject:[self getMessageFromRawData:messageDictionary]];
     }
-    
+
     [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];
     
         //TOOD: load users

@@ -24,12 +24,19 @@ FOUNDATION_EXPORT NSString *const kRightMenuViewController;
 
 FOUNDATION_EXPORT NSString *const kChatInfoViewController;
 
+FOUNDATION_EXPORT NSString *const kUserPrefix;
+FOUNDATION_EXPORT NSString *const kRoomPrefix;
+FOUNDATION_EXPORT NSString *const kDocPrefix;
+
 FOUNDATION_EXPORT NSString *const kUsername;
 FOUNDATION_EXPORT NSString *const kAuthToken;
 FOUNDATION_EXPORT NSString *const kLastAuthDate;
 FOUNDATION_EXPORT NSString *const kTeamKey;
 
 FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;
+
+FOUNDATION_EXPORT float const kStatusBarHeight;
+
 
 FOUNDATION_EXPORT NSString *const kErrorDoamin;
 FOUNDATION_EXPORT NSString *const kErrorDescription;

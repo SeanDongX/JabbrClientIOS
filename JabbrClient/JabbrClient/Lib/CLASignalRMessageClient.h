@@ -27,4 +27,8 @@
 - (void)SRConnectionDidClose:(SRConnection *)connection;
 - (void)SRConnection:(SRConnection *)connection didReceiveError:(NSError *)error;
 
+- (void)inviteUser:(NSString *)username inRoom:(NSString *)room;
+- (void)joinRoom:(NSString *)room;
+- (void)leaveRoom:(NSString *)room;
+
 @end

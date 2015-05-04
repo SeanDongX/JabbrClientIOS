@@ -20,7 +20,7 @@
 @interface CLAMessage : NSObject <JSQMessageData, NSCoding, NSCopying>
 
 
-@property (copy, nonatomic, readonly) NSString *oId;
+@property (copy, nonatomic) NSString *oId;
 
 /**
  *  Returns the string identifier that uniquely identifies the user who sent the message.

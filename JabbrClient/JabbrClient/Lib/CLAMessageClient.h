@@ -42,6 +42,10 @@
 - (void)sendTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room;
 
+- (void)inviteUser:(NSString *)username inRoom:(NSString *)room;
+- (void)joinRoom:(NSString *)room;
+- (void)leaveRoom:(NSString *)room;
+
 @end
 
 /**
@@ -65,6 +69,7 @@
 - (void)didLoadEarlierMessages: (NSArray *) earlierMessages inRoom:(NSString*)room;
 - (void)didLoadUsers: (NSArray *) users inRoom:(NSString*)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
+- (void)reaplceMessageId:(NSString *)tempMessageId withMessageId:(NSString *)serverMessageId;
 
 @optional
 

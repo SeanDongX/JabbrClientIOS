@@ -84,8 +84,7 @@
                             date:(NSDate *)date
                          isMedia:(BOOL)isMedia
 {
-    //oId can be null defore sending to sever and get an assigns one
-    //NSParameterAssert(oId != nil);
+    NSParameterAssert(oId != nil);
     NSParameterAssert(senderId != nil);
     NSParameterAssert(senderDisplayName != nil);
     NSParameterAssert(date != nil);

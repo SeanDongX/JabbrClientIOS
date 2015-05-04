@@ -177,6 +177,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
         [self initialzeCurrentThread];
     }
     
+    [self.messageClient joinRoom:self.currentChatThread.title];
     [self.collectionView reloadData];
 }
 
@@ -236,7 +237,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date
 {
-    CLAMessage *message = [CLAMessage messageWithOId:nil SenderId:senderId displayName:senderDisplayName text:text];
+    CLAMessage *message = [CLAMessage messageWithOId:[[NSUUID UUID] UUIDString] SenderId:senderId displayName:senderDisplayName text:text];
     [self sendMessage:message];
 }
 
@@ -563,7 +564,21 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 
-- (void)sendMessage: (id<JSQMessageData>)message {
+- (void)reaplceMessageId:(NSString *)tempMessageId withMessageId:(NSString *)serverMessageId {
+    
+    NSMutableArray *currentMessages = [self getCurrentMessageThread];
+    
+    for (CLAMessage *message in currentMessages) {
+        if ([[message.oId lowercaseString] isEqualToString: [tempMessageId lowercaseString]]) {
+            message.oId = serverMessageId;
+            break;
+        }
+    }
+}
+
+#pragma mark -
+
+- (void)sendMessage: (CLAMessage *)message {
     
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     [[self getCurrentMessageThread] addObject:message];

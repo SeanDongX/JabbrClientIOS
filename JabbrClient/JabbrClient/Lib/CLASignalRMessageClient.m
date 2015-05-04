@@ -68,8 +68,7 @@
     self.hub = [self.connection createHubProxy:@"Chat"];
     
     [self.hub on:@"logOn" perform:self selector:@selector(logon:)];
-//    [self.hub on:@"addUser" perform:self selector:@selector(addUser:)];
-//    [self.hub on:@"leave" perform:self selector:@selector(leave:)];
+    [self.hub on:@"replaceMessage" perform:self selector:@selector(replaceMessage:)];
     
     [self.hub on:@"addMessage" perform:self selector:@selector(incomingMessage:)];
 //    [self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
@@ -122,9 +121,10 @@
     [self.hub invoke:@"LoadRooms" withArgs:@[@[room]]];
 }
 
-- (void)sendMessage:(id<JSQMessageData>)message inRoom:(NSString *)room {
+- (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room {
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
-    [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
+    [messageData setObject:message.oId forKey:@"id"];
+    
     [messageData setObject:message.text forKey:@"content"];
     [messageData setObject:room forKey:@"room"];
     [self.hub invoke:@"Send" withArgs:@[messageData]];
@@ -135,6 +135,10 @@
 }
 
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room{
+    
+    if (messageId == nil) {
+        return;
+    }
     
     [self.hub invoke:@"GetPreviousMessages" withArgs:@[messageId] completionHandler:^(NSArray *data) {
         
@@ -265,6 +269,27 @@
     NSDictionary *messageDictionary = data[0];
     [self.delegate didReceiveMessage:[self getMessageFromRawData:messageDictionary] inRoom:room];
 }
+
+
+
+- (void)replaceMessage:(NSArray *)data {
+///{"C":"d-479787E6-A,0|B,7|C,0|D,7|E,0|F,2|G,2|H,6|I,2|J,2|K,2","M":[{"H":"Chat","M":"replaceMessage","A":["eb5e07e5-4327-86ee-20bd-e4556387ecd3",{"HtmlEncoded":false,"Id":"1b45008d-..."}...
+    //TODO: mark message as sent
+    if (!data && data.count <2)
+    {
+        return;
+    }
+    
+    NSString *tempMessageId = data[0];
+    
+    NSDictionary *messageDictionary = data[1];
+    NSString *serverMessageId = [messageDictionary objectForKey:@"Id"];
+    
+    if (tempMessageId != nil && serverMessageId != nil) {
+        [self.delegate reaplceMessageId:tempMessageId withMessageId: serverMessageId];
+    }
+}
+
 
 - (CLAMessage *)getMessageFromRawData:(NSDictionary *)messageDictionary
 {
@@ -443,6 +468,37 @@
     [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];
     
         //TOOD: load users
+}
+
+
+#pragma mark - 
+#pragma mark - Join, Leave, Invite and etc. Commands
+
+- (void)invokeCommand:(NSString *)comamndName withCommandParam:(NSString *)param fromRoom:(NSString *)room  {
+    //{"H":"chat","M":"Send","A":[{"id":"40868be9-e5de-9fe1-77eb-f4f6a6b14972","content":"/invite mike","room":"TestRoom"}]...
+    
+    NSString *commandText = [NSString stringWithFormat: @"/%@ %@", comamndName, param];
+    NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
+    [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
+    [messageData setObject:commandText forKey:@"content"];
+    [messageData setObject:room forKey:@"room"];
+    
+    [self.hub invoke:@"Send" withArgs:@[messageData]];
+}
+
+- (void)inviteUser:(NSString *)username inRoom:(NSString *)room; {
+    //{"H":"chat","M":"Send","A":[{"id":"40868be9-e5de-9fe1-77eb-f4f6a6b14972","content":"/invite mike","room":"TestRoom"}]...
+    [self invokeCommand:@"invite" withCommandParam:username fromRoom:room];
+}
+
+- (void)joinRoom:(NSString *)room {
+    
+    //{"H":"chat","M":"Send","A":[{"id":"883ea488-07eb-d63e-04d1-72bf8965c6f7","content":"/join testroom","room":"Welcome"}]...
+    [self invokeCommand:@"join" withCommandParam:room fromRoom:@""];
+}
+
+- (void)leaveRoom:(NSString *)room {
+    [self invokeCommand:@"leave" withCommandParam:room fromRoom:@""];
 }
 
 @end

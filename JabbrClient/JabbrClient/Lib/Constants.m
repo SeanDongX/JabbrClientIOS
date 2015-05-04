@@ -12,17 +12,23 @@
 
 @implementation Constants
 
-#if TARGET_IPHONE_SIMULATOR
+#ifdef DEBUG
 
-NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";//@"http://192.168.31.202:16207/";
+    #if TARGET_IPHONE_SIMULATOR
+
+    NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
+
+    #else
+
+    NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";
+
+    #endif
 
 #else
 
-NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";
+    NSString *const kServerBaseUrl = @"http://www.collara.co/";
 
 #endif
-
-//NSString *const kServerBaseUrl = @"http://www.collara.co/";
 
 NSString *const kChatNavigationController = @"ChatNavigationController";
 NSString *const kSignInNavigationController = @"SignInNavigationController";

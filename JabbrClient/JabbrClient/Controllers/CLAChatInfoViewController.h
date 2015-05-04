@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "CLARoomViewModel.h"
+#import "CLASignalRMessageClient.h"
 
 @interface CLAChatInfoViewController : UIViewController <UITableViewDataSource>
 
 @property (strong, nonatomic) CLARoomViewModel *roomViewModel;
+
+@property (strong, nonatomic) id<CLAMessageClient> messagClient;
 
 @end

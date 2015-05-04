@@ -23,8 +23,6 @@
 #import "CLATeamViewModel.h"
 #import "CLARoomViewModel.h"
 
-#import "CLASignalRMessageClient.h"
-
 #import "MBProgressHUD.h"
 
 static NSString * const kDefaultChatThread = @"collarabot";
@@ -178,6 +176,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     [self.messageClient joinRoom:self.currentChatThread.title];
+    [self.messageClient loadRoom:self.currentChatThread.title];
     [self.collectionView reloadData];
 }
 
@@ -541,7 +540,21 @@ static NSString * const kDefaultChatThread = @"collarabot";
         return;
     }
     
+    //Cautious check to see if the message is has been loaded before
     NSArray *currentMessages = [self.chatThreadRepository objectForKey:room];
+    
+    if (earlierMessages != nil && earlierMessages.count > 0
+        && currentMessages != nil && currentMessages.count > 0) {
+        
+        CLAMessage *firstEarlierMessage = earlierMessages[0];
+        
+        for(int i = 0; i< currentMessages.count; i++) {
+            CLAMessage *message = currentMessages[i];
+            if ([message.oId isEqualToString: firstEarlierMessage.oId]) {
+                return;
+            }
+        }
+    }
     
     NSMutableArray *aggregatedMessage = [NSMutableArray array];
     
@@ -594,8 +607,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     room.name = self.currentChatThread.title;
     
     self.roomViewModel.room = room;
-    
-    [self.messageClient loadRoom:self.currentChatThread.title];
 }
 
 
@@ -668,6 +679,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     CLAChatInfoViewController *chatInfoViewController = [storyBoard instantiateViewControllerWithIdentifier:kChatInfoViewController];
     
     chatInfoViewController.roomViewModel = self.roomViewModel;
+    chatInfoViewController.messagClient = self.messageClient;
     
     [self presentViewController:chatInfoViewController animated:YES completion:nil];
 }

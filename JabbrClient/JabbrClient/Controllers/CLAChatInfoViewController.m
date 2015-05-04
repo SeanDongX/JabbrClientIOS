@@ -11,10 +11,15 @@
 #import "CLARoomViewModel.h"
 #import "CLAUser.h"
 #import "CLARoom+Category.h"
+#import "CLAMessageClient.h"
+#import "CLARoundFrameButton.h"
+#import "CRToast.h"
 
 @interface CLAChatInfoViewController()
 
 @property (weak, nonatomic) IBOutlet UILabel *topicLabel;
+@property (weak, nonatomic) IBOutlet CLARoundFrameButton *leaveButton;
+@property (nonatomic, strong) NSMutableDictionary *toasOptions;
 
 @end
 
@@ -27,6 +32,7 @@
     [super viewDidLoad];
     [self setupNavBar];
     [self initRoomInfo];
+    [self setupToast];
 }
 
 - (void)setupNavBar {
@@ -53,6 +59,11 @@
     [self.topicLabel setText:[self.roomViewModel.room getDisplayTitle]];
 }
 
+- (void)setupToast {
+    self.toasOptions = [Constants toasOptions].mutableCopy;
+    self.toasOptions[kCRToastImageKey] = [Constants infoIconImage];
+}
+
 #pragma mark -
 #pragma mark - Event Handlers
 
@@ -66,6 +77,15 @@
 }
 
 - (IBAction)leaveButtonClicked:(id)sender {
+    if (self.messagClient != nil) {
+        [self.messagClient leaveRoom:self.roomViewModel.room.name];
+        [self.leaveButton setEnabled:NO];
+        [self.toasOptions setObject:@"You will not receive message from this topic any more." forKey:kCRToastTextKey];
+        [CRToastManager showNotificationWithOptions:self.toasOptions
+                                    completionBlock:nil];
+        
+        //TODO:make sure user can not send message to room until next join
+    }
 }
 
 #pragma mark -

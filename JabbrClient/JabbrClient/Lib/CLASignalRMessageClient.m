@@ -466,8 +466,6 @@
     }
 
     [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];
-    
-        //TOOD: load users
 }
 
 

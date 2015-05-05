@@ -92,10 +92,7 @@
     [self.hub invoke:@"Join" withArgs:@[]];
     self.connected = TRUE;
     
-    [self.hub invoke:@"GetTeams" withArgs:@[] completionHandler:^(id data){
-        [self loadTeamData:data];
-    }];
-    
+    [self invokeGetTeam];
     [self.delegate didOpenConnection];
 }
 
@@ -498,5 +495,16 @@
 - (void)leaveRoom:(NSString *)room {
     [self invokeCommand:@"leave" withCommandParam:room fromRoom:@""];
 }
+
+- (void)invokeGetTeam {
+    [self.hub invoke:@"GetTeams" withArgs:@[] completionHandler:^(id data){
+        [self loadTeamData:data];
+    }];
+}
+
+- (void)createTeam:(NSString *)teamName completionBlock:(void (^)(NSError*))completion {
+    completion(nil);
+}
+
 
 @end

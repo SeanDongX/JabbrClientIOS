@@ -17,6 +17,8 @@
 		144D9EE91AF03528005EBAD2 /* CLATeam.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EE81AF03528005EBAD2 /* CLATeam.m */; };
 		144D9EEC1AF035D6005EBAD2 /* CLARoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEB1AF035D6005EBAD2 /* CLARoom.m */; };
 		144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEE1AF03668005EBAD2 /* CLAUser.m */; };
+		1463CB061AF955AD00BC2513 /* CLACreateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */; };
+		1463CB0A1AF95D0A00BC2513 /* CLAToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB091AF95D0A00BC2513 /* CLAToastManager.m */; };
 		14679E961AC8838900316C9C /* ObjectThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14679E951AC8838900316C9C /* ObjectThread.m */; };
 		146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */; };
 		146D83DF1AF19BF500855C59 /* CLARoundFrameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83DE1AF19BF500855C59 /* CLARoundFrameButton.m */; };
@@ -78,6 +80,10 @@
 		144D9EEB1AF035D6005EBAD2 /* CLARoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARoom.m; path = JabbrClient/DataModel/CLARoom.m; sourceTree = SOURCE_ROOT; };
 		144D9EED1AF03668005EBAD2 /* CLAUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAUser.h; path = JabbrClient/DataModel/CLAUser.h; sourceTree = SOURCE_ROOT; };
 		144D9EEE1AF03668005EBAD2 /* CLAUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAUser.m; path = JabbrClient/DataModel/CLAUser.m; sourceTree = SOURCE_ROOT; };
+		1463CB041AF955AD00BC2513 /* CLACreateTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLACreateTeamViewController.h; sourceTree = "<group>"; };
+		1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLACreateTeamViewController.m; sourceTree = "<group>"; };
+		1463CB081AF95D0A00BC2513 /* CLAToastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAToastManager.h; path = Lib/CLAToastManager.h; sourceTree = "<group>"; };
+		1463CB091AF95D0A00BC2513 /* CLAToastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAToastManager.m; path = Lib/CLAToastManager.m; sourceTree = "<group>"; };
 		14679E941AC8838900316C9C /* ObjectThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectThread.h; path = JabbrClient/DataModel/ObjectThread.h; sourceTree = SOURCE_ROOT; };
 		14679E951AC8838900316C9C /* ObjectThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectThread.m; path = JabbrClient/DataModel/ObjectThread.m; sourceTree = SOURCE_ROOT; };
 		146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLASignUpViewController.h; sourceTree = "<group>"; };
@@ -167,6 +173,8 @@
 				1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */,
 				146D83DD1AF19BF500855C59 /* CLARoundFrameButton.h */,
 				146D83DE1AF19BF500855C59 /* CLARoundFrameButton.m */,
+				1463CB081AF95D0A00BC2513 /* CLAToastManager.h */,
+				1463CB091AF95D0A00BC2513 /* CLAToastManager.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -308,6 +316,8 @@
 				146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */,
 				1407AA001AF50E4D00E42F2C /* CLAChatInfoViewController.h */,
 				1407AA011AF50E4D00E42F2C /* CLAChatInfoViewController.m */,
+				1463CB041AF955AD00BC2513 /* CLACreateTeamViewController.h */,
+				1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -500,6 +510,7 @@
 			files = (
 				142046461AD1F866006143D5 /* SignInViewController.m in Sources */,
 				1430E00F1AF6E0CE00F2D974 /* CLARoom+Category.m in Sources */,
+				1463CB0A1AF95D0A00BC2513 /* CLAToastManager.m in Sources */,
 				144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
 				14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */,
@@ -515,6 +526,7 @@
 				149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */,
 				14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */,
 				14B6FB4F1ACB397700E5B5A5 /* ChatThread.m in Sources */,
+				1463CB061AF955AD00BC2513 /* CLACreateTeamViewController.m in Sources */,
 				14B515741ABF138A0000CC4F /* main.m in Sources */,
 				142046491AD203FD006143D5 /* Constants.m in Sources */,
 				146D83DF1AF19BF500855C59 /* CLARoundFrameButton.m in Sources */,

@@ -13,7 +13,7 @@
 #import "CLARoom+Category.h"
 #import "CLAMessageClient.h"
 #import "CLARoundFrameButton.h"
-#import "CRToast.h"
+#import "CLAToastManager.h"
 
 @interface CLAChatInfoViewController()
 
@@ -32,7 +32,6 @@
     [super viewDidLoad];
     [self setupNavBar];
     [self initRoomInfo];
-    [self setupToast];
 }
 
 - (void)setupNavBar {
@@ -59,11 +58,6 @@
     [self.topicLabel setText:[self.roomViewModel.room getDisplayTitle]];
 }
 
-- (void)setupToast {
-    self.toasOptions = [Constants toasOptions].mutableCopy;
-    self.toasOptions[kCRToastImageKey] = [Constants infoIconImage];
-}
-
 #pragma mark -
 #pragma mark - Event Handlers
 
@@ -80,9 +74,8 @@
     if (self.messagClient != nil) {
         [self.messagClient leaveRoom:self.roomViewModel.room.name];
         [self.leaveButton setEnabled:NO];
-        [self.toasOptions setObject:@"You will not receive message from this topic any more." forKey:kCRToastTextKey];
-        [CRToastManager showNotificationWithOptions:self.toasOptions
-                                    completionBlock:nil];
+        
+        [CLAToastManager showDefaultInfoToastWithText:@"You will not receive message from this topic any more." completionBlock:nil];
         
         //TODO:make sure user can not send message to room until next join
     }

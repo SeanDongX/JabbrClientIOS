@@ -11,6 +11,7 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "LeftMenuViewController.h"
 #import "CLAChatInfoViewController.h"
+#import "CLACreateTeamViewController.h"
 #import "ObjectThread.h"
 #import "ChatThread+Category.h"
 #import "DemoData.h"
@@ -134,7 +135,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.rightMenuButton setImage: [Constants docIconImage]];
     
     
-    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(ShowChatInfoView)];
+    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(ShowCreateTeamView)];//(ShowChatInfoView)];
+    
     [chatThreadSetupButon setTitle: @""];
     [chatThreadSetupButon setTintColor:[UIColor whiteColor]];
     
@@ -482,7 +484,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     if (teams == nil || teams.count == 0 || teams[0] == nil) {
-        //TODO: show team creation page
+        [self ShowCreateTeamView];
     }
     
     CLATeamViewModel *teamViewModel = teams[0];
@@ -683,5 +685,18 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
     [self presentViewController:chatInfoViewController animated:YES completion:nil];
 }
+
+
+- (void)ShowCreateTeamView {
+    
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    
+    CLACreateTeamViewController *createTeamViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateTeamViewController];
+    
+    createTeamViewController.messagClient = self.messageClient;
+    
+    [self presentViewController:createTeamViewController animated:YES completion:nil];
+}
+
 
 @end

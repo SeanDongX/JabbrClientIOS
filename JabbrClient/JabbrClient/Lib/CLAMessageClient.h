@@ -46,6 +46,9 @@
 - (void)joinRoom:(NSString *)room;
 - (void)leaveRoom:(NSString *)room;
 
+- (void)invokeGetTeam;
+- (void)createTeam:(NSString *)teamName completionBlock:(void (^)(NSError*))completion;
+
 @end
 
 /**
@@ -70,7 +73,6 @@
 - (void)didLoadUsers: (NSArray *) users inRoom:(NSString*)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 - (void)reaplceMessageId:(NSString *)tempMessageId withMessageId:(NSString *)serverMessageId;
-
 @optional
 
 /**

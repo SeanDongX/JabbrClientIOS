@@ -83,7 +83,7 @@
 }
 
 - (IBAction)signUpClicked:(id)sender {
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLASignUpViewController *signUpViewController = [storyBoard instantiateViewControllerWithIdentifier:kSignUpController];
     [self presentViewController:signUpViewController animated:TRUE completion:nil];

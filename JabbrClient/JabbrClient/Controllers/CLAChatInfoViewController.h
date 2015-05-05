@@ -14,6 +14,6 @@
 
 @property (strong, nonatomic) CLARoomViewModel *roomViewModel;
 
-@property (strong, nonatomic) id<CLAMessageClient> messagClient;
+@property (strong, nonatomic) id<CLAMessageClient> messageClient;
 
 @end

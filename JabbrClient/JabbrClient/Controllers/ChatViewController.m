@@ -676,12 +676,12 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)ShowChatInfoView {
     
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLAChatInfoViewController *chatInfoViewController = [storyBoard instantiateViewControllerWithIdentifier:kChatInfoViewController];
     
     chatInfoViewController.roomViewModel = self.roomViewModel;
-    chatInfoViewController.messagClient = self.messageClient;
+    chatInfoViewController.messageClient = self.messageClient;
     
     [self presentViewController:chatInfoViewController animated:YES completion:nil];
 }
@@ -689,11 +689,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)ShowCreateTeamView {
     
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLACreateTeamViewController *createTeamViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateTeamViewController];
     
-    createTeamViewController.messagClient = self.messageClient;
+    createTeamViewController.messageClient = self.messageClient;
     
     [self presentViewController:createTeamViewController animated:YES completion:nil];
 }

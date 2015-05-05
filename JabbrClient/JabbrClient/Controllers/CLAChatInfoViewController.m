@@ -19,7 +19,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *topicLabel;
 @property (weak, nonatomic) IBOutlet CLARoundFrameButton *leaveButton;
-@property (nonatomic, strong) NSMutableDictionary *toasOptions;
 
 @end
 
@@ -71,8 +70,8 @@
 }
 
 - (IBAction)leaveButtonClicked:(id)sender {
-    if (self.messagClient != nil) {
-        [self.messagClient leaveRoom:self.roomViewModel.room.name];
+    if (self.messageClient != nil) {
+        [self.messageClient leaveRoom:self.roomViewModel.room.name];
         [self.leaveButton setEnabled:NO];
         
         [CLAToastManager showDefaultInfoToastWithText:@"You will not receive message from this topic any more." completionBlock:nil];

@@ -13,6 +13,8 @@
 
 FOUNDATION_EXPORT NSString *const kServerBaseUrl;
 
+FOUNDATION_EXPORT NSString *const kMainStoryBoard;
+
 FOUNDATION_EXPORT NSString *const kChatNavigationController;
 FOUNDATION_EXPORT NSString *const kSignInNavigationController;
 FOUNDATION_EXPORT NSString *const kSignUpController;
@@ -24,6 +26,7 @@ FOUNDATION_EXPORT NSString *const kRightMenuViewController;
 
 FOUNDATION_EXPORT NSString *const kChatInfoViewController;
 FOUNDATION_EXPORT NSString *const kCreateTeamViewController;
+FOUNDATION_EXPORT NSString *const kCreateRoomViewController;
 
 FOUNDATION_EXPORT NSString *const kUserPrefix;
 FOUNDATION_EXPORT NSString *const kRoomPrefix;
@@ -58,7 +61,10 @@ FOUNDATION_EXPORT NSString *const kErrorMsgSignInFailureUnknown;
 + (UIImage *)docIconImage;
 + (UIImage *)infoIconImage;
 + (UIImage *)closeIconImage;
++ (UIImage *)addIconImage;
+
 + (UIColor *)mainThemeColor;
 + (UIColor*)mainThemeContrastColor;
++ (UIColor*)mainThemeContrastFocusColor;
 + (UIColor*)warningColor;
 @end

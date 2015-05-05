@@ -28,6 +28,8 @@
 #import "ChatThread+Category.h"
 #import "Constants.h"
 #import "SlidingViewController.h"
+#import "CLACreateRoomViewController.h"
+#import "CLARoundFrameButton.h"
 
 @interface LeftMenuViewController ()
 
@@ -69,8 +71,14 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //Last one for settings
-    return self.chatThreads.count + 1;
+    switch (section) {
+        case 0:
+            return self.chatThreads.count + 1;
+            
+        default:
+            return 0;
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -95,7 +103,49 @@
     return cell;
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - Table Section
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    CGRect frame = tableView.frame;
+    
+    UIView *hightlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 5, 30)];
+    [hightlightView setBackgroundColor:[Constants mainThemeColor]];
+    
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 30)];
+    title.text = [NSString stringWithFormat: @"Topics (%lu)", (unsigned long)self.chatThreads.count];
+    title.textColor = [UIColor whiteColor];
+    
+    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];
+    
+    [addButton addTarget:self action:@selector(showCreateTopicView) forControlEvents:UIControlEventTouchUpInside];
+
+    [addButton setImage:[Constants addIconImage] forState:UIControlStateNormal];
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    
+    [headerView setBackgroundColor: [Constants mainThemeContrastFocusColor]];
+    
+    [headerView addSubview:hightlightView];
+    [headerView addSubview:title];
+    [headerView addSubview:addButton];
+
+    return headerView;
+}
+
+
+#pragma mark - TableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // This undoes the Zoom Transition's scale because it affects the other transitions.
@@ -127,4 +177,21 @@
     [self.slidingViewController resetTopViewAnimated:YES];
 }
 
+
+#pragma mark -
+#pragma mark - Event Handlers
+
+- (void)showCreateTopicView {
+        
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
+    
+    CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
+    
+    //TOOD: find a good strategy to pass around messageClient on chatvc, perhaps a singleton (need to take care of messageClient.deleagte though in that case)
+    
+    createRoomViewController.messageClient = nil;
+    
+    [self presentViewController:createRoomViewController animated:YES completion:nil];
+
+}
 @end

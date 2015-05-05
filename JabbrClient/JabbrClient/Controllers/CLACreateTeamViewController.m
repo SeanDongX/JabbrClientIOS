@@ -9,9 +9,8 @@
 #import "CLACreateTeamViewController.h"
 #import "Constants.h"
 #import "CLAToastManager.h"
-@interface CLACreateTeamViewController ()
 
-@property (nonatomic, strong) NSMutableDictionary *toasOptions;
+@interface CLACreateTeamViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *teamNameTextField;
 
@@ -44,30 +43,31 @@
 }
 
 - (IBAction)createTeamClicked:(id)sender {
+    NSString *teamName = self.teamNameTextField.text;
     
-    if (self.teamNameTextField.text == nil || self.teamNameTextField.text.length == 0) {
+    if ( teamName == nil || teamName.length == 0) {
         
         [CLAToastManager showDefaultInfoToastWithText:@"Oh, an empty name. That will not work." completionBlock:nil];
     }
-    else if (self.teamNameTextField.text.length > kTeamNameMaxLength) {
+    else if (teamName.length > kTeamNameMaxLength) {
         
         [CLAToastManager showDefaultInfoToastWithText:[NSString stringWithFormat:@"Awww, do you really need more than %d characters for your team name?", kTeamNameMaxLength ]completionBlock:nil];
     }
     else {
         
-        [self.messagClient createTeam:(NSString *)@"" completionBlock: ^(NSError *error){
+        [self.messageClient createTeam:(NSString *)@"" completionBlock: ^(NSError *error){
             
             if (error == nil) {
                 
                 [self dismissViewControllerAnimated:YES completion: ^{
-                    [self.messagClient invokeGetTeam];
+                    [self.messageClient invokeGetTeam];
                 }];
                 
             }
             else {
                 
                 //TODO: define error code
-                [CLAToastManager showDefaultInfoToastWithText: [NSString stringWithFormat:@"Oh, \"%@\" is taken. Try you luck with a new name.", self.teamNameTextField.text] completionBlock:nil];
+                [CLAToastManager showDefaultInfoToastWithText: [NSString stringWithFormat:@"Oh, \"%@\" is taken. Try you luck with a new name.", teamName] completionBlock:nil];
             }
         
         }];

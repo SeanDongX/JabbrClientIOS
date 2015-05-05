@@ -19,6 +19,7 @@
 		144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEE1AF03668005EBAD2 /* CLAUser.m */; };
 		1463CB061AF955AD00BC2513 /* CLACreateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */; };
 		1463CB0A1AF95D0A00BC2513 /* CLAToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB091AF95D0A00BC2513 /* CLAToastManager.m */; };
+		1463CB0D1AF9691300BC2513 /* CLACreateRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB0C1AF9691300BC2513 /* CLACreateRoomViewController.m */; };
 		14679E961AC8838900316C9C /* ObjectThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14679E951AC8838900316C9C /* ObjectThread.m */; };
 		146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */; };
 		146D83DF1AF19BF500855C59 /* CLARoundFrameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83DE1AF19BF500855C59 /* CLARoundFrameButton.m */; };
@@ -84,6 +85,8 @@
 		1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLACreateTeamViewController.m; sourceTree = "<group>"; };
 		1463CB081AF95D0A00BC2513 /* CLAToastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAToastManager.h; path = Lib/CLAToastManager.h; sourceTree = "<group>"; };
 		1463CB091AF95D0A00BC2513 /* CLAToastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAToastManager.m; path = Lib/CLAToastManager.m; sourceTree = "<group>"; };
+		1463CB0B1AF9691300BC2513 /* CLACreateRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLACreateRoomViewController.h; sourceTree = "<group>"; };
+		1463CB0C1AF9691300BC2513 /* CLACreateRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLACreateRoomViewController.m; sourceTree = "<group>"; };
 		14679E941AC8838900316C9C /* ObjectThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectThread.h; path = JabbrClient/DataModel/ObjectThread.h; sourceTree = SOURCE_ROOT; };
 		14679E951AC8838900316C9C /* ObjectThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectThread.m; path = JabbrClient/DataModel/ObjectThread.m; sourceTree = SOURCE_ROOT; };
 		146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLASignUpViewController.h; sourceTree = "<group>"; };
@@ -318,6 +321,8 @@
 				1407AA011AF50E4D00E42F2C /* CLAChatInfoViewController.m */,
 				1463CB041AF955AD00BC2513 /* CLACreateTeamViewController.h */,
 				1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */,
+				1463CB0B1AF9691300BC2513 /* CLACreateRoomViewController.h */,
+				1463CB0C1AF9691300BC2513 /* CLACreateRoomViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -518,6 +523,7 @@
 				1407AA021AF50E4D00E42F2C /* CLAChatInfoViewController.m in Sources */,
 				14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */,
 				144D9EEC1AF035D6005EBAD2 /* CLARoom.m in Sources */,
+				1463CB0D1AF9691300BC2513 /* CLACreateRoomViewController.m in Sources */,
 				14B6FB581ACB5AC700E5B5A5 /* DemoData.m in Sources */,
 				142046431AD1EC91006143D5 /* AuthManager.m in Sources */,
 				1479A8101ACC372800A31A7E /* ChatThread+Category.m in Sources */,

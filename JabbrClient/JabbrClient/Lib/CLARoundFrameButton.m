@@ -10,18 +10,22 @@
 
 @implementation CLARoundFrameButton
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     [super awakeFromNib];
     [self setButtonStyle];
 }
 
 - (void)setButtonStyle {
-    
+    [self.titleLabel setTextColor:[UIColor whiteColor]];
     [[self layer] setCornerRadius:5.0f];
     [[self layer] setMasksToBounds:YES];
     [[self layer] setBorderWidth:1.0f];
     [[self layer] setBorderColor:[UIColor whiteColor].CGColor];
+}
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    [self setButtonStyle];
+    return self;
 }
 @end

@@ -1,5 +1,5 @@
 //
-//  CLACreateTeamViewController.h
+//  CLACreateRoomViewController.h
 //  Collara
 //
 //  Created by Sean on 05/05/15.
@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "CLASignalRMessageClient.h"
+#import "SlidingViewController.h"
 
-@interface CLACreateTeamViewController : UIViewController
+@interface CLACreateRoomViewController : UIViewController
 
 @property (strong, nonatomic) id<CLAMessageClient> messageClient;
+@property (strong, nonatomic) SlidingViewController *slidingMenuViewController;
 
 @end

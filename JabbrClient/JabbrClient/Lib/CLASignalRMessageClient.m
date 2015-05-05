@@ -481,6 +481,12 @@
     [self.hub invoke:@"Send" withArgs:@[messageData]];
 }
 
+
+- (void)createRoom:(NSString *)roomName completionBlock:(void (^)(NSError *)) completion{
+    //TODO: create room with server
+    completion(nil);
+}
+
 - (void)inviteUser:(NSString *)username inRoom:(NSString *)room; {
     //{"H":"chat","M":"Send","A":[{"id":"40868be9-e5de-9fe1-77eb-f4f6a6b14972","content":"/invite mike","room":"TestRoom"}]...
     [self invokeCommand:@"invite" withCommandParam:username fromRoom:room];
@@ -503,6 +509,7 @@
 }
 
 - (void)createTeam:(NSString *)teamName completionBlock:(void (^)(NSError*))completion {
+    //TODO: create team with server
     completion(nil);
 }
 

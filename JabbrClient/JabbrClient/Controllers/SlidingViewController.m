@@ -83,4 +83,10 @@
     [self setTopNavigationControllerWithKeyIdentifier:kSignInNavigationController];
     [self resetTopViewAnimated:TRUE];
 }
+
+
+- (void)switchToRoom: (NSString *)room {
+    //TODO:swith to chatvc and room
+}
+
 @end

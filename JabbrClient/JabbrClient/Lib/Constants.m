@@ -16,12 +16,13 @@
 
     #if TARGET_IPHONE_SIMULATOR
 
-    NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
+    //NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
+    NSString *const kServerBaseUrl = @"http://www.collara.co/";
 
     #else
 
-    NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";
-
+    //NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";
+    NSString *const kServerBaseUrl = @"http://www.collara.co/";
     #endif
 
 #else
@@ -29,6 +30,9 @@
     NSString *const kServerBaseUrl = @"http://www.collara.co/";
 
 #endif
+
+NSString *const kMainStoryBoard = @"Main";
+
 
 NSString *const kChatNavigationController = @"ChatNavigationController";
 NSString *const kSignInNavigationController = @"SignInNavigationController";
@@ -41,6 +45,8 @@ NSString *const kLeftMenuViewController = @"LeftMenuViewController";
 NSString *const kRightMenuViewController = @"RightMenuViewController";
 
 NSString *const kChatInfoViewController = @"ChatInfoViewController";
+NSString *const kCreateTeamViewController = @"CreateTeamViewController";
+NSString *const kCreateRoomViewController = @"CreateRoomViewController";
 
 NSString *const kUserPrefix = @"@";
 NSString *const kRoomPrefix = @"#";
@@ -50,6 +56,9 @@ NSString *const kUsername = @"Username";
 NSString *const kAuthToken = @"AuthToken";
 NSString *const kLastAuthDate = @"LastAuthDate";
 NSString *const kTeamKey = @"TeamKey";
+
+int const kTeamNameMaxLength = 50;
+
 int const kMessageLoadAnimateTimeThreshold = 60;
 
 float const kStatusBarHeight = 64.0;
@@ -78,33 +87,39 @@ NSString *const kErrorMsgSignInFailureUnknown = @"Something went wrong. How abou
 }
 
 + (UIImage *)menuIconImage {
-    FAKIonIcons *menuIcon = [FAKIonIcons iosMoreOutlineIconWithSize:30];
-    [menuIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
-    return [menuIcon imageWithSize:CGSizeMake(30, 30)];
+    FAKIonIcons *iccon = [FAKIonIcons iosMoreOutlineIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
 + (UIImage *)chatIconImage {
-    FAKIonIcons *chatIcon = [FAKIonIcons iosChatbubbleOutlineIconWithSize:30];
-    [chatIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
-    return [chatIcon imageWithSize:CGSizeMake(30, 30)];
+    FAKIonIcons *iccon = [FAKIonIcons iosChatbubbleOutlineIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
 + (UIImage *)docIconImage {
-    FAKIonIcons *docIcon = [FAKIonIcons iosPaperOutlineIconWithSize:30];
-    [docIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
-    return [docIcon imageWithSize:CGSizeMake(30, 30)];
+    FAKIonIcons *iccon = [FAKIonIcons iosPaperOutlineIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
 + (UIImage *)infoIconImage {
-    FAKIonIcons *cogIcon = [FAKIonIcons iosInformationOutlineIconWithSize:30];
-    [cogIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
-    return [cogIcon imageWithSize:CGSizeMake(30, 30)];
+    FAKIonIcons *iccon = [FAKIonIcons iosInformationOutlineIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
 + (UIImage *)closeIconImage {
-    FAKIonIcons *closeIcon = [FAKIonIcons iosCloseOutlineIconWithSize:30];
-    [closeIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
-    return [closeIcon imageWithSize:CGSizeMake(30, 30)];
+    FAKIonIcons *iccon = [FAKIonIcons iosCloseOutlineIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
+}
+
++ (UIImage *)addIconImage {
+    FAKIonIcons *iccon = [FAKIonIcons iosPlusOutlineIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
 + (UIColor*)mainThemeColor {
@@ -113,6 +128,10 @@ NSString *const kErrorMsgSignInFailureUnknown = @"Something went wrong. How abou
 
 + (UIColor*)mainThemeContrastColor {
     return [UIColor colorWithRed:(47/255.0) green:(64/255.0) blue:(80/255.0) alpha:1];
+}
+
++ (UIColor*)mainThemeContrastFocusColor {
+    return [UIColor colorWithRed:(41/255.0) green:(56/255.0) blue:(70/255.0) alpha:1];
 }
 
 + (UIColor*)warningColor {

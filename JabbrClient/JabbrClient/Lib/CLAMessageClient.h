@@ -42,6 +42,8 @@
 - (void)sendTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room;
 
+
+- (void)createRoom:(NSString *)roomName completionBlock:(void (^)(NSError*))completion;
 - (void)inviteUser:(NSString *)username inRoom:(NSString *)room;
 - (void)joinRoom:(NSString *)room;
 - (void)leaveRoom:(NSString *)room;

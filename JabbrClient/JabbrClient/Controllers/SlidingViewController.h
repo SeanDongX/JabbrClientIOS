@@ -14,5 +14,6 @@
 - (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier;
 - (void)switchToMainView;
 - (void)switchToSignInView;
-    
+- (void)switchToRoom: (NSString *)room;
+
 @end

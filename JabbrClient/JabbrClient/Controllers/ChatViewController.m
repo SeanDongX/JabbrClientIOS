@@ -135,7 +135,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.rightMenuButton setImage: [Constants docIconImage]];
     
     
-    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(ShowCreateTeamView)];//(ShowChatInfoView)];
+    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(ShowCreateTeamView)];
     
     [chatThreadSetupButon setTitle: @""];
     [chatThreadSetupButon setTintColor:[UIColor whiteColor]];

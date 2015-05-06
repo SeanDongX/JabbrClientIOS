@@ -658,7 +658,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are almost there" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4L-wy-hbF" userLabel="Header">
-                                <rect key="frame" x="32" y="164" width="256" height="30"/>
+                                <rect key="frame" x="32" y="80" width="256" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="9QF-h7-rLr"/>
                                 </constraints>
@@ -667,7 +667,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your team to start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t8W-wX-VH6">
-                                <rect key="frame" x="32" y="213" width="256" height="21"/>
+                                <rect key="frame" x="32" y="119" width="256" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="O4A-06-Xev"/>
                                 </constraints>
@@ -676,7 +676,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HB1-3G-gsP" userLabel="TeamName">
-                                <rect key="frame" x="32" y="264" width="256" height="40"/>
+                                <rect key="frame" x="32" y="160" width="256" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="qGx-PO-Apv"/>
                                 </constraints>
@@ -684,7 +684,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4Q-oV-qjl" userLabel="GoButton" customClass="CLARoundFrameButton">
-                                <rect key="frame" x="32" y="354" width="256" height="40"/>
+                                <rect key="frame" x="32" y="250" width="256" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="u4v-oO-Zcf"/>
                                 </constraints>
@@ -700,11 +700,11 @@
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="t8W-wX-VH6" secondAttribute="centerX" id="3ha-hm-ovO"/>
                             <constraint firstAttribute="centerX" secondItem="E4Q-oV-qjl" secondAttribute="centerX" id="44o-Lp-hKi"/>
-                            <constraint firstItem="HB1-3G-gsP" firstAttribute="top" secondItem="t8W-wX-VH6" secondAttribute="bottom" constant="30" id="I1k-0o-Ot8"/>
+                            <constraint firstItem="HB1-3G-gsP" firstAttribute="top" secondItem="qIF-pr-372" secondAttribute="bottom" constant="140" id="94E-dR-xUd"/>
+                            <constraint firstItem="HB1-3G-gsP" firstAttribute="top" secondItem="t8W-wX-VH6" secondAttribute="bottom" constant="20" id="I1k-0o-Ot8"/>
                             <constraint firstItem="t8W-wX-VH6" firstAttribute="width" secondItem="V7x-oV-eE9" secondAttribute="width" multiplier="0.8" id="K0A-BT-8hc"/>
                             <constraint firstAttribute="width" secondItem="HB1-3G-gsP" secondAttribute="width" multiplier="1.25" constant="1" id="R8P-fB-Slz"/>
-                            <constraint firstItem="HB1-3G-gsP" firstAttribute="top" secondItem="L4L-wy-hbF" secondAttribute="bottom" constant="70" id="Y9k-Pd-7BK"/>
-                            <constraint firstAttribute="centerY" secondItem="HB1-3G-gsP" secondAttribute="centerY" id="Yly-RU-5hb"/>
+                            <constraint firstItem="HB1-3G-gsP" firstAttribute="top" secondItem="L4L-wy-hbF" secondAttribute="bottom" constant="50" id="Y9k-Pd-7BK"/>
                             <constraint firstAttribute="centerX" secondItem="HB1-3G-gsP" secondAttribute="centerX" id="e1T-bC-RDY"/>
                             <constraint firstAttribute="centerX" secondItem="L4L-wy-hbF" secondAttribute="centerX" id="hMi-kh-HsA"/>
                             <constraint firstAttribute="width" secondItem="E4Q-oV-qjl" secondAttribute="width" multiplier="1.25" id="iCx-nu-7LZ"/>
@@ -733,7 +733,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Topic" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8mP-yL-80r" userLabel="Topic">
-                                <rect key="frame" x="32" y="264" width="256" height="40"/>
+                                <rect key="frame" x="32" y="100" width="256" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="IPt-Hh-CgU"/>
                                 </constraints>
@@ -741,7 +741,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Qr-nE-aXI" userLabel="GoButton" customClass="CLARoundFrameButton">
-                                <rect key="frame" x="32" y="354" width="256" height="40"/>
+                                <rect key="frame" x="32" y="190" width="256" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="hvS-gO-Cx2"/>
                                 </constraints>
@@ -757,9 +757,9 @@
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="8mP-yL-80r" secondAttribute="centerX" id="JMI-cL-NMW"/>
                             <constraint firstAttribute="width" secondItem="4Qr-nE-aXI" secondAttribute="width" multiplier="1.25" id="ZAR-0j-6HW"/>
-                            <constraint firstAttribute="centerY" secondItem="8mP-yL-80r" secondAttribute="centerY" id="ffl-CP-9qY"/>
                             <constraint firstItem="4Qr-nE-aXI" firstAttribute="top" secondItem="8mP-yL-80r" secondAttribute="bottom" constant="50" id="iJc-04-YtH"/>
                             <constraint firstAttribute="width" secondItem="8mP-yL-80r" secondAttribute="width" multiplier="1.25" constant="1" id="qPO-1N-bw9"/>
+                            <constraint firstItem="8mP-yL-80r" firstAttribute="top" secondItem="B7w-8T-Ju7" secondAttribute="bottom" constant="80" id="wbN-aO-LDv"/>
                             <constraint firstAttribute="centerX" secondItem="4Qr-nE-aXI" secondAttribute="centerX" id="z7W-TK-YLI"/>
                         </constraints>
                     </view>

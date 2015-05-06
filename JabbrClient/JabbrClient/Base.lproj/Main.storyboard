@@ -752,10 +752,22 @@
                                     <action selector="goButtonClicked:" destination="ChY-MW-Lfx" eventType="touchUpInside" id="Ddp-uK-tfG"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Only letters and space please" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucx-yB-FqH">
+                                <rect key="frame" x="32" y="150" width="256" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="CkT-IM-UQR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="ucx-yB-FqH" firstAttribute="width" secondItem="8mP-yL-80r" secondAttribute="width" id="1SP-X1-6f2"/>
+                            <constraint firstItem="ucx-yB-FqH" firstAttribute="top" secondItem="8mP-yL-80r" secondAttribute="bottom" constant="10" id="Fga-iE-w0H"/>
                             <constraint firstAttribute="centerX" secondItem="8mP-yL-80r" secondAttribute="centerX" id="JMI-cL-NMW"/>
+                            <constraint firstAttribute="centerX" secondItem="ucx-yB-FqH" secondAttribute="centerX" id="W1K-Kd-KkY"/>
                             <constraint firstAttribute="width" secondItem="4Qr-nE-aXI" secondAttribute="width" multiplier="1.25" id="ZAR-0j-6HW"/>
                             <constraint firstItem="4Qr-nE-aXI" firstAttribute="top" secondItem="8mP-yL-80r" secondAttribute="bottom" constant="50" id="iJc-04-YtH"/>
                             <constraint firstAttribute="width" secondItem="8mP-yL-80r" secondAttribute="width" multiplier="1.25" constant="1" id="qPO-1N-bw9"/>

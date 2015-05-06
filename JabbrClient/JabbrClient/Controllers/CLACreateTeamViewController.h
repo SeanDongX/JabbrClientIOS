@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CLASignalRMessageClient.h"
+#import "CLAKeyboardAwareViewController.h"
 
-@interface CLACreateTeamViewController : UIViewController
-
-@property (strong, nonatomic) id<CLAMessageClient> messageClient;
+@interface CLACreateTeamViewController : CLAKeyboardAwareViewController
 
 @end

@@ -58,17 +58,31 @@
     
     NSString *topic = self.topicLabel.text;
     
-    [self.messageClient createTeam:topic completionBlock:^(NSError *error){
+    CLASignalRMessageClient *messageClient = [CLASignalRMessageClient sharedInstance];
+    
+    [messageClient createRoom:topic completionBlock:^(NSError *error){
         if (error == nil) {
             //TODO: create existing topic should also go to the topic
             [self.slidingMenuViewController switchToRoom:topic];
         }
         else {
+            
             //TODO: define error code
-            [CLAToastManager showDefaultInfoToastWithText: @"Oh, something went wrong. Let's try it again." completionBlock:nil];
+            NSString *errorDescription = [error.userInfo objectForKey:NSLocalizedDescriptionKey];
+                                          
+            if (errorDescription!= nil && errorDescription.length > 0) {
+                
+                [CLAToastManager showDefaultInfoToastWithText: errorDescription completionBlock:nil];
+            }
+            else {
+                [CLAToastManager showDefaultInfoToastWithText: @"Oh, something went wrong. Let's try it again." completionBlock:nil];
+            }
         }
     }];
 }
 
+- (void)error {
+    
+}
 
 @end

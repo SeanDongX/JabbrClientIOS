@@ -25,6 +25,64 @@
 @implementation CLASignalRMessageClient
 
 #pragma mark -
+#pragma mark Singleton 
+
+static CLASignalRMessageClient *SINGLETON = nil;
+static bool isFirstAccess = YES;
+
++ (id)sharedInstance
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        isFirstAccess = NO;
+        SINGLETON = [[super allocWithZone:NULL] init];
+    });
+    
+    return SINGLETON;
+}
+
+
+#pragma mark - Life Cycle
+
++ (id) allocWithZone:(NSZone *)zone
+{
+    return [self sharedInstance];
+}
+
++ (id)copyWithZone:(struct _NSZone *)zone
+{
+    return [self sharedInstance];
+}
+
++ (id)mutableCopyWithZone:(struct _NSZone *)zone
+{
+    return [self sharedInstance];
+}
+
+- (id)copy
+{
+    return [[CLASignalRMessageClient alloc] init];
+}
+
+- (id)mutableCopy
+{
+    return [[CLASignalRMessageClient alloc] init];
+}
+
+- (id) init
+{
+    if(SINGLETON){
+        return SINGLETON;
+    }
+    if (isFirstAccess) {
+        [self doesNotRecognizeSelector:_cmd];
+    }
+    self = [super init];
+    return self;
+}
+
+
+#pragma mark -
 #pragma mark View Actions
 
 - (void)connect
@@ -67,21 +125,23 @@
     
     self.hub = [self.connection createHubProxy:@"Chat"];
     
-    [self.hub on:@"logOn" perform:self selector:@selector(logon:)];
-    [self.hub on:@"replaceMessage" perform:self selector:@selector(replaceMessage:)];
-    
-    [self.hub on:@"addMessage" perform:self selector:@selector(incomingMessage:)];
-//    [self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
-//    [self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
-    [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
-    
-    [self.hub on:@"roomLoaded" perform:self selector:@selector(roomLoaded:)];
+    [self crateHubSubscription];
     
     [self.connection setDelegate:self];
     [self.connection start];
-    
     //TODO: make better connection indicator
     self.connected = TRUE;
+}
+
+- (void)crateHubSubscription {
+    [self.hub on:@"logOn" perform:self selector:@selector(logon:)];
+    [self.hub on:@"replaceMessage" perform:self selector:@selector(replaceMessage:)];
+    [self.hub on:@"addMessage" perform:self selector:@selector(incomingMessage:)];
+    [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
+    [self.hub on:@"roomLoaded" perform:self selector:@selector(roomLoaded:)];
+    
+    //    [self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
+    //    [self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
 }
 
 #pragma mark -
@@ -483,8 +543,16 @@
 
 
 - (void)createRoom:(NSString *)roomName completionBlock:(void (^)(NSError *)) completion{
-    //TODO: create room with server
-    completion(nil);
+    
+    NSString *commandText = [NSString stringWithFormat: @"/%@ %@", @"create", roomName];
+    NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
+    [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
+    [messageData setObject:commandText forKey:@"content"];
+    [messageData setObject:@"lobby" forKey:@"room"];
+    
+    [self.hub invoke:@"Send" withArgs:@[messageData] complexCompletionHandler:^(id data, NSError *error){
+        completion(error);
+    }];
 }
 
 - (void)inviteUser:(NSString *)username inRoom:(NSString *)room; {
@@ -509,9 +577,8 @@
 }
 
 - (void)createTeam:(NSString *)teamName completionBlock:(void (^)(NSError*))completion {
-    //TODO: create team with server
-    completion(nil);
+//    [self.hub invoke:@"Create" withArgs:@[teamName] completionHandler:^(id data){
+//        [self loadTeamData:data];
+//    }];
 }
-
-
 @end

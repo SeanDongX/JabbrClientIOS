@@ -55,12 +55,13 @@
     }
     else {
         
-        [self.messageClient createTeam:(NSString *)@"" completionBlock: ^(NSError *error){
+        CLASignalRMessageClient *messageClient = [CLASignalRMessageClient sharedInstance];
+        [messageClient createTeam:(NSString *)@"" completionBlock: ^(NSError *error){
             
             if (error == nil) {
                 
                 [self dismissViewControllerAnimated:YES completion: ^{
-                    [self.messageClient invokeGetTeam];
+                    [messageClient invokeGetTeam];
                 }];
                 
             }

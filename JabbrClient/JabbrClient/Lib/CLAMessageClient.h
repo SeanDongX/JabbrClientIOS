@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <JSQMessagesViewController/JSQMessages.h>
 #import "CLAMessage.h"
+#import "SRHubservable.h"
 
 @protocol CLAMessageClient;
 @protocol CLAMessageClientDelegate;
@@ -49,8 +50,7 @@
 - (void)leaveRoom:(NSString *)room;
 
 - (void)invokeGetTeam;
-- (void)createTeam:(NSString *)teamName completionBlock:(void (^)(NSError*))completion;
-
+- (void)createTeam:(NSString *)teamName completionBlock:(void (^)(NSError*))completion;   
 @end
 
 /**

@@ -105,14 +105,12 @@
 
 #pragma mark - Table Section
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;
 }
 
@@ -186,12 +184,6 @@
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
-    
-    //TOOD: find a good strategy to pass around messageClient on chatvc, perhaps a singleton (need to take care of messageClient.deleagte though in that case)
-    
-    createRoomViewController.messageClient = nil;
-    
     [self presentViewController:createRoomViewController animated:YES completion:nil];
-
 }
 @end

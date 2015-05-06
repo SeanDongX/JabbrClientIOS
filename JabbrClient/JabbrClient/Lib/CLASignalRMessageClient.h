@@ -19,16 +19,6 @@
 @property (nonatomic) BOOL connected;
 @property (nonatomic) BOOL roomsLoaded;
 
-- (void)sendMessage:(id<JSQMessageData>)message inRoom:(NSString *)room;
-- (void)sendTypingFromUser:user inRoom:room;
-
-- (void)SRConnectionDidOpen:(SRConnection *)connection;
-- (void)SRConnection:(SRConnection *)connection didReceiveData:(id)data;
-- (void)SRConnectionDidClose:(SRConnection *)connection;
-- (void)SRConnection:(SRConnection *)connection didReceiveError:(NSError *)error;
-
-- (void)inviteUser:(NSString *)username inRoom:(NSString *)room;
-- (void)joinRoom:(NSString *)room;
-- (void)leaveRoom:(NSString *)room;
++ (CLASignalRMessageClient*)sharedInstance;
 
 @end

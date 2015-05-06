@@ -12,7 +12,6 @@
 
 @interface CLACreateRoomViewController : UIViewController
 
-@property (strong, nonatomic) id<CLAMessageClient> messageClient;
 @property (strong, nonatomic) SlidingViewController *slidingMenuViewController;
 
 @end

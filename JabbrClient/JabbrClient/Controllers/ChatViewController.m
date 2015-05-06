@@ -110,7 +110,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)connect {
-    self.messageClient = [[CLASignalRMessageClient alloc] init];
+    self.messageClient = [CLASignalRMessageClient sharedInstance];
     self.messageClient.delegate = self;
     [self.messageClient connect];
     
@@ -135,7 +135,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.rightMenuButton setImage: [Constants docIconImage]];
     
     
-    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(ShowCreateTeamView)];
+    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(showChatInfoView)];
     
     [chatThreadSetupButon setTitle: @""];
     [chatThreadSetupButon setTintColor:[UIColor whiteColor]];
@@ -484,7 +484,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     if (teams == nil || teams.count == 0 || teams[0] == nil) {
-        [self ShowCreateTeamView];
+        [self showCreateTeamView];
     }
     
     CLATeamViewModel *teamViewModel = teams[0];
@@ -674,7 +674,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark -
 #pragma mark View Controller Event Handlers
 
-- (void)ShowChatInfoView {
+- (void)showChatInfoView {
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
@@ -687,14 +687,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 
-- (void)ShowCreateTeamView {
+- (void)showCreateTeamView {
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLACreateTeamViewController *createTeamViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateTeamViewController];
-    
-    createTeamViewController.messageClient = self.messageClient;
-    
     [self presentViewController:createTeamViewController animated:YES completion:nil];
 }
 

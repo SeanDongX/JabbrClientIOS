@@ -16,8 +16,7 @@
 
     #if TARGET_IPHONE_SIMULATOR
 
-    //NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
-    NSString *const kServerBaseUrl = @"http://www.collara.co/";
+    NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
 
     #else
 
@@ -30,6 +29,8 @@
     NSString *const kServerBaseUrl = @"http://www.collara.co/";
 
 #endif
+
+NSString *const kApiPath = @"api/v1/";
 
 NSString *const kMainStoryBoard = @"Main";
 

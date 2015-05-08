@@ -22,4 +22,7 @@
 
 - (NSString *)getCachedAuthToken;
 - (NSString *)getUsername;
+
+- (void)cacheAuthToken: (NSString *)authToken;
+- (void)cacheUsername:(NSString *)username;
 @end

@@ -7,11 +7,13 @@
 //
 
 #import "SignInViewController.h"
-#import "AuthManager.h"
+
 #import "UIViewController+ECSlidingViewController.h"
-#import "Constants.h"
 #import "SlidingViewController.h"
 #import "CLASignUpViewController.h"
+
+#import "AuthManager.h"
+#import "Constants.h"
 #import "CRToast.h"
 #import "MBProgressHUD.h"
 
@@ -86,7 +88,8 @@
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLASignUpViewController *signUpViewController = [storyBoard instantiateViewControllerWithIdentifier:kSignUpController];
-    [self presentViewController:signUpViewController animated:TRUE completion:nil];
+    signUpViewController.slidingViewController = self.navigationController.slidingViewController;
+    [self presentViewController:signUpViewController animated:YES completion:nil];
 }
 
 

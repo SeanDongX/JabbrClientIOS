@@ -92,7 +92,12 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    @try {
+        [super viewWillAppear:animated];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception: %@", exception.description);
+    }
     
     if (self.messageClient == nil || self.messageClient.roomsLoaded == FALSE) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];

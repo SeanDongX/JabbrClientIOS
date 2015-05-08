@@ -9,6 +9,7 @@
 #import "CLACreateTeamViewController.h"
 #import "Constants.h"
 #import "CLAToastManager.h"
+#import "CLAWebApiClient.h"
 
 @interface CLACreateTeamViewController ()
 
@@ -55,20 +56,16 @@
     }
     else {
         
-        CLASignalRMessageClient *messageClient = [CLASignalRMessageClient sharedInstance];
-        [messageClient createTeam:(NSString *)@"" completionBlock: ^(NSError *error){
-            
-            if (error == nil) {
-                
-                [self dismissViewControllerAnimated:YES completion: ^{
-                    [messageClient invokeGetTeam];
-                }];
-                
+        CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
+        [apiClient createTeam:teamName completionHandler: ^(NSString *errorMessage){
+        
+            if (errorMessage == nil) {
+                [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
+                [self dismissViewControllerAnimated:YES completion: nil];
             }
             else {
                 
-                //TODO: define error code
-                [CLAToastManager showDefaultInfoToastWithText: [NSString stringWithFormat:@"Oh, \"%@\" is taken. Try you luck with a new name.", teamName] completionBlock:nil];
+                [CLAToastManager showDefaultInfoToastWithText:errorMessage completionBlock:nil];
             }
         
         }];

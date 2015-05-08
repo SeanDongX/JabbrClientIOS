@@ -58,6 +58,10 @@
     return [defaults objectForKey:kAuthToken];
 }
 
+- (void)cacheUsername:(NSString *)username {
+    [self cacheObject:username forKey:kUsername];
+}
+
 - (NSString *)getUsername {
     return (NSString *)[self getCachedObjectForKey:kUsername];
 }
@@ -91,7 +95,8 @@
 }
 
 - (void)signOut {
-
+    [self clearCookie];
+    [self clearCache];
 }
 
 - (void)clearCache {

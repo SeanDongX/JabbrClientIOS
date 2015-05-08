@@ -111,7 +111,7 @@ static bool isFirstAccess = YES;
     NSNumber *teamKey = [defaults objectForKey:kTeamKey];
     
     if (authToken == nil) {
-        //TODO: show login screen
+        //TODO: throw expcetion
     }
     
     self.username = [[AuthManager sharedInstance] getUsername];
@@ -139,6 +139,7 @@ static bool isFirstAccess = YES;
     [self.hub on:@"addMessage" perform:self selector:@selector(incomingMessage:)];
     [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
     [self.hub on:@"roomLoaded" perform:self selector:@selector(roomLoaded:)];
+    //TODO: show error msg when connection failed
     
     //    [self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
     //    [self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
@@ -576,9 +577,4 @@ static bool isFirstAccess = YES;
     }];
 }
 
-- (void)createTeam:(NSString *)teamName completionBlock:(void (^)(NSError*))completion {
-//    [self.hub invoke:@"Create" withArgs:@[teamName] completionHandler:^(id data){
-//        [self loadTeamData:data];
-//    }];
-}
 @end

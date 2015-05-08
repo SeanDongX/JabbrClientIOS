@@ -12,6 +12,7 @@
 @interface Constants : NSObject
 
 FOUNDATION_EXPORT NSString *const kServerBaseUrl;
+FOUNDATION_EXPORT NSString *const kApiPath;
 
 FOUNDATION_EXPORT NSString *const kMainStoryBoard;
 

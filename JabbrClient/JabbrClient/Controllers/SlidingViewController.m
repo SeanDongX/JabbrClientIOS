@@ -9,6 +9,7 @@
 #import "SlidingViewController.h"
 #import "AuthManager.h"
 #import "Constants.h"
+#import "AuthManager.h"
 
 @interface SlidingViewController ()
 
@@ -33,6 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initNavControllerCache];
+    [self setFirstView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -51,7 +53,7 @@
     
     self.mainViewControllersCache = [NSMutableDictionary dictionary];
     NSString *key = self.topViewControllerStoryboardId;
-    [self.mainViewControllersCache setObject:self.topViewController forKeyedSubscript:key];
+    [self.mainViewControllersCache setObject:self.topViewController forKey:key];
 }
 
 - (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier {
@@ -70,6 +72,17 @@
     self.topViewController = navigaionController;
     
     return navigaionController;
+}
+
+- (void)setFirstView {
+    NSString *token = [[AuthManager sharedInstance] getCachedAuthToken];
+    if (token == nil || token.length == 0) {
+        [self switchToSignInView];
+    }
+    else {
+        [self switchToMainView];
+    }
+    
 }
 
 - (void)switchToMainView {

@@ -49,8 +49,7 @@
 - (void)joinRoom:(NSString *)room;
 - (void)leaveRoom:(NSString *)room;
 
-- (void)invokeGetTeam;
-- (void)createTeam:(NSString *)teamName completionBlock:(void (^)(NSError*))completion;   
+- (void)invokeGetTeam; 
 @end
 
 /**

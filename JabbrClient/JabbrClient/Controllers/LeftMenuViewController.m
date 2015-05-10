@@ -33,6 +33,8 @@
 
 @interface LeftMenuViewController ()
 
+@property (nonatomic, strong) NSArray *chatThreads;
+
 @end
 
 @implementation LeftMenuViewController
@@ -45,6 +47,11 @@
     self.slidingViewController.anchorLeftPeekAmount  = 50.0;
     self.slidingViewController.anchorRightPeekAmount = 50.0;
 
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -64,10 +71,19 @@
     return nil;
 }
 
-//- (NSArray *)chatThreads {
-//    return [DemoData sharedDemoData].chatThreads;
-//}
+#pragma mark -
+#pragma mark - Public Methods
 
+- (void)updateChatThreads:(NSArray *)chatThreads {
+    self.chatThreads = chatThreads;
+    
+    if (self.isViewLoaded && self.view.window) {
+        // viewController is visible
+        [self.tableView reloadData];
+    }
+}
+
+#pragma mark -
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -78,7 +94,6 @@
         default:
             return 0;
     }
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -24,6 +24,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LeftMenuViewController : UIViewController <UITableViewDataSource>
-@property (nonatomic, strong)NSArray *chatThreads;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (void)updateChatThreads:(NSArray *)chatThreads;
 @end

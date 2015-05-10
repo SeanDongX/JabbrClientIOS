@@ -502,7 +502,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     LeftMenuViewController *leftMenuViewController = (LeftMenuViewController *)self.slidingViewController.underLeftViewController;
-    leftMenuViewController.chatThreads = chatThreadArray;
+    [leftMenuViewController updateChatThreads:chatThreadArray];
 }
 
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room {

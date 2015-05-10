@@ -219,7 +219,7 @@ static bool isFirstAccess = YES;
 }
 
 #pragma mark -
-#pragma mark Messag Processing Methods
+#pragma mark Message Processing Methods
 
 - (void)logon:(NSArray *)data {
 

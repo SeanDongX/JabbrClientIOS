@@ -157,19 +157,25 @@ static bool isFirstAccess = YES;
     [self.delegate didOpenConnection];
 }
 
-- (void)SRConnection:(SRConnection *)connection didReceiveData:(id)data
-{
-
+- (void)SRConnectionWillReconnect:(id <SRConnectionInterface>)connection {
 }
 
-- (void)SRConnectionDidClose:(SRConnection *)connection
-{
-
+- (void)SRConnectionDidReconnect:(id <SRConnectionInterface>)connection {
 }
 
-- (void)SRConnection:(SRConnection *)connection didReceiveError:(NSError *)error
-{
+- (void)SRConnection:(id <SRConnectionInterface>)connection didReceiveData:(id)data {
+}
 
+- (void)SRConnectionDidClose:(id <SRConnectionInterface>)connection {
+}
+
+- (void)SRConnection:(id <SRConnectionInterface>)connection didReceiveError:(NSError *)error {
+}
+
+- (void)SRConnection:(id <SRConnectionInterface>)connection didChangeState:(connectionState)oldState newState:(connectionState)newState {
+}
+
+- (void)SRConnectionDidSlow:(id <SRConnectionInterface>)connection {
 }
 
 #pragma mark -

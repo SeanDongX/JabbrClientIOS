@@ -85,20 +85,22 @@ static bool isFirstAccess = YES;
 #pragma mark -
 #pragma mark View Actions
 
-- (void)connect
-{
+- (void)connect{
     if (!self.connection)
     {
         [self makeConnection];
     }
 }
 
-- (void)reconnect
-{
+- (void)disconnect {
     [self.connection stop];
     self.hub = nil;
     self.connection.delegate = nil;
     self.connection = nil;
+}
+
+- (void)reconnect{
+    [self disconnect];
     [self makeConnection];
 }
 

@@ -83,7 +83,7 @@ static bool isFirstAccess = YES;
 #pragma mark CLAApiCleint Methods
 
 - (void)createAccount:(CLAUserRegistrationViewModel *)userRegistrationModel completionHandler:(void (^)(NSString *errorMessage))completion {
-    NSArray *array = @[kServerBaseUrl, kApiPath, @"accounts"];
+    NSArray *array = @[kServerBaseUrl, kApiPath, @"accounts/signup"];
     NSString *requestUrl = [array componentsJoinedByString:@""];
     
     NSDictionary *params = @ {

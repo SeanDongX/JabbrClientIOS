@@ -697,6 +697,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLACreateTeamViewController *createTeamViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateTeamViewController];
+    createTeamViewController.slidingMenuViewController = (SlidingViewController *)self.navigationController.slidingViewController;
     [self presentViewController:createTeamViewController animated:YES completion:nil];
 }
 

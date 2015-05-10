@@ -63,6 +63,7 @@ FOUNDATION_EXPORT NSString *const kErrorMsgSignInFailureUnknown;
 + (UIImage *)infoIconImage;
 + (UIImage *)closeIconImage;
 + (UIImage *)addIconImage;
++ (UIImage *)signOutImage;
 
 + (UIColor *)mainThemeColor;
 + (UIColor*)mainThemeContrastColor;

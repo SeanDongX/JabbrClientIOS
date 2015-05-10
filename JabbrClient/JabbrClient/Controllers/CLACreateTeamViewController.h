@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+
+//Message Client
 #import "CLASignalRMessageClient.h"
 
+//View Controllers
+#import "SlidingViewController.h"
+
 @interface CLACreateTeamViewController : UIViewController
+
+@property (strong, nonatomic) SlidingViewController *slidingMenuViewController;
 
 @end

@@ -7,11 +7,21 @@
 //
 
 #import "ProfileViewController.h"
-#import "UIViewController+ECSlidingViewController.h"
-#import "AuthManager.h"
+
+//Util
 #import "Constants.h"
-#import "SlidingViewController.h"
 #import <FontAwesomeKit/FAKIonIcons.h>
+
+//Auth & MessageClient
+#import "AuthManager.h"
+#import "CLASignalRMessageClient.h"
+
+//Menu
+#import "UIViewController+ECSlidingViewController.h"
+
+//ViewControllers
+#import "SlidingViewController.h"
+#import "ProfileViewController.h"
 
 @interface ProfileViewController()
 
@@ -60,6 +70,7 @@
 }
 - (IBAction)signOutClicked:(id)sender {
     [[AuthManager sharedInstance] signOut];
+    [[CLASignalRMessageClient sharedInstance] disconnect];
     [self switchToSignInView];
 }
 

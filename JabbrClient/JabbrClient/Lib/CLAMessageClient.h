@@ -36,6 +36,7 @@
 @property (nonatomic) BOOL roomsLoaded;
 
 - (void)connect;
+- (void)disconnect;
 - (void)reconnect;
 
 - (void)loadRoom:(NSString *)room;

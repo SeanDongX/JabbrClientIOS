@@ -7,8 +7,13 @@
 //
 
 #import "CLACreateTeamViewController.h"
+
+//Util
 #import "Constants.h"
 #import "CLAToastManager.h"
+#import "AuthManager.h"
+
+//API Client
 #import "CLAWebApiClient.h"
 
 @interface CLACreateTeamViewController ()
@@ -39,6 +44,13 @@
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
     navItem.title = @"Create Your Team";
     [navBar setItems:@[navItem]];
+    
+    UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc] initWithImage: [Constants signOutImage]
+                                                                      style:UIBarButtonItemStyleDone
+                                                                     target:self
+                                                                     action:@selector(signOut)];
+    signOutButton.tintColor = [UIColor whiteColor];
+    navItem.rightBarButtonItem = signOutButton;
     
     [self.view addSubview:navBar];
 }
@@ -71,6 +83,17 @@
         }];
     }
     
+}
+
+- (void)signOut {
+    [[AuthManager sharedInstance] signOut];
+    [[CLASignalRMessageClient sharedInstance] disconnect];
+    [self switchToSignInView];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)switchToSignInView {
+    [self.slidingMenuViewController switchToSignInView];
 }
 
 @end

@@ -55,9 +55,8 @@
     if ([self isValidAccountModel:accountModel]) {
         [[CLAWebApiClient sharedInstance] createAccount:accountModel completionHandler:^(NSString *errorMessage) {
             if (errorMessage == nil) {
-                [self dismissViewControllerAnimated:YES completion:^{
-                    [self.slidingViewController switchToMainView];
-                }];
+                [self.slidingViewController switchToMainView];
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
             else {
                 [CRToastManager showNotificationWithMessage:errorMessage completionBlock:nil];

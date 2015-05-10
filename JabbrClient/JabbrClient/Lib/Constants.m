@@ -123,6 +123,12 @@ NSString *const kErrorMsgSignInFailureUnknown = @"Something went wrong. How abou
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
++ (UIImage *)signOutImage {
+    FAKIonIcons *iccon = [FAKIonIcons logOutIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
+}
+
 + (UIColor*)mainThemeColor {
     return [UIColor colorWithRed:(26/255.0) green:(179/255.0) blue:(148/255.0) alpha:1];
 }

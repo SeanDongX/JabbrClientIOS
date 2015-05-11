@@ -83,6 +83,9 @@ static bool isFirstAccess = YES;
 #pragma mark CLAApiCleint Methods
 
 - (void)createAccount:(CLAUserRegistrationViewModel *)userRegistrationModel completionHandler:(void (^)(NSString *errorMessage))completion {
+    
+    
+    
     NSArray *array = @[kServerBaseUrl, kApiPath, @"accounts/signup"];
     NSString *requestUrl = [array componentsJoinedByString:@""];
     
@@ -93,27 +96,57 @@ static bool isFirstAccess = YES;
         @"ConfirmPassword" : userRegistrationModel.confirmPassword,
     };
     
+    
+    [self.connectionManager POST:requestUrl parameters:params
+                         success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+                             NSString *token = [responseObject objectForKey:@"token"];
+                             NSString *message = nil;
+                             if (token == nil || token.length == 0) {
+                                 message = @"We are terribly sorry, but some error happened.";
+                             }
+                             else {
+                                 [[AuthManager sharedInstance] cacheAuthToken:token];
+                                 [[AuthManager sharedInstance] cacheUsername:userRegistrationModel.username];
+                             }
+                             
+                             completion(message);
+
+     }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             completion([self getResponseErrorMessage:error]);
+     }];
+}
+
+- (void)signInWith: (NSString *)username password:(NSString *)password completionHandler:(void (^)(NSString *errorMessage))completion {
+    //TODO: replace AuthManager sign
+    NSArray *array = @[kServerBaseUrl, kApiPath, @"accounts/signin"];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    NSDictionary *params = @ {
+        @"Username" : username,
+        @"Password" : password,
+    };
+    
     [self.connectionManager POST:requestUrl parameters:params
                          success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject)
      {
          NSString *token = [responseObject objectForKey:@"token"];
          NSString *message = nil;
-         
          if (token == nil || token.length == 0) {
-             message = @"We are terribly sorry, but some error happened.";
+             message = @"We are terribly sorry, but we can not sign you in now.";
          }
          else {
              [[AuthManager sharedInstance] cacheAuthToken:token];
-             [[AuthManager sharedInstance] cacheUsername:userRegistrationModel.username];
+             [[AuthManager sharedInstance] cacheUsername:username];
          }
          
          completion(message);
      }
-                         failure:
-     ^(AFHTTPRequestOperation *operation, NSError *error) {
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          completion([self getResponseErrorMessage:error]);
      }];
 }
+
 
 - (void)createTeam:(NSString *)name completionHandler: (void(^)(NSString *errorMessage))completion {
     NSArray *array = @[kServerBaseUrl, kApiPath, @"accounts/team/", name, @"?token=", [self getToken]];
@@ -167,9 +200,15 @@ static bool isFirstAccess = YES;
 
 - (NSString *)getResponseErrorMessage: (NSError *)error {
     NSError *localError = nil;
-    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:&localError];
+    NSString *errorMessage = nil;
     
-    NSString *errorMessage = [parsedObject valueForKey:@"message"];
+    NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+    
+    if (errorData != nil) {
+        NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:errorData options:0 error:&localError];
+    
+       errorMessage = [parsedObject valueForKey:@"message"];
+    }
     
     if (errorMessage == nil || errorMessage.length == 0) {
         errorMessage = @"We are terribly sorry, but some error happened.";

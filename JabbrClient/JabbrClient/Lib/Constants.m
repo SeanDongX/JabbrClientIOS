@@ -16,8 +16,8 @@
 
     #if TARGET_IPHONE_SIMULATOR
 
-    NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
-
+    //NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
+NSString *const kServerBaseUrl = @"http://www.collara.co/";
     #else
 
     //NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";

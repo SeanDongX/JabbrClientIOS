@@ -42,7 +42,7 @@
     navBar.titleTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
     
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
-    navItem.title = @"Create Your Team";
+    navItem.title = @"Pick Your Team";
     [navBar setItems:@[navItem]];
     
     UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc] initWithImage: [Constants signOutImage]

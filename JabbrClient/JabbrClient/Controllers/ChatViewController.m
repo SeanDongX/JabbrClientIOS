@@ -52,26 +52,18 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 @implementation ChatViewController
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     [super awakeFromNib];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
-- (void)dealloc
-{
-    
 }
 
 #pragma mark -
 #pragma mark View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self initMenu];
     [self setupChatThread];
@@ -82,16 +74,13 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self connect];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
-    
     self.showLoadEarlierMessagesHeader = YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     @try {
         [super viewWillAppear:animated];
     }
@@ -102,16 +91,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     if (self.messageClient == nil || self.messageClient.roomsLoaded == FALSE) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
 }
 
 - (void)connect {
@@ -172,6 +151,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     self.incomingBubbleImageView = [bubbleImageFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
     
 }
+
 - (void)switchToChatThread:(ChatThread *)chatThread {
     
     self.currentChatThread = chatThread;
@@ -191,7 +171,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     return (NSMutableArray *)[self.chatThreadRepository objectForKey:self.currentChatThread.title];
 }
 
-- (void)setCurrentMessageThread:(NSMutableArray *)messages  {
+- (void)setCurrentMessageThread:(NSMutableArray *)messages {
     [self.chatThreadRepository setObject:messages forKey:self.currentChatThread.title];
 }
 
@@ -231,18 +211,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark -
 #pragma mark - Event handlers
 
-//- (IBAction)connectClicked:(id)sender
-//{
-//    //TODO: reconnect funcationality
-//    [self.messageClient reconnect];
-//}
-
 - (void)didPressSendButton:(UIButton *)button
            withMessageText:(NSString *)text
                   senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName
-                      date:(NSDate *)date
-{
+                      date:(NSDate *)date {
     CLAMessage *message = [CLAMessage messageWithOId:[[NSUUID UUID] UUIDString] SenderId:senderId displayName:senderDisplayName text:text];
     [self sendMessage:message];
 }
@@ -266,13 +239,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark -
 #pragma mark - JSQMessages CollectionView DataSource
 
-- (CLAMessage *)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CLAMessage *)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     return [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
 }
 
-- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     /**
      *  You may return nil here if you do not want bubbles.
      *  In this case, you should set the background color of your collection view cell's textView.
@@ -301,8 +272,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
 }
 
-- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
-{
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     /**
      *  This logic should be consistent with what you return from `heightForCellTopLabelAtIndexPath:`
      *  The other label text delegate methods should follow a similar pattern.
@@ -317,8 +287,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     return nil;
 }
 
-- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
-{
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
     
     /**
@@ -341,20 +310,17 @@ static NSString * const kDefaultChatThread = @"collarabot";
     return [[NSAttributedString alloc] initWithString:message.senderDisplayName];
 }
 
-- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
-{
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
     return nil;
 }
 
 #pragma mark - UICollectionView DataSource
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [[self getCurrentMessageThread] count];
 }
 
-- (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     /**
      *  Override point for customizing cells
      */
@@ -396,8 +362,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark - Adjusting cell label heights
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
-{
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     /**
      *  Each label in a cell has a `height` delegate method that corresponds to its text dataSource method
      */
@@ -416,8 +381,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
-{
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     /**
      *  iOS7-style sender name labels
      */
@@ -437,8 +401,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
-{
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
     return 0.0f;
 }
 
@@ -446,8 +409,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark - Responding to collection view tap events
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
-                header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
-{
+                header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender {
     NSMutableArray *chatThreads = [self getCurrentMessageThread];
     
     if (chatThreads != nil && chatThreads.count > 0){
@@ -460,18 +422,15 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
 }
 
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Tapped avatar!");
 }
 
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Tapped message bubble!");
 }
 
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation
-{
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation {
     NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
 }
 
@@ -649,8 +608,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 
-- (void)setTyping:(NSArray *)data
-{
+- (void)setTyping:(NSArray *)data {
     
     if (!data && data.count <2)
     {

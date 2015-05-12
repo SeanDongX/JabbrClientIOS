@@ -7,24 +7,29 @@
 //
 
 #import "ChatViewController.h"
+
+//Util
 #import "AuthManager.h"
-#import "UIViewController+ECSlidingViewController.h"
-#import "LeftMenuViewController.h"
-#import "CLAChatInfoViewController.h"
-#import "CLACreateTeamViewController.h"
 #import "ObjectThread.h"
 #import "ChatThread+Category.h"
 #import "DemoData.h"
 #import "Constants.h"
 #import "DateTools.h"
+#import "MBProgressHUD.h"
+#import <SpinKit/RTSpinKitView.h>
 
+//Data Model
 #import "CLATeam.h"
 #import "CLARoom.h"
 #import "CLAUser.h"
 #import "CLATeamViewModel.h"
 #import "CLARoomViewModel.h"
 
-#import "MBProgressHUD.h"
+//View Controller
+#import "UIViewController+ECSlidingViewController.h"
+#import "LeftMenuViewController.h"
+#import "CLAChatInfoViewController.h"
+#import "CLACreateTeamViewController.h"
 
 static NSString * const kDefaultChatThread = @"collarabot";
 
@@ -48,6 +53,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImageView;
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImageView;
 
+@property (nonatomic, strong) MBProgressHUD *progressHud;
+
 @end
 
 @implementation ChatViewController
@@ -69,6 +76,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self setupChatThread];
     [self setupChatRepository];
     [self configJSQMessage];
+    [self initProgressHud];
     
     [self setupOutgoingTypingEventHandler];
     [self connect];
@@ -89,7 +97,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     if (self.messageClient == nil || self.messageClient.roomsLoaded == FALSE) {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [self.progressHud show:YES];
     }
 }
 
@@ -151,6 +159,21 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
 }
 
+- (void)initProgressHud {
+    RTSpinKitView *spinner = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleArcAlt color:[UIColor whiteColor]];
+    
+    self.progressHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:self.progressHud];
+    self.progressHud.customView = spinner;
+    self.progressHud.color = [Constants mainThemeColor];
+    self.progressHud.mode = MBProgressHUDModeCustomView;
+    
+    [spinner startAnimating];
+    [self.progressHud show:YES];
+}
+
+#pragma mark -
+#pragma mark - Chat Thread Methods
 - (void)switchToChatThread:(ChatThread *)chatThread {
     
     self.currentChatThread = chatThread;
@@ -445,17 +468,14 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)didConnectionChnageState:(CLAConnectionState)oldState newState:(CLAConnectionState)newState {
     if (newState == CLAConnected) {
         //FIXME:when offline, this path is being taken periodically
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [self.progressHud hide:YES];
     }
     else {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [self.progressHud show:YES];
     }
 }
 
 - (void)didReceiveTeams:(NSArray *)teams {
-    
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    
     if (teams == nil || teams.count == 0 || teams[0] == nil) {
         [self showCreateTeamView];
     }
@@ -608,6 +628,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     NSString* username = [data objectForKey:@"username"];
     if (username && [[username lowercaseString] isEqualToString:[self.username lowercaseString]])
     {
+        //TODO:also show current user's message from other client
         NSLog(@"Incoming message ingored since from current user");
         return true;
     }
@@ -671,6 +692,5 @@ static NSString * const kDefaultChatThread = @"collarabot";
     createTeamViewController.slidingMenuViewController = (SlidingViewController *)self.navigationController.slidingViewController;
     [self presentViewController:createTeamViewController animated:YES completion:nil];
 }
-
 
 @end

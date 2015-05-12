@@ -14,6 +14,7 @@ target 'Collara' do
   #pod 'SignalR-ObjC', '2.0.0.alpha1'
   pod 'CRToast', '~> 0.0.7'
   pod 'MBProgressHUD', '~> 0.8'
+  pod 'SpinKit', '~> 1.1'
 end
 
 target 'CollaraTests' do

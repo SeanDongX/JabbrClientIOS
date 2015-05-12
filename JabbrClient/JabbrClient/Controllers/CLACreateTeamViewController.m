@@ -74,11 +74,14 @@
     else {
         
         CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
-        [apiClient createTeam:teamName completionHandler: ^(NSString *errorMessage){
+        __weak __typeof(&*self)weakSelf = self;
         
+        [apiClient createTeam:teamName completionHandler: ^(NSString *errorMessage){
+            __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+            
             if (errorMessage == nil) {
                 [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-                [self dismissViewControllerAnimated:YES completion: nil];
+                [strongSelf dismissViewControllerAnimated:YES completion: nil];
             }
             else {
                 
@@ -100,11 +103,13 @@
     else {
         
         CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
+        __weak __typeof(&*self)weakSelf = self;
+        
         [apiClient joinTeam:inviteCode completionHandler: ^(NSString *errorMessage){
-            
+            __strong __typeof(&*weakSelf)strongSelf = weakSelf;
             if (errorMessage == nil) {
                 [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-                [self dismissViewControllerAnimated:YES completion: nil];
+                [strongSelf dismissViewControllerAnimated:YES completion: nil];
             }
             else {
                 

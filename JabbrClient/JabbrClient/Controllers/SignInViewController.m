@@ -67,29 +67,23 @@
     }
     
     [MBProgressHUD showHUDAddedTo: self.view animated:YES];
+    __weak __typeof(&*self)weakSelf = self;
     
     [[CLAWebApiClient sharedInstance] signInWith:username
                                         password:password
                                      completionHandler:^(NSString *errorMessage) {
-                                                  
-                                                  [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                                  [self processSignInResult:errorMessage];
+                                     __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+                                         
+                                      [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                      [strongSelf processSignInResult:errorMessage];
     }];
-//    [[AuthManager sharedInstance]signInWithUsername:username
-//                                           password:password
-//                                         completion:^(NSError *error){
-//                                             
-//                                             [MBProgressHUD hideHUDForView:self.view animated:YES];
-//                                             [self processSignInResult:error];
-//    }];
-    
 }
 
 - (IBAction)signUpClicked:(id)sender {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLASignUpViewController *signUpViewController = [storyBoard instantiateViewControllerWithIdentifier:kSignUpController];
-    signUpViewController.slidingViewController = self.navigationController.slidingViewController;
+    signUpViewController.slidingViewController = (SlidingViewController *)self.navigationController.slidingViewController;
     [self presentViewController:signUpViewController animated:YES completion:nil];
 }
 

@@ -60,10 +60,14 @@
     
     CLASignalRMessageClient *messageClient = [CLASignalRMessageClient sharedInstance];
     
+    __weak __typeof(&*self)weakSelf = self;
+    
     [messageClient createRoom:topic completionBlock:^(NSError *error){
         if (error == nil) {
-            //TODO: create existing topic should also go to the topic
-            [self.slidingMenuViewController switchToRoom:topic];
+            __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+            [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
+            [strongSelf.slidingMenuViewController switchToRoom:topic];
+            [strongSelf dismissViewControllerAnimated:YES completion:nil];
         }
         else {
             

@@ -52,11 +52,15 @@
     accountModel.password = [self passwordTextField].text;
     accountModel.confirmPassword = [self repeatPasswordTextField].text;
     
+    __weak __typeof(&*self)weakSelf = self;
+    
     if ([self isValidAccountModel:accountModel]) {
         [[CLAWebApiClient sharedInstance] createAccount:accountModel completionHandler:^(NSString *errorMessage) {
+            __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+            
             if (errorMessage == nil) {
-                [self.slidingViewController switchToMainView];
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [strongSelf.slidingViewController switchToMainView];
+                [strongSelf dismissViewControllerAnimated:YES completion:nil];
             }
             else {
                 [CRToastManager showNotificationWithMessage:errorMessage completionBlock:nil];

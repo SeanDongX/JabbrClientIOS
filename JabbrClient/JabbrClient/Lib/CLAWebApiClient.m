@@ -138,6 +138,7 @@ static bool isFirstAccess = YES;
          else {
              [[AuthManager sharedInstance] cacheAuthToken:token];
              [[AuthManager sharedInstance] cacheUsername:username];
+             NSLog(@"Received and cached username %@ and token %@", username, token);
          }
          
          completion(message);

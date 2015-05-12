@@ -303,18 +303,13 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
-    /**
-     *  This logic should be consistent with what you return from `heightForCellTopLabelAtIndexPath:`
-     *  The other label text delegate methods should follow a similar pattern.
-     *
-     *  Show a timestamp for every 3rd message
-     */
-    if (indexPath.item % 3 == 0) {
-        CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
-        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
+    NSDate *displayDate = [self getMessageDisplayDateAt:indexPath];
+    
+    if (displayDate == nil) {
+        return nil;
     }
     
-    return nil;
+    return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:displayDate];
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
@@ -393,21 +388,14 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
-    /**
-     *  Each label in a cell has a `height` delegate method that corresponds to its text dataSource method
-     */
     
-    /**
-     *  This logic should be consistent with what you return from `attributedTextForCellTopLabelAtIndexPath:`
-     *  The other label height delegate methods should follow similarly
-     *
-     *  Show a timestamp for every 3rd message
-     */
-    if (indexPath.item % 3 == 0) {
-        return kJSQMessagesCollectionViewCellLabelHeightDefault;
+    NSDate *displayDate = [self getMessageDisplayDateAt:indexPath];
+    
+    if (displayDate == nil) {
+        return 0.0f;
     }
     
-    return 0.0f;
+    return kJSQMessagesCollectionViewCellLabelHeightDefault;
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -699,6 +687,29 @@ static NSString * const kDefaultChatThread = @"collarabot";
     CLACreateTeamViewController *createTeamViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateTeamViewController];
     createTeamViewController.slidingMenuViewController = (SlidingViewController *)self.navigationController.slidingViewController;
     [self presentViewController:createTeamViewController animated:YES completion:nil];
+}
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (NSDate *)getMessageDisplayDateAt: (NSIndexPath *)indexPath {
+    CLAMessage *currentMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+
+    if (indexPath.item == 0) {
+        return currentMessage.date;
+    }
+    else {
+        
+        CLAMessage *previsousMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item - 1];
+        if (currentMessage.date != nil
+            && previsousMessage.date != nil
+            && [currentMessage.date secondsFrom:previsousMessage.date] >= kMessageDisplayTimeGap) {
+            
+            return currentMessage.date;
+        }
+    }
+    
+    return nil;
 }
 
 @end

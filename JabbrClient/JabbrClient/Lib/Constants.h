@@ -47,6 +47,7 @@ FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;
 
 FOUNDATION_EXPORT float const kStatusBarHeight;
 
+FOUNDATION_EXPORT NSTimeInterval const kMessageDisplayTimeGap;
 
 FOUNDATION_EXPORT NSString *const kErrorDoamin;
 FOUNDATION_EXPORT NSString *const kErrorDescription;

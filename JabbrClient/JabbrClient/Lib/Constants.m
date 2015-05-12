@@ -66,6 +66,8 @@ int const kMessageLoadAnimateTimeThreshold = 60;
 
 float const kStatusBarHeight = 64.0;
 
+NSTimeInterval const kMessageDisplayTimeGap = 180;
+
 NSString *const kErrorDoamin = @"com.collara";
 NSString *const kErrorDescription = @"ErrorDescription";
 

@@ -163,8 +163,8 @@ static bool isFirstAccess = YES;
      }];
 }
 
-- (void)joinTeam:(NSString *)name completionHandler: (void(^)(NSString *errorMessage))completion {
-    NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/team/join/", name, [self getToken]];
+- (void)joinTeam:(NSString *)invitationCode completionHandler: (void(^)(NSString *errorMessage))completion {
+    NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/team/join/", invitationCode, @"/?token=", [self getToken]];
     NSString *requestUrl = [array componentsJoinedByString:@""];
     
     [self.connectionManager POST:requestUrl parameters:nil

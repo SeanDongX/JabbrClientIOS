@@ -14,8 +14,8 @@
 @protocol CLAApiClient <NSObject>
 
 - (void)createAccount:(CLAUserRegistrationViewModel *)userRegistrationModel completionHandler:(void (^)(NSString *errorMessage))completion;
-- (void)signInWith: (NSString *)username password:(NSString *)password completionHandler:(void (^)(NSString *errorMessage))completion ;
+- (void)signInWith: (NSString *)username password:(NSString *)password completionHandler:(void (^)(NSString *errorMessage))completion;
 - (void)createTeam:(NSString *)name completionHandler:(void(^)(NSString *errorMessage))completion;
-- (void)joinTeam:(NSString *)name completionHandler:(void(^)(NSString *errorMessage))completion;
+- (void)joinTeam:(NSString *)invitationCode completionHandler:(void(^)(NSString *errorMessage))completion;
 - (void)sendInviteFor:(NSString*)team to:(NSString *)email completion: (void(^)(NSString *token, NSString *errorMessage))completion;
 @end

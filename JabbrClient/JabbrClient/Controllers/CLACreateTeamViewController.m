@@ -20,6 +20,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *teamNameTextField;
 
+@property (weak, nonatomic) IBOutlet UITextField *inviteCodeTextField;
+
 @end
 
 @implementation CLACreateTeamViewController
@@ -55,6 +57,9 @@
     [self.view addSubview:navBar];
 }
 
+#pragma mark -
+#pragma mark Event Handlers
+
 - (IBAction)createTeamClicked:(id)sender {
     NSString *teamName = self.teamNameTextField.text;
     
@@ -84,6 +89,34 @@
     }
     
 }
+
+- (IBAction)joinTeamButtonClicked:(id)sender {
+    NSString *inviteCode = self.inviteCodeTextField.text;
+    
+    if ( inviteCode == nil || inviteCode.length == 0) {
+        
+        [CLAToastManager showDefaultInfoToastWithText:@"Oh, an empty invitation code. That will not work." completionBlock:nil];
+    }
+    else {
+        
+        CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
+        [apiClient joinTeam:inviteCode completionHandler: ^(NSString *errorMessage){
+            
+            if (errorMessage == nil) {
+                [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
+                [self dismissViewControllerAnimated:YES completion: nil];
+            }
+            else {
+                
+                [CLAToastManager showDefaultInfoToastWithText:errorMessage completionBlock:nil];
+            }
+            
+        }];
+    }
+}
+
+#pragma mark -
+#pragma mark Private Methods
 
 - (void)signOut {
     [[AuthManager sharedInstance] signOut];

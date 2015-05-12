@@ -8,14 +8,17 @@
 
 #import "SignInViewController.h"
 
+//Util
+#import "Constants.h"
+#import "AuthManager.h"
+#import "CLAWebApiClient.h"
+#import "CLAToastManager.h"
+#import "MBProgressHUD.h"
+
+//Menu
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
 #import "CLASignUpViewController.h"
-
-#import "AuthManager.h"
-#import "Constants.h"
-#import "CRToast.h"
-#import "MBProgressHUD.h"
 
 @interface SignInViewController ()
 
@@ -23,15 +26,12 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
-
-@property (nonatomic, strong) NSMutableDictionary *toasOptions;
 @end
 
 @implementation SignInViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.toasOptions = [Constants toasOptions].mutableCopy;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,37 +50,38 @@
 #pragma mark -
 #pragma mark - Event Handler
 - (IBAction)signInClicked:(id)sender {
-    self.toasOptions[kCRToastImageKey] = [Constants infoIconImage];
     
     NSString *username = [self.usernameTextField text];
     NSString *password = [self.passwordTextField text];
     
     if (username == nil || username.length == 0) {
         
-        [self.toasOptions setObject:@"Did you forget your username?" forKey:kCRToastTextKey];
-        [CRToastManager showNotificationWithOptions:self.toasOptions
-                                    completionBlock:nil];
-        
+        [CLAToastManager showDefaultInfoToastWithText:@"Did you forget your username?" completionBlock:nil];
         return;
     }
     
     if (password == nil || password.length == 0) {
-        
-        [self.toasOptions setObject:@"OK, that password won't work." forKey:kCRToastTextKey];
-        [CRToastManager showNotificationWithOptions:self.toasOptions
-                                    completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:@"OK, that password won't work."completionBlock:nil];
         
         return;
     }
     
     [MBProgressHUD showHUDAddedTo: self.view animated:YES];
-    [[AuthManager sharedInstance]signInWithUsername:username
-                                           password:password
-                                         completion:^(NSError *error){
-                                             
-                                             [MBProgressHUD hideHUDForView:self.view animated:YES];
-                                             [self processSignInResult:error];
+    
+    [[CLAWebApiClient sharedInstance] signInWith:username
+                                        password:password
+                                     completionHandler:^(NSString *errorMessage) {
+                                                  
+                                                  [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                                  [self processSignInResult:errorMessage];
     }];
+//    [[AuthManager sharedInstance]signInWithUsername:username
+//                                           password:password
+//                                         completion:^(NSError *error){
+//                                             
+//                                             [MBProgressHUD hideHUDForView:self.view animated:YES];
+//                                             [self processSignInResult:error];
+//    }];
     
 }
 
@@ -93,23 +94,12 @@
 }
 
 
-- (void)processSignInResult: (NSError *)error {
-    if (!error) {
+- (void)processSignInResult: (NSString *)errorMessage {
+    if (errorMessage == nil) {
         [self switchToMainView];
     }
     else {
-        NSString *errorMessage = [error.userInfo objectForKey:kErrorDescription];
-        
-        if (errorMessage == nil) {
-            errorMessage = kErrorMsgSignInFailureUnknown;
-        }
-        
-        [self.toasOptions setObject:errorMessage forKey:kCRToastTextKey];
-        
-        [CRToastManager showNotificationWithOptions:self.toasOptions
-                                    completionBlock:nil];
-        
-        NSLog(@"Sign in error, error domain: %@, error code: %ld", error.domain, (long)error.code);
+        [CLAToastManager showDefaultInfoToastWithText:errorMessage completionBlock:nil];
     }
 }
 

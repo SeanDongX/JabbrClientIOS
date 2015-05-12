@@ -25,7 +25,6 @@
 		146C9BAD1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAC1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m */; };
 		146C9BB01AFC199500885F96 /* CLAWebApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */; };
 		146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */; };
-		146D83DF1AF19BF500855C59 /* CLARoundFrameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83DE1AF19BF500855C59 /* CLARoundFrameButton.m */; };
 		146D83E31AF19F3300855C59 /* CLAKeyboardAwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */; };
 		1479A8101ACC372800A31A7E /* ChatThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 1479A80F1ACC372800A31A7E /* ChatThread+Category.m */; };
 		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
@@ -48,6 +47,7 @@
 		14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990A1AD317BC00776556 /* ProfileViewController.m */; };
 		14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990D1AD33D1000776556 /* CLAMessage.m */; };
 		14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */; };
+		14F8677F1B020D2A00CF751F /* CLARoundFrameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F8677E1B020D2A00CF751F /* CLARoundFrameButton.m */; };
 		EE809097EABCDD6117E3CED2 /* libPods-Collara.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE68A76A0440538A1CFB906 /* libPods-Collara.a */; };
 /* End PBXBuildFile section */
 
@@ -101,8 +101,6 @@
 		146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAWebApiClient.m; path = Lib/CLAWebApiClient.m; sourceTree = "<group>"; };
 		146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLASignUpViewController.h; sourceTree = "<group>"; };
 		146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLASignUpViewController.m; sourceTree = "<group>"; };
-		146D83DD1AF19BF500855C59 /* CLARoundFrameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoundFrameButton.h; path = Lib/CLARoundFrameButton.h; sourceTree = "<group>"; };
-		146D83DE1AF19BF500855C59 /* CLARoundFrameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARoundFrameButton.m; path = Lib/CLARoundFrameButton.m; sourceTree = "<group>"; };
 		146D83E11AF19F3300855C59 /* CLAKeyboardAwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAKeyboardAwareViewController.h; sourceTree = "<group>"; };
 		146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAKeyboardAwareViewController.m; sourceTree = "<group>"; };
 		1479A80E1ACC372800A31A7E /* ChatThread+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ChatThread+Category.h"; path = "JabbrClient/DataModel/ChatThread+Category.h"; sourceTree = SOURCE_ROOT; };
@@ -145,6 +143,8 @@
 		14BA990D1AD33D1000776556 /* CLAMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMessage.m; path = JabbrClient/DataModel/CLAMessage.m; sourceTree = SOURCE_ROOT; };
 		14BEBC3D1AF2E67100F2470C /* CLATeamViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATeamViewModel.h; path = ViewModel/CLATeamViewModel.h; sourceTree = "<group>"; };
 		14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLATeamViewModel.m; path = ViewModel/CLATeamViewModel.m; sourceTree = "<group>"; };
+		14F8677D1B020D2A00CF751F /* CLARoundFrameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoundFrameButton.h; path = CustomControl/CLARoundFrameButton.h; sourceTree = "<group>"; };
+		14F8677E1B020D2A00CF751F /* CLARoundFrameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARoundFrameButton.m; path = CustomControl/CLARoundFrameButton.m; sourceTree = "<group>"; };
 		388092327DB112E57ACB1DF5 /* Pods-Collara.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Collara.release.xcconfig"; path = "Pods/Target Support Files/Pods-Collara/Pods-Collara.release.xcconfig"; sourceTree = "<group>"; };
 		3ED0782C5C44919FA936A1B4 /* Pods-JabbrClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.release.xcconfig"; sourceTree = "<group>"; };
 		3FF416E318022D2101E2CBE9 /* Pods-JabbrClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JabbrClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JabbrClient/Pods-JabbrClient.debug.xcconfig"; sourceTree = "<group>"; };
@@ -184,8 +184,6 @@
 				1404B5311AF10ED400363178 /* CLAMessageClient.h */,
 				1404B5341AF118BB00363178 /* CLASignalRMessageClient.h */,
 				1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */,
-				146D83DD1AF19BF500855C59 /* CLARoundFrameButton.h */,
-				146D83DE1AF19BF500855C59 /* CLARoundFrameButton.m */,
 				1463CB081AF95D0A00BC2513 /* CLAToastManager.h */,
 				1463CB091AF95D0A00BC2513 /* CLAToastManager.m */,
 				146C9BA81AFC172C00885F96 /* CLAApiClient.h */,
@@ -279,6 +277,7 @@
 				142046401AD1EC58006143D5 /* Lib */,
 				14679E931AC8832900316C9C /* DataModel */,
 				14BEBC3C1AF2E63600F2470C /* ViewModel */,
+				14F8677C1B020C5D00CF751F /* CustomControl */,
 				149F994A1AC4D0FD00525EA7 /* StoryBoards */,
 				149F99311AC4D07000525EA7 /* Menus */,
 				14B515A01ABF14C90000CC4F /* Controllers */,
@@ -353,6 +352,15 @@
 				1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		14F8677C1B020C5D00CF751F /* CustomControl */ = {
+			isa = PBXGroup;
+			children = (
+				14F8677D1B020D2A00CF751F /* CLARoundFrameButton.h */,
+				14F8677E1B020D2A00CF751F /* CLARoundFrameButton.m */,
+			);
+			name = CustomControl;
 			sourceTree = "<group>";
 		};
 		5B31BC541338B01E45F1B8EB /* Pods */ = {
@@ -553,7 +561,6 @@
 				1463CB061AF955AD00BC2513 /* CLACreateTeamViewController.m in Sources */,
 				14B515741ABF138A0000CC4F /* main.m in Sources */,
 				142046491AD203FD006143D5 /* Constants.m in Sources */,
-				146D83DF1AF19BF500855C59 /* CLARoundFrameButton.m in Sources */,
 				144D9EE91AF03528005EBAD2 /* CLATeam.m in Sources */,
 				146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */,
 				14B515B01ABF14C90000CC4F /* ChatViewController.m in Sources */,
@@ -566,6 +573,7 @@
 				149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */,
 				14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */,
 				146C9BAD1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m in Sources */,
+				14F8677F1B020D2A00CF751F /* CLARoundFrameButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

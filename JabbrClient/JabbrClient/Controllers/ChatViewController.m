@@ -84,8 +84,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.collectionView.collectionViewLayout.springinessEnabled = NO;
-    self.showLoadEarlierMessagesHeader = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -151,11 +149,17 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)configJSQMessage {
     
+    self.collectionView.collectionViewLayout.springinessEnabled = NO;
+    self.showLoadEarlierMessagesHeader = YES;
+    
+    //TODO:show and implement attachment functionality
+    self.inputToolbar.contentView.leftBarButtonItem = nil;
+    
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     
     JSQMessagesBubbleImageFactory *bubbleImageFactory = [[JSQMessagesBubbleImageFactory alloc] init];
     self.outgoingBubbleImageView = [bubbleImageFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
-    self.incomingBubbleImageView = [bubbleImageFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+    self.incomingBubbleImageView = [bubbleImageFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleBlueColor]];
     
 }
 
@@ -285,13 +289,17 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+
+    NSString *username = [message.senderId uppercaseString];
+    NSInteger subStringIndex = username.length > 1 ? 1 : username.length;
     
-    if ([[message.senderId lowercaseString] isEqualToString:[self.senderId lowercaseString]]) {
-        return nil;
-    }
-    else {
-        return [[DemoData sharedDemoData].avatars objectForKey:[message.senderId lowercaseString]];
-    }
+    NSString *alias = [username substringToIndex:subStringIndex];
+    
+   return [JSQMessagesAvatarImageFactory avatarImageWithUserInitials:alias
+                                                     backgroundColor: [Constants mainThemeContrastColor]
+                                                                                        textColor: [UIColor whiteColor]
+                                                                                             font:[UIFont systemFontOfSize:13.0f]
+                                                                                         diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {

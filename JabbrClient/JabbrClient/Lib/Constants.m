@@ -93,6 +93,12 @@ NSString *const kErrorMsgSignInFailureUnknown = @"Something went wrong. How abou
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
++ (UIImage *)settingsImage {
+    FAKIonIcons *iccon = [FAKIonIcons iosGearOutlineIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
+}
+
 + (UIImage *)chatIconImage {
     FAKIonIcons *iccon = [FAKIonIcons iosChatbubbleOutlineIconWithSize:30];
     [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];

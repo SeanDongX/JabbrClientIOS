@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cLf-iZ-bmg">
-                                <rect key="frame" x="0.0" y="64" width="270" height="504"/>
+                                <rect key="frame" x="0.0" y="64" width="270" height="444"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -46,18 +46,59 @@
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bXB-JU-LXW" userLabel="SettingsView">
+                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3H-YL-uv1" userLabel="SettingsButton">
+                                        <rect key="frame" x="50" y="10" width="228" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="dpe-mE-1DO"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Settings">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="settingsButtonClicked:" destination="Ldj-Tp-LNF" eventType="touchUpInside" id="J9M-dG-oAm"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kdo-s2-nr1" userLabel="SettingsIcon">
+                                        <rect key="frame" x="10" y="10" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Mgz-WX-MAM"/>
+                                            <constraint firstAttribute="width" constant="30" id="bF7-UJ-1dP"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="R3H-YL-uv1" secondAttribute="bottom" constant="10" id="LUV-g4-avc"/>
+                                    <constraint firstAttribute="height" constant="50" id="LiN-vm-D33"/>
+                                    <constraint firstAttribute="trailing" secondItem="R3H-YL-uv1" secondAttribute="trailing" constant="10" id="OBs-LO-FQI"/>
+                                    <constraint firstAttribute="bottom" secondItem="kdo-s2-nr1" secondAttribute="bottom" constant="10" id="d5M-6X-BDt"/>
+                                    <constraint firstItem="R3H-YL-uv1" firstAttribute="leading" secondItem="bXB-JU-LXW" secondAttribute="leading" constant="50" id="f41-jO-RsJ"/>
+                                    <constraint firstItem="kdo-s2-nr1" firstAttribute="leading" secondItem="bXB-JU-LXW" secondAttribute="leading" constant="10" id="uea-CN-b4m"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.18823529410000001" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="cLf-iZ-bmg" firstAttribute="leading" secondItem="f5y-RZ-4ee" secondAttribute="leading" id="3R9-3S-1IP"/>
+                            <constraint firstItem="bXB-JU-LXW" firstAttribute="leading" secondItem="f5y-RZ-4ee" secondAttribute="leadingMargin" constant="-16" id="GHv-Mu-Hj2"/>
                             <constraint firstItem="Yhz-xb-hCd" firstAttribute="leading" secondItem="f5y-RZ-4ee" secondAttribute="leading" id="LSA-X4-QBO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bXB-JU-LXW" secondAttribute="trailing" constant="-16" id="OLY-nb-2zB"/>
                             <constraint firstItem="cLf-iZ-bmg" firstAttribute="top" secondItem="Yhz-xb-hCd" secondAttribute="bottom" id="bDA-a6-rma"/>
                             <constraint firstAttribute="trailing" secondItem="cLf-iZ-bmg" secondAttribute="trailing" constant="50" id="ftS-XI-Gwh"/>
-                            <constraint firstItem="rfl-Te-ozR" firstAttribute="top" secondItem="cLf-iZ-bmg" secondAttribute="bottom" id="nWL-h6-yjB"/>
+                            <constraint firstItem="rfl-Te-ozR" firstAttribute="top" secondItem="bXB-JU-LXW" secondAttribute="bottom" id="guO-GO-gXQ"/>
+                            <constraint firstItem="rfl-Te-ozR" firstAttribute="top" secondItem="cLf-iZ-bmg" secondAttribute="bottom" constant="60" id="nWL-h6-yjB"/>
                             <constraint firstItem="Yhz-xb-hCd" firstAttribute="top" secondItem="FpX-sN-A4x" secondAttribute="bottom" id="q2R-NS-TRv"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="settingsButton" destination="R3H-YL-uv1" id="mRy-aP-Gh3"/>
+                        <outlet property="settingsIcon" destination="kdo-s2-nr1" id="sUM-ch-459"/>
                         <outlet property="tableView" destination="cLf-iZ-bmg" id="QWb-0Q-iIR"/>
                     </connections>
                 </viewController>
@@ -274,7 +315,7 @@
                             <constraint firstItem="hQj-jR-e2C" firstAttribute="top" secondItem="vnb-LW-PJV" secondAttribute="bottom" constant="36" id="y4C-qq-9UI"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="z5r-zy-Ycm">
+                    <navigationItem key="navigationItem" title="Settings" id="z5r-zy-Ycm">
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="ZxX-xc-zh0" userLabel="Menu">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>

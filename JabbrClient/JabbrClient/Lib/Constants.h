@@ -58,6 +58,7 @@ FOUNDATION_EXPORT NSString *const kErrorMsgSignInFailureUnknown;
 + (NSDictionary *)toasOptions;
 
 + (UIImage *)menuIconImage;
++ (UIImage *)settingsImage;
 + (UIImage *)chatIconImage;
 + (UIImage *)docIconImage;
 + (UIImage *)infoIconImage;

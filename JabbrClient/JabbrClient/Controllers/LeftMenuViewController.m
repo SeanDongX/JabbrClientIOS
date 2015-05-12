@@ -22,18 +22,28 @@
 // THE SOFTWARE.
 
 #import "LeftMenuViewController.h"
-#import "UIViewController+ECSlidingViewController.h"
-#import "ChatViewController.h"
+
+//Util
 #import "DemoData.h"
 #import "ChatThread+Category.h"
 #import "Constants.h"
+
+//Menu
+#import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
-#import "CLACreateRoomViewController.h"
+
+//Control
 #import "CLARoundFrameButton.h"
+
+//View Controller
+#import "ChatViewController.h"
+#import "CLACreateRoomViewController.h"
 
 @interface LeftMenuViewController ()
 
 @property (nonatomic, strong) NSArray *chatThreads;
+@property (weak, nonatomic) IBOutlet UIImageView *settingsIcon;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 
 @end
 
@@ -41,12 +51,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.slidingViewController.topViewAnchoredGesture = ECSlidingViewControllerAnchoredGestureTapping | ECSlidingViewControllerAnchoredGesturePanning;
-    
-    self.slidingViewController.anchorLeftPeekAmount  = 50.0;
-    self.slidingViewController.anchorRightPeekAmount = 50.0;
-
+    [self setupMenu];
+    [self setupSettingsView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -57,6 +63,19 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.view endEditing:YES];
+}
+
+- (void)setupMenu {
+    
+    self.slidingViewController.topViewAnchoredGesture = ECSlidingViewControllerAnchoredGestureTapping | ECSlidingViewControllerAnchoredGesturePanning;
+    
+    self.slidingViewController.anchorLeftPeekAmount  = 50.0;
+    self.slidingViewController.anchorRightPeekAmount = 50.0;
+}
+
+- (void)setupSettingsView {
+    [self.settingsIcon setImage: [Constants settingsImage]];
+    self.settingsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 }
 
 #pragma mark - Properties
@@ -89,7 +108,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return self.chatThreads.count + 1;
+            return self.chatThreads.count;
             
         default:
             return 0;
@@ -100,14 +119,9 @@
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (indexPath.row == self.chatThreads.count) {
-        cell.textLabel.text = @"Profile";
-    }
-    else {
-        ChatThread *chatThread = self.chatThreads[indexPath.row];
-        cell.textLabel.text = [chatThread getDisplayTitle];
-    }
-    
+    ChatThread *chatThread = self.chatThreads[indexPath.row];
+    cell.textLabel.text = [chatThread getDisplayTitle];
+
     cell.textLabel.textColor = [UIColor whiteColor];
     [cell setBackgroundColor:[UIColor clearColor]];
     
@@ -201,5 +215,12 @@
     CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
     createRoomViewController.slidingMenuViewController = (SlidingViewController *)self.slidingViewController;
     [self presentViewController:createRoomViewController animated:YES completion:nil];
+}
+
+- (IBAction)settingsButtonClicked:(id)sender {
+    UINavigationController *navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kProfileNavigationController];
+        
+    [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    [self.slidingViewController resetTopViewAnimated:YES];
 }
 @end

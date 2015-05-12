@@ -60,6 +60,10 @@ NSString *const kAuthToken = @"AuthToken";
 NSString *const kLastAuthDate = @"LastAuthDate";
 NSString *const kTeamKey = @"TeamKey";
 
+NSString *const kMessageId = @"MessageIdKey";
+NSString *const kRoomName = @"RoomNameKey";
+
+
 int const kTeamNameMaxLength = 50;
 
 int const kMessageLoadAnimateTimeThreshold = 60;

@@ -114,12 +114,12 @@
     [self.tableView reloadData];
     
     //select last selected, if any
-    [self selectThread:selectedChatTitle closeMenu:NO];
+    [self selectRoom:selectedChatTitle closeMenu:NO];
 }
 
-- (void)selectThread: (NSString *)title closeMenu:(BOOL)close {
+- (void)selectRoom: (NSString *)room closeMenu:(BOOL)close {
     //TODO: support section
-    if (title == nil)
+    if (room == nil)
     {
         return;
     }
@@ -127,7 +127,7 @@
     for (int key=0 ; key< self.chatThreads.count; key++) {
         ChatThread *thread = [self.chatThreads objectAtIndex:key];
         
-        if ([thread.title isEqualToString: title]) {
+        if ([thread.title isEqualToString: room]) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:key inSection:0];
             
             [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];

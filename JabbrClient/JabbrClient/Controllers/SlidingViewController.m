@@ -12,6 +12,9 @@
 #import "Constants.h"
 #import "AuthManager.h"
 
+//App
+#import "AppDelegate.h"
+
 //View Controller
 #import "LeftMenuViewController.h"
 #import "ChatViewController.h"
@@ -87,7 +90,6 @@
     else {
         [self switchToMainView];
     }
-    
 }
 
 - (void)switchToMainView {
@@ -95,16 +97,18 @@
     [self setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     [self.topViewController.view addGestureRecognizer:self.panGesture];
     [self resetTopViewAnimated:TRUE];
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).slidingViewController = self;
 }
 
 - (void)switchToSignInView {
     [self setTopNavigationControllerWithKeyIdentifier:kSignInNavigationController];
     [self resetTopViewAnimated:TRUE];
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).slidingViewController = nil;
 }
 
 - (void)switchToRoom:(NSString *)room {
     LeftMenuViewController *leftMenu = (LeftMenuViewController *)self.underLeftViewController;
-    [leftMenu selectThread:room closeMenu:YES];
+    [leftMenu selectRoom:room closeMenu:YES];
 }
 
 - (void)switchToRoomAtNextReload:(NSString *)room {

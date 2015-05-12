@@ -8,16 +8,25 @@
 
 #import "AppDelegate.h"
 
+//Util
+#import "Constants.h"
+
+//Menu
+#import "LeftMenuViewController.h"
+
+@interface AppDelegate()
+
+@property (strong, nonatomic) UILocalNotification *lastLocalNotification;
+
+@end
+
 @implementation AppDelegate
 
 @synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    //UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    //UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-    //splitViewController.delegate = (id)navigationController.topViewController;
+    [self registerLocalNotification];
     return YES;
 }
 							
@@ -46,9 +55,12 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
+    application.applicationIconBadgeNumber = 0;
+    [self processLocalNotificaton:self.lastLocalNotification];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    self.lastLocalNotification = notification;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -58,6 +70,29 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+
+- (void)registerLocalNotification {
+    UIUserNotificationType types = UIUserNotificationTypeBadge |
+    UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    
+    UIUserNotificationSettings *mySettings =
+    [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+}
+
+- (void)processLocalNotificaton: (UILocalNotification *)notification {
+    if (notification.userInfo != nil) {
+        NSString *room = [notification.userInfo objectForKey:kRoomName];
+        
+        if (room != nil && self.slidingViewController != nil) {
+            LeftMenuViewController *leftMenu = (LeftMenuViewController *)self.slidingViewController.underLeftViewController;
+            
+            if ([leftMenu respondsToSelector:@selector(selectRoom:closeMenu:)]) {
+                [leftMenu selectRoom:room closeMenu:YES];
+            }
+        }
+    }
 }
 
 @end

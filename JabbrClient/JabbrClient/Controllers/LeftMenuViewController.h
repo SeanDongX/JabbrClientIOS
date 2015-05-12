@@ -28,6 +28,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (void)updateChatThreads:(NSArray *)chatThreads;
-- (void)selectThread: (NSString *)title closeMenu:(BOOL)close;
+- (void)selectRoom:(NSString *)room closeMenu:(BOOL)close;
 
 @end

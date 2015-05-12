@@ -201,7 +201,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.chatThreadRepository setObject:messages forKey:self.currentChatThread.title];
 }
 
-- (void)addMessage:(CLAMessage *)message toThread: (NSString*)threadTitle {
+- (void)addMessage:(CLAMessage *)message toRoom: (NSString*)threadTitle {
     if (!message) {
         return;
     }
@@ -489,13 +489,14 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [leftMenuViewController updateChatThreads:chatThreadArray];
     
     if (self.preselectedTitle != nil) {
-        [leftMenuViewController selectThread:self.preselectedTitle closeMenu:YES];
+        [leftMenuViewController selectRoom:self.preselectedTitle closeMenu:YES];
         self.preselectedTitle = nil;
     }
 }
 
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room {
-    [self addMessage:message toThread:room];
+    [self addMessage:message toRoom:room];
+    [self sendLocalNotificationFor:message inRoom:room];
     
     NSInteger secondApart = [message.date secondsFrom:[NSDate date]];
     
@@ -504,7 +505,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     //TODO: also show messages of the same user from other client in current thread
     if (message.senderId != self.username &&
         [[self.currentChatThread.title lowercaseString] isEqualToString:[room lowercaseString]]) {
-        
         [self finishReceivingMessageAnimated:animated];
     }
 }
@@ -692,7 +692,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark -
 #pragma mark Private Methods
 
-- (NSDate *)getMessageDisplayDateAt: (NSIndexPath *)indexPath {
+- (NSDate *)getMessageDisplayDateAt:(NSIndexPath *)indexPath {
     CLAMessage *currentMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
 
     if (indexPath.item == 0) {
@@ -712,4 +712,29 @@ static NSString * const kDefaultChatThread = @"collarabot";
     return nil;
 }
 
+- (void)sendLocalNotificationFor:(CLAMessage *)message inRoom:(NSString *)room  {
+    
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        return;
+    }
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate date];
+    localNotification.alertBody = [NSString stringWithFormat:@"%@%@ %@%@: %@", kRoomPrefix, room, kUserPrefix, message.senderDisplayName, message.text];
+    localNotification.soundName=UILocalNotificationDefaultSoundName;
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    
+    NSDictionary *infoDict= @{
+                                kRoomName: room,
+                                kMessageId: message.oId
+                            };
+    
+    localNotification.userInfo = infoDict;
+    
+    localNotification.alertAction = @"Open App";
+    localNotification.hasAction = YES;
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
 @end

@@ -41,6 +41,9 @@ FOUNDATION_EXPORT NSString *const kAuthToken;
 FOUNDATION_EXPORT NSString *const kLastAuthDate;
 FOUNDATION_EXPORT NSString *const kTeamKey;
 
+FOUNDATION_EXPORT NSString *const kMessageId;
+FOUNDATION_EXPORT NSString *const kRoomName;
+
 FOUNDATION_EXPORT int const kTeamNameMaxLength;
 
 FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;

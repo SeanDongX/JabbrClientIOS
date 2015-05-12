@@ -10,9 +10,6 @@
 
 @interface AuthManager : NSObject
 
-//TODO: remove
-@property (strong, nonatomic, readonly) NSString *server_url;
-
 + (AuthManager *)sharedInstance;
 
 - (BOOL)isAuthenticated;
@@ -24,4 +21,5 @@
 
 - (void)cacheAuthToken: (NSString *)authToken;
 - (void)cacheUsername:(NSString *)username;
+
 @end

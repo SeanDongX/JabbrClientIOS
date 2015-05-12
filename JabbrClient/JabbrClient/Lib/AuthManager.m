@@ -24,9 +24,6 @@
 
 - (instancetype)init {
     self = [super init];
-    if (self) {
-        _server_url = kServerBaseUrl;
-    }
     return self;
 }
 
@@ -112,54 +109,6 @@
     for (NSHTTPCookie *each in cookieStorage.cookies) {
         [cookieStorage deleteCookie:each];
     }
-}
-
-- (void)requestAuthTokenWithUsername: (NSString *)username password:(NSString *)password completion:(void (^)(NSString *authToken, NSError *requestError))completionBlock{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@account/login?ReturnUrl=/account/tokenr", [AuthManager sharedInstance].server_url]]];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
-    
-    NSString *postString = [NSString stringWithFormat: @"username=%@&password=%@", username, password];
-    
-    NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
-    [request setHTTPBody:data];
-    
-    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[data length]] forHTTPHeaderField:@"Content-Length"];
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                               
-                               if (error == nil) {
-                                   
-                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                                   
-                                   NSString *actualResponseUrl = [httpResponse.URL absoluteString];
-                                   NSString *expectedResponseUrl = [NSString stringWithFormat: @"%@account/tokenr", self.server_url];
-                                   
-                                   NSString *authToken = nil;
-                                   
-                                   if ([actualResponseUrl rangeOfString:expectedResponseUrl options:NSCaseInsensitiveSearch].location == NSNotFound) {
-                                       
-                                       completionBlock(nil,
-                                                       [NSError errorWithDomain:kErrorDoamin
-                                                                           code:kErrorCodeSignInUsernameOrPasswordInvalid
-                                                                       userInfo:@{ kErrorDescription : kErrorMsgSignInUsernameOrPasswordInvalid }]);
-                                       
-                                       NSLog(@"Token request error. Expect response url '%@', but get '%@'", expectedResponseUrl, actualResponseUrl);
-                                   }
-                                   else {
-                                       authToken = [self fetchAuthToken:data];
-                                       NSLog(@"Authtoken acquried: %@", authToken);
-                                       completionBlock(authToken, nil);
-                                   }
-                               }
-                               else {
-                                   completionBlock(nil, error);
-                               }
-                           }];
-
 }
 
 @end

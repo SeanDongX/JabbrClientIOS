@@ -106,7 +106,8 @@ static bool isFirstAccess = YES;
 
 - (void)makeConnection {
     
-    NSString *server = [AuthManager sharedInstance].server_url;
+    NSString *server = kServerBaseUrl;
+    
     NSString *authToken = [[AuthManager sharedInstance] getCachedAuthToken];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

@@ -63,7 +63,7 @@
     
     [self.leftMenuButton setTitle:@""];
     [self.leftMenuButton setWidth:30];
-    [self.leftMenuButton setImage: [Constants chatIconImage]];
+    [self.leftMenuButton setImage: [Constants menuIconImage]];
     
     
     [self.rightMenuButton setTitle:@""];

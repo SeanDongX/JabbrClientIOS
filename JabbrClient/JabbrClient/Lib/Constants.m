@@ -17,7 +17,7 @@
     #if TARGET_IPHONE_SIMULATOR
 
     //NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
-NSString *const kServerBaseUrl = @"http://www.collara.co/";
+    NSString *const kServerBaseUrl = @"http://www.collara.co/";
     #else
 
     //NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";
@@ -88,7 +88,7 @@ NSString *const kErrorMsgSignInFailureUnknown = @"Something went wrong. How abou
 }
 
 + (UIImage *)menuIconImage {
-    FAKIonIcons *iccon = [FAKIonIcons iosMoreOutlineIconWithSize:30];
+    FAKIonIcons *iccon = [FAKIonIcons naviconIconWithSize:30];
     [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }

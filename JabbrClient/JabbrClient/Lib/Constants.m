@@ -32,6 +32,8 @@
 
 NSString *const kApiPath = @"api/v1/";
 
+NSTimeInterval const kMessageClientReconnectInterval = 5.0;
+
 NSString *const kMainStoryBoard = @"Main";
 
 

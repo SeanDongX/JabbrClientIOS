@@ -17,6 +17,13 @@
 @protocol CLAMessageDeliveryInfo;
 @protocol CLAMessageFailureInfo;
 
+typedef enum {
+    CLAConnecting,
+    CLAConnected,
+    CLAReconnecting,
+    CLADisconnected
+} CLAConnectionState;
+
 
 @protocol CLAMessageClient <NSObject>
 
@@ -32,12 +39,13 @@
 
 @property (nonatomic, weak) id<CLAMessageClientDelegate> delegate;
 @property (nonatomic, strong) NSString *username;
-@property (nonatomic) BOOL connected;
 @property (nonatomic) BOOL roomsLoaded;
 
 - (void)connect;
 - (void)disconnect;
 - (void)reconnect;
+
+- (CLAConnectionState)getConnectionState;
 
 - (void)loadRoom:(NSString *)room;
 - (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room;
@@ -69,6 +77,7 @@
  *
  **/
 - (void)didOpenConnection;
+- (void)didConnectionChnageState:(CLAConnectionState)oldState newState:(CLAConnectionState)newState;
 - (void)didReceiveTeams: (NSArray *)teams;
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room;
 - (void)didLoadEarlierMessages: (NSArray *) earlierMessages inRoom:(NSString*)room;

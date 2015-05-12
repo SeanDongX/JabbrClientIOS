@@ -98,7 +98,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     self.messageClient.delegate = self;
     [self.messageClient connect];
     
-    
     self.senderId = self.messageClient.username;
     self.senderDisplayName = self.messageClient.username;
     self.username = self.messageClient.username;
@@ -437,10 +436,20 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 
 #pragma mark - 
-#pragma mark Chat actions
+#pragma mark CLAMessageClient Delegate Methods
 
 - (void)didOpenConnection {
     
+}
+
+- (void)didConnectionChnageState:(CLAConnectionState)oldState newState:(CLAConnectionState)newState {
+    if (newState == CLAConnected) {
+        //FIXME:when offline, this path is being taken periodically
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    }
+    else {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
 }
 
 - (void)didReceiveTeams:(NSArray *)teams {
@@ -561,7 +570,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 #pragma mark -
-
+#pragma mark Private Methods
 - (void)sendMessage: (CLAMessage *)message {
     
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
@@ -583,7 +592,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 #pragma mark -
 #pragma mark Incoming message handlers
-
 
 - (BOOL)shoudIgnoreIncoming:(NSDictionary*)data {
     if (!data) {

@@ -167,6 +167,7 @@ static bool isFirstAccess = YES;
 }
 
 - (void)SRConnection:(id <SRConnectionInterface>)connection didChangeState:(connectionState)oldState newState:(connectionState)newState {
+    [self.delegate didConnectionChnageState:[self translateConnectionState:oldState] newState:[self translateConnectionState:newState]];
 }
 
 - (void)SRConnectionDidSlow:(id <SRConnectionInterface>)connection {
@@ -174,6 +175,27 @@ static bool isFirstAccess = YES;
 
 #pragma mark -
 #pragma mark CLAMessageClient Protocol Methods
+
+- (CLAConnectionState)getConnectionState {
+    return [self translateConnectionState:self.connection.state];
+}
+
+- (CLAConnectionState)translateConnectionState: (connectionState)state {
+    switch (state) {
+        case connected :
+            return CLAConnected;
+            
+        case connecting :
+            return CLAConnecting;
+            
+        case reconnecting :
+            return CLAReconnecting;
+            
+        default :
+            return CLADisconnected;
+    }
+}
+
 
 - (void)loadRoom:(NSString *)room {
     [self.hub invoke:@"LoadRooms" withArgs:@[@[room]]];

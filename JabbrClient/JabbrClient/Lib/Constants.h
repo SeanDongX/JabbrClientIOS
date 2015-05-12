@@ -14,6 +14,9 @@
 FOUNDATION_EXPORT NSString *const kServerBaseUrl;
 FOUNDATION_EXPORT NSString *const kApiPath;
 
+FOUNDATION_EXPORT NSTimeInterval const kMessageClientReconnectInterval;
+
+
 FOUNDATION_EXPORT NSString *const kMainStoryBoard;
 
 FOUNDATION_EXPORT NSString *const kChatNavigationController;

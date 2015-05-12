@@ -66,34 +66,6 @@
     return (NSString *)[self getCachedObjectForKey:kUsername];
 }
 
-#pragma -
-- (void)signInWithUsername:(NSString *)username password: (NSString *)password completion:(void (^)(NSError *error))completionBlock {
-    
-    [self clearCookie];
-    [self clearCache];
-    
-    [self requestAuthTokenWithUsername:username password:password completion:^(NSString *authToken, NSError *requestError) {
-
-        BOOL signInSuccessful = FALSE;
-
-        if (authToken != nil) {
-            [self cacheAuthToken:authToken];
-            signInSuccessful = TRUE;
-        }
-
-        if (signInSuccessful) {
-            [self cacheObject:[username lowercaseString] forKey:kUsername];
-            if (completionBlock != nil) {
-                completionBlock(nil);
-            }
-        } else {
-            if (completionBlock != nil) {
-                completionBlock(requestError);
-            }
-        }
-    }];
-}
-
 - (void)signOut {
     [self clearCookie];
     [self clearCache];

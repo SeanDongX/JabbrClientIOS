@@ -16,7 +16,6 @@
 + (AuthManager *)sharedInstance;
 
 - (BOOL)isAuthenticated;
-- (void)signInWithUsername:(NSString *)username password: (NSString *)password completion:(void (^)(NSError *error))completionBlock;
 
 - (void)signOut;
 

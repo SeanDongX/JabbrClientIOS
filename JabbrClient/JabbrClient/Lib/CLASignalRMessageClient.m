@@ -30,8 +30,7 @@
 static CLASignalRMessageClient *SINGLETON = nil;
 static bool isFirstAccess = YES;
 
-+ (id)sharedInstance
-{
++ (id)sharedInstance {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         isFirstAccess = NO;
@@ -41,36 +40,29 @@ static bool isFirstAccess = YES;
     return SINGLETON;
 }
 
-
 #pragma mark - Life Cycle
 
-+ (id) allocWithZone:(NSZone *)zone
-{
++ (id) allocWithZone:(NSZone *)zone {
     return [self sharedInstance];
 }
 
-+ (id)copyWithZone:(struct _NSZone *)zone
-{
++ (id)copyWithZone:(struct _NSZone *)zone {
     return [self sharedInstance];
 }
 
-+ (id)mutableCopyWithZone:(struct _NSZone *)zone
-{
++ (id)mutableCopyWithZone:(struct _NSZone *)zone {
     return [self sharedInstance];
 }
 
-- (id)copy
-{
+- (id)copy {
     return [[CLASignalRMessageClient alloc] init];
 }
 
-- (id)mutableCopy
-{
+- (id)mutableCopy {
     return [[CLASignalRMessageClient alloc] init];
 }
 
-- (id) init
-{
+- (id) init {
     if(SINGLETON){
         return SINGLETON;
     }
@@ -85,7 +77,7 @@ static bool isFirstAccess = YES;
 #pragma mark -
 #pragma mark View Actions
 
-- (void)connect{
+- (void)connect {
     if (!self.connection)
     {
         [self makeConnection];
@@ -99,7 +91,7 @@ static bool isFirstAccess = YES;
     self.connection = nil;
 }
 
-- (void)reconnect{
+- (void)reconnect {
     [self disconnect];
     [self makeConnection];
 }
@@ -151,8 +143,7 @@ static bool isFirstAccess = YES;
 #pragma mark -
 #pragma mark SRConnection Delegate
 
-- (void)SRConnectionDidOpen:(SRConnection *)connection
-{
+- (void)SRConnectionDidOpen:(SRConnection *)connection {
     [self.hub invoke:@"Join" withArgs:@[]];
     self.connected = TRUE;
     
@@ -201,7 +192,7 @@ static bool isFirstAccess = YES;
     [self.hub invoke:@"Typing" withArgs:@[room]];
 }
 
-- (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room{
+- (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room {
     
     if (messageId == nil) {
         return;
@@ -228,8 +219,7 @@ static bool isFirstAccess = YES;
 
 }
 
-- (void)loadTeamData:(NSArray *)data
-{
+- (void)loadTeamData:(NSArray *)data {
     self.roomsLoaded = TRUE;
     
     if (data == nil || data.count == 0) {
@@ -296,36 +286,7 @@ static bool isFirstAccess = YES;
     [self.delegate didReceiveTeams:teamViewModelArray];
 }
 
-- (void)incomingMessage:(NSArray *)data
-{
-    //Message data example
-    //    {
-    //        Content = hi;
-    //        HtmlContent = "<null>";
-    //        HtmlEncoded = 0;
-    //        Id = "8111d548-2db7-420b-bb2e-7494c6205f56";
-    //        ImageUrl = "<null>";
-    //        MessageType = 0;
-    //        Source = "<null>";
-    //        User =     {
-    //            Active = 1;
-    //            AfkNote = "<null>";
-    //            Country = "<null>";
-    //            Flag = "<null>";
-    //            Hash = "<null>";
-    //            IsAdmin = 1;
-    //            IsAfk = 0;
-    //            LastActivity = "2015-03-25T22:02:03.8653739Z";
-    //            Name = seanxd;
-    //            Note = "some note, help";
-    //            Status = Active;
-    //        };
-    //        UserRoomPresence = present;
-    //        When = "2015-03-25T22:02:03.8809978+00:00";
-    //    },
-    //    TestRoom
-    //  }
-    
+- (void)incomingMessage:(NSArray *)data {
     if (!data && data.count <2)
     {
         return;
@@ -358,8 +319,7 @@ static bool isFirstAccess = YES;
 }
 
 
-- (CLAMessage *)getMessageFromRawData:(NSDictionary *)messageDictionary
-{
+- (CLAMessage *)getMessageFromRawData:(NSDictionary *)messageDictionary {
     NSString *userName = @"Unknown";
     NSDictionary *userData = [messageDictionary objectForKey:@"User"];
     
@@ -387,16 +347,13 @@ static bool isFirstAccess = YES;
                                      text:[messageDictionary objectForKey:@"Content"]];
 }
 
-- (CLAUser *)getUserFromRawData:(NSDictionary *)userDictionary
-{
+- (CLAUser *)getUserFromRawData:(NSDictionary *)userDictionary {
     CLAUser *user = [[CLAUser alloc] init];
     user.name = [userDictionary objectForKey:@"Name"];
     return  user;
 }
 
-- (void)setTyping:(NSArray *)data
-{
-    
+- (void)setTyping:(NSArray *)data {
     if (!data && data.count <2)
     {
         return;
@@ -412,101 +369,7 @@ static bool isFirstAccess = YES;
     }
 }
 
-- (void)roomLoaded:(NSArray *)data
-{
-    
-    //    <__NSCFArray 0x7fb214346e20>(
-    //    {
-    //        Closed = 0;
-    //        Count = 0;
-    //        Name = PitchDemo;
-    //        Owners =     (
-    //                      seanxd
-    //                      );
-    //        Private = 0;
-    //        RecentMessages =     (
-    //                              {
-    //                                  Content = send;
-    //                                  HtmlContent = "<null>";
-    //                                  HtmlEncoded = 0;
-    //                                  Id = "182be5ef-d8a6-44b6-a18f-ea42f1a38813";
-    //                                  ImageUrl = "<null>";
-    //                                  MessageType = 0;
-    //                                  Source = "<null>";
-    //                                  User =             {
-    //                                      Active = 0;
-    //                                      AfkNote = "<null>";
-    //                                      Country = "<null>";
-    //                                      Flag = "<null>";
-    //                                      Hash = "<null>";
-    //                                      IsAdmin = 0;
-    //                                      IsAfk = 0;
-    //                                      LastActivity = "2015-04-03T01:11:59.493Z";
-    //                                      Name = kate;
-    //                                      Note = "<null>";
-    //                                      Status = Offline;
-    //                                  };
-    //                                  UserRoomPresence = present;
-    //                                  When = "2015-04-01T13:21:12.9563522+00:00";
-    //                              },
-    //                              {
-    //                                  Content = "Boom! Check your docs, just created from my phone!";
-    //                                  HtmlContent = "<null>";
-    //                                  HtmlEncoded = 0;
-    //                                  Id = "661e9b16-7831-443f-a41e-c66c4de03027";
-    //                                  ImageUrl = "<null>";
-    //                                  MessageType = 0;
-    //                                  Source = "<null>";
-    //                                  User =             {
-    //                                      Active = 1;
-    //                                      AfkNote = "<null>";
-    //                                      Country = "<null>";
-    //                                      Flag = "<null>";
-    //                                      Hash = "<null>";
-    //                                      IsAdmin = 0;
-    //                                      IsAfk = 0;
-    //                                      LastActivity = "2015-04-06T14:11:57.707Z";
-    //                                      Name = Mike;
-    //                                      Note = "<null>";
-    //                                      Status = Active;
-    //                                  };
-    //                                  UserRoomPresence = present;
-    //                                  When = "2015-04-03T14:52:25.9471504+00:00";
-    //                              }
-    //                              );
-    //        Topic = "";
-    //        Users =     (
-    //                     {
-    //                         Active = 0;
-    //                         AfkNote = "<null>";
-    //                         Country = "<null>";
-    //                         Flag = "<null>";
-    //                         Hash = "<null>";
-    //                         IsAdmin = 1;
-    //                         IsAfk = 0;
-    //                         LastActivity = "2015-04-06T13:41:18.517Z";
-    //                         Name = seanxd;
-    //                         Note = "some note, help";
-    //                         Status = Inactive;
-    //                     },
-    //                     {
-    //                         Active = 1;
-    //                         AfkNote = "<null>";
-    //                         Country = "<null>";
-    //                         Flag = "<null>";
-    //                         Hash = "<null>";
-    //                         IsAdmin = 0;
-    //                         IsAfk = 0;
-    //                         LastActivity = "2015-04-06T14:11:57.707Z";
-    //                         Name = Mike;
-    //                         Note = "<null>";
-    //                         Status = Active;
-    //                     }
-    //                     );
-    //        Welcome = "";
-    //    }
-    //                                 )
-    //
+- (void)roomLoaded:(NSArray *)data {
     if (data == nil)
     {
         return;

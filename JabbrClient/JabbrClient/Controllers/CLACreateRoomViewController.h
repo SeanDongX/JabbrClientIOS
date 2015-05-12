@@ -10,7 +10,7 @@
 #import "CLASignalRMessageClient.h"
 #import "SlidingViewController.h"
 
-@interface CLACreateRoomViewController : UIViewController
+@interface CLACreateRoomViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) SlidingViewController *slidingMenuViewController;
 

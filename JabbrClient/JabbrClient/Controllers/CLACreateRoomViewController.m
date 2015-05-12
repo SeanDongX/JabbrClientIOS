@@ -21,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNavBar];
+    self.topicLabel.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,8 +86,23 @@
     }];
 }
 
-- (void)error {
+
+#pragma mark -
+#pragma mark - TextField Delegate Methods
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
+    NSString *regex = @"[^-A-Za-z0-9]";
+    NSPredicate *textTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    
+    if ([textTest evaluateWithObject:string]){
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:@"-"];
+        self.topicLabel.text = newString;
+        
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

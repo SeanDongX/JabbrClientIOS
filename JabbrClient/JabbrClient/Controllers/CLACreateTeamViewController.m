@@ -29,6 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNavBar];
+    self.teamNameTextField.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -118,6 +119,24 @@
             
         }];
     }
+}
+
+#pragma mark -
+#pragma mark - TextField Delegate Methods
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    NSString *regex = @"[^-A-Za-z0-9]";
+    NSPredicate *textTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    
+    if ([textTest evaluateWithObject:string]){
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:@"-"];
+        self.teamNameTextField.text = newString;
+        
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark -

@@ -14,7 +14,7 @@
 //View Controllers
 #import "SlidingViewController.h"
 
-@interface CLACreateTeamViewController : UIViewController
+@interface CLACreateTeamViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) SlidingViewController *slidingMenuViewController;
 

@@ -57,7 +57,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.tableView reloadData];
+    [self updateChatThreads:self.chatThreads];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -94,11 +94,50 @@
 #pragma mark - Public Methods
 
 - (void)updateChatThreads:(NSArray *)chatThreads {
-    self.chatThreads = chatThreads;
     
-    if (self.isViewLoaded && self.view.window) {
-        // viewController is visible
-        [self.tableView reloadData];
+    //Find current selected
+    NSInteger currentSelected = -1;
+    NSString *selectedChatTitle = nil;
+    
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedIndexPath != nil) {
+        currentSelected = selectedIndexPath.row;
+    }
+    
+    if (self.chatThreads != nil && self.chatThreads.count > currentSelected) {
+        ChatThread *selectedChatThrad = self.chatThreads[currentSelected];
+        selectedChatTitle = selectedChatThrad.title;
+    }
+    
+    //Update threads array and table view
+    self.chatThreads = chatThreads;
+    [self.tableView reloadData];
+    
+    //select last selected, if any
+    [self selectThread:selectedChatTitle closeMenu:NO];
+}
+
+- (void)selectThread: (NSString *)title closeMenu:(BOOL)close {
+    //TODO: support section
+    if (title == nil)
+    {
+        return;
+    }
+    
+    for (int key=0 ; key< self.chatThreads.count; key++) {
+        ChatThread *thread = [self.chatThreads objectAtIndex:key];
+        
+        if ([thread.title isEqualToString: title]) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:key inSection:0];
+            
+            [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+            
+            if (close != NO) {
+                [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+            }
+            
+            return;
+        }
     }
 }
 
@@ -223,4 +262,5 @@
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
     [self.slidingViewController resetTopViewAnimated:YES];
 }
+
 @end

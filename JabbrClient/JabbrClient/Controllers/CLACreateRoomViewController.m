@@ -66,8 +66,9 @@
     [messageClient createRoom:topic completionBlock:^(NSError *error){
         if (error == nil) {
             __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+            
+            [strongSelf.slidingMenuViewController switchToRoomAtNextReload:topic];
             [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-            [strongSelf.slidingMenuViewController switchToRoom:topic];
             [strongSelf dismissViewControllerAnimated:YES completion:nil];
         }
         else {

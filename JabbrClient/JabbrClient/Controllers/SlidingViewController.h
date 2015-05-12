@@ -15,5 +15,6 @@
 - (void)switchToMainView;
 - (void)switchToSignInView;
 - (void)switchToRoom: (NSString *)room;
+- (void)switchToRoomAtNextReload: (NSString *)room;
 
 @end

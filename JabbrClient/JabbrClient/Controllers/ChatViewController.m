@@ -503,6 +503,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
     LeftMenuViewController *leftMenuViewController = (LeftMenuViewController *)self.slidingViewController.underLeftViewController;
     [leftMenuViewController updateChatThreads:chatThreadArray];
+    
+    if (self.preselectedTitle != nil) {
+        [leftMenuViewController selectThread:self.preselectedTitle closeMenu:YES];
+        self.preselectedTitle = nil;
+    }
 }
 
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room {

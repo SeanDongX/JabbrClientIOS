@@ -24,6 +24,10 @@
 #import <UIKit/UIKit.h>
 
 @interface LeftMenuViewController : UIViewController <UITableViewDataSource>
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 - (void)updateChatThreads:(NSArray *)chatThreads;
+- (void)selectThread: (NSString *)title closeMenu:(BOOL)close;
+
 @end

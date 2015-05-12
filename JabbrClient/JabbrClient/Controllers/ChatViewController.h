@@ -15,6 +15,8 @@
 
 @interface ChatViewController : JSQMessagesViewController <CLAMessageClientDelegate>
 
+@property (strong, nonatomic) NSString *preselectedTitle;
+
 - (void)switchToChatThread:(ChatThread *)chatThread;
 
 - (void)didReceiveTeams: (NSArray *)userTeams;

@@ -7,9 +7,14 @@
 //
 
 #import "SlidingViewController.h"
-#import "AuthManager.h"
+
+//Util
 #import "Constants.h"
 #import "AuthManager.h"
+
+//View Controller
+#import "LeftMenuViewController.h"
+#import "ChatViewController.h"
 
 @interface SlidingViewController ()
 
@@ -97,9 +102,17 @@
     [self resetTopViewAnimated:TRUE];
 }
 
-
-- (void)switchToRoom: (NSString *)room {
-    //TODO:swith to chatvc and room
+- (void)switchToRoom:(NSString *)room {
+    LeftMenuViewController *leftMenu = (LeftMenuViewController *)self.underLeftViewController;
+    [leftMenu selectThread:room closeMenu:YES];
 }
 
+- (void)switchToRoomAtNextReload:(NSString *)room {
+    
+    ChatViewController *chatViewController = (ChatViewController *)[((UINavigationController *)self.topViewController).viewControllers objectAtIndex:0];
+    
+    if (chatViewController != nil) {
+        chatViewController.preselectedTitle = room;
+    }
+}
 @end

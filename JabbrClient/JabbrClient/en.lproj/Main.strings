@@ -1,0 +1,105 @@
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "6vg-UG-eAB"; */
+"6vg-UG-eAB.placeholder" = "Email";
+
+/* Class = "UILabel"; text = "Create your team to start"; ObjectID = "8GA-n0-fUR"; */
+"8GA-n0-fUR.text" = "Create your team to start";
+
+/* Class = "UIButton"; normalTitle = "Leave"; ObjectID = "8xb-02-c7C"; */
+"8xb-02-c7C.normalTitle" = "Leave";
+
+/* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "9wN-Ke-SEM"; */
+"9wN-Ke-SEM.normalTitle" = "Sign In";
+
+/* Class = "UIButton"; normalTitle = "Go"; ObjectID = "9yc-pk-ljP"; */
+"9yc-pk-ljP.normalTitle" = "Go";
+
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "Axg-ob-q0b"; */
+"Axg-ob-q0b.placeholder" = "Username";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "C1u-My-kQW"; */
+"C1u-My-kQW.normalTitle" = "Sign Up";
+
+/* Class = "UIButton"; normalTitle = "Join Team"; ObjectID = "Ie1-LK-m1i"; */
+"Ie1-LK-m1i.normalTitle" = "Join Team";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "JVD-7L-Ab0"; */
+"JVD-7L-Ab0.normalTitle" = "Sign Up";
+
+/* Class = "UILabel"; text = "#"; ObjectID = "KIr-Lu-VGj"; */
+"KIr-Lu-VGj.text" = "#";
+
+/* Class = "UIButton"; normalTitle = "Create Team"; ObjectID = "LlV-JF-2Lk"; */
+"LlV-JF-2Lk.normalTitle" = "Create Team";
+
+/* Class = "UITextField"; placeholder = "Invitation Code"; ObjectID = "Moy-Rd-2Cn"; */
+"Moy-Rd-2Cn.placeholder" = "Invitation Code";
+
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "N4x-KO-VIS"; */
+"N4x-KO-VIS.placeholder" = "Username";
+
+/* Class = "UITextField"; placeholder = "Topic"; ObjectID = "P6Z-Tn-z7G"; */
+"P6Z-Tn-z7G.placeholder" = "Topic";
+
+/* Class = "UITextField"; placeholder = "Repeat Password"; ObjectID = "PIN-Zw-1xS"; */
+"PIN-Zw-1xS.placeholder" = "Repeat Password";
+
+/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "R3H-YL-uv1"; */
+"R3H-YL-uv1.normalTitle" = "Settings";
+
+/* Class = "UIBarButtonItem"; title = "Chat"; ObjectID = "SNL-za-AqO"; */
+"SNL-za-AqO.title" = "Chat";
+
+/* Class = "UINavigationItem"; title = "Document"; ObjectID = "USF-5o-XfX"; */
+"USF-5o-XfX.title" = "Document";
+
+/* Class = "UIButton"; normalTitle = "Invite"; ObjectID = "XOn-ai-3bw"; */
+"XOn-ai-3bw.normalTitle" = "Invite";
+
+/* Class = "UILabel"; text = "You are almost there"; ObjectID = "Ynb-a5-2Xd"; */
+"Ynb-a5-2Xd.text" = "You are almost there";
+
+/* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "ZxX-xc-zh0"; */
+"ZxX-xc-zh0.title" = "Menu";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "bGl-aJ-Ek7"; */
+"bGl-aJ-Ek7.placeholder" = "Password";
+
+/* Class = "UIBarButtonItem"; title = "Docs"; ObjectID = "bRO-fd-KOx"; */
+"bRO-fd-KOx.title" = "Docs";
+
+/* Class = "UITextField"; placeholder = "Team Name"; ObjectID = "dg4-Nx-u52"; */
+"dg4-Nx-u52.placeholder" = "Team Name";
+
+/* Class = "UIBarButtonItem"; title = "Docs"; ObjectID = "eIt-t0-87j"; */
+"eIt-t0-87j.title" = "Docs";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "eoW-RA-sJz"; */
+"eoW-RA-sJz.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "Participants"; ObjectID = "ezc-Fb-eoz"; */
+"ezc-Fb-eoz.text" = "Participants";
+
+/* Class = "UINavigationItem"; title = "Chat"; ObjectID = "iDk-6w-F7j"; */
+"iDk-6w-F7j.title" = "Chat";
+
+/* Class = "UILabel"; text = "Only letters and \"-\" please"; ObjectID = "lRr-MZ-gLy"; */
+"lRr-MZ-gLy.text" = "Only letters and \"-\" please";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "qeo-G0-hFE"; */
+"qeo-G0-hFE.text" = "Name";
+
+/* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "rhd-Pn-tdl"; */
+"rhd-Pn-tdl.normalTitle" = "Sign In";
+
+/* Class = "UIButton"; normalTitle = "Sign out"; ObjectID = "vR8-jy-CjL"; */
+"vR8-jy-CjL.normalTitle" = "Sign out";
+
+/* Class = "UILabel"; text = "Or join a team with inviatation code"; ObjectID = "xNi-xF-Kk5"; */
+"xNi-xF-Kk5.text" = "Or join a team with inviatation code";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "z5r-zy-Ycm"; */
+"z5r-zy-Ycm.title" = "Settings";
+
+/* Class = "UIBarButtonItem"; title = "Chat"; ObjectID = "zun-6c-983"; */
+"zun-6c-983.title" = "Chat";

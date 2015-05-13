@@ -95,15 +95,6 @@
     [defaults synchronize];
 }
 
-
-- (NSString *)fetchAuthToken:(NSData *)data {
-    NSString *authToken = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    //remove "" from returned json string
-    authToken = [authToken substringFromIndex:1];
-    authToken = [authToken substringToIndex: [authToken length] - 1];
-    return authToken;
-}
-
 - (void)clearCookie {
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (NSHTTPCookie *each in cookieStorage.cookies) {

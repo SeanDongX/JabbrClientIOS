@@ -76,26 +76,26 @@
 - (BOOL)isValidAccountModel: (CLAUserRegistrationViewModel *)accountModel {
 
     if (accountModel.username.length == 0) {
-        [CRToastManager showNotificationWithMessage:@"Uesrname is empty" completionBlock:nil];
+        [CRToastManager showNotificationWithMessage:NSLocalizedString(@"Oops, an empty username won't get very far.", nil) completionBlock:nil];
         return NO;
     }
     
     if (accountModel.email.length == 0) {
-        [CRToastManager showNotificationWithMessage:@"Email is empty" completionBlock:nil];
+        [CRToastManager showNotificationWithMessage:NSLocalizedString(@"We will need your email.", nil) completionBlock:nil];
         return NO;
     }
     
     if (![CLAUtility isValidEmail:accountModel.email]) {
-        [CRToastManager showNotificationWithMessage:@"Email is invalid" completionBlock:nil];
+        [CRToastManager showNotificationWithMessage:NSLocalizedString(@"We will need a valid email address.", nil) completionBlock:nil];
         return NO;
     }
-    if (accountModel.password.length == 0) {
-        [CRToastManager showNotificationWithMessage:@"Password is empty" completionBlock:nil];
+    if (accountModel.password.length < 6) {
+        [CRToastManager showNotificationWithMessage:NSLocalizedString(@"How about a password with more than 6 characters?", nil) completionBlock:nil];
         return NO;
     }
     
     if (![accountModel.password isEqual:accountModel.confirmPassword]) {
-        [CRToastManager showNotificationWithMessage:@"Password does not match" completionBlock:nil];
+        [CRToastManager showNotificationWithMessage:NSLocalizedString(@"Oops, the passwords does not match.", nil) completionBlock:nil];
         return NO;
     }
     

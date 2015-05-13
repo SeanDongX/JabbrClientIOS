@@ -625,7 +625,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     NSString* username = [data objectForKey:@"username"];
     if (username && [[username lowercaseString] isEqualToString:[self.username lowercaseString]])
     {
-        //TODO:also show current user's message from other client
         NSLog(@"Incoming message ingored since from current user");
         return true;
     }

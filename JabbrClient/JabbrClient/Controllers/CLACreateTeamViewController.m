@@ -66,11 +66,11 @@
     
     if ( teamName == nil || teamName.length == 0) {
         
-        [CLAToastManager showDefaultInfoToastWithText:@"Oh, an empty name. That will not work." completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, an empty name. That will not work.", nil) completionBlock:nil];
     }
     else if (teamName.length > kTeamNameMaxLength) {
         
-        [CLAToastManager showDefaultInfoToastWithText:[NSString stringWithFormat:@"Awww, do you really need more than %d characters for your team name?", kTeamNameMaxLength ]completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:[NSString stringWithFormat:NSLocalizedString(@"Sorry, but we will need you to keep you team name less than %d characters.", nil), kTeamNameMaxLength ]completionBlock:nil];
     }
     else {
         
@@ -99,7 +99,7 @@
     
     if ( inviteCode == nil || inviteCode.length == 0) {
         
-        [CLAToastManager showDefaultInfoToastWithText:@"Oh, an empty invitation code. That will not work." completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, an empty invitation code. That will not work.", nil) completionBlock:nil];
     }
     else {
         

@@ -1,0 +1,21 @@
+/* 
+  Labels.strings
+  Collara
+
+  Created by Sean on 13/05/15.
+  Copyright (c) 2015 Collara. All rights reserved.
+*/
+
+"We are terribly sorry, but some error happened." = "We are terribly sorry, but some error happened.";
+"We are terribly sorry, but we can not sign you in now." = "We are terribly sorry, but we can not sign you in now.";
+"Oops, an empty username won't get very far." = "Oops, an empty username won't get very far.";
+"Oops, an empty password won't get very far." = "Oops, an empty password won't get very far.";
+"How about a password with more than 6 characters?" = "How about a password with more than 6 characters?";
+"We will need your email." = "We will need your email.";
+"We will need a valid email address." = "We will need a valid email address.";
+"Oops, the passwords does not match." = "Oops, the passwords does not match.";
+"You will not receive message from this topic any more." = "You will not receive message from this topic any more.";
+"Oh, an empty name. That will not work."  = "Oh, an empty name. That will not work.";
+"Sorry, but we will need you to keep you team name less than %d characters." = "Sorry, but we will need you to keep you team name less than %d characters.";
+"Oh, an empty invitation code. That will not work." = "Oh, an empty invitation code. That will not work.";
+"Oh, something went wrong. Let's try it again." = "Oh, something went wrong. Let's try it again.";

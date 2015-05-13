@@ -55,13 +55,6 @@ FOUNDATION_EXPORT NSTimeInterval const kMessageDisplayTimeGap;
 FOUNDATION_EXPORT NSString *const kErrorDoamin;
 FOUNDATION_EXPORT NSString *const kErrorDescription;
 
-FOUNDATION_EXPORT int const kErrorCodeSignInUsernameOrPasswordInvalid;
-
-FOUNDATION_EXPORT NSString *const kErrorMsgSignInUsernameOrPasswordInvalid;
-
-FOUNDATION_EXPORT NSString *const kErrorMsgSignInFailureUnknown;
-
-
 + (NSDictionary *)toasOptions;
 
 + (UIImage *)menuIconImage;

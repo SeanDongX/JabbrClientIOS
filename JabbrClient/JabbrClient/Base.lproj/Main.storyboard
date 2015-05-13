@@ -49,8 +49,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bXB-JU-LXW" userLabel="SettingsView">
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3H-YL-uv1" userLabel="SettingsButton">
-                                        <rect key="frame" x="50" y="10" width="228" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3H-YL-uv1" userLabel="SettingsButton">
+                                        <rect key="frame" x="50" y="10" width="260" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="dpe-mE-1DO"/>
                                         </constraints>

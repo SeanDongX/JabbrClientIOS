@@ -81,7 +81,7 @@
                 [CLAToastManager showDefaultInfoToastWithText: errorDescription completionBlock:nil];
             }
             else {
-                [CLAToastManager showDefaultInfoToastWithText: @"Oh, something went wrong. Let's try it again." completionBlock:nil];
+                [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, something went wrong. Let's try it again.", nil)completionBlock:nil];
             }
         }
     }];

@@ -74,7 +74,7 @@
         [self.messageClient leaveRoom:self.roomViewModel.room.name];
         [self.leaveButton setEnabled:NO];
         
-        [CLAToastManager showDefaultInfoToastWithText:@"You will not receive message from this topic any more." completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"You will not receive message from this topic any more.", nil)completionBlock:nil];
         
         //TODO:make sure user can not send message to room until next join
     }

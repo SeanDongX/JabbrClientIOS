@@ -75,11 +75,6 @@ NSTimeInterval const kMessageDisplayTimeGap = 180;
 NSString *const kErrorDoamin = @"com.collara";
 NSString *const kErrorDescription = @"ErrorDescription";
 
-int const kErrorCodeSignInUsernameOrPasswordInvalid = 100;
-NSString *const kErrorMsgSignInUsernameOrPasswordInvalid = @"We can not sign you in with that username and password.";
-
-NSString *const kErrorMsgSignInFailureUnknown = @"Something went wrong. How about another try?";
-
 + (NSDictionary *)toasOptions {
     return @{
              kCRToastFontKey: [UIFont systemFontOfSize:16],

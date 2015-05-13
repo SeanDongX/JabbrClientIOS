@@ -56,12 +56,12 @@
     
     if (username == nil || username.length == 0) {
         
-        [CLAToastManager showDefaultInfoToastWithText:@"Did you forget your username?" completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty username won't get very far.", nil)completionBlock:nil];
         return;
     }
     
     if (password == nil || password.length == 0) {
-        [CLAToastManager showDefaultInfoToastWithText:@"OK, that password won't work."completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty password won't get very far.", nil) completionBlock:nil];
         
         return;
     }

@@ -102,7 +102,7 @@ static bool isFirstAccess = YES;
                              NSString *token = [responseObject objectForKey:@"token"];
                              NSString *message = nil;
                              if (token == nil || token.length == 0) {
-                                 message = @"We are terribly sorry, but some error happened.";
+                                 message = NSLocalizedString(@"We are terribly sorry, but some error happened.", nil);
                              }
                              else {
                                  [[AuthManager sharedInstance] cacheAuthToken:token];
@@ -133,7 +133,7 @@ static bool isFirstAccess = YES;
          NSString *token = [responseObject objectForKey:@"token"];
          NSString *message = nil;
          if (token == nil || token.length == 0) {
-             message = @"We are terribly sorry, but we can not sign you in now.";
+             message = NSLocalizedString(@"We are terribly sorry, but we can not sign you in now.", nil);
          }
          else {
              [[AuthManager sharedInstance] cacheAuthToken:token];
@@ -212,7 +212,7 @@ static bool isFirstAccess = YES;
     }
     
     if (errorMessage == nil || errorMessage.length == 0) {
-        errorMessage = @"We are terribly sorry, but some error happened.";
+        errorMessage =  NSLocalizedString(@"We are terribly sorry, but some error happened.", nil);
     }
     
     return errorMessage;

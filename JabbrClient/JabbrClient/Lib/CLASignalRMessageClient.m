@@ -136,8 +136,8 @@ static bool isFirstAccess = YES;
     [self.hub on:@"roomLoaded" perform:self selector:@selector(roomLoaded:)];
     //TODO: show error msg when connection failed
     
-    //    [self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
-    //    [self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
+    //[self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
+    //[self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
 }
 
 #pragma mark -

@@ -533,7 +533,6 @@
                             <constraint firstItem="3Qo-46-cwj" firstAttribute="top" secondItem="rhd-Pn-tdl" secondAttribute="bottom" constant="30" id="u28-gQ-7Md"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="m6O-lD-4oT"/>
                     <connections>
                         <outlet property="emailTextField" destination="6vg-UG-eAB" id="bfe-QF-m8L"/>
                         <outlet property="passwordTextField" destination="bGl-aJ-Ek7" id="7xU-7F-INT"/>

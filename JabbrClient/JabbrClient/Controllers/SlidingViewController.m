@@ -65,7 +65,7 @@
 }
 
 - (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier {
-    UINavigationController *navigaionController = (UINavigationController *)[self.mainViewControllersCache objectForKey:keyIdentifier];
+    UINavigationController *navigaionController = [self getNavigationControllerWithKeyIdentifier:keyIdentifier];
     
     if (navigaionController == nil) {
         navigaionController = (UINavigationController *)[self.storyboard instantiateViewControllerWithIdentifier:keyIdentifier];
@@ -80,6 +80,10 @@
     self.topViewController = navigaionController;
     
     return navigaionController;
+}
+
+- (UINavigationController *)getNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier {
+    return (UINavigationController *)[self.mainViewControllersCache objectForKey:keyIdentifier];
 }
 
 - (void)setFirstView {
@@ -101,23 +105,22 @@
 }
 
 - (void)switchToMainView {
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).slidingViewController = self;
     //TODO: find how to switch
-    //[self switchToHomeView];
-    
     [self switchToChatView];
+    [self switchToHomeView];
 }
 
 - (void)switchToChatView {
     [self setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     [self.topViewController.view addGestureRecognizer:self.panGesture];
     [self resetTopViewAnimated:TRUE];
-    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).slidingViewController = self;
 }
 
 - (void)switchToSignInView {
     [self setTopNavigationControllerWithKeyIdentifier:kSignInNavigationController];
+    [self.topViewController.view addGestureRecognizer:self.panGesture];
     [self resetTopViewAnimated:TRUE];
-    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).slidingViewController = nil;
 }
 
 - (void)switchToRoom:(NSString *)room {
@@ -126,11 +129,14 @@
 }
 
 - (void)switchToRoomAtNextReload:(NSString *)room {
+    UINavigationController *navController = [self getNavigationControllerWithKeyIdentifier:kChatNavigationController];
     
-    ChatViewController *chatViewController = (ChatViewController *)[((UINavigationController *)self.topViewController).viewControllers objectAtIndex:0];
-    
-    if (chatViewController != nil) {
-        chatViewController.preselectedTitle = room;
+    if (navController != nil) {
+        ChatViewController *chatViewController = (ChatViewController *)[navController.viewControllers objectAtIndex:0];
+        
+        if (chatViewController != nil) {
+            chatViewController.preselectedTitle = room;
+        }
     }
 }
 @end

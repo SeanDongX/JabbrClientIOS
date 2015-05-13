@@ -62,6 +62,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    [self connect];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,7 +81,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     //[self initProgressHud];
     
     [self setupOutgoingTypingEventHandler];
-    [self connect];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -161,7 +161,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     JSQMessagesBubbleImageFactory *bubbleImageFactory = [[JSQMessagesBubbleImageFactory alloc] init];
     self.outgoingBubbleImageView = [bubbleImageFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
     self.incomingBubbleImageView = [bubbleImageFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleBlueColor]];
-    
 }
 
 //- (void)initProgressHud {
@@ -477,19 +476,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
         [self showCreateTeamView];
     }
     
-    CLATeamViewModel *teamViewModel = teams[0];
-    
-    NSMutableArray *chatThreadArray = [NSMutableArray array];
-    for (CLARoom *room in teamViewModel.rooms) {
-        ChatThread *thread= [[ChatThread alloc] init];
-        thread.title = room.name;
-        [chatThreadArray addObject:thread];
-    }
-    
-    LeftMenuViewController *leftMenuViewController = (LeftMenuViewController *)self.slidingViewController.underLeftViewController;
-    [leftMenuViewController updateChatThreads:chatThreadArray];
+    CLATeamViewModel *teamViewModel = teams[0];    
+    [self sendTeamUpdatedEventNotification:teamViewModel];
     
     if (self.preselectedTitle != nil) {
+        LeftMenuViewController *leftMenuViewController = (LeftMenuViewController *)self.slidingViewController.underLeftViewController;
         [leftMenuViewController selectRoom:self.preselectedTitle closeMenu:YES];
         self.preselectedTitle = nil;
     }
@@ -691,6 +682,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 #pragma mark -
 #pragma mark Private Methods
+
+- (void)sendTeamUpdatedEventNotification:(CLATeamViewModel *)teamViewModel {
+    NSDictionary *userInfo = @{ kTeamKey : teamViewModel};
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEventTeamUpdated object:nil userInfo:userInfo];
+}
 
 - (NSDate *)getMessageDisplayDateAt:(NSIndexPath *)indexPath {
     CLAMessage *currentMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];

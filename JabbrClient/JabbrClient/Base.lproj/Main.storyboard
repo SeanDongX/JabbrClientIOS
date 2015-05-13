@@ -1051,9 +1051,21 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oGo-Ro-YgI" userLabel="TopView">
                                         <rect key="frame" x="0.0" y="60" width="320" height="100"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Collara" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghY-QB-6Y2">
+                                                <rect key="frame" x="30" y="30" width="260" height="40"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="ghY-QB-6Y2" secondAttribute="trailing" constant="30" id="PSI-C9-cBd"/>
+                                            <constraint firstItem="ghY-QB-6Y2" firstAttribute="leading" secondItem="oGo-Ro-YgI" secondAttribute="leading" constant="30" id="VKx-sU-SrZ"/>
+                                            <constraint firstItem="ghY-QB-6Y2" firstAttribute="top" secondItem="oGo-Ro-YgI" secondAttribute="top" constant="30" id="XiR-SD-jJQ"/>
                                             <constraint firstAttribute="height" constant="100" id="eMs-t5-79J"/>
+                                            <constraint firstAttribute="bottom" secondItem="ghY-QB-6Y2" secondAttribute="bottom" constant="30" id="mys-KA-wvV"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3E-IK-CLG" userLabel="TopicView">
@@ -1158,6 +1170,7 @@
                         <outlet property="menuItem" destination="hIA-Md-hbm" id="pn2-87-2gJ"/>
                         <outlet property="teamMemberTableView" destination="XaQ-Ib-9Sh" id="jeF-FG-nE6"/>
                         <outlet property="topicTableView" destination="mYy-7X-91E" id="quG-B7-skP"/>
+                        <outlet property="welcomeLabel" destination="ghY-QB-6Y2" id="y4D-uE-cUH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mL9-9a-cF4" userLabel="First Responder" sceneMemberID="firstResponder"/>

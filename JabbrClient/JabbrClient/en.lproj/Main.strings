@@ -86,6 +86,9 @@
 /* Class = "UILabel"; text = "Participants"; ObjectID = "ezc-Fb-eoz"; */
 "ezc-Fb-eoz.text" = "Participants";
 
+/* Class = "UILabel"; text = "Welcome to Collara"; ObjectID = "ghY-QB-6Y2"; */
+"ghY-QB-6Y2.text" = "Welcome to Collara";
+
 /* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "hIA-Md-hbm"; */
 "hIA-Md-hbm.title" = "Menu";
 

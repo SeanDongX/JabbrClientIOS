@@ -13,6 +13,10 @@
 #import "ChatThread+Category.h"
 #import "Constants.h"
 
+//Data Model
+#import "CLATeamViewModel.h"
+#import "CLARoom.h"
+
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
@@ -40,11 +44,17 @@
     [super viewDidLoad];
     [self setupMenu];
     [self setupBottomMenus];
+    [self subscribNotifications];
+}
+
+- (void)dealloc {
+    [self unsubscribNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self updateChatThreads:self.chatThreads];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -78,6 +88,31 @@
     
     NSLog(@"Error: no main view controllers found in sliding view controller");
     return nil;
+}
+
+#pragma mark - 
+#pragma mark Notifications
+- (void)subscribNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTeam:) name:kEventTeamUpdated object:nil];
+}
+
+- (void)unsubscribNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)updateTeam: (NSNotification *)notification {
+    CLATeamViewModel *teamViewModel = [notification.userInfo objectForKey:kTeamKey];
+    if (teamViewModel != nil) {
+        
+        NSMutableArray *chatThreadArray = [NSMutableArray array];
+        for (CLARoom *room in teamViewModel.rooms) {
+            ChatThread *thread= [[ChatThread alloc] init];
+            thread.title = room.name;
+            [chatThreadArray addObject:thread];
+        }
+        
+        [self updateChatThreads:chatThreadArray];
+    }
 }
 
 #pragma mark -
@@ -137,7 +172,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return self.chatThreads.count;
+            return [self getRoomCount];
             
         default:
             return 0;
@@ -180,7 +215,7 @@
     [hightlightView setBackgroundColor:[Constants mainThemeColor]];
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 30)];
-    title.text = [NSString stringWithFormat:NSLocalizedString(@"Topics (%lu)", nil), (unsigned long)self.chatThreads.count];
+    title.text = [NSString stringWithFormat:NSLocalizedString(@"Topics (%lu)", nil), [self getRoomCount]];
     title.textColor = [UIColor whiteColor];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];
@@ -248,6 +283,13 @@
         
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
     [self.slidingViewController resetTopViewAnimated:YES];
+}
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (NSInteger)getRoomCount {
+    return self.chatThreads == nil ? 0 : self.chatThreads.count;
 }
 
 @end

@@ -33,7 +33,7 @@
 "LlV-JF-2Lk.normalTitle" = "创建团队";
 
 /* Class = "UINavigationItem"; title = "Home"; ObjectID = "MB3-YP-6oU"; */
-"MB3-YP-6oU.title" = "Home";
+"MB3-YP-6oU.title" = "首页";
 
 /* Class = "UITextField"; placeholder = "Invitation Code"; ObjectID = "Moy-Rd-2Cn"; */
 "Moy-Rd-2Cn.placeholder" = "邀请码";
@@ -85,6 +85,9 @@
 
 /* Class = "UILabel"; text = "Participants"; ObjectID = "ezc-Fb-eoz"; */
 "ezc-Fb-eoz.text" = "小伙伴";
+
+/* Class = "UILabel"; text = "Welcome to Collara"; ObjectID = "ghY-QB-6Y2"; */
+"ghY-QB-6Y2.text" = "欢迎使用Collara";
 
 /* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "hIA-Md-hbm"; */
 "hIA-Md-hbm.title" = "菜单";

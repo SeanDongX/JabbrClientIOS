@@ -11,6 +11,15 @@
 //Util
 #import "Constants.h"
 
+//Data Model
+#import "CLARoom.h"
+#import "CLARoom+Category.h"
+#import "CLAUser.h"
+#import "CLAUser+Category.h"
+#import "CLATeamViewModel.h"
+#import "ChatThread.h"
+#import "ChatThread+Category.h"
+
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
@@ -20,9 +29,14 @@
 #import "ChatViewController.h"
 
 @interface CLAHomeViewController ()
+
 @property (weak, nonatomic) IBOutlet UITableView *topicTableView;
 @property (weak, nonatomic) IBOutlet UITableView *teamMemberTableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *menuItem;
+@property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
+
+@property (strong, nonatomic) NSArray *rooms;
+@property (strong, nonatomic) NSArray *users;
 
 @end
 
@@ -30,18 +44,62 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self subscribNotifications];
     [self initUI];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)dealloc {
+    [self unsubscribNotifications];
 }
 
 - (void)initUI {
     [self.menuItem setTitle:@""];
     [self.menuItem setWidth:30];    
     [self.menuItem setImage: [Constants menuIconImage]];
+}
+
+
+#pragma mark -
+#pragma mark Notifications
+- (void)subscribNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTeam:) name:kEventTeamUpdated object:nil];
+}
+
+- (void)unsubscribNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)updateTeam:(NSNotification *)notification {
+    CLATeamViewModel *teamViewModel = [notification.userInfo objectForKey:kTeamKey];
+    if (teamViewModel != nil) {
+        [self updateRooms:teamViewModel.rooms];
+        [self updateTeamMembers:teamViewModel.users];
+        
+        if (teamViewModel.team != nil) {
+            self.welcomeLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Welcome to join team %@", nil), teamViewModel.team.name];
+        }
+    }
+}
+
+- (void)updateRooms: (NSArray *)rooms {
+    if (rooms != nil) {
+        NSMutableArray *chatThreadArray = [NSMutableArray array];
+        for (CLARoom *room in rooms) {
+            ChatThread *thread= [[ChatThread alloc] init];
+            thread.title = room.name;
+            [chatThreadArray addObject:thread];
+        }
+        
+        self.rooms = chatThreadArray;
+        [self.topicTableView reloadData];
+    }
+}
+
+- (void)updateTeamMembers: (NSArray *)users {
+    if (users != nil) {
+        self.users = users;
+        [self.teamMemberTableView reloadData];
+    }
 }
 
 #pragma mark -
@@ -52,7 +110,7 @@
     if (tableView == self.topicTableView) {
         switch (section) {
             case 0:
-                return 0;//TODO:add count from ds
+                return [self getRoomCount];
                 
             default:
                 return 0;
@@ -61,7 +119,7 @@
     else {
         switch (section) {
             case 0:
-                return 0;//TODO:add count from ds
+                return [self getTeamMemberCount];
                 
             default:
                 return 0;
@@ -76,20 +134,30 @@
     
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TopicCell"];
     
-//    ChatThread *chatThread = self.chatThreads[indexPath.row];
-//    cell.textLabel.text = [chatThread getDisplayTitle];
-//    
-//    cell.textLabel.textColor = [UIColor whiteColor];
-//    [cell setBackgroundColor:[UIColor clearColor]];
-//    
-//    UIView *backgroundView = [UIView new];
-//    backgroundView.backgroundColor = [Constants mainThemeColor];
-//    cell.selectedBackgroundView = backgroundView;
-//    
+        ChatThread *room = self.rooms[indexPath.row];
+        cell.textLabel.text = [room getDisplayTitle];
+        
+        cell.textLabel.textColor = [Constants mainThemeContrastColor];
+        [cell setBackgroundColor:[UIColor clearColor]];
+        
+        UIView *backgroundView = [UIView new];
+        backgroundView.backgroundColor = [Constants mainThemeColor];
+        cell.selectedBackgroundView = backgroundView;
+        
         return cell;
     }
     else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TeamMemeberCell"];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TeamMemberCell"];
+        CLAUser *user = self.users[indexPath.row];
+        cell.textLabel.text = [user getDisplayName];
+        
+        cell.textLabel.textColor = [Constants mainThemeContrastColor];
+        [cell setBackgroundColor:[UIColor clearColor]];
+        
+        UIView *backgroundView = [UIView new];
+        backgroundView.backgroundColor = [Constants mainThemeColor];
+        cell.selectedBackgroundView = backgroundView;
+
         return cell;
     }
 }
@@ -99,7 +167,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;
@@ -124,7 +191,7 @@
     [headerView addSubview:title];
     
     if (tableView == self.topicTableView) {
-        title.text = [NSString stringWithFormat: NSLocalizedString(@"Topics (%lu)", nil), 0];
+        title.text = [NSString stringWithFormat: NSLocalizedString(@"Topics (%lu)", nil), [self getRoomCount]];
         
         UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];
         [addButton addTarget:self action:@selector(showCreateTopicView) forControlEvents:UIControlEventTouchUpInside];
@@ -132,8 +199,7 @@
         [headerView addSubview:addButton];
     }
     else {
-        title.text = [NSString stringWithFormat: NSLocalizedString(@"Team members (%lu)", nil), 0];
-
+        title.text = [NSString stringWithFormat: NSLocalizedString(@"Team members (%lu)", nil), [self getTeamMemberCount]];
     }
     
     return headerView;
@@ -143,18 +209,20 @@
 #pragma mark - TableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UINavigationController *navController = nil;
-    
-    navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
-    
-    ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
-    
-    if (chatViewController != nil) {
-        //[chatViewController switchToChatThread:self.chatThreads[indexPath.row]];
+    if (tableView == self.topicTableView) {
+        UINavigationController *navController = nil;
+        
+        navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
+        
+        ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
+        
+        if (chatViewController != nil) {
+            [chatViewController switchToChatThread:self.rooms[indexPath.row]];
+        }
+        
+        [self.slidingViewController resetTopViewAnimated:YES];
     }
     
-    [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
-    [self.slidingViewController resetTopViewAnimated:YES];
 }
 
 #pragma mark -
@@ -172,4 +240,16 @@
     createRoomViewController.slidingMenuViewController = (SlidingViewController *)self.slidingViewController;
     [self presentViewController:createRoomViewController animated:YES completion:nil];
 }
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (NSInteger)getRoomCount {
+    return self.rooms == nil ? 0 : self.rooms.count;
+}
+
+- (NSInteger)getTeamMemberCount {
+    return self.users == nil ? 0 : self.users.count;
+}
+
 @end

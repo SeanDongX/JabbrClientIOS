@@ -54,16 +54,14 @@
 
 - (void)initRoomInfo {
     
-    [self.topicLabel setText:[self.roomViewModel.room getDisplayTitle]];
+    [self.topicLabel setText:[self.roomViewModel.room getDisplayName]];
 }
 
 #pragma mark -
 #pragma mark - Event Handlers
 
 - (void)closeButtonClicked:(id)sender {
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-
 }
 
 - (IBAction)inviteButtonClicked:(id)sender {

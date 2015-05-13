@@ -1,105 +1,105 @@
 
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "6vg-UG-eAB"; */
-"6vg-UG-eAB.placeholder" = "Email";
+"6vg-UG-eAB.placeholder" = "邮箱";
 
 /* Class = "UILabel"; text = "Create your team to start"; ObjectID = "8GA-n0-fUR"; */
-"8GA-n0-fUR.text" = "Create your team to start";
+"8GA-n0-fUR.text" = "创建你的团队";
 
 /* Class = "UIButton"; normalTitle = "Leave"; ObjectID = "8xb-02-c7C"; */
-"8xb-02-c7C.normalTitle" = "Leave";
+"8xb-02-c7C.normalTitle" = "离开";
 
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "9wN-Ke-SEM"; */
-"9wN-Ke-SEM.normalTitle" = "Sign In";
+"9wN-Ke-SEM.normalTitle" = "登录";
 
 /* Class = "UIButton"; normalTitle = "Go"; ObjectID = "9yc-pk-ljP"; */
 "9yc-pk-ljP.normalTitle" = "Go";
 
 /* Class = "UITextField"; placeholder = "Username"; ObjectID = "Axg-ob-q0b"; */
-"Axg-ob-q0b.placeholder" = "Username";
+"Axg-ob-q0b.placeholder" = "用户名";
 
 /* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "C1u-My-kQW"; */
-"C1u-My-kQW.normalTitle" = "Sign Up";
+"C1u-My-kQW.normalTitle" = "注册";
 
 /* Class = "UIButton"; normalTitle = "Join Team"; ObjectID = "Ie1-LK-m1i"; */
-"Ie1-LK-m1i.normalTitle" = "Join Team";
+"Ie1-LK-m1i.normalTitle" = "加入团队";
 
 /* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "JVD-7L-Ab0"; */
-"JVD-7L-Ab0.normalTitle" = "Sign Up";
+"JVD-7L-Ab0.normalTitle" = "注册";
 
 /* Class = "UILabel"; text = "#"; ObjectID = "KIr-Lu-VGj"; */
 "KIr-Lu-VGj.text" = "#";
 
 /* Class = "UIButton"; normalTitle = "Create Team"; ObjectID = "LlV-JF-2Lk"; */
-"LlV-JF-2Lk.normalTitle" = "Create Team";
+"LlV-JF-2Lk.normalTitle" = "创建团队";
 
 /* Class = "UITextField"; placeholder = "Invitation Code"; ObjectID = "Moy-Rd-2Cn"; */
-"Moy-Rd-2Cn.placeholder" = "Invitation Code";
+"Moy-Rd-2Cn.placeholder" = "邀请码";
 
 /* Class = "UITextField"; placeholder = "Username"; ObjectID = "N4x-KO-VIS"; */
-"N4x-KO-VIS.placeholder" = "Username";
+"N4x-KO-VIS.placeholder" = "用户名";
 
 /* Class = "UITextField"; placeholder = "Topic"; ObjectID = "P6Z-Tn-z7G"; */
-"P6Z-Tn-z7G.placeholder" = "Topic";
+"P6Z-Tn-z7G.placeholder" = "话题";
 
 /* Class = "UITextField"; placeholder = "Repeat Password"; ObjectID = "PIN-Zw-1xS"; */
-"PIN-Zw-1xS.placeholder" = "Repeat Password";
+"PIN-Zw-1xS.placeholder" = "重复密码";
 
 /* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "R3H-YL-uv1"; */
-"R3H-YL-uv1.normalTitle" = "Settings";
+"R3H-YL-uv1.normalTitle" = "设置";
 
 /* Class = "UIBarButtonItem"; title = "Chat"; ObjectID = "SNL-za-AqO"; */
-"SNL-za-AqO.title" = "Chat";
+"SNL-za-AqO.title" = "消息";
 
 /* Class = "UINavigationItem"; title = "Document"; ObjectID = "USF-5o-XfX"; */
-"USF-5o-XfX.title" = "Document";
+"USF-5o-XfX.title" = "文档";
 
 /* Class = "UIButton"; normalTitle = "Invite"; ObjectID = "XOn-ai-3bw"; */
-"XOn-ai-3bw.normalTitle" = "Invite";
+"XOn-ai-3bw.normalTitle" = "邀请";
 
 /* Class = "UILabel"; text = "You are almost there"; ObjectID = "Ynb-a5-2Xd"; */
-"Ynb-a5-2Xd.text" = "You are almost there";
+"Ynb-a5-2Xd.text" = "马上就到了哦";
 
 /* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "ZxX-xc-zh0"; */
-"ZxX-xc-zh0.title" = "Menu";
+"ZxX-xc-zh0.title" = "菜单";
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "bGl-aJ-Ek7"; */
-"bGl-aJ-Ek7.placeholder" = "Password";
+"bGl-aJ-Ek7.placeholder" = "密码";
 
 /* Class = "UIBarButtonItem"; title = "Docs"; ObjectID = "bRO-fd-KOx"; */
-"bRO-fd-KOx.title" = "Docs";
+"bRO-fd-KOx.title" = "文档";
 
 /* Class = "UITextField"; placeholder = "Team Name"; ObjectID = "dg4-Nx-u52"; */
-"dg4-Nx-u52.placeholder" = "Team Name";
+"dg4-Nx-u52.placeholder" = "团队名称";
 
 /* Class = "UIBarButtonItem"; title = "Docs"; ObjectID = "eIt-t0-87j"; */
-"eIt-t0-87j.title" = "Docs";
+"eIt-t0-87j.title" = "文档";
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "eoW-RA-sJz"; */
-"eoW-RA-sJz.placeholder" = "Password";
+"eoW-RA-sJz.placeholder" = "密码";
 
 /* Class = "UILabel"; text = "Participants"; ObjectID = "ezc-Fb-eoz"; */
-"ezc-Fb-eoz.text" = "Participants";
+"ezc-Fb-eoz.text" = "小伙伴";
 
 /* Class = "UINavigationItem"; title = "Chat"; ObjectID = "iDk-6w-F7j"; */
-"iDk-6w-F7j.title" = "Chat";
+"iDk-6w-F7j.title" = "消息";
 
 /* Class = "UILabel"; text = "Only letters and \"-\" please"; ObjectID = "lRr-MZ-gLy"; */
-"lRr-MZ-gLy.text" = "Only letters and \"-\" please";
+"lRr-MZ-gLy.text" = "只能使用字符和\"-\"哦，你懂的";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "qeo-G0-hFE"; */
-"qeo-G0-hFE.text" = "Name";
+"qeo-G0-hFE.text" = "名称";
 
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "rhd-Pn-tdl"; */
-"rhd-Pn-tdl.normalTitle" = "Sign In";
+"rhd-Pn-tdl.normalTitle" = "登录";
 
 /* Class = "UIButton"; normalTitle = "Sign out"; ObjectID = "vR8-jy-CjL"; */
-"vR8-jy-CjL.normalTitle" = "Sign out";
+"vR8-jy-CjL.normalTitle" = "退出";
 
 /* Class = "UILabel"; text = "Or join a team with inviatation code"; ObjectID = "xNi-xF-Kk5"; */
-"xNi-xF-Kk5.text" = "Or join a team with inviatation code";
+"xNi-xF-Kk5.text" = "也可以加入用团队邀请码的哦";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "z5r-zy-Ycm"; */
-"z5r-zy-Ycm.title" = "Settings";
+"z5r-zy-Ycm.title" = "设置";
 
 /* Class = "UIBarButtonItem"; title = "Chat"; ObjectID = "zun-6c-983"; */
-"zun-6c-983.title" = "Chat";
+"zun-6c-983.title" = "消息";

@@ -5,3 +5,17 @@
   Created by Sean on 13/05/15.
   Copyright (c) 2015 Collara. All rights reserved.
 */
+
+"We are terribly sorry, but some error happened." = "哎呀，出了点小问题。别担心，产品经理的工资我们一定扣。";
+"We are terribly sorry, but we can not sign you in now." = "亲爱的小伙伴，刚在登录没有成功。跪求你再试试！";
+"Oops, an empty username won't get very far." = "你的用户名不够长哦！";
+"Oops, an empty password won't get very far." = "密码在哪里呢？";
+"How about a password with more than 6 characters?" = "密码要六位以上的哦，你懂的";
+"We will need your email." = "邮箱没填好。";
+"We will need a valid email address." = "你的邮箱好像不对吧。";
+"Oops, the passwords does not match." = "两个密码对不上，再试试？";
+"You will not receive message from this topic any more." = "恭喜你，你已经成功退订了这个话题的消息";
+"Oh, an empty name. That will not work."  = "哎呀，空的用户名恐怕不行哦。";
+"Sorry, but we will need you to keep you team name less than %d characters." = "亲爱的小伙伴，团队名称可以不要太长么？最好在%d个字符之内。";
+"Oh, an empty invitation code. That will not work." = "邀请码不能为空哦";
+"Oh, something went wrong. Let's try it again." = "哎呀，出了点小问题。要不再试试？";

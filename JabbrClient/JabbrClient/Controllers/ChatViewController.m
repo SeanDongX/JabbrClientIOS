@@ -119,18 +119,20 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.leftMenuButton setWidth:30];
     [self.leftMenuButton setImage: [Constants menuIconImage]];
     
-    
-    [self.rightMenuButton setTitle:@""];
-    [self.rightMenuButton setWidth:30];
-    [self.rightMenuButton setImage: [Constants docIconImage]];
-    
-    
     UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(showChatInfoView)];
     
     [chatThreadSetupButon setTitle: @""];
     [chatThreadSetupButon setTintColor:[UIColor whiteColor]];
-    
-    self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:chatThreadSetupButon];
+
+    if (kFSDocumentEnabled != NO) {
+        [self.rightMenuButton setTitle:@""];
+        [self.rightMenuButton setWidth:30];
+        [self.rightMenuButton setImage: [Constants docIconImage]];
+        self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:chatThreadSetupButon];
+    }
+    else {
+        [self.navigationItem setRightBarButtonItem:chatThreadSetupButon];
+    }
 }
 
 #pragma mark - 

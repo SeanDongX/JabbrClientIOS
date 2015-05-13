@@ -27,7 +27,10 @@
 
 - (void)awakeFromNib {
     self.underLeftViewControllerStoryboardId = kLeftMenuViewController;
-    self.underRightViewControllerStoryboardId = kRightMenuViewController;
+    
+    if (kFSDocumentEnabled != NO) {
+        self.underRightViewControllerStoryboardId = kRightMenuViewController;
+    }
     
     if ([[AuthManager sharedInstance] isAuthenticated]) {
         self.topViewControllerStoryboardId = kChatNavigationController;

@@ -16,6 +16,7 @@ FOUNDATION_EXPORT NSString *const kApiPath;
 
 FOUNDATION_EXPORT NSTimeInterval const kMessageClientReconnectInterval;
 
+FOUNDATION_EXPORT BOOL const kFSDocumentEnabled;
 
 FOUNDATION_EXPORT NSString *const kMainStoryBoard;
 

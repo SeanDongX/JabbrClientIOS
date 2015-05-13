@@ -189,5 +189,5 @@ if __name__ == '__main__':
 	path = os.path.abspath(argv[1])
 	routine = argv[2] if argc > 2 else 'NSLocalizedString'
 	developmentLanguage = argv[3] if argc > 3 else 'en'
-	localizeCode(path, routine)
+	#localizeCode(path, routine)
 	localizeInterface(path, developmentLanguage)

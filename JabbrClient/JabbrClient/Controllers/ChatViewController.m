@@ -54,8 +54,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImageView;
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImageView;
 
-@property (nonatomic, strong) MBProgressHUD *progressHud;
-@property (nonatomic, strong) RTSpinKitView *progressHubspinner;
+//@property (nonatomic, strong) MBProgressHUD *progressHud;
+//@property (nonatomic, strong) RTSpinKitView *progressHubspinner;
 @end
 
 @implementation ChatViewController
@@ -164,18 +164,18 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
 }
 
-- (void)initProgressHud {
-    self.progressHubspinner = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleArcAlt color:[UIColor whiteColor]];
-    
-    self.progressHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.progressHud];
-    self.progressHud.customView = self.progressHubspinner;
-    self.progressHud.color = [[Constants warningColor] colorWithAlphaComponent:0.8f];
-    self.progressHud.mode = MBProgressHUDModeCustomView;
-    
-    [self.progressHubspinner startAnimating];
-    [self.progressHud show:YES];
-}
+//- (void)initProgressHud {
+//    self.progressHubspinner = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleArcAlt color:[UIColor whiteColor]];
+//    
+//    self.progressHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+//    [self.navigationController.view addSubview:self.progressHud];
+//    self.progressHud.customView = self.progressHubspinner;
+//    self.progressHud.color = [[Constants warningColor] colorWithAlphaComponent:0.8f];
+//    self.progressHud.mode = MBProgressHUDModeCustomView;
+//    
+//    [self.progressHubspinner startAnimating];
+//    [self.progressHud show:YES];
+//}
 
 #pragma mark -
 #pragma mark - Chat Thread Methods

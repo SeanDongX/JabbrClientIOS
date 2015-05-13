@@ -12,7 +12,7 @@
 		142046431AD1EC91006143D5 /* AuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* AuthManager.m */; };
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
-		142150881B035E1500D18214 /* Labels.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1421508A1B035E1500D18214 /* Labels.strings */; };
+		142150881B035E1500D18214 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1421508A1B035E1500D18214 /* Localizable.strings */; };
 		142FFA6B1AFD4B3C0076DB6E /* CLAUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FFA6A1AFD4B3C0076DB6E /* CLAUtility.m */; };
 		1430E00C1AF6DFF300F2D974 /* CLARoomViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */; };
 		1430E00F1AF6E0CE00F2D974 /* CLARoom+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 1430E00E1AF6E0CE00F2D974 /* CLARoom+Category.m */; };
@@ -76,8 +76,8 @@
 		142046481AD203FD006143D5 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Lib/Constants.m; sourceTree = "<group>"; };
 		142150861B035DD200D18214 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		142150871B035DD200D18214 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		142150891B035E1500D18214 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Labels.strings"; sourceTree = "<group>"; };
-		1421508C1B035F9900D18214 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Labels.strings; sourceTree = "<group>"; };
+		142150891B035E1500D18214 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		1421508C1B035F9900D18214 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1421508E1B036A2700D18214 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		142FFA691AFD4B3C0076DB6E /* CLAUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAUtility.h; path = Lib/CLAUtility.h; sourceTree = "<group>"; };
 		142FFA6A1AFD4B3C0076DB6E /* CLAUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAUtility.m; path = Lib/CLAUtility.m; sourceTree = "<group>"; };
@@ -257,7 +257,7 @@
 		14B515651ABF138A0000CC4F = {
 			isa = PBXGroup;
 			children = (
-				1421508A1B035E1500D18214 /* Labels.strings */,
+				1421508A1B035E1500D18214 /* Localizable.strings */,
 				14B515701ABF138A0000CC4F /* JabbrClient */,
 				14B5158D1ABF138A0000CC4F /* JabbrClientTests */,
 				14B5156F1ABF138A0000CC4F /* Products */,
@@ -476,7 +476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14B515801ABF138A0000CC4F /* Main.storyboard in Resources */,
-				142150881B035E1500D18214 /* Labels.strings in Resources */,
+				142150881B035E1500D18214 /* Localizable.strings in Resources */,
 				14B515851ABF138A0000CC4F /* LaunchScreen.xib in Resources */,
 				14B515821ABF138A0000CC4F /* Images.xcassets in Resources */,
 			);
@@ -600,13 +600,13 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1421508A1B035E1500D18214 /* Labels.strings */ = {
+		1421508A1B035E1500D18214 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				142150891B035E1500D18214 /* zh-Hans */,
 				1421508C1B035F9900D18214 /* en */,
 			);
-			name = Labels.strings;
+			name = Localizable.strings;
 			path = JabbrClient;
 			sourceTree = "<group>";
 		};

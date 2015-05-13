@@ -37,7 +37,7 @@
     navBar.titleTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
     
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
-    navItem.title = @"Create Topic";
+    navItem.title = NSLocalizedString(@"Create Topic", nil);
     [navBar setItems:@[navItem]];
     
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[Constants closeIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonClicked:)];

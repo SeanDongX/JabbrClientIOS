@@ -1,10 +1,11 @@
 //
 //  ChatViewController.m
-//  SignalR
+//  Collara
 //
-//  Created by Alex Billingsley on 11/3/11.
-//  Copyright (c) 2011 DyKnow LLC. All rights reserved.
+//  Created by Sean on 13/05/15.
+//  Copyright (c) 2015 Collara. All rights reserved.
 //
+
 
 #import "ChatViewController.h"
 

@@ -1,9 +1,9 @@
 //
 //  SlidingViewController.m
-//  JabbrClient
+//  Collara
 //
-//  Created by Sean on 05/04/15.
-//  Copyright (c) 2015 Colla. All rights reserved.
+//  Created by Sean on 12/04/15.
+//  Copyright (c) 2015 Collara. All rights reserved.
 //
 
 #import "SlidingViewController.h"

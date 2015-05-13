@@ -27,6 +27,7 @@
 //View Controller
 #import "CLACreateRoomViewController.h"
 #import "ChatViewController.h"
+#import "CLACreateTeamViewController.h"
 
 @interface CLAHomeViewController ()
 
@@ -71,7 +72,11 @@
 
 - (void)updateTeam:(NSNotification *)notification {
     CLATeamViewModel *teamViewModel = [notification.userInfo objectForKey:kTeamKey];
-    if (teamViewModel != nil) {
+    
+    if (teamViewModel == nil) {
+        [self showCreateTeamView];
+    }
+    else {
         [self updateRooms:teamViewModel.rooms];
         [self updateTeamMembers:teamViewModel.users];
         
@@ -252,4 +257,12 @@
     return self.users == nil ? 0 : self.users.count;
 }
 
+- (void)showCreateTeamView {
+    
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
+    
+    CLACreateTeamViewController *createTeamViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateTeamViewController];
+    createTeamViewController.slidingMenuViewController = (SlidingViewController *)self.navigationController.slidingViewController;
+    [self presentViewController:createTeamViewController animated:YES completion:nil];
+}
 @end

@@ -83,9 +83,6 @@
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "eoW-RA-sJz"; */
 "eoW-RA-sJz.placeholder" = "Password";
 
-/* Class = "UILabel"; text = "Participants"; ObjectID = "ezc-Fb-eoz"; */
-"ezc-Fb-eoz.text" = "Participants";
-
 /* Class = "UILabel"; text = "Welcome to Collara"; ObjectID = "ghY-QB-6Y2"; */
 "ghY-QB-6Y2.text" = "Welcome to Collara";
 

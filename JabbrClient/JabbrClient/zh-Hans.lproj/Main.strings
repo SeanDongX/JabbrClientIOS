@@ -83,9 +83,6 @@
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "eoW-RA-sJz"; */
 "eoW-RA-sJz.placeholder" = "密码";
 
-/* Class = "UILabel"; text = "Participants"; ObjectID = "ezc-Fb-eoz"; */
-"ezc-Fb-eoz.text" = "小伙伴";
-
 /* Class = "UILabel"; text = "Welcome to Collara"; ObjectID = "ghY-QB-6Y2"; */
 "ghY-QB-6Y2.text" = "欢迎使用Collara";
 
@@ -108,7 +105,7 @@
 "vR8-jy-CjL.normalTitle" = "退出";
 
 /* Class = "UILabel"; text = "Or join a team with inviatation code"; ObjectID = "xNi-xF-Kk5"; */
-"xNi-xF-Kk5.text" = "也可以加入用团队邀请码的哦";
+"xNi-xF-Kk5.text" = "也可以使用团队邀请码的哦";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "z5r-zy-Ycm"; */
 "z5r-zy-Ycm.title" = "设置";

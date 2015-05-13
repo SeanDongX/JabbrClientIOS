@@ -7,13 +7,20 @@
 //
 
 #import "CLAChatInfoViewController.h"
+
+//Util
 #import "Constants.h"
-#import "CLARoomViewModel.h"
-#import "CLAUser.h"
-#import "CLARoom+Category.h"
-#import "CLAMessageClient.h"
 #import "CLARoundFrameButton.h"
 #import "CLAToastManager.h"
+
+//Data Model
+#import "CLARoomViewModel.h"
+#import "CLARoom+Category.h"
+#import "CLAUser.h"
+#import "CLAUser+Category.h"
+
+//Message Client
+#import "CLAMessageClient.h"
 
 @interface CLAChatInfoViewController()
 
@@ -82,7 +89,13 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.roomViewModel.users == nil ? 0 : self.roomViewModel.users.count;
+    switch (section) {
+        case 0:
+            return [self getUserCount];
+            
+        default:
+            return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -94,17 +107,55 @@
     CLAUser *user = self.roomViewModel.users[indexPath.row];
     
     if (user != nil) {
-        cell.textLabel.text = user.name;
+        cell.textLabel.text = [user getDisplayName];
     }
     
     return cell;
 }
 
+#pragma mark - Table Section
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 50;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    CGRect frame = tableView.frame;
+    
+    UIView *hightlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 5, 30)];
+    [hightlightView setBackgroundColor:[Constants mainThemeColor]];
+    
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 30)];
+    title.textColor = [UIColor whiteColor];
+    
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    
+    [headerView setBackgroundColor: [Constants mainThemeContrastFocusColor]];
+    
+    [headerView addSubview:hightlightView];
+    [headerView addSubview:title];
+    
+    title.text = [NSString stringWithFormat: NSLocalizedString(@"Topic participants (%lu)", nil), [self getUserCount]];
+    
+    return headerView;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
 }
 
+#pragma mark
+#pragma mark Private Methods
+
+- (NSInteger)getUserCount {
+    return self.roomViewModel.users == nil ? 0 : self.roomViewModel.users.count;
+}
 
 @end

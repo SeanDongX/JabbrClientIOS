@@ -55,7 +55,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImageView;
 
 @property (nonatomic, strong) MBProgressHUD *progressHud;
-
+@property (nonatomic, strong) RTSpinKitView *progressHubspinner;
 @end
 
 @implementation ChatViewController
@@ -77,7 +77,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self setupChatThread];
     [self setupChatRepository];
     [self configJSQMessage];
-    [self initProgressHud];
+    //[self initProgressHud];
     
     [self setupOutgoingTypingEventHandler];
     [self connect];
@@ -85,6 +85,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if (self.messageClient == nil || self.messageClient.roomsLoaded == FALSE) {
+        [self showHud];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,10 +97,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     @catch (NSException *exception) {
         NSLog(@"Exception: %@", exception.description);
-    }
-    
-    if (self.messageClient == nil || self.messageClient.roomsLoaded == FALSE) {
-        [self.progressHud show:YES];
     }
 }
 
@@ -165,15 +165,15 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)initProgressHud {
-    RTSpinKitView *spinner = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleArcAlt color:[UIColor whiteColor]];
+    self.progressHubspinner = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleArcAlt color:[UIColor whiteColor]];
     
     self.progressHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.progressHud];
-    self.progressHud.customView = spinner;
-    self.progressHud.color = [Constants mainThemeColor];
+    self.progressHud.customView = self.progressHubspinner;
+    self.progressHud.color = [[Constants warningColor] colorWithAlphaComponent:0.8f];
     self.progressHud.mode = MBProgressHUDModeCustomView;
     
-    [spinner startAnimating];
+    [self.progressHubspinner startAnimating];
     [self.progressHud show:YES];
 }
 
@@ -465,10 +465,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)didConnectionChnageState:(CLAConnectionState)oldState newState:(CLAConnectionState)newState {
     if (newState == CLAConnected) {
         //FIXME:when offline, this path is being taken periodically
-        [self.progressHud hide:YES];
+        [self hideHud];
     }
     else {
-        [self.progressHud show:YES];
+        [self showHud];
     }
 }
 
@@ -736,5 +736,19 @@ static NSString * const kDefaultChatThread = @"collarabot";
     localNotification.hasAction = YES;
     
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
+- (void)showHud {
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //[self.progressHubspinner startAnimating];
+    //[self.progressHud show:YES];
+}
+
+
+- (void)hideHud {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    //[self.progressHubspinner stopAnimating];
+    //[self.progressHud hide:YES];
 }
 @end

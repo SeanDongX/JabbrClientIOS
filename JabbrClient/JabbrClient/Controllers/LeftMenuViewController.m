@@ -29,6 +29,8 @@
 @property (nonatomic, strong) NSArray *chatThreads;
 @property (weak, nonatomic) IBOutlet UIImageView *settingsIcon;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
+@property (weak, nonatomic) IBOutlet UIImageView *homeIcon;
+@property (weak, nonatomic) IBOutlet UIButton *homeButton;
 
 @end
 
@@ -37,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupMenu];
-    [self setupSettingsView];
+    [self setupBottomMenus];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -58,7 +60,10 @@
     self.slidingViewController.anchorRightPeekAmount = 50.0;
 }
 
-- (void)setupSettingsView {
+- (void)setupBottomMenus {
+    [self.homeIcon setImage: [Constants homeImage]];
+    self.homeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    
     [self.settingsIcon setImage: [Constants settingsImage]];
     self.settingsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 }
@@ -175,7 +180,7 @@
     [hightlightView setBackgroundColor:[Constants mainThemeColor]];
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 30)];
-    title.text = [NSString stringWithFormat: @"Topics (%lu)", (unsigned long)self.chatThreads.count];
+    title.text = [NSString stringWithFormat:NSLocalizedString(@"Topics (%lu)", nil), (unsigned long)self.chatThreads.count];
     title.textColor = [UIColor whiteColor];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];
@@ -205,25 +210,15 @@
     self.slidingViewController.topViewController.view.layer.transform = CATransform3DMakeScale(1, 1, 1);
 
     UINavigationController *navController = nil;
+        
+    navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     
-    if (indexPath.row == self.chatThreads.count) {
-        
-        navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kProfileNavigationController];
-
-        [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
-        [self.slidingViewController resetTopViewAnimated:YES];
+    ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
+    
+    if (chatViewController != nil) {
+        [chatViewController switchToChatThread:self.chatThreads[indexPath.row]];
     }
-    else {
-        
-        navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
-        
-        ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
-        
-        if (chatViewController != nil) {
-            [chatViewController switchToChatThread:self.chatThreads[indexPath.row]];
-        }
-    }
-        
+    
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
     [self.slidingViewController resetTopViewAnimated:YES];
 }
@@ -239,6 +234,13 @@
     CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
     createRoomViewController.slidingMenuViewController = (SlidingViewController *)self.slidingViewController;
     [self presentViewController:createRoomViewController animated:YES completion:nil];
+}
+
+- (IBAction)homeBUttonClicked:(id)sender {
+    UINavigationController *navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kHomeNavigationController];
+    
+    [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    [self.slidingViewController resetTopViewAnimated:YES];
 }
 
 - (IBAction)settingsButtonClicked:(id)sender {

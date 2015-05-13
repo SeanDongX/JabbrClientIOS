@@ -32,11 +32,17 @@
 /* Class = "UIButton"; normalTitle = "Create Team"; ObjectID = "LlV-JF-2Lk"; */
 "LlV-JF-2Lk.normalTitle" = "创建团队";
 
+/* Class = "UINavigationItem"; title = "Home"; ObjectID = "MB3-YP-6oU"; */
+"MB3-YP-6oU.title" = "Home";
+
 /* Class = "UITextField"; placeholder = "Invitation Code"; ObjectID = "Moy-Rd-2Cn"; */
 "Moy-Rd-2Cn.placeholder" = "邀请码";
 
 /* Class = "UITextField"; placeholder = "Username"; ObjectID = "N4x-KO-VIS"; */
 "N4x-KO-VIS.placeholder" = "用户名";
+
+/* Class = "UIButton"; normalTitle = "Home"; ObjectID = "NZt-5J-PuY"; */
+"NZt-5J-PuY.normalTitle" = "首页";
 
 /* Class = "UITextField"; placeholder = "Topic"; ObjectID = "P6Z-Tn-z7G"; */
 "P6Z-Tn-z7G.placeholder" = "话题";
@@ -80,6 +86,9 @@
 /* Class = "UILabel"; text = "Participants"; ObjectID = "ezc-Fb-eoz"; */
 "ezc-Fb-eoz.text" = "小伙伴";
 
+/* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "hIA-Md-hbm"; */
+"hIA-Md-hbm.title" = "菜单";
+
 /* Class = "UINavigationItem"; title = "Chat"; ObjectID = "iDk-6w-F7j"; */
 "iDk-6w-F7j.title" = "消息";
 
@@ -103,3 +112,4 @@
 
 /* Class = "UIBarButtonItem"; title = "Chat"; ObjectID = "zun-6c-983"; */
 "zun-6c-983.title" = "消息";
+

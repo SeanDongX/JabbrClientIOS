@@ -19,6 +19,7 @@ FOUNDATION_EXPORT NSTimeInterval const kMessageClientReconnectInterval;
 
 FOUNDATION_EXPORT NSString *const kMainStoryBoard;
 
+FOUNDATION_EXPORT NSString *const kHomeNavigationController;
 FOUNDATION_EXPORT NSString *const kChatNavigationController;
 FOUNDATION_EXPORT NSString *const kSignInNavigationController;
 FOUNDATION_EXPORT NSString *const kSignUpController;
@@ -58,6 +59,7 @@ FOUNDATION_EXPORT NSString *const kErrorDescription;
 + (NSDictionary *)toasOptions;
 
 + (UIImage *)menuIconImage;
++ (UIImage *)homeImage;
 + (UIImage *)settingsImage;
 + (UIImage *)chatIconImage;
 + (UIImage *)docIconImage;

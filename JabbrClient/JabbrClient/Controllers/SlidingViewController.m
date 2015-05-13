@@ -92,8 +92,22 @@
     }
 }
 
+
+- (void)switchToHomeView {
+    [self setTopNavigationControllerWithKeyIdentifier:kHomeNavigationController];
+    [self.topViewController.view addGestureRecognizer:self.panGesture];
+    [self resetTopViewAnimated:TRUE];
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).slidingViewController = self;
+}
+
 - (void)switchToMainView {
+    //TODO: find how to switch
+    //[self switchToHomeView];
     
+    [self switchToChatView];
+}
+
+- (void)switchToChatView {
     [self setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     [self.topViewController.view addGestureRecognizer:self.panGesture];
     [self resetTopViewAnimated:TRUE];

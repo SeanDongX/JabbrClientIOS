@@ -36,7 +36,7 @@ NSTimeInterval const kMessageClientReconnectInterval = 5.0;
 
 NSString *const kMainStoryBoard = @"Main";
 
-
+NSString *const kHomeNavigationController = @"HomeNavigationController";
 NSString *const kChatNavigationController = @"ChatNavigationController";
 NSString *const kSignInNavigationController = @"SignInNavigationController";
 NSString *const kSignUpController = @"SignUpController";
@@ -92,6 +92,12 @@ NSString *const kErrorDescription = @"ErrorDescription";
 
 + (UIImage *)menuIconImage {
     FAKIonIcons *iccon = [FAKIonIcons naviconIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
+}
+
++ (UIImage *)homeImage {
+    FAKIonIcons *iccon = [FAKIonIcons iosHomeOutlineIconWithSize:30];
     [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }

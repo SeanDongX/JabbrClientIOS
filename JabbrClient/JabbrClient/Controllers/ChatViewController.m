@@ -17,7 +17,6 @@
 #import "Constants.h"
 #import "DateTools.h"
 #import "MBProgressHUD.h"
-#import <SpinKit/RTSpinKitView.h>
 
 //Data Model
 #import "CLATeam.h"
@@ -54,8 +53,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImageView;
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImageView;
 
-//@property (nonatomic, strong) MBProgressHUD *progressHud;
-//@property (nonatomic, strong) RTSpinKitView *progressHubspinner;
 @end
 
 @implementation ChatViewController
@@ -78,7 +75,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self setupChatThread];
     [self setupChatRepository];
     [self configJSQMessage];
-    //[self initProgressHud];
     
     [self setupOutgoingTypingEventHandler];
 }
@@ -164,19 +160,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     self.outgoingBubbleImageView = [bubbleImageFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
     self.incomingBubbleImageView = [bubbleImageFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleBlueColor]];
 }
-
-//- (void)initProgressHud {
-//    self.progressHubspinner = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleArcAlt color:[UIColor whiteColor]];
-//    
-//    self.progressHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-//    [self.navigationController.view addSubview:self.progressHud];
-//    self.progressHud.customView = self.progressHubspinner;
-//    self.progressHud.color = [[Constants warningColor] colorWithAlphaComponent:0.8f];
-//    self.progressHud.mode = MBProgressHUDModeCustomView;
-//    
-//    [self.progressHubspinner startAnimating];
-//    [self.progressHud show:YES];
-//}
 
 #pragma mark -
 #pragma mark - Chat Thread Methods
@@ -739,14 +722,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)showHud {
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    //[self.progressHubspinner startAnimating];
-    //[self.progressHud show:YES];
 }
 
 
 - (void)hideHud {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    //[self.progressHubspinner stopAnimating];
-    //[self.progressHud hide:YES];
 }
 @end

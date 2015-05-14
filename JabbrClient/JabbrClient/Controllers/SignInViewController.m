@@ -54,6 +54,11 @@
     NSString *username = [self.usernameTextField text];
     NSString *password = [self.passwordTextField text];
     
+    //Trim leading and trailing space in user name; since signAPI does not anyways when sign in
+    
+    username = [username stringByTrimmingCharactersInSet:
+                [NSCharacterSet whitespaceCharacterSet]];
+    
     if (username == nil || username.length == 0) {
         
         [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty username won't get very far.", nil)completionBlock:nil];

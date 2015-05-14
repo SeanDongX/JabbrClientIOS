@@ -17,6 +17,8 @@
 #import "Constants.h"
 #import "DateTools.h"
 #import "MBProgressHUD.h"
+#import "CLAUtility.h"
+
 
 //Data Model
 #import "CLATeam.h"
@@ -487,8 +489,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
-    if (![[user lowercaseString] isEqualToString: [self.username lowercaseString]]  &&
-        [[self.currentChatThread.title lowercaseString] isEqualToString:[room lowercaseString]]) {
+    if (![CLAUtility isString:user caseInsensitiveEqualTo:self.username]  &&
+        [CLAUtility isString:room caseInsensitiveEqualTo:self.currentChatThread.title]) {
         
         self.showTypingIndicator = TRUE;
         [self scrollToBottomAnimated:YES];

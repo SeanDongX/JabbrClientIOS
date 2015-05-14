@@ -20,4 +20,8 @@
     return [emailTest evaluateWithObject:email];
 }
 
++ (BOOL) isString:(NSString *)firstString caseInsensitiveEqualTo:(NSString *)secondString {
+    return firstString && [firstString caseInsensitiveCompare:secondString] == NSOrderedSame;
+}
+
 @end

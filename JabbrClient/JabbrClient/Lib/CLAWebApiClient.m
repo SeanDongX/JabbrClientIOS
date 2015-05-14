@@ -118,7 +118,6 @@ static bool isFirstAccess = YES;
 }
 
 - (void)signInWith: (NSString *)username password:(NSString *)password completionHandler:(void (^)(NSString *errorMessage))completion {
-    //TODO: replace AuthManager sign
     NSArray *array = @[kServerBaseUrl, kApiPath, @"accounts/signin"];
     NSString *requestUrl = [array componentsJoinedByString:@""];
     

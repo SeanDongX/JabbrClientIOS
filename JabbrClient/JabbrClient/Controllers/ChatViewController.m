@@ -482,15 +482,13 @@ static NSString * const kDefaultChatThread = @"collarabot";
     BOOL animated = secondApart > -1 * kMessageLoadAnimateTimeThreshold ? TRUE : FALSE;
     
     //TODO: also show messages of the same user from other client in current thread
-    if (message.senderId != self.username &&
-        [[self.currentChatThread.title lowercaseString] isEqualToString:[room lowercaseString]]) {
+    if (![self isCUrrentUser:message.senderId] && [self isCUrrentRoom:room]) {
         [self finishReceivingMessageAnimated:animated];
     }
 }
 
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
-    if (![CLAUtility isString:user caseInsensitiveEqualTo:self.username]  &&
-        [CLAUtility isString:room caseInsensitiveEqualTo:self.currentChatThread.title]) {
+    if (![self isCUrrentUser:user]  && [self isCUrrentRoom:room]) {
         
         self.showTypingIndicator = TRUE;
         [self scrollToBottomAnimated:YES];
@@ -557,7 +555,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     NSMutableArray *currentMessages = [self getCurrentMessageThread];
     
     for (CLAMessage *message in currentMessages) {
-        if ([[message.oId lowercaseString] isEqualToString: [tempMessageId lowercaseString]]) {
+        if ([CLAUtility isString:message.oId caseInsensitiveEqualTo:tempMessageId]) {
             message.oId = serverMessageId;
             break;
         }
@@ -594,14 +592,14 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     NSString* room = [data objectForKey:@"room"];
-    if (room && ![[room lowercaseString] isEqualToString:[self.currentChatThread.title lowercaseString]])
+    if ([self isCUrrentRoom:room])
     {
-        NSLog(@"Incoming message ingored since it is for a thread thread");
+        NSLog(@"Incoming message ingored since it is for a different thread");
         return true;
     }
     
     NSString* username = [data objectForKey:@"username"];
-    if (username && [[username lowercaseString] isEqualToString:[self.username lowercaseString]])
+    if ([self isCUrrentUser:username])
     {
         NSLog(@"Incoming message ingored since from current user");
         return true;
@@ -730,4 +728,16 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)hideHud {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
 }
+
+- (BOOL)isCUrrentRoom:(NSString *)room {
+    return room != nil &&
+            self.currentChatThread != nil &&
+            [room caseInsensitiveCompare:self.currentChatThread.title] == NSOrderedSame;
+}
+
+- (BOOL)isCUrrentUser:(NSString *)user {
+    return user != nil &&
+            [user caseInsensitiveCompare:self.username] == NSOrderedSame;
+}
+
 @end

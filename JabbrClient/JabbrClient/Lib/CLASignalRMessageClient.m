@@ -249,7 +249,7 @@ static bool isFirstAccess = YES;
         return;
     }
     
-    NSMutableArray *teamViewModelArray = [NSMutableArray arrayWithCapacity:data.count];
+    NSMutableArray<CLATeamViewModel> *teamViewModelArray = [NSMutableArray arrayWithCapacity:data.count];
     
     for (NSDictionary *teamDictionary in data) {
         
@@ -257,7 +257,7 @@ static bool isFirstAccess = YES;
         team.name = [teamDictionary objectForKey:@"Name"];
         team.key = [teamDictionary objectForKey:@"Key"];
         
-        NSMutableArray *roomArray = [NSMutableArray array];
+        NSMutableArray<CLARoom> *roomArray = [NSMutableArray array];
         NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
         if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0){
             
@@ -270,7 +270,7 @@ static bool isFirstAccess = YES;
             }
         }
         
-        NSMutableArray *userArray = [NSMutableArray array];
+        NSMutableArray<CLAUser> *userArray = [NSMutableArray array];
         NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
         if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0){
             
@@ -285,7 +285,6 @@ static bool isFirstAccess = YES;
         teamViewModel.users = userArray;
         [teamViewModelArray addObject:teamViewModel];
     }
-    
     
     if (teamViewModelArray.count > 0) {
         
@@ -314,9 +313,9 @@ static bool isFirstAccess = YES;
         return;
     }
     
-    NSString *room = data[1];
+    NSString *room = (NSString *)data[1];
     
-    NSDictionary *messageDictionary = data[0];
+    NSDictionary *messageDictionary = (NSDictionary *)data[0];
     [self.delegate didReceiveMessage:[self getMessageFromRawData:messageDictionary] inRoom:room];
 }
 
@@ -330,9 +329,9 @@ static bool isFirstAccess = YES;
         return;
     }
     
-    NSString *tempMessageId = data[0];
+    NSString *tempMessageId = (NSString *)data[0];
     
-    NSDictionary *messageDictionary = data[1];
+    NSDictionary *messageDictionary = (NSDictionary *)data[1];
     NSString *serverMessageId = [messageDictionary objectForKey:@"Id"];
     
     if (tempMessageId != nil && serverMessageId != nil) {
@@ -381,10 +380,10 @@ static bool isFirstAccess = YES;
         return;
     }
     
-    NSDictionary *userDictionary = data[0];
+    NSDictionary *userDictionary = (NSDictionary *)data[0];
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
-        NSString *room = data[1];
+        NSString *room = (NSString *)data[1];
         NSString *user = [userDictionary objectForKey:@"Name"];
         
         [self.delegate didReceiveTypingFromUser:user inRoom:room];
@@ -397,7 +396,7 @@ static bool isFirstAccess = YES;
         return;
     }
     
-    NSDictionary *roomInfoDictionary = data[0];
+    NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
     NSString *room = [roomInfoDictionary objectForKey:@"Name"];
     
     

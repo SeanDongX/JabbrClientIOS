@@ -7,12 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CLATeam.h"
 
-@interface CLATeamViewModel : NSObject
+//Util
+#import "ObjectiveCGenerics.h"
+
+//Data Model
+#import "CLATeam.h"
+#import "CLAUser.h"
+#import "CLARoom.h"
+
+GENERICSABLE(CLATeamViewModel)
+
+@interface CLATeamViewModel : NSObject<CLATeamViewModel>
 
 @property (nonatomic, strong) CLATeam *team;
-@property (nonatomic, strong) NSArray *rooms;
-@property (nonatomic, strong) NSArray *users;
+@property (nonatomic, strong) NSArray<CLARoom> *rooms;
+@property (nonatomic, strong) NSArray<CLAUser> *users;
 
 @end

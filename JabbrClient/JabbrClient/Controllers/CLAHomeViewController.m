@@ -36,8 +36,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *menuItem;
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
 
-@property (strong, nonatomic) NSArray *rooms;
-@property (strong, nonatomic) NSArray *users;
+@property (strong, nonatomic) NSArray<ChatThread> *rooms;
+@property (strong, nonatomic) NSArray<CLAUser> *users;
 
 @end
 
@@ -139,7 +139,7 @@
     
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TopicCell"];
     
-        ChatThread *room = self.rooms[indexPath.row];
+        ChatThread *room = [self.rooms objectAtIndex:indexPath.row];
         cell.textLabel.text = [room getDisplayTitle];
         
         cell.textLabel.textColor = [Constants mainThemeContrastColor];
@@ -153,7 +153,7 @@
     }
     else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TeamMemberCell"];
-        CLAUser *user = self.users[indexPath.row];
+        CLAUser *user = [self.users objectAtIndex:indexPath.row];
         cell.textLabel.text = [user getDisplayName];
         
         cell.textLabel.textColor = [Constants mainThemeContrastColor];
@@ -222,7 +222,7 @@
         ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
         
         if (chatViewController != nil) {
-            [chatViewController switchToChatThread:self.rooms[indexPath.row]];
+            [chatViewController switchToChatThread:[self.rooms objectAtIndex:indexPath.row]];
         }
         
         [self.slidingViewController resetTopViewAnimated:YES];

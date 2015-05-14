@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ObjectiveCGenerics.h"
 
-@interface CLARoom : NSObject
+GENERICSABLE(CLARoom)
+
+@interface CLARoom : NSObject<CLARoom>
+
 @property  (nonatomic, strong) NSString *name;
+
 @end

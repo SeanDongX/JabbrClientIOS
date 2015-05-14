@@ -124,7 +124,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
         [self.rightMenuButton setTitle:@""];
         [self.rightMenuButton setWidth:30];
         [self.rightMenuButton setImage: [Constants docIconImage]];
-        self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:chatThreadSetupButon];
+        self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:(id)chatThreadSetupButon];
     }
     else {
         [self.navigationItem setRightBarButtonItem:chatThreadSetupButon];
@@ -178,8 +178,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self.collectionView reloadData];
 }
 
-- (NSMutableArray *)getCurrentMessageThread {
-    return (NSMutableArray *)[self.chatThreadRepository objectForKey:self.currentChatThread.title];
+- (NSMutableArray<CLAMessage> *)getCurrentMessageThread {
+    return (NSMutableArray<CLAMessage> *)[self.chatThreadRepository objectForKey:self.currentChatThread.title];
 }
 
 - (void)setCurrentMessageThread:(NSMutableArray *)messages {
@@ -413,10 +413,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender {
-    NSMutableArray *chatThreads = [self getCurrentMessageThread];
+    NSMutableArray<CLAMessage> *chatThreads = [self getCurrentMessageThread];
     
     if (chatThreads != nil && chatThreads.count > 0){
-        CLAMessage *earliestMessage = chatThreads[0];
+        CLAMessage *earliestMessage = [chatThreads objectAtIndex:0];
         if (earliestMessage != nil)
         {
             self.showLoadEarlierMessagesHeader = false;
@@ -507,22 +507,22 @@ static NSString * const kDefaultChatThread = @"collarabot";
     self.roomViewModel.users = users;
 }
 
-- (void)didLoadEarlierMessages:(NSArray *)earlierMessages inRoom:(NSString *)room {
+- (void)didLoadEarlierMessages:(NSArray<CLAMessage> *)earlierMessages inRoom:(NSString *)room {
     if (room == nil || earlierMessages == nil || earlierMessages.count == 0){
         self.showLoadEarlierMessagesHeader = FALSE;
         return;
     }
     
     //Cautious check to see if the message is has been loaded before
-    NSArray *currentMessages = [self.chatThreadRepository objectForKey:room];
+    NSArray<CLAMessage> *currentMessages = [self.chatThreadRepository objectForKey:room];
     
     if (earlierMessages != nil && earlierMessages.count > 0
         && currentMessages != nil && currentMessages.count > 0) {
         
-        CLAMessage *firstEarlierMessage = earlierMessages[0];
+        CLAMessage *firstEarlierMessage = [earlierMessages objectAtIndex:0];
         
         for(int i = 0; i< currentMessages.count; i++) {
-            CLAMessage *message = currentMessages[i];
+            CLAMessage *message = [currentMessages objectAtIndex:i];
             if ([message.oId isEqualToString: firstEarlierMessage.oId]) {
                 return;
             }
@@ -616,10 +616,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
         return;
     }
     
-    NSDictionary *userDictionary = data[0];
+    NSDictionary *userDictionary = (NSDictionary *)data[0];
     if (userDictionary && [userDictionary objectForKey:@"Name"])
     {
-        NSString *room = data[1];
+        NSString *room = (NSString *)data[1];
         NSString *userName = [userDictionary objectForKey:@"Name"];
         
         NSMutableDictionary *ignoreParamDictionary = [NSMutableDictionary dictionaryWithCapacity:2];

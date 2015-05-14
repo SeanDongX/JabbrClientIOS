@@ -30,7 +30,7 @@
 
 @interface LeftMenuViewController ()
 
-@property (nonatomic, strong) NSArray *chatThreads;
+@property (nonatomic, strong) NSArray<ChatThread> *chatThreads;
 @property (weak, nonatomic) IBOutlet UIImageView *settingsIcon;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIImageView *homeIcon;
@@ -130,7 +130,7 @@
     }
     
     if (self.chatThreads != nil && self.chatThreads.count > currentSelected) {
-        ChatThread *selectedChatThrad = self.chatThreads[currentSelected];
+        ChatThread *selectedChatThrad = [self.chatThreads objectAtIndex:currentSelected];
         selectedChatTitle = selectedChatThrad.title;
     }
     
@@ -183,7 +183,7 @@
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    ChatThread *chatThread = self.chatThreads[indexPath.row];
+    ChatThread *chatThread = [self.chatThreads objectAtIndex:indexPath.row];
     cell.textLabel.text = [chatThread getDisplayTitle];
 
     cell.textLabel.textColor = [UIColor whiteColor];
@@ -251,7 +251,7 @@
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
-        [chatViewController switchToChatThread:self.chatThreads[indexPath.row]];
+        [chatViewController switchToChatThread:[self.chatThreads objectAtIndex:indexPath.row]];
     }
     
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];

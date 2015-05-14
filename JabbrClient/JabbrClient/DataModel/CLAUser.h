@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ObjectiveCGenerics.h"
 
-@interface CLAUser : NSObject
+GENERICSABLE(CLAUser)
+
+@interface CLAUser : NSObject<CLAUser>
+
 @property  (nonatomic, strong) NSString *name;
+
 @end

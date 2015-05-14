@@ -8,6 +8,12 @@
 
 #import "ObjectThread.h"
 
-@interface ChatThread : ObjectThread
+#import "ObjectiveCGenerics.h"
+
+GENERICSABLE(ChatThread)
+
+@interface ChatThread : ObjectThread<ChatThread>
+
 @property  (nonatomic) BOOL isDirectMessageThread;
+
 @end

@@ -668,9 +668,16 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark -
 #pragma mark Private Methods
 
+- (void)subscribeEvent {
+    //TODO: subscribe envent to save current active thread when app goes to background or terminated
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
+}
+
 - (void)sendTeamUpdatedEventNotification:(CLATeamViewModel *)teamViewModel {
     NSDictionary *userInfo = @{ kTeamKey : teamViewModel};
     [[NSNotificationCenter defaultCenter] postNotificationName:kEventTeamUpdated object:nil userInfo:userInfo];
+    
 }
 
 - (NSDate *)getMessageDisplayDateAt:(NSIndexPath *)indexPath {

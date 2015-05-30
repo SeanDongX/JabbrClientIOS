@@ -9,4 +9,11 @@
 #import "CLAUser.h"
 
 @implementation CLAUser
+
++ (CLAUser *)getFromData:(NSDictionary *)userDictionary {
+    CLAUser *user = [[CLAUser alloc] init];
+    user.name = [userDictionary objectForKey:@"Name"];
+    return  user;
+}
+
 @end

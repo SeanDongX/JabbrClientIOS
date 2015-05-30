@@ -13,6 +13,7 @@ GENERICSABLE(CLARoom)
 
 @interface CLARoom : NSObject<CLARoom>
 
-@property  (nonatomic, strong) NSString *name;
-
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSArray *users;
+@property (nonatomic, strong) NSArray *owners;
 @end

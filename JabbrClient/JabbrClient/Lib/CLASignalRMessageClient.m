@@ -252,37 +252,7 @@ static bool isFirstAccess = YES;
     NSMutableArray<CLATeamViewModel> *teamViewModelArray = [NSMutableArray arrayWithCapacity:data.count];
     
     for (NSDictionary *teamDictionary in data) {
-        
-        CLATeam *team = [[CLATeam alloc] init];
-        team.name = [teamDictionary objectForKey:@"Name"];
-        team.key = [teamDictionary objectForKey:@"Key"];
-        
-        NSMutableArray<CLARoom> *roomArray = [NSMutableArray array];
-        NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
-        if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0){
-            
-            for (id room in roomArrayFromDictionary) {
-                NSDictionary *roomDictionary = room;
-                CLARoom *claRoom = [[CLARoom alloc] init];
-                claRoom.name = [roomDictionary objectForKey:@"Name"];
-                
-                [roomArray addObject:claRoom];
-            }
-        }
-        
-        NSMutableArray<CLAUser> *userArray = [NSMutableArray array];
-        NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
-        if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0){
-            
-            for (id userDictionary in userArrayFromDictionary) {
-                [userArray addObject:[self getUserFromRawData:userDictionary]];
-            }
-        }
-        
-        CLATeamViewModel *teamViewModel = [[CLATeamViewModel alloc] init];
-        teamViewModel.team = team;
-        teamViewModel.rooms = roomArray;
-        teamViewModel.users = userArray;
+        CLATeamViewModel *teamViewModel = [CLATeamViewModel getFromData:teamDictionary];
         [teamViewModelArray addObject:teamViewModel];
     }
     
@@ -302,7 +272,6 @@ static bool isFirstAccess = YES;
             [self reconnect];
         }
     }
-    
     
     [self.delegate didReceiveTeams:teamViewModelArray];
 }
@@ -368,12 +337,6 @@ static bool isFirstAccess = YES;
                                      text:[messageDictionary objectForKey:@"Content"]];
 }
 
-- (CLAUser *)getUserFromRawData:(NSDictionary *)userDictionary {
-    CLAUser *user = [[CLAUser alloc] init];
-    user.name = [userDictionary objectForKey:@"Name"];
-    return  user;
-}
-
 - (void)setTyping:(NSArray *)data {
     if (!data && data.count <2)
     {
@@ -404,7 +367,7 @@ static bool isFirstAccess = YES;
     NSMutableArray *users = [NSMutableArray array];
     
     for(NSDictionary *userDictionary in usersArray) {
-        [users addObject:[self getUserFromRawData:userDictionary]];
+        [users addObject:[CLAUser getFromData:userDictionary]];
     }
     
     [self.delegate didLoadUsers:users inRoom:room];

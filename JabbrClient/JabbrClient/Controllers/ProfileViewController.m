@@ -36,10 +36,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initUI];
 }
 
-- (void)initUI {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     [[self.signOutButton layer] setCornerRadius:5.0f];
     [[self.signOutButton layer] setMasksToBounds:YES];

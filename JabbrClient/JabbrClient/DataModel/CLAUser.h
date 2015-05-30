@@ -15,6 +15,7 @@ GENERICSABLE(CLAUser)
 
 @property  (nonatomic, strong) NSString *name;
 
+- (BOOL)isCurrentUser;
 + (CLAUser *)getFromData:(NSDictionary *)userDictionary;
 
 @end

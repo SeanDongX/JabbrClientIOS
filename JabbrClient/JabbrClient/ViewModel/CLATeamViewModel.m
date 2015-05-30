@@ -25,8 +25,17 @@
             CLARoom *claRoom = [[CLARoom alloc] init];
             claRoom.name = [roomDictionary objectForKey:@"Name"];
             
-            //NSMutableArray *usersArray = [NSMutableArray array];
-            //TODO: add users and owners to room
+            NSMutableArray *usersArray = [NSMutableArray array];
+            NSArray *usersDcitionaryArray = [roomDictionary objectForKey:@"Users"];
+            
+            if (usersDcitionaryArray != nil && usersDcitionaryArray.count > 0) {
+                for (NSDictionary *userDictionary in usersDcitionaryArray) {
+                    CLAUser *user = [CLAUser getFromData:userDictionary];
+                    [usersArray addObject:user];
+                }
+            }
+            
+            claRoom.users = usersArray;
             [roomArray addObject:claRoom];
         }
     }

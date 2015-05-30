@@ -106,9 +106,21 @@
         
         NSMutableArray *chatThreadArray = [NSMutableArray array];
         for (CLARoom *room in teamViewModel.rooms) {
-            ChatThread *thread= [[ChatThread alloc] init];
-            thread.title = room.name;
-            [chatThreadArray addObject:thread];
+            
+            if (room.users != nil && room.users.count > 0) {
+            
+                for (CLAUser *user in room.users) {
+                    if ([user isCurrentUser] != NO) {
+                        //only show my topics
+                        ChatThread *thread= [[ChatThread alloc] init];
+                        thread.title = room.name;
+                        [chatThreadArray addObject:thread];
+                        
+                        break;
+                    }
+                        
+                }
+            }
         }
         
         [self updateChatThreads:chatThreadArray];

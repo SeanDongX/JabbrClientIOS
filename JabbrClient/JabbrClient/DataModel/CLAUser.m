@@ -7,8 +7,14 @@
 //
 
 #import "CLAUser.h"
+#import "AuthManager.h"
 
 @implementation CLAUser
+
+
+- (BOOL)isCurrentUser {
+    return [self.name caseInsensitiveCompare:[[AuthManager sharedInstance] getUsername]] == NSOrderedSame;
+}
 
 + (CLAUser *)getFromData:(NSDictionary *)userDictionary {
     CLAUser *user = [[CLAUser alloc] init];

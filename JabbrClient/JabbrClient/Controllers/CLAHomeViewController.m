@@ -64,6 +64,7 @@
 #pragma mark Notifications
 - (void)subscribNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTeam:) name:kEventTeamUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCreateTeamView) name:kEventNoTeam object:nil];
 }
 
 - (void)unsubscribNotifications {
@@ -238,12 +239,7 @@
 }
 
 - (void)showCreateTopicView {
-    
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
-    
-    CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
-    createRoomViewController.slidingMenuViewController = (SlidingViewController *)self.slidingViewController;
-    [self presentViewController:createRoomViewController animated:YES completion:nil];
+    [((SlidingViewController *)self.slidingViewController) switchToCreateTopicView];
 }
 
 #pragma mark -
@@ -257,12 +253,9 @@
     return self.users == nil ? 0 : self.users.count;
 }
 
+
 - (void)showCreateTeamView {
-    
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
-    
-    CLACreateTeamViewController *createTeamViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateTeamViewController];
-    createTeamViewController.slidingMenuViewController = (SlidingViewController *)self.navigationController.slidingViewController;
-    [self presentViewController:createTeamViewController animated:YES completion:nil];
+    SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
+    [slidingViewController switchToCreateTeamView];
 }
 @end

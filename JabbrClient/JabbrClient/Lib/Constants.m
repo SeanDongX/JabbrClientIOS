@@ -66,6 +66,7 @@ NSString *const kMessageId = @"MessageIdKey";
 NSString *const kRoomName = @"RoomNameKey";
 
 NSString *const kEventTeamUpdated = @"EventTeamUpdatedKey";
+NSString *const kEventNoTeam = @"EventNoTeamKey";
 
 int const kTeamNameMaxLength = 50;
 

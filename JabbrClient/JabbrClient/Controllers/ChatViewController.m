@@ -448,6 +448,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)didReceiveTeams:(NSArray *)teams {
     if (teams == nil || teams.count == 0 || teams[0] == nil) {
         [self showCreateTeamView];
+        return;
     }
     
     CLATeamViewModel *teamViewModel = teams[0];    
@@ -644,12 +645,13 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 
 - (void)showCreateTeamView {
-    
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
-    
-    CLACreateTeamViewController *createTeamViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateTeamViewController];
-    createTeamViewController.slidingMenuViewController = (SlidingViewController *)self.navigationController.slidingViewController;
-    [self presentViewController:createTeamViewController animated:YES completion:nil];
+    SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
+    if (slidingViewController == nil) {
+        [self sendNoTeamEventNotification];
+    }
+    else {
+        [slidingViewController switchToCreateTeamView];
+    }
 }
 
 #pragma mark -
@@ -665,6 +667,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
     NSDictionary *userInfo = @{ kTeamKey : teamViewModel};
     [[NSNotificationCenter defaultCenter] postNotificationName:kEventTeamUpdated object:nil userInfo:userInfo];
     
+}
+
+- (void)sendNoTeamEventNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEventNoTeam object:nil userInfo:nil];
 }
 
 - (NSDate *)getMessageDisplayDateAt:(NSIndexPath *)indexPath {

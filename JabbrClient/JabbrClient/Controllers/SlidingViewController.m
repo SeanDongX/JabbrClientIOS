@@ -101,7 +101,6 @@
     }
 }
 
-
 - (void)switchToHomeView {
     [self setTopNavigationControllerWithKeyIdentifier:kHomeNavigationController];
     [self.topViewController.view addGestureRecognizer:self.panGesture];
@@ -124,9 +123,19 @@
     [self resetTopViewAnimated:TRUE];
 }
 
+- (void)switchToCreateTeamView {
+    [self setTopNavigationControllerWithKeyIdentifier:kCreateTeamViewController];
+    [self resetTopViewAnimated:TRUE];
+}
+
+- (void)switchToCreateTopicView {
+    [self setTopNavigationControllerWithKeyIdentifier:kCreateRoomViewController];
+    [self resetTopViewAnimated:TRUE];
+}
+
 - (void)switchToSignInView {
     [self setTopNavigationControllerWithKeyIdentifier:kSignInNavigationController];
-    [self.topViewController.view addGestureRecognizer:self.panGesture];
+    //[self.topViewController.view addGestureRecognizer:self.panGesture];
     [self resetTopViewAnimated:TRUE];
 }
 

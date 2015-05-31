@@ -15,6 +15,9 @@
 #import "CLAToastManager.h"
 #import "MBProgressHUD.h"
 
+//Contorls
+#import "CLARoundFrameButton.h"
+
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
@@ -24,14 +27,15 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UIButton *signInButton;
-@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
+@property (weak, nonatomic) IBOutlet CLARoundFrameButton *signInButton;
+@property (weak, nonatomic) IBOutlet CLARoundFrameButton *signUpButton;
 @end
 
 @implementation SignInViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupButtons];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,6 +49,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillAppear:animated];
+}
+
+- (void)setupButtons {
+    [self.signInButton setButtonStyle:[UIColor whiteColor]];
+    [self.signUpButton setButtonStyle:[UIColor whiteColor]];
 }
 
 #pragma mark -

@@ -13,6 +13,9 @@
 #import "CLAToastManager.h"
 #import "CLAUtility.h"
 
+//Control
+#import "CLARoundFrameButton.h"
+
 //API Client
 #import "CLAWebApiClient.h"
 
@@ -23,8 +26,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *repeatPasswordTextField;
-@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
-@property (weak, nonatomic) IBOutlet UIButton *signInButton;
+@property (weak, nonatomic) IBOutlet CLARoundFrameButton *signUpButton;
+@property (weak, nonatomic) IBOutlet CLARoundFrameButton *signInButton;
 
 @end
 
@@ -32,6 +35,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupButtons];
+}
+
+- (void)setupButtons {
+    [self.signInButton setButtonStyle:[UIColor whiteColor]];
+    [self.signUpButton setButtonStyle:[UIColor whiteColor]];
 }
 
 #pragma mark - 

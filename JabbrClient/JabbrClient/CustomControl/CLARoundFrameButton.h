@@ -10,4 +10,6 @@
 
 @interface CLARoundFrameButton : UIButton
 
+- (void)setButtonStyle: (UIColor *)color;
+
 @end

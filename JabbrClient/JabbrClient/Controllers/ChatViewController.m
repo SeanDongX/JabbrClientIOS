@@ -44,13 +44,9 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightMenuButton;
 
-@property (nonatomic, strong) NSString *username;
-
 @property (nonatomic, strong) ChatThread *currentChatThread;
 
 @property (nonatomic, strong) CLASignalRMessageClient *messageClient;
-
-@property (nonatomic, strong) NSMutableDictionary *chatThreadRepository;
 
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImageView;
 @property (nonatomic, strong) JSQMessagesBubbleImage* outgoingBubbleImageView;
@@ -74,8 +70,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initMenu];
-    [self setupChatThread];
-    [self setupChatRepository];
     [self configJSQMessage];
     
     [self setupOutgoingTypingEventHandler];
@@ -92,6 +86,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)viewWillAppear:(BOOL)animated {
     @try {
         [super viewWillAppear:animated];
+        [self.collectionView reloadData];
     }
     @catch (NSException *exception) {
         NSLog(@"Exception: %@", exception.description);
@@ -105,7 +100,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
     
     self.senderId = self.messageClient.username;
     self.senderDisplayName = self.messageClient.username;
-    self.username = self.messageClient.username;
+}
+
+
+- (NSMutableDictionary*)getChatThreadRepository {
+    return self.messageClient.roomRepository;
 }
 
 #pragma mark -
@@ -136,18 +135,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark - 
 #pragma mark - Initial Setup
 
-- (void)setupChatThread {
-    //Set deafult as collabot thread
-    ChatThread *initialThread = [[DemoData sharedDemoData].chatThreads objectAtIndex:2];
-    
-    self.currentChatThread = initialThread;
-    self.navigationItem.title  = [initialThread getDisplayTitle];
-}
-
-- (void)setupChatRepository {
-    self.chatThreadRepository = [NSMutableDictionary dictionary];
-}
-
 - (void)configJSQMessage {
     
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
@@ -170,8 +157,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
     self.currentChatThread = chatThread;
     self.navigationItem.title = [NSString stringWithFormat:@"#%@", self.currentChatThread.title];
     
-    if (![self.chatThreadRepository objectForKey:self.currentChatThread.title]) {
-        [self.chatThreadRepository setObject:[NSMutableArray array] forKey:self.currentChatThread.title];
+    if (![[self getChatThreadRepository] objectForKey:self.currentChatThread.title]) {
+        [[self getChatThreadRepository] setObject:[NSMutableArray array] forKey:self.currentChatThread.title];
         [self initialzeCurrentThread];
     }
     
@@ -181,11 +168,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (NSMutableArray<CLAMessage> *)getCurrentMessageThread {
-    return (NSMutableArray<CLAMessage> *)[self.chatThreadRepository objectForKey:self.currentChatThread.title];
+    return (NSMutableArray<CLAMessage> *)[[self getChatThreadRepository] objectForKey:self.currentChatThread.title];
 }
 
 - (void)setCurrentMessageThread:(NSMutableArray *)messages {
-    [self.chatThreadRepository setObject:messages forKey:self.currentChatThread.title];
+    [[self getChatThreadRepository] setObject:messages forKey:self.currentChatThread.title];
 }
 
 - (void)addMessage:(CLAMessage *)message toRoom: (NSString*)threadTitle {
@@ -199,10 +186,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     else {
         //TODO:user dictionary to store message
-        NSMutableArray* messages = [self.chatThreadRepository objectForKey:threadTitle];
+        NSMutableArray* messages = [[self getChatThreadRepository] objectForKey:threadTitle];
         if (!message) {
             messages = [NSMutableArray array];
-            [self.chatThreadRepository setObject:messages forKey:threadTitle];
+            [[self getChatThreadRepository] setObject:messages forKey:threadTitle];
         }
         
         [messages addObject:message];
@@ -246,7 +233,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)textFieldTextChanged:(id)sender {
-    [self.messageClient sendTypingFromUser:self.username inRoom:self.currentChatThread.title];
+    [self.messageClient sendTypingFromUser:self.messageClient.username inRoom:self.currentChatThread.title];
 }
 
 #pragma mark -
@@ -514,7 +501,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     //Cautious check to see if the message is has been loaded before
-    NSArray<CLAMessage> *currentMessages = [self.chatThreadRepository objectForKey:room];
+    NSArray<CLAMessage> *currentMessages = [[self getChatThreadRepository] objectForKey:room];
     
     if (earlierMessages != nil && earlierMessages.count > 0
         && currentMessages != nil && currentMessages.count > 0) {
@@ -543,7 +530,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     earlierMessages = nil;
     currentMessages = nil;
     
-    [self.chatThreadRepository setObject:aggregatedMessage forKey:room];
+    [[self getChatThreadRepository] setObject:aggregatedMessage forKey:room];
     
     [self finishReceivingMessageAnimated:FALSE];
     self.showLoadEarlierMessagesHeader = TRUE;
@@ -744,7 +731,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (BOOL)isCUrrentUser:(NSString *)user {
     return user != nil &&
-            [user caseInsensitiveCompare:self.username] == NSOrderedSame;
+            [user caseInsensitiveCompare:self.messageClient.username] == NSOrderedSame;
 }
 
 @end

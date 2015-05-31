@@ -19,6 +19,8 @@
 #import "LeftMenuViewController.h"
 #import "ChatViewController.h"
 
+#import "CLASignalRMessageClient.h"
+
 @interface SlidingViewController ()
 
 @end
@@ -104,7 +106,6 @@
     [self setTopNavigationControllerWithKeyIdentifier:kHomeNavigationController];
     [self.topViewController.view addGestureRecognizer:self.panGesture];
     [self resetTopViewAnimated:TRUE];
-    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).slidingViewController = self;
 }
 
 - (void)switchToMainView {
@@ -116,6 +117,9 @@
 
 - (void)switchToChatView {
     [self setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
+    
+    [[CLASignalRMessageClient sharedInstance] connect];
+    
     [self.topViewController.view addGestureRecognizer:self.panGesture];
     [self resetTopViewAnimated:TRUE];
 }

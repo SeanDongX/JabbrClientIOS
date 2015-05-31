@@ -70,6 +70,7 @@ static bool isFirstAccess = YES;
         [self doesNotRecognizeSelector:_cmd];
     }
     self = [super init];
+    self.roomRepository = [NSMutableDictionary dictionary];
     return self;
 }
 

@@ -39,6 +39,7 @@ typedef enum {
 
 @property (nonatomic, weak) id<CLAMessageClientDelegate> delegate;
 @property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSMutableDictionary *roomRepository;
 @property (nonatomic) BOOL roomsLoaded;
 
 - (void)connect;

@@ -71,6 +71,7 @@
 - (IBAction)signOutClicked:(id)sender {
     [[AuthManager sharedInstance] signOut];
     [[CLASignalRMessageClient sharedInstance] disconnect];
+    [[CLASignalRMessageClient sharedInstance].roomRepository removeAllObjects];
     [self switchToSignInView];
 }
 

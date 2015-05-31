@@ -17,6 +17,7 @@
 @property (nonatomic, weak) id<CLAMessageClientDelegate> delegate;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic) BOOL connected;
+@property (nonatomic, strong) NSMutableDictionary *roomRepository;
 @property (nonatomic) BOOL roomsLoaded;
 
 + (CLASignalRMessageClient*)sharedInstance;

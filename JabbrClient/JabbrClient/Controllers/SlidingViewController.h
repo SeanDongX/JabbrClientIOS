@@ -16,7 +16,6 @@
 - (void)switchToMainView;
 - (void)switchToSignInView;
 - (void)switchToCreateTeamView;
-- (void)switchToCreateTopicView;
 - (void)switchToRoom: (NSString *)room;
 - (void)switchToRoomAtNextReload: (NSString *)room;
 

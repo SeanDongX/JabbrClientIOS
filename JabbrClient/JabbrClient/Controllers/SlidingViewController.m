@@ -128,11 +128,6 @@
     [self resetTopViewAnimated:TRUE];
 }
 
-- (void)switchToCreateTopicView {
-    [self setTopNavigationControllerWithKeyIdentifier:kCreateRoomViewController];
-    [self resetTopViewAnimated:TRUE];
-}
-
 - (void)switchToSignInView {
     [self setTopNavigationControllerWithKeyIdentifier:kSignInNavigationController];
     //[self.topViewController.view addGestureRecognizer:self.panGesture];

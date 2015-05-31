@@ -50,9 +50,7 @@
 
 
 - (void)closeButtonClicked:(id)sender {
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
 - (IBAction)goButtonClicked:(id)sender {

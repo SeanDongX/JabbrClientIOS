@@ -31,6 +31,12 @@
 @interface LeftMenuViewController ()
 
 @property (nonatomic, strong) NSArray<ChatThread> *chatThreads;
+
+@property (nonatomic, strong) NSArray<ChatThread> *filteredChatThreads;
+
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic) BOOL isFiltered;
+
 @property (weak, nonatomic) IBOutlet UIImageView *settingsIcon;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIImageView *homeIcon;
@@ -45,6 +51,7 @@
     [self setupMenu];
     [self setupBottomMenus];
     [self subscribNotifications];
+    self.searchBar.delegate = self;
 }
 
 - (void)dealloc {
@@ -54,7 +61,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self updateChatThreads:self.chatThreads];
-    
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -161,6 +168,11 @@
         return;
     }
     
+    //Clear search and reload table before select
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+    [self.tableView reloadData];
+    
     for (int key=0 ; key< self.chatThreads.count; key++) {
         ChatThread *thread = [self.chatThreads objectAtIndex:key];
         
@@ -195,7 +207,7 @@
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    ChatThread *chatThread = [self.chatThreads objectAtIndex:indexPath.row];
+    ChatThread *chatThread = [self getChatThreadAtRow:indexPath.row];
     cell.textLabel.text = [chatThread getDisplayTitle];
 
     cell.textLabel.textColor = [UIColor whiteColor];
@@ -263,7 +275,7 @@
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
-        [chatViewController switchToChatThread:[self.chatThreads objectAtIndex:indexPath.row]];
+        [chatViewController switchToChatThread:[self getChatThreadAtRow:indexPath.row]];
     }
     
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
@@ -298,10 +310,64 @@
 }
 
 #pragma mark -
+#pragma Search Bar Delegate Methods
+//#pragma mark - UISearchDisplayController Delegate Methods
+//-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+//    // Tells the table data source to reload when text changes
+//    [self filterContentForSearchText:searchString scope:
+//     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+//    // Return YES to cause the search result table view to be reloaded.
+//    return YES;
+//}
+//
+//-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
+//    // Tells the table data source to reload when scope bar selection changes
+//    [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
+//     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+//    // Return YES to cause the search result table view to be reloaded.
+//    return YES;
+//}
+
+-(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
+{
+    if(text.length == 0)
+    {
+        self.isFiltered = FALSE;
+    }
+    else
+    {
+        self.isFiltered = TRUE;
+        [self filterContentForSearchText:text];
+    }
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark -
 #pragma mark Private Methods
 
+- (void)filterContentForSearchText:(NSString*)searchText
+{
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
+    self.filteredChatThreads = [self.chatThreads filteredArrayUsingPredicate:resultPredicate];
+}
+
+- (ChatThread *)getChatThreadAtRow:(NSInteger)row {
+    
+    // Check to see whether the normal table or search results table is being displayed and set the Candy object from the appropriate array
+    if (self.isFiltered) {
+        return [self.filteredChatThreads objectAtIndex:row];
+    } else {
+        return [self.chatThreads objectAtIndex:row];
+    }
+}
+
 - (NSInteger)getRoomCount {
-    return self.chatThreads == nil ? 0 : self.chatThreads.count;
+    if (self.isFiltered) {
+        return self.filteredChatThreads == nil ? 0 : self.filteredChatThreads.count;
+    } else {
+        return self.chatThreads == nil ? 0 : self.chatThreads.count;
+    }
 }
 
 @end

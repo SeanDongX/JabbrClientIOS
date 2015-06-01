@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeftMenuViewController : UIViewController <UITableViewDataSource>
+@interface LeftMenuViewController : UIViewController <UITableViewDataSource, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

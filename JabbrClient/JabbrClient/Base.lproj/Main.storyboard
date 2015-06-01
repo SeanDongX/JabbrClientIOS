@@ -45,6 +45,9 @@
                                     <constraint firstAttribute="height" constant="44" id="fbz-Js-n9Y"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Ldj-Tp-LNF" id="LDp-ON-nI1"/>
+                                </connections>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zea-mw-Us8" userLabel="HomeView">
                                 <rect key="frame" x="0.0" y="468" width="320" height="50"/>
@@ -138,12 +141,22 @@
                     <connections>
                         <outlet property="homeButton" destination="NZt-5J-PuY" id="Hey-qW-Dfg"/>
                         <outlet property="homeIcon" destination="XS7-60-w3H" id="j89-qc-z2s"/>
+                        <outlet property="searchBar" destination="Yhz-xb-hCd" id="ALQ-ji-RGf"/>
+                        <outlet property="searchDisplayController" destination="TfQ-vi-xyw" id="G0c-tJ-U0X"/>
                         <outlet property="settingsButton" destination="R3H-YL-uv1" id="mRy-aP-Gh3"/>
                         <outlet property="settingsIcon" destination="kdo-s2-nr1" id="sUM-ch-459"/>
                         <outlet property="tableView" destination="cLf-iZ-bmg" id="QWb-0Q-iIR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HHl-XJ-irH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="TfQ-vi-xyw">
+                    <connections>
+                        <outlet property="delegate" destination="Ldj-Tp-LNF" id="EXY-Wh-Gul"/>
+                        <outlet property="searchContentsController" destination="Ldj-Tp-LNF" id="HBO-fE-Bxp"/>
+                        <outlet property="searchResultsDataSource" destination="Ldj-Tp-LNF" id="Osi-ef-Q01"/>
+                        <outlet property="searchResultsDelegate" destination="Ldj-Tp-LNF" id="ZUE-DH-etK"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="-195" y="188"/>
         </scene>
@@ -184,6 +197,9 @@
                                     <constraint firstAttribute="height" constant="40" id="Ljf-0V-VwZ"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="pcT-6d-B6d" id="C5n-i7-q4B"/>
+                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.18823529410000001" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>

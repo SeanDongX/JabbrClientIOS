@@ -1214,7 +1214,7 @@
         <!--Home Master Controller-->
         <scene sceneID="S3k-9f-pW0">
             <objects>
-                <viewController id="r1D-oD-dzc" userLabel="Home Master Controller" customClass="CLAHomeMasterViewController" sceneMemberID="viewController">
+                <viewController id="r1D-oD-dzc" userLabel="Home Master Controller" customClass="CLAHomeMasterViewController" propertyAccessControl="none" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vr4-lh-4C1"/>
                         <viewControllerLayoutGuide type="bottom" id="YzK-W4-Q98"/>
@@ -1243,7 +1243,7 @@
                                 <action selector="leftMenuClicked:" destination="r1D-oD-dzc" id="Shw-pb-zN2"/>
                             </connections>
                         </barButtonItem>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="qZ5-mw-GTl" propertyAccessControl="localizable">
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="qZ5-mw-GTl" propertyAccessControl="none">
                             <rect key="frame" x="89" y="7" width="143" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

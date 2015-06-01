@@ -61,10 +61,7 @@
 - (void)updateTeam:(NSNotification *)notification {
     CLATeamViewModel *teamViewModel = [notification.userInfo objectForKey:kTeamKey];
     
-    if (teamViewModel == nil) {
-        //[self showCreateTeamView];
-    }
-    else {
+    if (teamViewModel != nil) {
         [self updateRooms:teamViewModel.rooms];
         
         if (teamViewModel.team != nil) {

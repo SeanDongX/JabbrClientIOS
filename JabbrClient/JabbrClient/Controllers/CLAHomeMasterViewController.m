@@ -22,6 +22,8 @@
 @interface CLAHomeMasterViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *menuItem;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @end
 
 @implementation CLAHomeMasterViewController
@@ -47,6 +49,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, 0);
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    //scroll view's scroll behavior is disabled.
+    //The code below disables scroll view y contnet offset, otherwise the page will have a top offset.
+    //If page scroll need to be enabled, need to do this in XLPagerTabStripViewController viewDidScroll method
+    self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, 0);
 }
 
 #pragma mark -
@@ -65,6 +76,7 @@
     [self.menuItem setWidth:30];
     [self.menuItem setImage: [Constants menuIconImage]];
 }
+
 
 #pragma mark -
 #pragma mark - Event Handlers

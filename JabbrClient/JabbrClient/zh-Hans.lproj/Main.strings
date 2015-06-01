@@ -1,7 +1,4 @@
 
-/* Class = "UILabel"; text = "Welcome to Collara"; ObjectID = "5Kt-Hh-y4U"; */
-"5Kt-Hh-y4U.text" = "欢迎使用Collara";
-
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "6vg-UG-eAB"; */
 "6vg-UG-eAB.placeholder" = "邮箱";
 

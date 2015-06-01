@@ -16,10 +16,16 @@
 #import "CLAUser+Category.h"
 #import "CLATeamViewModel.h"
 
+//Menu
+#import "UIViewController+ECSlidingViewController.h"
+#import "SlidingViewController.h"
+
+//View Controller
+#import "CLACreateRoomViewController.h"
+
 @interface CLAHomeMemberViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *teamMemberTableView;
-@property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
 
 @property (strong, nonatomic) NSArray<CLAUser> *users;
 
@@ -49,15 +55,8 @@
 - (void)updateTeam:(NSNotification *)notification {
     CLATeamViewModel *teamViewModel = [notification.userInfo objectForKey:kTeamKey];
     
-    if (teamViewModel == nil) {
-        //[self showCreateTeamView];
-    }
-    else {
+    if (teamViewModel != nil) {
         [self updateTeamMembers:teamViewModel.users];
-        
-        if (teamViewModel.team != nil) {
-            self.welcomeLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Welcome to join team %@", nil), teamViewModel.team.name];
-        }
     }
 }
 
@@ -145,6 +144,14 @@
 
 #pragma mark -
 #pragma mark Private Methods
+
+- (void)showCreateTopicView {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
+    
+    CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
+    createRoomViewController.slidingMenuViewController = (SlidingViewController *)self.slidingViewController;
+    [self presentViewController:createRoomViewController animated:YES completion:nil];
+}
 
 - (NSInteger)getTeamMemberCount {
     return self.users == nil ? 0 : self.users.count;

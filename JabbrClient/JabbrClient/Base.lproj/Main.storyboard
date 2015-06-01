@@ -1131,29 +1131,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MOb-8c-lLl" userLabel="ScrollContentView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZD-fD-HLR" userLabel="TopView">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Collara" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Kt-Hh-y4U">
-                                                <rect key="frame" x="30" y="20" width="260" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="4rz-iO-4aP"/>
-                                            <constraint firstItem="5Kt-Hh-y4U" firstAttribute="leading" secondItem="JZD-fD-HLR" secondAttribute="leading" constant="30" id="JLy-gC-3AE"/>
-                                            <constraint firstAttribute="trailing" secondItem="5Kt-Hh-y4U" secondAttribute="trailing" constant="30" id="JPd-zb-Mhc"/>
-                                            <constraint firstItem="5Kt-Hh-y4U" firstAttribute="top" secondItem="JZD-fD-HLR" secondAttribute="top" constant="20" id="yCi-2w-PJi"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ScG-vy-27M" userLabel="TeamMemberView">
-                                        <rect key="frame" x="0.0" y="60" width="320" height="508"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1Pz-28-Atm" userLabel="TeamMemberTableView">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="503"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="563"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <prototypes>
@@ -1183,13 +1165,9 @@
                                 <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="ScG-vy-27M" firstAttribute="width" secondItem="MOb-8c-lLl" secondAttribute="width" id="4tJ-Or-NP1"/>
-                                    <constraint firstAttribute="trailing" secondItem="JZD-fD-HLR" secondAttribute="trailing" id="Hxe-j2-sZG"/>
-                                    <constraint firstItem="JZD-fD-HLR" firstAttribute="leading" secondItem="MOb-8c-lLl" secondAttribute="leading" id="ICa-s1-3cy"/>
-                                    <constraint firstItem="JZD-fD-HLR" firstAttribute="top" secondItem="MOb-8c-lLl" secondAttribute="top" id="Thv-Fx-xCQ"/>
+                                    <constraint firstItem="ScG-vy-27M" firstAttribute="top" secondItem="MOb-8c-lLl" secondAttribute="top" id="BHb-Dp-jTp"/>
                                     <constraint firstItem="ScG-vy-27M" firstAttribute="leading" secondItem="MOb-8c-lLl" secondAttribute="leading" id="Ucj-vU-24R"/>
                                     <constraint firstAttribute="bottom" secondItem="ScG-vy-27M" secondAttribute="bottom" id="Wia-oN-Oyi"/>
-                                    <constraint firstItem="ScG-vy-27M" firstAttribute="top" secondItem="JZD-fD-HLR" secondAttribute="bottom" id="e9Z-Xx-UTz"/>
-                                    <constraint firstItem="JZD-fD-HLR" firstAttribute="width" secondItem="MOb-8c-lLl" secondAttribute="width" id="pR2-yO-HKv"/>
                                     <constraint firstAttribute="trailing" secondItem="ScG-vy-27M" secondAttribute="trailing" id="qEZ-HQ-2iL"/>
                                 </constraints>
                             </view>
@@ -1204,7 +1182,6 @@
                     </view>
                     <connections>
                         <outlet property="teamMemberTableView" destination="1Pz-28-Atm" id="cUe-dx-dAB"/>
-                        <outlet property="welcomeLabel" destination="5Kt-Hh-y4U" id="a6O-S6-z1P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ggp-Rk-0Jc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1223,7 +1200,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRZ-xy-h8R">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRZ-xy-h8R">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                             </scrollView>
                         </subviews>
@@ -1257,6 +1234,7 @@
                     <connections>
                         <outlet property="containerView" destination="DRZ-xy-h8R" id="8oZ-9s-zgz"/>
                         <outlet property="menuItem" destination="cLn-gR-ov7" id="brL-Z2-kxq"/>
+                        <outlet property="scrollView" destination="DRZ-xy-h8R" id="uhz-Wa-PNn"/>
                         <outlet property="segmentedControl" destination="qZ5-mw-GTl" id="Do7-Ng-2Y7"/>
                     </connections>
                 </viewController>

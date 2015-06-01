@@ -15,7 +15,8 @@ target 'Collara' do
   pod 'CRToast', '~> 0.0.7'
   pod 'MBProgressHUD', '~> 0.8'
   pod 'Objective-C-Generics'
-  pod 'XLPagerTabStrip', '~> 1.0'
+  pod 'XLPagerTabStrip', :path => '~/Documents/workspace/XLPagerTabStrip/'
+  #pod 'XLPagerTabStrip', '~> 1.0'
 end
 
 target 'CollaraTests' do

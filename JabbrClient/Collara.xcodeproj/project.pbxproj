@@ -46,9 +46,11 @@
 		14B6FB581ACB5AC700E5B5A5 /* DemoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB571ACB5AC700E5B5A5 /* DemoData.m */; };
 		14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990A1AD317BC00776556 /* ProfileViewController.m */; };
 		14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990D1AD33D1000776556 /* CLAMessage.m */; };
-		14BE49C61B039D5C005C04E9 /* CLAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BE49C51B039D5C005C04E9 /* CLAHomeViewController.m */; };
+		14BE49C61B039D5C005C04E9 /* CLAHomeTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BE49C51B039D5C005C04E9 /* CLAHomeTopicViewController.m */; };
 		14BE49C91B04063E005C04E9 /* CLAUser+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BE49C81B04063E005C04E9 /* CLAUser+Category.m */; };
 		14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */; };
+		14D905211B1BB98400B6DF63 /* CLAHomeMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */; };
+		14D905241B1BC36200B6DF63 /* CLAHomeMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905231B1BC36200B6DF63 /* CLAHomeMemberViewController.m */; };
 		14F8677F1B020D2A00CF751F /* CLARoundFrameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F8677E1B020D2A00CF751F /* CLARoundFrameButton.m */; };
 		EE809097EABCDD6117E3CED2 /* libPods-Collara.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE68A76A0440538A1CFB906 /* libPods-Collara.a */; };
 /* End PBXBuildFile section */
@@ -147,12 +149,16 @@
 		14BA990A1AD317BC00776556 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		14BA990C1AD33D1000776556 /* CLAMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMessage.h; path = JabbrClient/DataModel/CLAMessage.h; sourceTree = SOURCE_ROOT; };
 		14BA990D1AD33D1000776556 /* CLAMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMessage.m; path = JabbrClient/DataModel/CLAMessage.m; sourceTree = SOURCE_ROOT; };
-		14BE49C41B039D5C005C04E9 /* CLAHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeViewController.h; sourceTree = "<group>"; };
-		14BE49C51B039D5C005C04E9 /* CLAHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeViewController.m; sourceTree = "<group>"; };
+		14BE49C41B039D5C005C04E9 /* CLAHomeTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeTopicViewController.h; sourceTree = "<group>"; };
+		14BE49C51B039D5C005C04E9 /* CLAHomeTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeTopicViewController.m; sourceTree = "<group>"; };
 		14BE49C71B04063E005C04E9 /* CLAUser+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLAUser+Category.h"; path = "JabbrClient/DataModel/CLAUser+Category.h"; sourceTree = SOURCE_ROOT; };
 		14BE49C81B04063E005C04E9 /* CLAUser+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLAUser+Category.m"; path = "JabbrClient/DataModel/CLAUser+Category.m"; sourceTree = SOURCE_ROOT; };
 		14BEBC3D1AF2E67100F2470C /* CLATeamViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATeamViewModel.h; path = ViewModel/CLATeamViewModel.h; sourceTree = "<group>"; };
 		14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLATeamViewModel.m; path = ViewModel/CLATeamViewModel.m; sourceTree = "<group>"; };
+		14D9051F1B1BB98400B6DF63 /* CLAHomeMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeMasterViewController.h; sourceTree = "<group>"; };
+		14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeMasterViewController.m; sourceTree = "<group>"; };
+		14D905221B1BC36200B6DF63 /* CLAHomeMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeMemberViewController.h; sourceTree = "<group>"; };
+		14D905231B1BC36200B6DF63 /* CLAHomeMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeMemberViewController.m; sourceTree = "<group>"; };
 		14F8677D1B020D2A00CF751F /* CLARoundFrameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoundFrameButton.h; path = CustomControl/CLARoundFrameButton.h; sourceTree = "<group>"; };
 		14F8677E1B020D2A00CF751F /* CLARoundFrameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARoundFrameButton.m; path = CustomControl/CLARoundFrameButton.m; sourceTree = "<group>"; };
 		388092327DB112E57ACB1DF5 /* Pods-Collara.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Collara.release.xcconfig"; path = "Pods/Target Support Files/Pods-Collara/Pods-Collara.release.xcconfig"; sourceTree = "<group>"; };
@@ -351,8 +357,12 @@
 				1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */,
 				1463CB0B1AF9691300BC2513 /* CLACreateRoomViewController.h */,
 				1463CB0C1AF9691300BC2513 /* CLACreateRoomViewController.m */,
-				14BE49C41B039D5C005C04E9 /* CLAHomeViewController.h */,
-				14BE49C51B039D5C005C04E9 /* CLAHomeViewController.m */,
+				14D9051F1B1BB98400B6DF63 /* CLAHomeMasterViewController.h */,
+				14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */,
+				14BE49C41B039D5C005C04E9 /* CLAHomeTopicViewController.h */,
+				14BE49C51B039D5C005C04E9 /* CLAHomeTopicViewController.m */,
+				14D905221B1BC36200B6DF63 /* CLAHomeMemberViewController.h */,
+				14D905231B1BC36200B6DF63 /* CLAHomeMemberViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -582,12 +592,14 @@
 				1479A8101ACC372800A31A7E /* ChatThread+Category.m in Sources */,
 				14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */,
 				14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */,
+				14D905241B1BC36200B6DF63 /* CLAHomeMemberViewController.m in Sources */,
 				149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */,
 				14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */,
-				14BE49C61B039D5C005C04E9 /* CLAHomeViewController.m in Sources */,
+				14BE49C61B039D5C005C04E9 /* CLAHomeTopicViewController.m in Sources */,
 				14B6FB4F1ACB397700E5B5A5 /* ChatThread.m in Sources */,
 				142FFA6B1AFD4B3C0076DB6E /* CLAUtility.m in Sources */,
 				1463CB061AF955AD00BC2513 /* CLACreateTeamViewController.m in Sources */,
+				14D905211B1BB98400B6DF63 /* CLAHomeMasterViewController.m in Sources */,
 				14B515741ABF138A0000CC4F /* main.m in Sources */,
 				14BE49C91B04063E005C04E9 /* CLAUser+Category.m in Sources */,
 				142046491AD203FD006143D5 /* Constants.m in Sources */,

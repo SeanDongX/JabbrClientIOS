@@ -39,6 +39,9 @@ BOOL const kFSDocumentEnabled = NO;
 NSString *const kMainStoryBoard = @"Main";
 
 NSString *const kHomeNavigationController = @"HomeNavigationController";
+NSString *const kHomeTopicViewController = @"HomeTopicViewController";
+NSString *const kHomeMemberViewController = @"HomeMemberViewController";
+
 NSString *const kChatNavigationController = @"ChatNavigationController";
 NSString *const kSignInNavigationController = @"SignInNavigationController";
 NSString *const kSignUpController = @"SignUpController";

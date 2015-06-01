@@ -1,4 +1,7 @@
 
+/* Class = "UILabel"; text = "Welcome to Collara"; ObjectID = "5Kt-Hh-y4U"; */
+"5Kt-Hh-y4U.text" = "Welcome to Collara";
+
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "6vg-UG-eAB"; */
 "6vg-UG-eAB.placeholder" = "Email";
 
@@ -31,9 +34,6 @@
 
 /* Class = "UIButton"; normalTitle = "Create Team"; ObjectID = "LlV-JF-2Lk"; */
 "LlV-JF-2Lk.normalTitle" = "Create Team";
-
-/* Class = "UINavigationItem"; title = "Home"; ObjectID = "MB3-YP-6oU"; */
-"MB3-YP-6oU.title" = "Home";
 
 /* Class = "UITextField"; placeholder = "Invitation Code"; ObjectID = "Moy-Rd-2Cn"; */
 "Moy-Rd-2Cn.placeholder" = "Invitation Code";
@@ -74,6 +74,9 @@
 /* Class = "UIBarButtonItem"; title = "Docs"; ObjectID = "bRO-fd-KOx"; */
 "bRO-fd-KOx.title" = "Docs";
 
+/* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "cLn-gR-ov7"; */
+"cLn-gR-ov7.title" = "Menu";
+
 /* Class = "UITextField"; placeholder = "Team Name"; ObjectID = "dg4-Nx-u52"; */
 "dg4-Nx-u52.placeholder" = "Team Name";
 
@@ -86,14 +89,17 @@
 /* Class = "UILabel"; text = "Welcome to Collara"; ObjectID = "ghY-QB-6Y2"; */
 "ghY-QB-6Y2.text" = "Welcome to Collara";
 
-/* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "hIA-Md-hbm"; */
-"hIA-Md-hbm.title" = "Menu";
-
 /* Class = "UINavigationItem"; title = "Chat"; ObjectID = "iDk-6w-F7j"; */
 "iDk-6w-F7j.title" = "Chat";
 
 /* Class = "UILabel"; text = "Only letters and \"-\" please"; ObjectID = "lRr-MZ-gLy"; */
 "lRr-MZ-gLy.text" = "Only letters and \"-\" please";
+
+/* Class = "UISegmentedControl"; qZ5-mw-GTl.segmentTitles[0] = "Topics"; ObjectID = "qZ5-mw-GTl"; */
+"qZ5-mw-GTl.segmentTitles[0]" = "Topics";
+
+/* Class = "UISegmentedControl"; qZ5-mw-GTl.segmentTitles[1] = "Members"; ObjectID = "qZ5-mw-GTl"; */
+"qZ5-mw-GTl.segmentTitles[1]" = "Members";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "qeo-G0-hFE"; */
 "qeo-G0-hFE.text" = "Name";

@@ -646,12 +646,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)showCreateTeamView {
     SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
-    if (slidingViewController == nil) {
-        [self sendNoTeamEventNotification];
-    }
-    else {
-        [slidingViewController switchToCreateTeamView];
-    }
+    [slidingViewController switchToCreateTeamView];
 }
 
 #pragma mark -

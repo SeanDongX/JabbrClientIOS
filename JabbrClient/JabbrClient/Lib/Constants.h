@@ -21,6 +21,9 @@ FOUNDATION_EXPORT BOOL const kFSDocumentEnabled;
 FOUNDATION_EXPORT NSString *const kMainStoryBoard;
 
 FOUNDATION_EXPORT NSString *const kHomeNavigationController;
+FOUNDATION_EXPORT NSString *const kHomeTopicViewController;
+FOUNDATION_EXPORT NSString *const kHomeMemberViewController;
+
 FOUNDATION_EXPORT NSString *const kChatNavigationController;
 FOUNDATION_EXPORT NSString *const kSignInNavigationController;
 FOUNDATION_EXPORT NSString *const kSignUpController;

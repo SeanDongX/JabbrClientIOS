@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XLPagerTabStripViewController.h"
 
-@interface CLAHomeViewController : UIViewController <UITableViewDataSource>
+@interface CLAHomeTopicViewController : UIViewController <UITableViewDataSource, XLPagerTabStripChildItem>
 
 @end

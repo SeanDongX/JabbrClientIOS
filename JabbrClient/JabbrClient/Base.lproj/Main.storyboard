@@ -706,7 +706,6 @@
                         </subviews>
                         <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="qJH-lA-hCR" secondAttribute="trailing" constant="-16" id="2gK-q0-BIJ"/>
                             <constraint firstItem="XOn-ai-3bw" firstAttribute="top" secondItem="KIr-Lu-VGj" secondAttribute="bottom" constant="30" id="8qE-67-Xkw"/>
                             <constraint firstItem="8xb-02-c7C" firstAttribute="top" secondItem="KIr-Lu-VGj" secondAttribute="bottom" constant="30" id="PzA-jV-dSH"/>
                             <constraint firstItem="LHf-VF-hZj" firstAttribute="top" secondItem="qJH-lA-hCR" secondAttribute="bottom" constant="28" id="T7H-SK-iEw"/>
@@ -716,7 +715,8 @@
                             <constraint firstItem="qJH-lA-hCR" firstAttribute="top" secondItem="8xb-02-c7C" secondAttribute="bottom" constant="40" id="Z5K-JP-wOd"/>
                             <constraint firstAttribute="width" secondItem="qJH-lA-hCR" secondAttribute="width" id="b48-0Y-86g"/>
                             <constraint firstAttribute="width" secondItem="KIr-Lu-VGj" secondAttribute="width" multiplier="1.25" id="biC-oU-r0t"/>
-                            <constraint firstItem="qJH-lA-hCR" firstAttribute="leading" secondItem="7Wo-jG-sRG" secondAttribute="leadingMargin" constant="-16" id="kbD-vQ-m9a"/>
+                            <constraint firstAttribute="centerX" secondItem="qJH-lA-hCR" secondAttribute="centerX" id="fEq-Nz-K6O"/>
+                            <constraint firstAttribute="width" secondItem="qJH-lA-hCR" secondAttribute="width" id="nSy-Jy-bar"/>
                             <constraint firstItem="KIr-Lu-VGj" firstAttribute="top" secondItem="r9w-d8-y9F" secondAttribute="bottom" constant="80" id="peq-I7-CUq"/>
                         </constraints>
                     </view>

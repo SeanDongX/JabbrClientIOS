@@ -26,8 +26,12 @@
 @interface CLAHomeMemberViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *teamMemberTableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
+@property (nonatomic) BOOL isFiltered;
 
 @property (strong, nonatomic) NSArray<CLAUser> *users;
+@property (strong, nonatomic) NSArray<CLAUser> *filteredUsers;
 
 @end
 
@@ -36,6 +40,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self subscribNotifications];
+}
+
+- (void)viewDidLoad {
+    self.searchBar.delegate = self;
 }
 
 - (void)dealloc {
@@ -94,7 +102,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TeamMemberCell"];
-    CLAUser *user = [self.users objectAtIndex:indexPath.row];
+    CLAUser *user = [self getUserAtRow:indexPath.row];
     cell.textLabel.text = [user getDisplayName];
     
     cell.textLabel.textColor = [Constants mainThemeContrastColor];
@@ -131,7 +139,7 @@
     
     [headerView addSubview:title];
     
-    title.text = [NSString stringWithFormat: NSLocalizedString(@"Team members (%lu)", nil), [self getTeamMemberCount]];
+    title.text = [NSString stringWithFormat: NSLocalizedString(@"Team members (%@)", nil), [self getTeamMemberCountString]];
 
     return headerView;
 }
@@ -143,7 +151,40 @@
 }
 
 #pragma mark -
+#pragma Search Bar Delegate Methods
+
+-(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
+{
+    if(text.length == 0)
+    {
+        self.isFiltered = FALSE;
+    }
+    else
+    {
+        self.isFiltered = TRUE;
+        [self filterContentForSearchText:text];
+    }
+    
+    [self.teamMemberTableView reloadData];
+}
+
+
+#pragma mark -
 #pragma mark Private Methods
+
+- (void)filterContentForSearchText:(NSString*)searchText
+{
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
+    self.filteredUsers = [self.users filteredArrayUsingPredicate:resultPredicate];
+}
+
+- (CLAUser *)getUserAtRow:(NSInteger)row {
+    if (self.isFiltered) {
+        return [self.filteredUsers objectAtIndex:row];
+    } else {
+        return [self.users objectAtIndex:row];
+    }
+}
 
 - (void)showCreateTopicView {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
@@ -153,8 +194,25 @@
     [self presentViewController:createRoomViewController animated:YES completion:nil];
 }
 
-- (NSInteger)getTeamMemberCount {
-    return self.users == nil ? 0 : self.users.count;
+- (NSUInteger)getTeamMemberCount {
+    if (self.isFiltered) {
+        return self.filteredUsers == nil ? 0 : self.filteredUsers.count;
+    }
+    else {
+        return self.users == nil ? 0 : self.users.count;
+    }
+}
+
+- (NSString *)getTeamMemberCountString {
+    NSUInteger filterCount = self.filteredUsers == nil ? 0 : self.filteredUsers.count;
+    NSUInteger totalCount = self.users == nil ? 0 : self.users.count;
+    
+    if (self.isFiltered) {
+        return [NSString stringWithFormat:@"%lu/%lu", (unsigned long)filterCount, (unsigned long)totalCount];
+    }
+    else {
+        return [NSString stringWithFormat:@"%lu", (unsigned long)totalCount];
+    }
 }
 
 @end

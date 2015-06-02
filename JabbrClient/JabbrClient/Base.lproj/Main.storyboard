@@ -1053,7 +1053,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oGo-Ro-YgI" userLabel="TopView">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Collara" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghY-QB-6Y2">
                                                 <rect key="frame" x="30" y="20" width="260" height="21"/>
@@ -1061,20 +1061,30 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="d9M-DL-1ye">
+                                                <rect key="frame" x="0.0" y="60" width="320" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="XES-dL-SdK"/>
+                                                </constraints>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </searchBar>
                                         </subviews>
                                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
+                                            <constraint firstItem="d9M-DL-1ye" firstAttribute="leading" secondItem="oGo-Ro-YgI" secondAttribute="leading" id="7Cx-hi-l8J"/>
                                             <constraint firstAttribute="trailing" secondItem="ghY-QB-6Y2" secondAttribute="trailing" constant="30" id="PSI-C9-cBd"/>
                                             <constraint firstItem="ghY-QB-6Y2" firstAttribute="leading" secondItem="oGo-Ro-YgI" secondAttribute="leading" constant="30" id="VKx-sU-SrZ"/>
                                             <constraint firstItem="ghY-QB-6Y2" firstAttribute="top" secondItem="oGo-Ro-YgI" secondAttribute="top" constant="20" id="XiR-SD-jJQ"/>
-                                            <constraint firstAttribute="height" constant="60" id="eMs-t5-79J"/>
+                                            <constraint firstAttribute="bottom" secondItem="d9M-DL-1ye" secondAttribute="bottom" id="ddB-jI-epJ"/>
+                                            <constraint firstAttribute="height" constant="100" id="eMs-t5-79J"/>
+                                            <constraint firstAttribute="trailing" secondItem="d9M-DL-1ye" secondAttribute="trailing" id="qHZ-BS-2FW"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3E-IK-CLG" userLabel="TopicView">
-                                        <rect key="frame" x="0.0" y="60" width="320" height="508"/>
+                                        <rect key="frame" x="0.0" y="100" width="320" height="468"/>
                                         <subviews>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mYy-7X-91E" userLabel="TopicTableView">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="503"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="463"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <prototypes>
@@ -1124,6 +1134,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="d9M-DL-1ye" id="Q50-Cx-px3"/>
                         <outlet property="topicTableView" destination="mYy-7X-91E" id="quG-B7-skP"/>
                         <outlet property="welcomeLabel" destination="ghY-QB-6Y2" id="y4D-uE-cUH"/>
                     </connections>
@@ -1150,8 +1161,15 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ScG-vy-27M" userLabel="TeamMemberView">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
+                                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="zt3-fM-W2j">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="wIn-VN-DTu"/>
+                                                </constraints>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </searchBar>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1Pz-28-Atm" userLabel="TeamMemberTableView">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="563"/>
+                                                <rect key="frame" x="0.0" y="40" width="320" height="523"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <prototypes>
@@ -1170,11 +1188,14 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="1Pz-28-Atm" firstAttribute="top" secondItem="ScG-vy-27M" secondAttribute="top" id="A1M-Iy-Stp"/>
+                                            <constraint firstItem="1Pz-28-Atm" firstAttribute="top" secondItem="ScG-vy-27M" secondAttribute="top" constant="40" id="A1M-Iy-Stp"/>
                                             <constraint firstAttribute="trailing" secondItem="1Pz-28-Atm" secondAttribute="trailing" id="ABG-Bt-bEe"/>
                                             <constraint firstAttribute="width" secondItem="1Pz-28-Atm" secondAttribute="width" id="BoB-VQ-HNZ"/>
+                                            <constraint firstItem="zt3-fM-W2j" firstAttribute="leading" secondItem="ScG-vy-27M" secondAttribute="leading" id="GqP-bU-Pvq"/>
                                             <constraint firstItem="1Pz-28-Atm" firstAttribute="leading" secondItem="ScG-vy-27M" secondAttribute="leading" id="Hip-N7-rKy"/>
                                             <constraint firstAttribute="bottom" secondItem="1Pz-28-Atm" secondAttribute="bottom" constant="5" id="lqV-Dc-G4c"/>
+                                            <constraint firstAttribute="trailing" secondItem="zt3-fM-W2j" secondAttribute="trailing" id="nqz-fp-qau"/>
+                                            <constraint firstItem="zt3-fM-W2j" firstAttribute="top" secondItem="ScG-vy-27M" secondAttribute="top" id="ztN-K1-9yx"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1197,6 +1218,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="zt3-fM-W2j" id="2ZZ-t1-JI5"/>
                         <outlet property="teamMemberTableView" destination="1Pz-28-Atm" id="cUe-dx-dAB"/>
                     </connections>
                 </viewController>

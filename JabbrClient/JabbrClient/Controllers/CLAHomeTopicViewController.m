@@ -31,10 +31,12 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *topicTableView;
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
+@property (nonatomic) BOOL isFiltered;
 
 @property (strong, nonatomic) NSArray<ChatThread> *rooms;
-@property (strong, nonatomic) NSArray<CLAUser> *users;
-
+@property (strong, nonatomic) NSArray<ChatThread> *filteredRooms;
 @end
 
 @implementation CLAHomeTopicViewController
@@ -42,6 +44,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self subscribNotifications];
+}
+
+- (void)viewDidLoad {
+    self.searchBar.delegate = self;
 }
 
 - (void)dealloc {
@@ -112,7 +118,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TopicCell"];
 
-    ChatThread *room = [self.rooms objectAtIndex:indexPath.row];
+    ChatThread *room = [self getRoomAtRow:indexPath.row];
     cell.textLabel.text = [room getDisplayTitle];
     
     cell.textLabel.textColor = [Constants mainThemeContrastColor];
@@ -149,7 +155,7 @@
     
     [headerView addSubview:title];
     
-    title.text = [NSString stringWithFormat: NSLocalizedString(@"Topics (%lu)", nil), [self getRoomCount]];
+    title.text = [NSString stringWithFormat: NSLocalizedString(@"Topics (%@)", nil), [self getRoomCountString]];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];
     [addButton addTarget:self action:@selector(showCreateTopicView) forControlEvents:UIControlEventTouchUpInside];
@@ -169,7 +175,7 @@
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
-        [chatViewController switchToChatThread:[self.rooms objectAtIndex:indexPath.row]];
+        [chatViewController switchToChatThread:[self getRoomAtRow:indexPath.row]];
     }
     
     [self.slidingViewController resetTopViewAnimated:YES];
@@ -187,9 +193,59 @@
 }
 
 #pragma mark -
+#pragma Search Bar Delegate Methods
+
+-(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
+{
+    if(text.length == 0)
+    {
+        self.isFiltered = FALSE;
+    }
+    else
+    {
+        self.isFiltered = TRUE;
+        [self filterContentForSearchText:text];
+    }
+    
+    [self.topicTableView reloadData];
+}
+
+
+#pragma mark -
 #pragma mark Private Methods
 
-- (NSInteger)getRoomCount {
-    return self.rooms == nil ? 0 : self.rooms.count;
+- (void)filterContentForSearchText:(NSString*)searchText
+{
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
+    self.filteredRooms = [self.rooms filteredArrayUsingPredicate:resultPredicate];
+}
+
+- (ChatThread *)getRoomAtRow:(NSInteger)row {
+    if (self.isFiltered) {
+        return [self.filteredRooms objectAtIndex:row];
+    } else {
+        return [self.rooms objectAtIndex:row];
+    }
+}
+
+- (NSUInteger)getRoomCount {
+    if (self.isFiltered) {
+        return self.filteredRooms == nil ? 0 : self.filteredRooms.count;
+    }
+    else {
+        return self.rooms == nil ? 0 : self.rooms.count;
+    }
+}
+
+- (NSString *)getRoomCountString {
+    NSUInteger filterCount = self.filteredRooms == nil ? 0 : self.filteredRooms.count;
+    NSUInteger totalCount = self.rooms == nil ? 0 : self.rooms.count;
+    
+    if (self.isFiltered) {
+        return [NSString stringWithFormat:@"%lu/%lu", (unsigned long)filterCount, (unsigned long)totalCount];
+    }
+    else {
+        return [NSString stringWithFormat:@"%lu", (unsigned long)totalCount];
+    }
 }
 @end

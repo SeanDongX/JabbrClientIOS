@@ -52,6 +52,7 @@
     [self setupBottomMenus];
     [self subscribNotifications];
     self.searchBar.delegate = self;
+    [[UITextField appearanceWhenContainedIn:[LeftMenuViewController class], nil] setDefaultTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
 - (void)dealloc {
@@ -61,7 +62,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self updateChatThreads:self.chatThreads];
-    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -239,7 +239,7 @@
     [hightlightView setBackgroundColor:[Constants mainThemeColor]];
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 30)];
-    title.text = [NSString stringWithFormat:NSLocalizedString(@"Topics (%lu)", nil), [self getRoomCount]];
+    title.text = [NSString stringWithFormat:NSLocalizedString(@"Topics (%@)", nil), [self getRoomCountString]];
     title.textColor = [UIColor whiteColor];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];
@@ -311,22 +311,6 @@
 
 #pragma mark -
 #pragma Search Bar Delegate Methods
-//#pragma mark - UISearchDisplayController Delegate Methods
-//-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
-//    // Tells the table data source to reload when text changes
-//    [self filterContentForSearchText:searchString scope:
-//     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
-//    // Return YES to cause the search result table view to be reloaded.
-//    return YES;
-//}
-//
-//-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption {
-//    // Tells the table data source to reload when scope bar selection changes
-//    [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
-//     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
-//    // Return YES to cause the search result table view to be reloaded.
-//    return YES;
-//}
 
 -(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
 {
@@ -353,8 +337,6 @@
 }
 
 - (ChatThread *)getChatThreadAtRow:(NSInteger)row {
-    
-    // Check to see whether the normal table or search results table is being displayed and set the Candy object from the appropriate array
     if (self.isFiltered) {
         return [self.filteredChatThreads objectAtIndex:row];
     } else {
@@ -362,11 +344,24 @@
     }
 }
 
-- (NSInteger)getRoomCount {
+- (NSUInteger)getRoomCount {
     if (self.isFiltered) {
         return self.filteredChatThreads == nil ? 0 : self.filteredChatThreads.count;
-    } else {
+    }
+    else {
         return self.chatThreads == nil ? 0 : self.chatThreads.count;
+    }
+}
+
+- (NSString *)getRoomCountString {
+    NSUInteger filterCount = self.filteredChatThreads == nil ? 0 : self.filteredChatThreads.count;
+    NSUInteger totalCount = self.chatThreads == nil ? 0 : self.chatThreads.count;
+    
+    if (self.isFiltered) {
+        return [NSString stringWithFormat:@"%lu/%lu", (unsigned long)filterCount, (unsigned long)totalCount];
+    }
+    else {
+        return [NSString stringWithFormat:@"%lu", (unsigned long)totalCount];
     }
 }
 

@@ -7,8 +7,8 @@
 */
 
 "Welcome to join team %@" = "Welcome to join team %@";
-"Topics (%lu)" = "Topics (%lu)";
-"Team members (%lu)" = "Team members (%lu)";
+"Topics (%@)" = "Topics (%@)";
+"Team members (%@)" = "Team members (%@)";
 "Topic participants (%lu)" = "Topic participants (%lu)";
 "Topic Settings" = "Topic Settings";
 "Create Topic" = "Create Topic";

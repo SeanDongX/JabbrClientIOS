@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1404B5361AF118BB00363178 /* CLASignalRMessageClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */; };
 		1407AA021AF50E4D00E42F2C /* CLAChatInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1407AA011AF50E4D00E42F2C /* CLAChatInfoViewController.m */; };
+		1419E8E91B1E271C0057CAC5 /* CLAInMemoryDataRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */; };
 		142046431AD1EC91006143D5 /* AuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* AuthManager.m */; };
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
@@ -72,6 +73,9 @@
 		1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLASignalRMessageClient.m; path = Lib/CLASignalRMessageClient.m; sourceTree = "<group>"; };
 		1407AA001AF50E4D00E42F2C /* CLAChatInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAChatInfoViewController.h; sourceTree = "<group>"; };
 		1407AA011AF50E4D00E42F2C /* CLAChatInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAChatInfoViewController.m; sourceTree = "<group>"; };
+		1419E8E41B1E26ED0057CAC5 /* CLADataRepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLADataRepositoryProtocol.h; path = Repository/CLADataRepositoryProtocol.h; sourceTree = "<group>"; };
+		1419E8E71B1E271C0057CAC5 /* CLAInMemoryDataRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAInMemoryDataRepository.h; path = Repository/CLAInMemoryDataRepository.h; sourceTree = "<group>"; };
+		1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAInMemoryDataRepository.m; path = Repository/CLAInMemoryDataRepository.m; sourceTree = "<group>"; };
 		142046411AD1EC91006143D5 /* AuthManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthManager.h; path = Lib/AuthManager.h; sourceTree = "<group>"; };
 		142046421AD1EC91006143D5 /* AuthManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthManager.m; path = Lib/AuthManager.m; sourceTree = "<group>"; };
 		142046441AD1F866006143D5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
@@ -190,6 +194,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1419E8E31B1E26CB0057CAC5 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				1419E8E41B1E26ED0057CAC5 /* CLADataRepositoryProtocol.h */,
+				1419E8E71B1E271C0057CAC5 /* CLAInMemoryDataRepository.h */,
+				1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */,
+			);
+			name = Repository;
+			sourceTree = "<group>";
+		};
 		142046401AD1EC58006143D5 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +309,7 @@
 				142046401AD1EC58006143D5 /* Lib */,
 				14679E931AC8832900316C9C /* DataModel */,
 				14BEBC3C1AF2E63600F2470C /* ViewModel */,
+				1419E8E31B1E26CB0057CAC5 /* Repository */,
 				14F8677C1B020C5D00CF751F /* CustomControl */,
 				149F994A1AC4D0FD00525EA7 /* StoryBoards */,
 				149F99311AC4D07000525EA7 /* Menus */,
@@ -582,6 +597,7 @@
 				144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
 				14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */,
+				1419E8E91B1E271C0057CAC5 /* CLAInMemoryDataRepository.m in Sources */,
 				14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */,
 				1407AA021AF50E4D00E42F2C /* CLAChatInfoViewController.m in Sources */,
 				14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */,

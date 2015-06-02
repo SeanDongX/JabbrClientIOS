@@ -78,7 +78,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (self.messageClient == nil || self.messageClient.roomsLoaded == FALSE) {
+    if (self.messageClient == nil || self.messageClient.teamLoaded == FALSE) {
         [self showHud];
     }
 }
@@ -185,7 +185,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
         [[self getCurrentMessageThread] addObject:message];
     }
     else {
-        //TODO:user dictionary to store message
         NSMutableArray* messages = [[self getChatThreadRepository] objectForKey:threadTitle];
         if (!message) {
             messages = [NSMutableArray array];
@@ -659,8 +658,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)sendTeamUpdatedEventNotification:(CLATeamViewModel *)teamViewModel {
-    NSDictionary *userInfo = @{ kTeamKey : teamViewModel};
-    [[NSNotificationCenter defaultCenter] postNotificationName:kEventTeamUpdated object:nil userInfo:userInfo];
+    //NSDictionary *userInfo = @{ kTeamKey : teamViewModel};
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEventTeamUpdated object:nil userInfo:nil];
     
 }
 

@@ -61,7 +61,7 @@
 }
 
 - (void)updateTeam:(NSNotification *)notification {
-    CLATeamViewModel *teamViewModel = [notification.userInfo objectForKey:kTeamKey];
+    CLATeamViewModel *teamViewModel = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
     
     if (teamViewModel != nil) {
         [self updateTeamMembers:teamViewModel.users];

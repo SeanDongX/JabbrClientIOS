@@ -27,6 +27,9 @@
 #import "ChatViewController.h"
 #import "CLACreateTeamViewController.h"
 
+//Message Client
+#import "CLASignalRMessageClient.h"
+
 @interface CLAHomeTopicViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *topicTableView;
@@ -65,7 +68,7 @@
 }
 
 - (void)updateTeam:(NSNotification *)notification {
-    CLATeamViewModel *teamViewModel = [notification.userInfo objectForKey:kTeamKey];
+    CLATeamViewModel *teamViewModel = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
     
     if (teamViewModel != nil) {
         [self updateRooms:teamViewModel.rooms];

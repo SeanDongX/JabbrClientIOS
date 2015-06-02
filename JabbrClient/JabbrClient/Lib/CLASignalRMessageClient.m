@@ -8,12 +8,18 @@
 
 #import "CLASignalRMessageClient.h"
 
+//Util
 #import "Constants.h"
 #import "AuthManager.h"
+
+//Data Model
 #import "CLATeam.h"
 #import "CLARoom.h"
 #import "CLAUser.h"
 #import "CLATeamViewModel.h"
+
+//Repository
+#import "CLAInMemoryDataRepository.h"
 
 @interface CLASignalRMessageClient()
 
@@ -23,6 +29,7 @@
 @end
 
 @implementation CLASignalRMessageClient
+@synthesize dataRepository;
 
 #pragma mark -
 #pragma mark Singleton 
@@ -71,6 +78,7 @@ static bool isFirstAccess = YES;
     }
     self = [super init];
     self.roomRepository = [NSMutableDictionary dictionary];
+    self.dataRepository = [[CLAInMemoryDataRepository alloc] init];
     return self;
 }
 
@@ -243,24 +251,22 @@ static bool isFirstAccess = YES;
 }
 
 - (void)loadTeamData:(NSArray *)data {
-    self.roomsLoaded = TRUE;
+    self.teamLoaded = TRUE;
     
     if (data == nil || data.count == 0) {
         [self.delegate didReceiveTeams:nil];
         return;
     }
     
-    NSMutableArray<CLATeamViewModel> *teamViewModelArray = [NSMutableArray arrayWithCapacity:data.count];
-    
     for (NSDictionary *teamDictionary in data) {
         CLATeamViewModel *teamViewModel = [CLATeamViewModel getFromData:teamDictionary];
-        [teamViewModelArray addObject:teamViewModel];
+        [self.dataRepository addTeam:teamViewModel];
     }
     
-    if (teamViewModelArray.count > 0) {
+    CLATeamViewModel *myTeam = [self.dataRepository getDefaultTeam];
+    if (myTeam != nil) {
         
-        CLATeamViewModel *teamViewModel = teamViewModelArray[0];
-        CLATeam *team = teamViewModel.team;
+        CLATeam *team = myTeam.team;
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSNumber *teamKey = [defaults objectForKey:kTeamKey];
@@ -274,7 +280,7 @@ static bool isFirstAccess = YES;
         }
     }
     
-    [self.delegate didReceiveTeams:teamViewModelArray];
+    [self.delegate didReceiveTeams:[self.dataRepository getTeams]];
 }
 
 - (void)incomingMessage:(NSArray *)data {

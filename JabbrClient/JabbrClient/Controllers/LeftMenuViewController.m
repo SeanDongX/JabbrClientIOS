@@ -24,6 +24,9 @@
 //Control
 #import "CLARoundFrameButton.h"
 
+//Message Client
+#import "CLASignalRMessageClient.h"
+
 //View Controller
 #import "ChatViewController.h"
 #import "CLACreateRoomViewController.h"
@@ -108,7 +111,7 @@
 }
 
 - (void)updateTeam: (NSNotification *)notification {
-    CLATeamViewModel *teamViewModel = [notification.userInfo objectForKey:kTeamKey];
+    CLATeamViewModel *teamViewModel = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
     if (teamViewModel != nil) {
         
         NSMutableArray *chatThreadArray = [NSMutableArray array];

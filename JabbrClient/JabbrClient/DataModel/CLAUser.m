@@ -8,6 +8,7 @@
 
 #import "CLAUser.h"
 #import "AuthManager.h"
+#import "CLAUtility.h"
 
 @implementation CLAUser
 
@@ -16,9 +17,22 @@
     return [self.name caseInsensitiveCompare:[[AuthManager sharedInstance] getUsername]] == NSOrderedSame;
 }
 
++ (CLAUserStatus)getStatus:(NSString *)status {
+    if ([CLAUtility isString:status caseInsensitiveEqualTo:@"active"]) {
+        return CLAUserStatusActive;
+    }
+    else if ([CLAUtility isString:status caseInsensitiveEqualTo:@"inactive"]) {
+        return CLAUserStatusInactive;
+    }
+    else {
+        return CLAUserStatusOffline;
+    }
+}
+
 + (CLAUser *)getFromData:(NSDictionary *)userDictionary {
     CLAUser *user = [[CLAUser alloc] init];
     user.name = [userDictionary objectForKey:@"Name"];
+    user.status = [self getStatus:[userDictionary objectForKey:@"Status"]];
     return  user;
 }
 

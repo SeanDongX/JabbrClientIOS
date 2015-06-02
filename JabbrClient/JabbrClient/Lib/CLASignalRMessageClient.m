@@ -263,10 +263,10 @@ static bool isFirstAccess = YES;
         [self.dataRepository addTeam:teamViewModel];
     }
     
-    CLATeamViewModel *myTeam = [self.dataRepository getDefaultTeam];
-    if (myTeam != nil) {
+    CLATeamViewModel *myTeamViewModel = [self.dataRepository getDefaultTeam];
+    if (myTeamViewModel != nil) {
         
-        CLATeam *team = myTeam.team;
+        CLATeam *team = myTeamViewModel.team;
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSNumber *teamKey = [defaults objectForKey:kTeamKey];

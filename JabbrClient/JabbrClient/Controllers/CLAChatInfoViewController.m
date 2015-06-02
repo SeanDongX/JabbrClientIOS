@@ -103,8 +103,7 @@
     static NSString *CellIdentifier = @"ParticipantCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    CLAUser *user = self.roomViewModel.users[indexPath.row];
+    CLAUser *user = (CLAUser *)self.roomViewModel.users[indexPath.row];
     
     if (user != nil) {
         cell.textLabel.text = [user getDisplayName];

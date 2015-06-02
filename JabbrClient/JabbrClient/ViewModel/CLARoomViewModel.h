@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "CLARoom.h"
+#import "CLAUser.h"
 
 @interface CLARoomViewModel : NSObject
 
 @property (nonatomic, strong) CLARoom *room;
-@property (nonatomic, strong) NSArray *users;
+@property (nonatomic, strong) NSArray<CLAUser> *users;
 
 @end

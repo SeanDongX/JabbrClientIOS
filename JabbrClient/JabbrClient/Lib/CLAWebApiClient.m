@@ -91,6 +91,7 @@ static bool isFirstAccess = YES;
     
     NSDictionary *params = @ {
         @"Username" : userRegistrationModel.username,
+        //@"Name" : userRegistrationModel.name,
         @"Email" : userRegistrationModel.email,
         @"Password" : userRegistrationModel.password,
         @"ConfirmPassword" : userRegistrationModel.confirmPassword,
@@ -177,8 +178,23 @@ static bool isFirstAccess = YES;
          completion([self getResponseErrorMessage:error]);
      }];
 }
-                                                                                                       
-- (void)sendInviteFor:(NSString*)team to:(NSString *)email completion: (void(^)(NSString *token, NSString *errorMessage))completion {
+
+- (void)getInviteCodeForTeam:(NSNumber *)teamKey completion:(void(^)(NSString *invitationCode, NSString *errorMessage))completion {
+    NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/team/", teamKey, @"/invite/?token=", [self getToken]];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager GET:requestUrl parameters:nil
+                         success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         completion([responseObject objectForKey:@"id"], nil);
+     }
+                         failure:
+     ^(AFHTTPRequestOperation *operation, NSError *error) {
+         completion(nil, [self getResponseErrorMessage:error]);
+     }];
+}
+
+- (void)sendInviteFor:(NSNumber *)team to:(NSString *)email completion:(void(^)(NSString *token, NSString *errorMessage))completion {
     NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/team/", team, @"/sendinvite/", email, @"/?token=", [self getToken]];
     NSString *requestUrl = [array componentsJoinedByString:@""];
     
@@ -186,7 +202,6 @@ static bool isFirstAccess = YES;
      success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          completion(responseObject, nil);
-         NSLog(@"JSON: %@", responseObject);
      }
     failure:
      ^(AFHTTPRequestOperation *operation, NSError *error) {

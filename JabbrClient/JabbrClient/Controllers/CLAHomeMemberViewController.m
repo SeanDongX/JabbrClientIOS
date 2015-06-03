@@ -10,6 +10,11 @@
 
 //Util
 #import "Constants.h"
+#import "CLAWebApiClient.h"
+#import "AuthManager.h"
+#import "MBProgressHUD.h"
+#import "CLAToastManager.h"
+#import "CLASignalRMessageClient.h"
 
 //Data Model
 #import "CLAUser.h"
@@ -141,6 +146,11 @@
     
     title.text = [NSString stringWithFormat: NSLocalizedString(@"Team members (%@)", nil), [self getTeamMemberCountString]];
 
+    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];
+    [addButton addTarget:self action:@selector(shareInvite) forControlEvents:UIControlEventTouchUpInside];
+    [addButton setImage:[Constants addIconImage] forState:UIControlStateNormal];
+    [headerView addSubview:addButton];
+    
     return headerView;
 }
 
@@ -215,4 +225,34 @@
     }
 }
 
+- (void)shareInvite {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
+    
+    [[CLAWebApiClient sharedInstance] getInviteCodeForTeam:teamKey completion:^(NSString *invitationCode, NSString *errorMessage) {
+        if (errorMessage != nil) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"We are terribly sorry, but some error happened.", nil) completionBlock:nil];
+            return;
+        }
+        
+        //TODO: use user full name instead
+        NSString *userFullName = [defaults objectForKey:kUsername];
+        NSString *teamName = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam].team.name;
+        NSURL *inviteUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.collara.co/team/join/%@", invitationCode]];
+        
+        //TODO: locale based app download url
+        NSURL *appDownloadUrl = [NSURL URLWithString:@"https://itunes.apple.com/app/id983440285"];
+        
+        NSString *invitationMessage = [NSString stringWithFormat:NSLocalizedString(@"Team invitation message", nil), userFullName, teamName, inviteUrl, invitationCode, appDownloadUrl];
+        
+        UIActivityViewController *activityViewController =
+        [[UIActivityViewController alloc] initWithActivityItems:@[invitationMessage]
+                                          applicationActivities:nil];
+        [self presentViewController:activityViewController animated:YES completion:nil];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
+}
 @end

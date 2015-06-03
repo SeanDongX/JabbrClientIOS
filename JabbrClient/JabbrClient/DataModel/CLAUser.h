@@ -21,6 +21,7 @@ GENERICSABLE(CLAUser)
 @interface CLAUser : NSObject<CLAUser>
 
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *realName;
 @property (nonatomic) CLAUserStatus status;
 
 - (BOOL)isCurrentUser;

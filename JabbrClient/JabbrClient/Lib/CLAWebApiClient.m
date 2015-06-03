@@ -91,7 +91,7 @@ static bool isFirstAccess = YES;
     
     NSDictionary *params = @ {
         @"Username" : userRegistrationModel.username,
-        //@"Name" : userRegistrationModel.name,
+        @"Name" : userRegistrationModel.name,
         @"Email" : userRegistrationModel.email,
         @"Password" : userRegistrationModel.password,
         @"ConfirmPassword" : userRegistrationModel.confirmPassword,

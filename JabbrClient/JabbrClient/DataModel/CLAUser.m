@@ -32,6 +32,7 @@
 + (CLAUser *)getFromData:(NSDictionary *)userDictionary {
     CLAUser *user = [[CLAUser alloc] init];
     user.name = [userDictionary objectForKey:@"Name"];
+    user.realName = [userDictionary objectForKey:@"RealName"];
     user.status = [self getStatus:[userDictionary objectForKey:@"Status"]];
     return  user;
 }

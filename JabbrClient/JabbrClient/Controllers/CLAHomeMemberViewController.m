@@ -15,7 +15,7 @@
 #import "MBProgressHUD.h"
 #import "CLAToastManager.h"
 #import "CLASignalRMessageClient.h"
-
+#import "CLAUtility.h"
 //Data Model
 #import "CLAUser.h"
 #import "CLAUser+Category.h"
@@ -239,9 +239,24 @@
         }
         
         //TODO: use user full name instead
-        NSString *userFullName = [defaults objectForKey:kUsername];
-        NSString *teamName = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam].team.name;
-        NSURL *inviteUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.collara.co/team/join/%@", invitationCode]];
+        CLATeamViewModel *teamViewModel = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
+        
+        NSString *teamName = teamViewModel.team.name;
+        
+        NSString *username = [defaults objectForKey:kUsername];
+        NSString *userFullName = username;
+        for (CLAUser *user in teamViewModel.users) {
+            if ([CLAUtility isString:username caseInsensitiveEqualTo:user.name]) {
+                if (user.realName != nil)
+                {
+                    userFullName = user.realName;
+                }
+                
+                break;
+            }
+        }
+        
+        NSURL *inviteUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.collara.co/teams/join/?invitationId=%@", invitationCode]];
         
         //TODO: locale based app download url
         NSURL *appDownloadUrl = [NSURL URLWithString:@"https://itunes.apple.com/app/id983440285"];

@@ -658,7 +658,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)sendTeamUpdatedEventNotification:(CLATeamViewModel *)teamViewModel {
-    //NSDictionary *userInfo = @{ kTeamKey : teamViewModel};
     [[NSNotificationCenter defaultCenter] postNotificationName:kEventTeamUpdated object:nil userInfo:nil];
     
 }

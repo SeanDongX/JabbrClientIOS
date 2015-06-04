@@ -171,9 +171,6 @@
         return;
     }
     
-    //Clear search and reload table before select
-    self.searchBar.text = @"";
-    [self.searchBar resignFirstResponder];
     [self.tableView reloadData];
     
     for (int key=0 ; key< self.chatThreads.count; key++) {

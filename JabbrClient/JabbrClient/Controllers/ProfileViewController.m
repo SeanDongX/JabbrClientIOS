@@ -77,7 +77,11 @@
 }
 
 - (void)switchToSignInView {
-    [((SlidingViewController *)self.navigationController.slidingViewController) switchToSignInView];
+    
+    SlidingViewController *slidingViewController = (SlidingViewController *)self.navigationController.slidingViewController;
+
+    [slidingViewController clearControllerCache];
+    [slidingViewController switchToSignInView];
 }
 
 @end

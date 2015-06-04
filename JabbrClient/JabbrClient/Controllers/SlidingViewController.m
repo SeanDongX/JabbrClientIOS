@@ -17,6 +17,7 @@
 
 //View Controller
 #import "LeftMenuViewController.h"
+#import "RightMenuViewController.h"
 #import "ChatViewController.h"
 
 #import "CLASignalRMessageClient.h"
@@ -58,15 +59,12 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)initNavControllerCache {
-    
-    self.topViewController.view.layer.shadowOpacity = 0.75f;
-    self.topViewController.view.layer.shadowRadius = 10.0f;
-    self.topViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
-    
-    self.mainViewControllersCache = [NSMutableDictionary dictionary];
-    NSString *key = self.topViewControllerStoryboardId;
-    [self.mainViewControllersCache setObject:self.topViewController forKey:key];
+#pragma mark -
+#pragma mark Public Mehtods
+
+- (void)clearControllerCache {
+    //TODO: find a way to re init left menu, so that the filter goes away
+    [self.mainViewControllersCache removeAllObjects];
 }
 
 - (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier {
@@ -91,16 +89,6 @@
     return (UINavigationController *)[self.mainViewControllersCache objectForKey:keyIdentifier];
 }
 
-- (void)setFirstView {
-    NSString *token = [[AuthManager sharedInstance] getCachedAuthToken];
-    if (token == nil || token.length == 0) {
-        [self switchToSignInView];
-    }
-    else {
-        [self switchToMainView];
-    }
-}
-
 - (void)switchToHomeView {
     [self setTopNavigationControllerWithKeyIdentifier:kHomeNavigationController];
     [self.topViewController.view addGestureRecognizer:self.panGesture];
@@ -109,7 +97,6 @@
 
 - (void)switchToMainView {
     ((AppDelegate *)[[UIApplication sharedApplication] delegate]).slidingViewController = self;
-    //TODO: find how to switch
     [self switchToChatView];
     [self switchToHomeView];
 }
@@ -147,6 +134,30 @@
         if (chatViewController != nil) {
             chatViewController.preselectedTitle = room;
         }
+    }
+}
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (void)initNavControllerCache {
+    
+    self.topViewController.view.layer.shadowOpacity = 0.75f;
+    self.topViewController.view.layer.shadowRadius = 10.0f;
+    self.topViewController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    
+    self.mainViewControllersCache = [NSMutableDictionary dictionary];
+    NSString *key = self.topViewControllerStoryboardId;
+    [self.mainViewControllersCache setObject:self.topViewController forKey:key];
+}
+
+- (void)setFirstView {
+    NSString *token = [[AuthManager sharedInstance] getCachedAuthToken];
+    if (token == nil || token.length == 0) {
+        [self switchToSignInView];
+    }
+    else {
+        [self switchToMainView];
     }
 }
 @end

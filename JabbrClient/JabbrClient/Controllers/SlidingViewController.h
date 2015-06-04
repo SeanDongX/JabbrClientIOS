@@ -13,6 +13,7 @@
 
 - (UINavigationController *)getNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier;
 - (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier;
+- (void)clearControllerCache;
 - (void)switchToMainView;
 - (void)switchToSignInView;
 - (void)switchToCreateTeamView;

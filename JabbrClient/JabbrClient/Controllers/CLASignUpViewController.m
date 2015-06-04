@@ -63,6 +63,7 @@
             
             if (errorMessage == nil) {
                 [strongSelf.slidingViewController switchToMainView];
+                [strongSelf cleanUpForm];
                 [strongSelf dismissViewControllerAnimated:YES completion:nil];
             }
             else {
@@ -115,4 +116,15 @@
     return YES;
 }
 
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (void)cleanUpForm {
+    self.usernameTextField.text = @"";
+    self.nameTextField.text = @"";
+    self.emailTextField.text = @"";
+    self.passwordTextField.text = @"";
+    self.repeatPasswordTextField.text = @"";
+}
 @end

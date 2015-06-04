@@ -104,6 +104,7 @@
 
 - (void)processSignInResult: (NSString *)errorMessage {
     if (errorMessage == nil) {
+        [self cleanUpForm];
         [self switchToMainView];
     }
     else {
@@ -115,4 +116,11 @@
     [((SlidingViewController *)self.navigationController.slidingViewController) switchToMainView];
 }
 
+#pragma mark -
+#pragma mark Private Methods
+
+- (void)cleanUpForm {
+    self.usernameTextField.text = @"";
+    self.passwordTextField.text = @"";
+}
 @end

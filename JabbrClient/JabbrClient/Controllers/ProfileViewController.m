@@ -52,7 +52,8 @@
     [self.menuItem setWidth:30];
     
     [self.menuItem setImage: [Constants menuIconImage]];
-    [self.nameLabel setText:[[AuthManager sharedInstance] getUsername]];
+    CLAUser *user = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] findUser:[[AuthManager sharedInstance] getUsername]];
+    [self.nameLabel setText:user.realName];
     
     FAKIonIcons *userIcon = [FAKIonIcons iosPersonIconWithSize:50];
     [userIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];

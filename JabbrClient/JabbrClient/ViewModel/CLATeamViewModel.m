@@ -7,8 +7,19 @@
 //
 
 #import "CLATeamViewModel.h"
+#import "CLAUtility.h"
 
 @implementation CLATeamViewModel
+
+- (CLAUser *)findUser:(NSString *)username {
+    for (CLAUser *user in self.users) {
+        if([CLAUtility isString:username caseInsensitiveEqualTo:user.name]) {
+            return user;
+        }
+    }
+    
+    return nil;
+}
 
 + (CLATeamViewModel *)getFromData: (NSDictionary *)teamDictionary {
     

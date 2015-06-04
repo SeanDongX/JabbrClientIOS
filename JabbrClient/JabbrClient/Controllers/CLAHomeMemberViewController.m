@@ -245,15 +245,11 @@
         
         NSString *username = [defaults objectForKey:kUsername];
         NSString *userFullName = username;
-        for (CLAUser *user in teamViewModel.users) {
-            if ([CLAUtility isString:username caseInsensitiveEqualTo:user.name]) {
-                if (user.realName != nil)
-                {
-                    userFullName = user.realName;
-                }
-                
-                break;
-            }
+        
+        CLAUser *user = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] findUser:username];
+        
+        if (user != nil && user.realName != nil){
+            userFullName = user.realName;
         }
         
         NSURL *inviteUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.collara.co/teams/join/?invitationId=%@", invitationCode]];

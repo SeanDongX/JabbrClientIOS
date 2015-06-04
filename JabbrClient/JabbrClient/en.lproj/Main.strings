@@ -89,6 +89,9 @@
 /* Class = "UINavigationItem"; title = "Chat"; ObjectID = "iDk-6w-F7j"; */
 "iDk-6w-F7j.title" = "Chat";
 
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "ieG-St-eJJ"; */
+"ieG-St-eJJ.placeholder" = "Name";
+
 /* Class = "UILabel"; text = "Only letters and \"-\" please"; ObjectID = "lRr-MZ-gLy"; */
 "lRr-MZ-gLy.text" = "Only letters and \"-\" please";
 

@@ -447,6 +447,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)didReceiveTeams:(NSArray *)teams {
     if (teams == nil || teams.count == 0 || teams[0] == nil) {
         [self showCreateTeamView];
+        [self sendNoTeamEventNotification];
         return;
     }
     

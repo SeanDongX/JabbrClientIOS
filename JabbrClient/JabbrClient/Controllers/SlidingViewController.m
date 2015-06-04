@@ -130,7 +130,6 @@
 
 - (void)switchToSignInView {
     [self setTopNavigationControllerWithKeyIdentifier:kSignInNavigationController];
-    //[self.topViewController.view addGestureRecognizer:self.panGesture];
     [self resetTopViewAnimated:TRUE];
 }
 

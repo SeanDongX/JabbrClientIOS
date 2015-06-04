@@ -12,9 +12,11 @@
 "Topic participants (%lu)" = "Topic participants (%lu)";
 "Topic Settings" = "Topic Settings";
 "Create Topic" = "Create Topic";
+"Pick Your Team" = "Pick Your Team";
 "We are terribly sorry, but some error happened." = "We are terribly sorry, but some error happened.";
 "We are terribly sorry, but we can not sign you in now." = "We are terribly sorry, but we can not sign you in now.";
 "Oops, an empty username won't get very far." = "Oops, an empty username won't get very far.";
+"Oops, an empty name won't get very far." = "Oops, an empty name won't get very far.";
 "Oops, an empty password won't get very far." = "Oops, an empty password won't get very far.";
 "How about a password with more than 6 characters?" = "How about a password with more than 6 characters?";
 "We will need your email." = "We will need your email.";

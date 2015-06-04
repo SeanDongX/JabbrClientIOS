@@ -22,7 +22,7 @@
 @interface CLASignUpViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
-
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *repeatPasswordTextField;
@@ -50,6 +50,7 @@
     
     CLAUserRegistrationViewModel *accountModel = [[CLAUserRegistrationViewModel alloc] init];
     accountModel.username = [self usernameTextField].text;
+    accountModel.name = [self nameTextField].text;
     accountModel.email = [self emailTextField].text;
     accountModel.password = [self passwordTextField].text;
     accountModel.confirmPassword = [self repeatPasswordTextField].text;
@@ -82,6 +83,16 @@
         return NO;
     }
 
+    if (accountModel.name.length == 0) {
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty name won't get very far.", nil) completionBlock:nil];
+        return NO;
+    }
+    
+    if (accountModel.username.length == 0) {
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty username won't get very far.", nil) completionBlock:nil];
+        return NO;
+    }
+    
     if (accountModel.email.length == 0) {
         [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"We will need your email.", nil) completionBlock:nil];
         return NO;

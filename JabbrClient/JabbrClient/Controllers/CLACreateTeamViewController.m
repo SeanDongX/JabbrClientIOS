@@ -13,6 +13,9 @@
 #import "CLAToastManager.h"
 #import "AuthManager.h"
 
+//Menu
+#import "UIViewController+ECSlidingViewController.h"
+
 //API Client
 #import "CLAWebApiClient.h"
 
@@ -45,7 +48,7 @@
     navBar.titleTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
     
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
-    navItem.title = @"Pick Your Team";
+    navItem.title = NSLocalizedString(@"Pick Your Team", nil);
     [navBar setItems:@[navItem]];
     
     UIBarButtonItem *signOutButton = [[UIBarButtonItem alloc] initWithImage: [Constants signOutImage]
@@ -146,11 +149,11 @@
     [[AuthManager sharedInstance] signOut];
     [[CLASignalRMessageClient sharedInstance] disconnect];
     [self switchToSignInView];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)switchToSignInView {
-    [self.slidingMenuViewController switchToSignInView];
+    SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
+    [slidingViewController switchToSignInView];
 }
 
 @end

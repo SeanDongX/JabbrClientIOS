@@ -501,10 +501,20 @@
                                 <rect key="frame" x="0.0" y="50" width="320" height="141"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N4x-KO-VIS">
-                                <rect key="frame" x="40" y="248" width="240" height="35"/>
+                                <rect key="frame" x="40" y="203" width="240" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="V0U-j7-t4r"/>
                                     <constraint firstAttribute="height" constant="35" id="hdQ-JK-ecJ"/>
+                                </constraints>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ieG-St-eJJ">
+                                <rect key="frame" x="40" y="248" width="240" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="O4f-ZY-g1g"/>
+                                    <constraint firstAttribute="width" constant="240" id="THt-qX-5cC"/>
                                 </constraints>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -576,13 +586,15 @@
                             <constraint firstItem="bGl-aJ-Ek7" firstAttribute="top" secondItem="6vg-UG-eAB" secondAttribute="bottom" constant="10" id="1PL-FM-pES"/>
                             <constraint firstAttribute="centerX" secondItem="rhd-Pn-tdl" secondAttribute="centerX" id="3In-O1-3Xm"/>
                             <constraint firstAttribute="centerX" secondItem="bGl-aJ-Ek7" secondAttribute="centerX" id="5Rz-OB-0tb"/>
+                            <constraint firstItem="ieG-St-eJJ" firstAttribute="top" secondItem="N4x-KO-VIS" secondAttribute="bottom" constant="10" id="7mc-Om-3bW"/>
                             <constraint firstAttribute="centerX" secondItem="Jrr-2A-b6c" secondAttribute="centerX" id="8so-9u-uhk"/>
                             <constraint firstItem="Jrr-2A-b6c" firstAttribute="width" secondItem="rpK-aX-owU" secondAttribute="width" id="8to-hr-FmN"/>
                             <constraint firstItem="PIN-Zw-1xS" firstAttribute="top" secondItem="bGl-aJ-Ek7" secondAttribute="bottom" constant="10" id="GtL-Rx-F0v"/>
+                            <constraint firstItem="6vg-UG-eAB" firstAttribute="top" secondItem="ieG-St-eJJ" secondAttribute="bottom" constant="10" id="TVn-gA-LQx"/>
+                            <constraint firstAttribute="centerX" secondItem="ieG-St-eJJ" secondAttribute="centerX" id="Xdz-dQ-x69"/>
                             <constraint firstItem="Jrr-2A-b6c" firstAttribute="top" secondItem="e0W-r6-WSS" secondAttribute="bottom" constant="30" id="Xqh-ep-XiD"/>
                             <constraint firstAttribute="centerX" secondItem="PIN-Zw-1xS" secondAttribute="centerX" id="e5d-oC-q9E"/>
                             <constraint firstItem="rhd-Pn-tdl" firstAttribute="top" secondItem="JVD-7L-Ab0" secondAttribute="bottom" constant="20" id="h1o-Xw-N0c"/>
-                            <constraint firstItem="6vg-UG-eAB" firstAttribute="top" secondItem="N4x-KO-VIS" secondAttribute="bottom" constant="10" id="h2A-KT-InO"/>
                             <constraint firstAttribute="centerX" secondItem="JVD-7L-Ab0" secondAttribute="centerX" id="jcd-Si-hUu"/>
                             <constraint firstItem="JVD-7L-Ab0" firstAttribute="top" secondItem="PIN-Zw-1xS" secondAttribute="bottom" constant="10" id="jf9-1M-jfU"/>
                             <constraint firstAttribute="centerX" secondItem="6vg-UG-eAB" secondAttribute="centerX" id="q9y-MH-iar"/>
@@ -592,6 +604,7 @@
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="6vg-UG-eAB" id="bfe-QF-m8L"/>
+                        <outlet property="nameTextField" destination="ieG-St-eJJ" id="mHc-dv-CmT"/>
                         <outlet property="passwordTextField" destination="bGl-aJ-Ek7" id="7xU-7F-INT"/>
                         <outlet property="repeatPasswordTextField" destination="PIN-Zw-1xS" id="lMI-nr-xfq"/>
                         <outlet property="signInButton" destination="rhd-Pn-tdl" id="glL-Lk-CIb"/>
@@ -854,6 +867,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="f1E-VV-4sJ" secondAttribute="bottom" id="AbZ-dX-yMd"/>
                                     <constraint firstItem="f1E-VV-4sJ" firstAttribute="top" secondItem="iSt-kU-ZGX" secondAttribute="top" id="POV-4C-huD"/>

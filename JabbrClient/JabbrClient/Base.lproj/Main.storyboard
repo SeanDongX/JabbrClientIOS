@@ -349,10 +349,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vR8-jy-CjL">
-                                <rect key="frame" x="70" y="452" width="180" height="30"/>
+                                <rect key="frame" x="60" y="442" width="200" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="4ml-lN-qf7"/>
-                                    <constraint firstAttribute="height" constant="30" id="SIU-VJ-gIQ"/>
+                                    <constraint firstAttribute="width" constant="200" id="4ml-lN-qf7"/>
+                                    <constraint firstAttribute="height" constant="40" id="SIU-VJ-gIQ"/>
                                 </constraints>
                                 <state key="normal" title="Sign out">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

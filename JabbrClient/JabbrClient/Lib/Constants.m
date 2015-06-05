@@ -155,12 +155,16 @@ NSString *const kErrorDescription = @"ErrorDescription";
     return [UIColor colorWithRed:(26/255.0) green:(179/255.0) blue:(148/255.0) alpha:1];
 }
 
-+ (UIColor*)mainThemeContrastColor {
-    return [UIColor colorWithRed:(47/255.0) green:(64/255.0) blue:(80/255.0) alpha:1];
++ (UIColor*)tableHeaderColor {
+    return [UIColor colorWithRed:(41/255.0) green:(56/255.0) blue:(70/255.0) alpha:1];
 }
 
-+ (UIColor*)mainThemeContrastFocusColor {
-    return [UIColor colorWithRed:(41/255.0) green:(56/255.0) blue:(70/255.0) alpha:1];
++ (UIColor*)highlightColor {
+    return [UIColor colorWithRed:(52/255.0) green:(152/255.0) blue:(219/255.0) alpha:1];
+}
+
++ (UIColor*)mainThemeContrastColor {
+    return [UIColor colorWithRed:(47/255.0) green:(64/255.0) blue:(80/255.0) alpha:1];
 }
 
 + (UIColor*)warningColor {

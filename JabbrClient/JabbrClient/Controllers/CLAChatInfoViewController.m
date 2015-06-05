@@ -135,7 +135,7 @@
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     
-    [headerView setBackgroundColor: [Constants mainThemeContrastFocusColor]];
+    [headerView setBackgroundColor: [Constants tableHeaderColor]];
     
     [headerView addSubview:hightlightView];
     [headerView addSubview:title];

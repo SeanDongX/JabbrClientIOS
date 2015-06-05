@@ -25,6 +25,7 @@ GENERICSABLE(CLATeamViewModel)
 @property (nonatomic, strong) NSArray<CLAUser> *users;
 
 - (CLAUser *)findUser:(NSString *)username;
+- (void)joinUser:(CLAUser *)newUser toRoom:(NSString *)roomName;
 
 + (CLATeamViewModel *)getFromData: (NSDictionary *)data;
 

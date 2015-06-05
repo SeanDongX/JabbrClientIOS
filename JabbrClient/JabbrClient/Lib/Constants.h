@@ -76,7 +76,8 @@ FOUNDATION_EXPORT NSString *const kErrorDescription;
 + (UIImage *)signOutImage;
 
 + (UIColor *)mainThemeColor;
++ (UIColor *)tableHeaderColor;
++ (UIColor *)highlightColor;
 + (UIColor*)mainThemeContrastColor;
-+ (UIColor*)mainThemeContrastFocusColor;
 + (UIColor*)warningColor;
 @end

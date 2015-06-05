@@ -21,6 +21,35 @@
     return nil;
 }
 
+- (void)joinUser:(CLAUser *)newUser toRoom:(NSString *)roomName {
+    if (newUser == nil || newUser.name == nil) {
+        return;
+    }
+    
+    for (CLARoom *room in self.rooms) {
+        if ([room.name isEqualToString:roomName]) {
+            BOOL userFound = FALSE;
+            
+            for (CLAUser *user in room.users) {
+                if([CLAUtility isString:newUser.name caseInsensitiveEqualTo:user.name]) {
+                    userFound = TRUE;
+                    //break on first user instance found
+                    break;
+                }
+            }
+            
+            if (userFound == FALSE) {
+                NSMutableArray<CLAUser> *copyUsers = [room.users mutableCopy];
+                [copyUsers addObject:newUser];
+                room.users = copyUsers;
+            }
+            
+            //return on first room instance found
+            return;
+        }
+    }
+}
+
 + (CLATeamViewModel *)getFromData: (NSDictionary *)teamDictionary {
     
     CLATeam *team = [[CLATeam alloc] init];

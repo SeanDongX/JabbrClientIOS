@@ -114,7 +114,7 @@
     [cell setBackgroundColor:[UIColor clearColor]];
     
     UIView *backgroundView = [UIView new];
-    backgroundView.backgroundColor = [Constants mainThemeColor];
+    backgroundView.backgroundColor = [Constants highlightColor];
     cell.selectedBackgroundView = backgroundView;
     
     return cell;
@@ -140,7 +140,7 @@
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     
-    [headerView setBackgroundColor: [Constants mainThemeContrastFocusColor]];
+    [headerView setBackgroundColor: [Constants tableHeaderColor]];
     
     [headerView addSubview:title];
     

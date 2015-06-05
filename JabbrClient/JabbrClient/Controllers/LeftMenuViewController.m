@@ -56,6 +56,8 @@
     [self subscribNotifications];
     self.searchBar.delegate = self;
     [[UITextField appearanceWhenContainedIn:[LeftMenuViewController class], nil] setDefaultTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    [self.view setBackgroundColor:[Constants mainThemeContrastColor]];
 }
 
 - (void)dealloc {
@@ -214,7 +216,7 @@
     [cell setBackgroundColor:[UIColor clearColor]];
     
     UIView *backgroundView = [UIView new];
-    backgroundView.backgroundColor = [Constants mainThemeColor];
+    backgroundView.backgroundColor = [Constants highlightColor];
     cell.selectedBackgroundView = backgroundView;
     
     return cell;
@@ -235,9 +237,6 @@
     
     CGRect frame = tableView.frame;
     
-    UIView *hightlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 5, 30)];
-    [hightlightView setBackgroundColor:[Constants mainThemeColor]];
-    
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 30)];
     title.text = [NSString stringWithFormat:NSLocalizedString(@"Topics (%@)", nil), [self getRoomCountString]];
     title.textColor = [UIColor whiteColor];
@@ -250,9 +249,8 @@
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     
-    [headerView setBackgroundColor: [Constants mainThemeContrastFocusColor]];
+    [headerView setBackgroundColor: [Constants tableHeaderColor]];
     
-    [headerView addSubview:hightlightView];
     [headerView addSubview:title];
     [headerView addSubview:addButton];
 

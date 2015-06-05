@@ -162,9 +162,17 @@ static NSString * const kDefaultChatThread = @"collarabot";
         [self initialzeCurrentThread];
     }
     
+    [self joinUserToRoomModel];
     [self.messageClient joinRoom:self.currentChatThread.title];
     [self.messageClient loadRoom:self.currentChatThread.title];
     [self.collectionView reloadData];
+}
+
+- (void)joinUserToRoomModel {
+    CLATeamViewModel *teamViewModel = [self.messageClient.dataRepository getDefaultTeam];
+    CLAUser *currentUser = [teamViewModel findUser:[[AuthManager sharedInstance] getUsername]];
+    [teamViewModel joinUser:currentUser toRoom:self.currentChatThread.title];
+    [self sendTeamUpdatedEventNotification];
 }
 
 - (NSMutableArray<CLAMessage> *)getCurrentMessageThread {
@@ -451,8 +459,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
         return;
     }
     
-    CLATeamViewModel *teamViewModel = teams[0];    
-    [self sendTeamUpdatedEventNotification:teamViewModel];
+    [self sendTeamUpdatedEventNotification];
     
     if (self.preselectedTitle != nil) {
         LeftMenuViewController *leftMenuViewController = (LeftMenuViewController *)self.slidingViewController.underLeftViewController;
@@ -658,7 +665,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
 }
 
-- (void)sendTeamUpdatedEventNotification:(CLATeamViewModel *)teamViewModel {
+- (void)sendTeamUpdatedEventNotification {
     [[NSNotificationCenter defaultCenter] postNotificationName:kEventTeamUpdated object:nil userInfo:nil];
     
 }

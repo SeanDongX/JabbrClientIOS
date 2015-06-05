@@ -71,10 +71,14 @@ static bool isFirstAccess = YES;
     if (isFirstAccess) {
         [self doesNotRecognizeSelector:_cmd];
     }
+    
+    NSString *appLocale = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+    
     self = [super init];
     self.connectionManager =  [AFHTTPRequestOperationManager manager];
     self.connectionManager.requestSerializer = [AFJSONRequestSerializer serializer];
-    
+    [self.connectionManager.requestSerializer setValue:appLocale forHTTPHeaderField:@"Accept-Language"];
+
     return self;
 }
 

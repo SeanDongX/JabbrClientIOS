@@ -50,10 +50,9 @@
     
     [self.menuItem setTitle:@""];
     [self.menuItem setWidth:30];
-    
     [self.menuItem setImage: [Constants menuIconImage]];
-    CLAUser *user = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] findUser:[[AuthManager sharedInstance] getUsername]];
-    [self.nameLabel setText:user.realName];
+    
+    [self.nameLabel setText:[self getUserRealName]];
     
     FAKIonIcons *userIcon = [FAKIonIcons iosPersonIconWithSize:50];
     [userIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
@@ -62,7 +61,7 @@
     self.profileImageView.layer.cornerRadius = 50;
     self.profileImageView.layer.borderWidth = 2;
     self.profileImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.profileImageView.layer.backgroundColor = [Constants mainThemeColor].CGColor;
+    self.profileImageView.layer.backgroundColor = [Constants mainThemeContrastColor].CGColor;
 }
 
 
@@ -76,6 +75,9 @@
     [self switchToSignInView];
 }
 
+#pragma mark -
+#pragma mark Private Methods
+
 - (void)switchToSignInView {
     
     SlidingViewController *slidingViewController = (SlidingViewController *)self.navigationController.slidingViewController;
@@ -83,5 +85,22 @@
     [slidingViewController clearControllerCache];
     [slidingViewController switchToSignInView];
 }
+
+- (NSString *)getUserRealName {
+    NSString *username = [[AuthManager sharedInstance] getUsername];
+    
+    if (username != nil) {
+        CLAUser *user = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] findUser:username];
+        if (user != nil && user.realName != (id)[NSNull null] && user.realName.length != 0 ) {
+            username = user.realName;
+        }
+    }
+    else {
+        username = @"";
+    }
+    
+    return username;
+}
+
 
 @end

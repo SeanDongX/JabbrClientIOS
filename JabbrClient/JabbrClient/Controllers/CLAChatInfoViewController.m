@@ -126,9 +126,6 @@
     
     CGRect frame = tableView.frame;
     
-    UIView *hightlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 5, 30)];
-    [hightlightView setBackgroundColor:[Constants mainThemeColor]];
-    
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 30)];
     title.textColor = [UIColor whiteColor];
     
@@ -136,8 +133,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     
     [headerView setBackgroundColor: [Constants tableHeaderColor]];
-    
-    [headerView addSubview:hightlightView];
+
     [headerView addSubview:title];
     
     title.text = [NSString stringWithFormat: NSLocalizedString(@"Topic participants (%lu)", nil), [self getUserCount]];

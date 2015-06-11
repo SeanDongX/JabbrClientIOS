@@ -29,6 +29,7 @@
 		146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */; };
 		146D83E31AF19F3300855C59 /* CLAKeyboardAwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */; };
 		1479A8101ACC372800A31A7E /* ChatThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 1479A80F1ACC372800A31A7E /* ChatThread+Category.m */; };
+		14805B781B298C9C007ACBE2 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */; };
 		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
 		149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149718551ADABFE400785D11 /* CLAPadBaseViewController.m */; };
 		149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */; };
@@ -118,6 +119,7 @@
 		146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAKeyboardAwareViewController.m; sourceTree = "<group>"; };
 		1479A80E1ACC372800A31A7E /* ChatThread+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ChatThread+Category.h"; path = "JabbrClient/DataModel/ChatThread+Category.h"; sourceTree = SOURCE_ROOT; };
 		1479A80F1ACC372800A31A7E /* ChatThread+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ChatThread+Category.m"; path = "JabbrClient/DataModel/ChatThread+Category.m"; sourceTree = SOURCE_ROOT; };
+		14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMessaging.framework; path = JabbrClient/External/WindowsAzureMessaging.framework; sourceTree = "<group>"; };
 		14938DE81AD4645E00BCC852 /* DocumentThread+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DocumentThread+Category.h"; path = "JabbrClient/DataModel/DocumentThread+Category.h"; sourceTree = SOURCE_ROOT; };
 		14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DocumentThread+Category.m"; path = "JabbrClient/DataModel/DocumentThread+Category.m"; sourceTree = SOURCE_ROOT; };
 		149718541ADABFE400785D11 /* CLAPadBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAPadBaseViewController.h; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE809097EABCDD6117E3CED2 /* libPods-Collara.a in Frameworks */,
+				14805B781B298C9C007ACBE2 /* WindowsAzureMessaging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +262,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		14805B741B29864C007ACBE2 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
 		149F99311AC4D07000525EA7 /* Menus */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,6 +300,7 @@
 				14B515701ABF138A0000CC4F /* JabbrClient */,
 				14B5158D1ABF138A0000CC4F /* JabbrClientTests */,
 				14B5156F1ABF138A0000CC4F /* Products */,
+				14805B741B29864C007ACBE2 /* External */,
 				5B31BC541338B01E45F1B8EB /* Pods */,
 				8D4FED4A1F6F60D024E6B1EB /* Frameworks */,
 			);
@@ -775,6 +787,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JabbrClient/External",
+				);
 				INFOPLIST_FILE = JabbrClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -792,6 +808,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hiveeo Aps (YJK9294VWR)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JabbrClient/External",
+				);
 				INFOPLIST_FILE = JabbrClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

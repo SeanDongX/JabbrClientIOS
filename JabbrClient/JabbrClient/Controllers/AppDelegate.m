@@ -11,12 +11,19 @@
 //Util
 #import "Constants.h"
 
+//Data Model
+#import "CLANotification.h"
+
 //Menu
 #import "LeftMenuViewController.h"
 
+//Auzre Notification Hub
+#import <WindowsAzureMessaging/WindowsAzureMessaging.h>
+
+
 @interface AppDelegate()
 
-@property (strong, nonatomic) UILocalNotification *lastLocalNotification;
+@property (strong, nonatomic) CLANotification *lastNotification;
 
 @end
 
@@ -26,7 +33,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self registerLocalNotification];
+    [self registerNotification];
     return YES;
 }
 							
@@ -53,14 +60,14 @@
      */
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
+- (void)applicationDidBecomeActive:(UIApplication *)application {
     application.applicationIconBadgeNumber = 0;
-    [self processLocalNotificaton:self.lastLocalNotification];
+    [self processNotificaton:self.lastNotification];
 }
 
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    self.lastLocalNotification = notification;
+- (void)application:(UIApplication *)application didReceiveRemoteNotification: (NSDictionary *)userInfo {
+    
+    self.lastNotification = [[CLANotification alloc] init:userInfo];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -72,7 +79,7 @@
      */
 }
 
-- (void)registerLocalNotification {
+- (void)registerNotification {
     UIApplication *application = [UIApplication sharedApplication];
 
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
@@ -84,18 +91,17 @@
     }
 }
 
-- (void)processLocalNotificaton: (UILocalNotification *)notification {
-    if (notification.userInfo != nil) {
-        NSString *room = [notification.userInfo objectForKey:kRoomName];
-        
-        if (room != nil && self.slidingViewController != nil) {
-            LeftMenuViewController *leftMenu = (LeftMenuViewController *)self.slidingViewController.underLeftViewController;
-            
-            if ([leftMenu respondsToSelector:@selector(selectRoom:closeMenu:)]) {
-                [leftMenu selectRoom:room closeMenu:YES];
-            }
-        }
-    }
+- (void)processNotificaton: (CLANotification *)notification {
+    //TODO: process appurl
 }
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *) deviceToken {
+    SBNotificationHub* hub = [[SBNotificationHub alloc] initWithConnectionString: kAzureNotificationHubConnectionString                                                              notificationHubPath: kAuzreNotificationHubName];
+    
+    [hub registerNativeWithDeviceToken:deviceToken tags:nil completion:^(NSError* error) {
+        if (error != nil) {
+            NSLog(@"Error registering for notifications: %@", error);
+        }
+    }];
+}
 @end

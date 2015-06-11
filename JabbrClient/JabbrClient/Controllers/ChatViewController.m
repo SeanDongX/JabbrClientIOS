@@ -695,11 +695,11 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)sendLocalNotificationFor:(CLAMessage *)message inRoom:(NSString *)room  {
-    
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         return;
     }
     
+    //TODO: investigation if this is possible when app goes to background
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = [NSDate date];
     localNotification.alertBody = [NSString stringWithFormat:@"%@%@ %@%@: %@", kRoomPrefix, room, kUserPrefix, message.senderDisplayName, message.text];

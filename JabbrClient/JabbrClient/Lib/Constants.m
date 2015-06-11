@@ -32,6 +32,10 @@
 
 NSString *const kApiPath = @"api/v1/";
 
+NSString *const kAuzreNotificationHubName = @"collarapush";
+NSString *const kAzureNotificationHubConnectionString = @"Endpoint=sb://collarapush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=PiHeM88D6LWhitL1452bcQ1rEnxzu55R/eVbKseOhos=";
+
+
 NSTimeInterval const kMessageClientReconnectInterval = 5.0;
 
 BOOL const kFSDocumentEnabled = NO;
@@ -81,6 +85,10 @@ NSTimeInterval const kMessageDisplayTimeGap = 180;
 
 NSString *const kErrorDoamin = @"com.collara";
 NSString *const kErrorDescription = @"ErrorDescription";
+
+NSString *const kNotificationAps = @"aps";
+NSString *const kNotificationAlert = @"alert";
+NSString *const kNotificationAppUrl = @"appUrl";
 
 + (NSDictionary *)toasOptions {
     return @{

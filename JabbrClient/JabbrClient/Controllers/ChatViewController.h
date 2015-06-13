@@ -8,16 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "SignalR.h"
-#import "ChatThread.h"
-#import <JSQMessagesViewController/JSQMessages.h> 
+#import <JSQMessagesViewController/JSQMessages.h>
 #import "CLAMessage.h"
 #import "CLAMessageClient.h"
+
+//Data Models
+#import "CLARoom.h"
 
 @interface ChatViewController : JSQMessagesViewController <CLAMessageClientDelegate>
 
 @property (strong, nonatomic) NSString *preselectedTitle;
 
-- (void)switchToChatThread:(ChatThread *)chatThread;
+- (void)switchToRoom:(CLARoom *)room;
 
 - (void)didReceiveTeams: (NSArray *)userTeams;
 

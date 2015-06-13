@@ -9,8 +9,6 @@
 #import "LeftMenuViewController.h"
 
 //Util
-#import "DemoData.h"
-#import "ChatThread+Category.h"
 #import "Constants.h"
 
 //Data Model
@@ -33,9 +31,9 @@
 
 @interface LeftMenuViewController ()
 
-@property (nonatomic, strong) NSArray<ChatThread> *chatThreads;
+@property (nonatomic, strong) NSArray<CLARoom> *rooms;
 
-@property (nonatomic, strong) NSArray<ChatThread> *filteredChatThreads;
+@property (nonatomic, strong) NSArray<CLARoom> *filteredChatThreads;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic) BOOL isFiltered;
@@ -66,7 +64,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateChatThreads:self.chatThreads];
+    [self updateChatThreads:self.rooms];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -123,10 +121,7 @@
             
                 for (CLAUser *user in room.users) {
                     if ([user isCurrentUser] != NO) {
-                        //only show my topics
-                        ChatThread *thread= [[ChatThread alloc] init];
-                        thread.title = room.name;
-                        [chatThreadArray addObject:thread];
+                        [chatThreadArray addObject:room];
                         
                         break;
                     }
@@ -153,13 +148,13 @@
         currentSelected = selectedIndexPath.row;
     }
     
-    if (self.chatThreads != nil && self.chatThreads.count > currentSelected) {
-        ChatThread *selectedChatThrad = [self.chatThreads objectAtIndex:currentSelected];
-        selectedChatTitle = selectedChatThrad.title;
+    if (self.rooms != nil && self.rooms.count > currentSelected) {
+        CLARoom *selectedRoom = [self.rooms objectAtIndex:currentSelected];
+        selectedChatTitle = selectedRoom.name;
     }
     
     //Update threads array and table view
-    self.chatThreads = chatThreads;
+    self.rooms = chatThreads;
     [self.tableView reloadData];
     
     //select last selected, if any
@@ -175,10 +170,10 @@
     
     [self.tableView reloadData];
     
-    for (int key=0 ; key< self.chatThreads.count; key++) {
-        ChatThread *thread = [self.chatThreads objectAtIndex:key];
+    for (int key=0 ; key< self.rooms.count; key++) {
+        CLARoom *thread = [self.rooms objectAtIndex:key];
         
-        if ([thread.title isEqualToString: room]) {
+        if ([thread.name isEqualToString: room]) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:key inSection:0];
             
             [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
@@ -209,8 +204,8 @@
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    ChatThread *chatThread = [self getChatThreadAtRow:indexPath.row];
-    cell.textLabel.text = [chatThread getDisplayTitle];
+    CLARoom *room = [self getChatThreadAtRow:indexPath.row];
+    cell.textLabel.text = [room getHandle];
 
     cell.textLabel.textColor = [UIColor whiteColor];
     [cell setBackgroundColor:[UIColor clearColor]];
@@ -273,7 +268,7 @@
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
-        [chatViewController switchToChatThread:[self getChatThreadAtRow:indexPath.row]];
+        [chatViewController switchToRoom:[self getChatThreadAtRow:indexPath.row]];
     }
     
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
@@ -330,15 +325,15 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText
 {
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
-    self.filteredChatThreads = [self.chatThreads filteredArrayUsingPredicate:resultPredicate];
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
+    self.filteredChatThreads = [self.rooms filteredArrayUsingPredicate:resultPredicate];
 }
 
-- (ChatThread *)getChatThreadAtRow:(NSInteger)row {
+- (CLARoom *)getChatThreadAtRow:(NSInteger)row {
     if (self.isFiltered) {
         return [self.filteredChatThreads objectAtIndex:row];
     } else {
-        return [self.chatThreads objectAtIndex:row];
+        return [self.rooms objectAtIndex:row];
     }
 }
 
@@ -347,13 +342,13 @@
         return self.filteredChatThreads == nil ? 0 : self.filteredChatThreads.count;
     }
     else {
-        return self.chatThreads == nil ? 0 : self.chatThreads.count;
+        return self.rooms == nil ? 0 : self.rooms.count;
     }
 }
 
 - (NSString *)getRoomCountString {
     NSUInteger filterCount = self.filteredChatThreads == nil ? 0 : self.filteredChatThreads.count;
-    NSUInteger totalCount = self.chatThreads == nil ? 0 : self.chatThreads.count;
+    NSUInteger totalCount = self.rooms == nil ? 0 : self.rooms.count;
     
     if (self.isFiltered) {
         return [NSString stringWithFormat:@"%lu/%lu", (unsigned long)filterCount, (unsigned long)totalCount];

@@ -12,7 +12,7 @@
 @implementation DocumentThread (Category)
 
 - (NSString *)getDisplayTitle {
-    return [NSString stringWithFormat:@"%@%@", kDocPrefix, self.title];
+    return [NSString stringWithFormat:@"%@%@", kDocPrefix, self.name];
 }
 
 @end

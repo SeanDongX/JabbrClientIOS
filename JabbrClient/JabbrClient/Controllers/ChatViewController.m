@@ -12,8 +12,6 @@
 //Util
 #import "AuthManager.h"
 #import "ObjectThread.h"
-#import "ChatThread+Category.h"
-#import "DemoData.h"
 #import "Constants.h"
 #import "DateTools.h"
 #import "MBProgressHUD.h"
@@ -44,7 +42,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightMenuButton;
 
-@property (nonatomic, strong) ChatThread *currentChatThread;
+@property (nonatomic, strong) CLARoom *currentRoom;
 
 @property (nonatomic, strong) CLASignalRMessageClient *messageClient;
 
@@ -152,35 +150,35 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 #pragma mark -
 #pragma mark - Chat Thread Methods
-- (void)switchToChatThread:(ChatThread *)chatThread {
+- (void)switchToRoom:(CLARoom *)chatThread {
     
-    self.currentChatThread = chatThread;
-    self.navigationItem.title = [NSString stringWithFormat:@"#%@", self.currentChatThread.title];
+    self.currentRoom = chatThread;
+    self.navigationItem.title = [NSString stringWithFormat:@"#%@", self.currentRoom.name];
     
-    if (![[self getChatThreadRepository] objectForKey:self.currentChatThread.title]) {
-        [[self getChatThreadRepository] setObject:[NSMutableArray array] forKey:self.currentChatThread.title];
+    if (![[self getChatThreadRepository] objectForKey:self.currentRoom.name]) {
+        [[self getChatThreadRepository] setObject:[NSMutableArray array] forKey:self.currentRoom.name];
         [self initialzeCurrentThread];
     }
     
     [self joinUserToRoomModel];
-    [self.messageClient joinRoom:self.currentChatThread.title];
-    [self.messageClient loadRoom:self.currentChatThread.title];
+    [self.messageClient joinRoom:self.currentRoom.name];
+    [self.messageClient loadRoom:self.currentRoom.name];
     [self.collectionView reloadData];
 }
 
 - (void)joinUserToRoomModel {
     CLATeamViewModel *teamViewModel = [self.messageClient.dataRepository getDefaultTeam];
     CLAUser *currentUser = [teamViewModel findUser:[[AuthManager sharedInstance] getUsername]];
-    [teamViewModel joinUser:currentUser toRoom:self.currentChatThread.title];
+    [teamViewModel joinUser:currentUser toRoom:self.currentRoom.name];
     [self sendTeamUpdatedEventNotification];
 }
 
 - (NSMutableArray<CLAMessage> *)getCurrentMessageThread {
-    return (NSMutableArray<CLAMessage> *)[[self getChatThreadRepository] objectForKey:self.currentChatThread.title];
+    return (NSMutableArray<CLAMessage> *)[[self getChatThreadRepository] objectForKey:self.currentRoom.name];
 }
 
 - (void)setCurrentMessageThread:(NSMutableArray *)messages {
-    [[self getChatThreadRepository] setObject:messages forKey:self.currentChatThread.title];
+    [[self getChatThreadRepository] setObject:messages forKey:self.currentRoom.name];
 }
 
 - (void)addMessage:(CLAMessage *)message toRoom: (NSString*)threadTitle {
@@ -240,7 +238,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)textFieldTextChanged:(id)sender {
-    [self.messageClient sendTypingFromUser:self.messageClient.username inRoom:self.currentChatThread.title];
+    [self.messageClient sendTypingFromUser:self.messageClient.username inRoom:self.currentRoom.name];
 }
 
 #pragma mark -
@@ -416,7 +414,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
         if (earliestMessage != nil)
         {
             self.showLoadEarlierMessagesHeader = false;
-            [self.messageClient getPreviousMessages:earliestMessage.oId inRoom:self.currentChatThread.title];
+            [self.messageClient getPreviousMessages:earliestMessage.oId inRoom:self.currentRoom.name];
         }
     }
 }
@@ -477,13 +475,15 @@ static NSString * const kDefaultChatThread = @"collarabot";
     BOOL animated = secondApart > -1 * kMessageLoadAnimateTimeThreshold ? TRUE : FALSE;
     
     //TODO: also show messages of the same user from other client in current thread
-    if (![self isCUrrentUser:message.senderId] && [self isCUrrentRoom:room]) {
+    if (![self isCurrentUser:message.senderId] && [self isCUrrentRoom:room]) {
         [self finishReceivingMessageAnimated:animated];
     }
+    
+    [self addUnread:1 toRoom:room];
 }
 
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
-    if (![self isCUrrentUser:user]  && [self isCUrrentRoom:room]) {
+    if (![self isCurrentUser:user]  && [self isCUrrentRoom:room]) {
         
         self.showTypingIndicator = TRUE;
         [self scrollToBottomAnimated:YES];
@@ -564,7 +564,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     [[self getCurrentMessageThread] addObject:message];
     [self finishSendingMessageAnimated:TRUE];
-    [self.messageClient sendMessage:message inRoom:self.currentChatThread.title];
+    [self.messageClient sendMessage:message inRoom:self.currentRoom.name];
 }
 
 
@@ -572,7 +572,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     self.roomViewModel = [[CLARoomViewModel alloc] init];
     
     CLARoom *room = [[CLARoom alloc] init];
-    room.name = self.currentChatThread.title;
+    room.name = self.currentRoom.name;
     
     self.roomViewModel.room = room;
 }
@@ -594,7 +594,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     NSString* username = [data objectForKey:@"username"];
-    if ([self isCUrrentUser:username])
+    if ([self isCurrentUser:username])
     {
         NSLog(@"Incoming message ingored since from current user");
         return true;
@@ -732,13 +732,17 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (BOOL)isCUrrentRoom:(NSString *)room {
     return room != nil &&
-            self.currentChatThread != nil &&
-            [room caseInsensitiveCompare:self.currentChatThread.title] == NSOrderedSame;
+            self.currentRoom != nil &&
+            [room caseInsensitiveCompare:self.currentRoom.name] == NSOrderedSame;
 }
 
-- (BOOL)isCUrrentUser:(NSString *)user {
+- (BOOL)isCurrentUser:(NSString *)user {
     return user != nil &&
             [user caseInsensitiveCompare:self.messageClient.username] == NSOrderedSame;
+}
+
+- (void)addUnread:(NSInteger)count toRoom: (NSString *)room {
+    //[self.messageClient.dataRepository getDefaultTeam]
 }
 
 @end

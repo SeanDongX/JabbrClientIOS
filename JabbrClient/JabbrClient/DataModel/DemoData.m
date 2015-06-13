@@ -8,7 +8,6 @@
 
 #import "DemoData.h"
 #import "DocumentThread.h"
-#import "ChatThread.h"
 #import <JSQMessagesViewController/JSQMessages.h>
 
 static NSString * const kMe = @"mike";
@@ -31,7 +30,6 @@ static NSString * const kKate = @"kate";
         [self setupUsernamePassword];
         [self setupAvatars];
         [self setupDocumentThreads];
-        [self setupChatThreads];
     }
     return self;
 }
@@ -60,38 +58,17 @@ static NSString * const kKate = @"kate";
     self.documentThreads = [NSMutableArray array];
     
     DocumentThread *pitchSpeech = [[DocumentThread alloc] init];
-    pitchSpeech.title = @"PitchBrainstorm";
+    pitchSpeech.name = @"PitchBrainstorm";
     pitchSpeech.url = [NSURL URLWithString: [NSString stringWithFormat:@"http://doc.collara.co/p/878XT1YtTH?showChat=false&userName=%@", self.myUsername]];
     
     DocumentThread *featureDocument = [[DocumentThread alloc] init];
-    featureDocument.title = @"FeatureDocument";
+    featureDocument.name = @"FeatureDocument";
     featureDocument.url = [NSURL URLWithString:[NSString stringWithFormat:@"http://doc.collara.co/p/DpfVMMrnEx?showChat=false&userName=%@", self.myUsername]];
     
     
     [self.documentThreads addObject:pitchSpeech];
     [self.documentThreads addObject:featureDocument];
 }
-
-
-- (void)setupChatThreads {
-    
-    self.chatThreads = [NSMutableArray array];
-    
-    ChatThread *pitchSpeech = [[ChatThread alloc] init];
-    pitchSpeech.title = @"PitchDemo";
-    
-    ChatThread *featureDocument = [[ChatThread alloc] init];
-    featureDocument.title = @"FeaturePlanning";
-    
-    ChatThread *collabot = [[ChatThread alloc] init];
-    collabot.title = @"Collabot";
-    collabot.isDirectMessageThread = TRUE;
-    
-    [self.chatThreads addObject:pitchSpeech];
-    [self.chatThreads addObject:featureDocument];
-    [self.chatThreads addObject:collabot];
-}
-
 
 - (void)dealloc {
     // Should never be called, but just here for clarity really.

@@ -14,8 +14,6 @@
 //Data Model
 #import "CLARoom.h"
 #import "CLATeamViewModel.h"
-#import "ChatThread.h"
-#import "ChatThread+Category.h"
 
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
@@ -37,8 +35,8 @@
 
 @property (nonatomic) BOOL isFiltered;
 
-@property (strong, nonatomic) NSArray<ChatThread> *rooms;
-@property (strong, nonatomic) NSArray<ChatThread> *filteredRooms;
+@property (strong, nonatomic) NSArray<CLARoom> *rooms;
+@property (strong, nonatomic) NSArray<CLARoom> *filteredRooms;
 @end
 
 @implementation CLAHomeTopicViewController
@@ -82,9 +80,7 @@
     if (rooms != nil) {
         NSMutableArray *chatThreadArray = [NSMutableArray array];
         for (CLARoom *room in rooms) {
-            ChatThread *thread= [[ChatThread alloc] init];
-            thread.title = room.name;
-            [chatThreadArray addObject:thread];
+            [chatThreadArray addObject:room];
         }
         
         self.rooms = chatThreadArray;
@@ -120,8 +116,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TopicCell"];
 
-    ChatThread *room = [self getRoomAtRow:indexPath.row];
-    cell.textLabel.text = [room getDisplayTitle];
+    CLARoom *room = [self getRoomAtRow:indexPath.row];
+    cell.textLabel.text = [room getHandle];
     
     cell.textLabel.textColor = [Constants mainThemeContrastColor];
     [cell setBackgroundColor:[UIColor clearColor]];
@@ -177,7 +173,7 @@
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
-        [chatViewController switchToChatThread:[self getRoomAtRow:indexPath.row]];
+        [chatViewController switchToRoom:[self getRoomAtRow:indexPath.row]];
     }
     
     [self.slidingViewController resetTopViewAnimated:YES];
@@ -218,11 +214,11 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText
 {
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@", searchText];
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
     self.filteredRooms = [self.rooms filteredArrayUsingPredicate:resultPredicate];
 }
 
-- (ChatThread *)getRoomAtRow:(NSInteger)row {
+- (CLARoom *)getRoomAtRow:(NSInteger)row {
     if (self.isFiltered) {
         return [self.filteredRooms objectAtIndex:row];
     } else {

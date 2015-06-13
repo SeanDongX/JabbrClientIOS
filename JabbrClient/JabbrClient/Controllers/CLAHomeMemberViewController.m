@@ -18,7 +18,6 @@
 #import "CLAUtility.h"
 //Data Model
 #import "CLAUser.h"
-#import "CLAUser+Category.h"
 #import "CLATeamViewModel.h"
 
 //Menu
@@ -108,7 +107,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TeamMemberCell"];
     CLAUser *user = [self getUserAtRow:indexPath.row];
-    cell.textLabel.text = [user getDisplayName];
+    cell.textLabel.text = [user getHandle];
     
     cell.textLabel.textColor = [Constants mainThemeContrastColor];
     [cell setBackgroundColor:[UIColor clearColor]];

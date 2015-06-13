@@ -8,6 +8,18 @@
 
 #import "CLARoom.h"
 
+//Util
+#import "Constants.h"
+
 @implementation CLARoom
+
+
+- (NSString *)getHandle {
+    return [CLARoom getHandle:self.name];
+}
+
++ (NSString *)getHandle: (NSString *)roomName {
+    return [NSString stringWithFormat:@"%@%@", kRoomPrefix, roomName];
+}
 
 @end

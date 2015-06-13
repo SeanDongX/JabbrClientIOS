@@ -15,9 +15,7 @@
 
 //Data Model
 #import "CLARoomViewModel.h"
-#import "CLARoom+Category.h"
 #import "CLAUser.h"
-#import "CLAUser+Category.h"
 
 //Message Client
 #import "CLAMessageClient.h"
@@ -61,7 +59,7 @@
 
 - (void)initRoomInfo {
     
-    [self.topicLabel setText:[self.roomViewModel.room getDisplayName]];
+    [self.topicLabel setText:[self.roomViewModel.room getHandle]];
 }
 
 #pragma mark -
@@ -106,7 +104,7 @@
     CLAUser *user = (CLAUser *)self.roomViewModel.users[indexPath.row];
     
     if (user != nil) {
-        cell.textLabel.text = [user getDisplayName];
+        cell.textLabel.text = [user getHandle];
     }
     
     return cell;

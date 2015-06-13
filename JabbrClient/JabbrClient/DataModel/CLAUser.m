@@ -7,6 +7,9 @@
 //
 
 #import "CLAUser.h"
+
+//Util
+#import "Constants.h"
 #import "AuthManager.h"
 #import "CLAUtility.h"
 
@@ -15,6 +18,15 @@
 
 - (BOOL)isCurrentUser {
     return [self.name caseInsensitiveCompare:[[AuthManager sharedInstance] getUsername]] == NSOrderedSame;
+}
+
+
+- (NSString*)getHandle {
+    return [CLAUser getHandle:self.name];
+}
+
++ (NSString*)getHandle:(NSString *)username {
+    return [NSString stringWithFormat:@"%@%@", kUserPrefix, username];
 }
 
 + (CLAUserStatus)getStatus:(NSString *)status {

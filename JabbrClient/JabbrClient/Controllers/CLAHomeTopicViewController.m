@@ -13,7 +13,6 @@
 
 //Data Model
 #import "CLARoom.h"
-#import "CLARoom+Category.h"
 #import "CLATeamViewModel.h"
 #import "ChatThread.h"
 #import "ChatThread+Category.h"

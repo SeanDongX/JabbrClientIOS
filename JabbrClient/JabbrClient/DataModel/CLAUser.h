@@ -25,6 +25,9 @@ GENERICSABLE(CLAUser)
 @property (nonatomic) CLAUserStatus status;
 
 - (BOOL)isCurrentUser;
+- (NSString*)getHandle;
+
++ (NSString*)getHandle:(NSString *)username;
 + (CLAUser *)getFromData:(NSDictionary *)userDictionary;
 
 @end

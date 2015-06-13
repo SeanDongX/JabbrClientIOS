@@ -497,6 +497,11 @@
 					14B5156D1ABF138A0000CC4F = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = YJK9294VWR;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					14B515891ABF138A0000CC4F = {
 						CreatedOnToolsVersion = 6.2;

@@ -212,7 +212,23 @@ static bool isFirstAccess = YES;
          completion(nil, [self getResponseErrorMessage:error]);
      }];
 }
-                                                                                                                       
+
+- (void)setBadge:(NSNumber *)count forTeam:(NSNumber *)teamKey  {
+    NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/notification/setunread/", count, @"/?teamkey=", teamKey, @"&token=", [self getToken]];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl parameters:nil
+                     success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+                     }
+                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                         NSLog(@"Set badge faield with error: %@", [self getResponseErrorMessage:error]);
+                     }];
+    
+}
+
+#pragma mark -
+#pragma mark Private Methods
+
 - (NSString *)getToken {
     return [[AuthManager sharedInstance] getCachedAuthToken];
 }

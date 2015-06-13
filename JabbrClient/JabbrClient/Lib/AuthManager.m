@@ -7,7 +7,12 @@
 //
 
 #import "AuthManager.h"
+
+//Util
 #import "Constants.h"
+
+//Services
+#import "CLAAzureHubPushNotificationService.h"
 
 @implementation AuthManager
 
@@ -63,10 +68,33 @@
     return (NSString *)[self getCachedObjectForKey:kUsername];
 }
 
+
+- (NSData *)getCachedDeviceToken {
+    return (NSData *)[self getCachedObjectForKey:kDeviceToken];
+}
+
+- (void)cacheAuthToken: (NSString *)authToken {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:authToken forKey:kAuthToken];
+    [defaults setObject:[NSDate date] forKey:kLastAuthDate];
+    [defaults synchronize];
+}
+
+
+- (void)cacheDeviceToken:(NSData *)deviceToken {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:deviceToken forKey:kDeviceToken];
+    [defaults synchronize];
+}
+
 - (void)signOut {
     [self clearCookie];
     [self clearCache];
 }
+
+
+#pragma mark -
+#pragma Private Methods
 
 - (void)clearCache {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -75,6 +103,7 @@
     [defaults removeObjectForKey:kLastAuthDate];
     [defaults removeObjectForKey:kTeamKey];
     [defaults synchronize];
+    //Device Token should be not cleared
 }
 
 - (void)cacheObject: (NSObject*)object forKey:(NSString *)key {
@@ -86,13 +115,6 @@
 - (NSObject*)getCachedObjectForKey:(NSString *)key {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults objectForKey:key];
-}
-
-- (void)cacheAuthToken: (NSString *)authToken {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:authToken forKey:kAuthToken];
-    [defaults setObject:[NSDate date] forKey:kLastAuthDate];
-    [defaults synchronize];
 }
 
 - (void)clearCookie {

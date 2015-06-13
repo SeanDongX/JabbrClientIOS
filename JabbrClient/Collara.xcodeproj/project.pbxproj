@@ -52,6 +52,7 @@
 		14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */; };
 		14D905211B1BB98400B6DF63 /* CLAHomeMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */; };
 		14D905241B1BC36200B6DF63 /* CLAHomeMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905231B1BC36200B6DF63 /* CLAHomeMemberViewController.m */; };
+		14F5B5CC1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F5B5CB1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m */; };
 		14F8677F1B020D2A00CF751F /* CLARoundFrameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F8677E1B020D2A00CF751F /* CLARoundFrameButton.m */; };
 		EE809097EABCDD6117E3CED2 /* libPods-Collara.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE68A76A0440538A1CFB906 /* libPods-Collara.a */; };
 /* End PBXBuildFile section */
@@ -162,6 +163,9 @@
 		14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeMasterViewController.m; sourceTree = "<group>"; };
 		14D905221B1BC36200B6DF63 /* CLAHomeMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeMemberViewController.h; sourceTree = "<group>"; };
 		14D905231B1BC36200B6DF63 /* CLAHomeMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeMemberViewController.m; sourceTree = "<group>"; };
+		14F5B5C71B2CD710005FDCC3 /* CLAPushNotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAPushNotificationService.h; path = Lib/CLAPushNotificationService.h; sourceTree = "<group>"; };
+		14F5B5CA1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAAzureHubPushNotificationService.h; path = Lib/CLAAzureHubPushNotificationService.h; sourceTree = "<group>"; };
+		14F5B5CB1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAAzureHubPushNotificationService.m; path = Lib/CLAAzureHubPushNotificationService.m; sourceTree = "<group>"; };
 		14F8677D1B020D2A00CF751F /* CLARoundFrameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoundFrameButton.h; path = CustomControl/CLARoundFrameButton.h; sourceTree = "<group>"; };
 		14F8677E1B020D2A00CF751F /* CLARoundFrameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARoundFrameButton.m; path = CustomControl/CLARoundFrameButton.m; sourceTree = "<group>"; };
 		388092327DB112E57ACB1DF5 /* Pods-Collara.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Collara.release.xcconfig"; path = "Pods/Target Support Files/Pods-Collara/Pods-Collara.release.xcconfig"; sourceTree = "<group>"; };
@@ -221,6 +225,9 @@
 				146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */,
 				142FFA691AFD4B3C0076DB6E /* CLAUtility.h */,
 				142FFA6A1AFD4B3C0076DB6E /* CLAUtility.m */,
+				14F5B5C71B2CD710005FDCC3 /* CLAPushNotificationService.h */,
+				14F5B5CA1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.h */,
+				14F5B5CB1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -606,6 +613,7 @@
 				142046461AD1F866006143D5 /* SignInViewController.m in Sources */,
 				1463CB0A1AF95D0A00BC2513 /* CLAToastManager.m in Sources */,
 				14805B7E1B2A1DF5007ACBE2 /* CLANotification.m in Sources */,
+				14F5B5CC1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m in Sources */,
 				144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
 				14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */,

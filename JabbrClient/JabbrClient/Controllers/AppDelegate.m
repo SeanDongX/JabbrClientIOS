@@ -12,16 +12,14 @@
 #import "Constants.h"
 #import "AuthManager.h"
 #import "CLAWebApiClient.h"
+#import "CLAAzureHubPushNotificationService.h"
 
 //Data Model
 #import "CLANotification.h"
+#import "CLAUser.h"
 
 //Menu
 #import "LeftMenuViewController.h"
-
-//Auzre Notification Hub
-#import <WindowsAzureMessaging/WindowsAzureMessaging.h>
-
 
 @interface AppDelegate()
 
@@ -97,16 +95,9 @@
     }
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *) deviceToken {
-    SBNotificationHub* hub = [[SBNotificationHub alloc] initWithConnectionString: kAzureNotificationHubConnectionString                                                              notificationHubPath: kAuzreNotificationHubName];
-    
-    //TODO: save device token in userdefaults and handle device tag update when user sign in and sign out;
-    NSSet *tagSet = [NSSet setWithObject: [NSString stringWithFormat:@"@%@", [[AuthManager sharedInstance] getUsername]]];
-    [hub registerNativeWithDeviceToken:deviceToken tags:tagSet completion:^(NSError* error) {
-        if (error != nil) {
-            NSLog(@"Error registering for notifications: %@", error);
-        }
-    }];
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [[AuthManager sharedInstance] cacheDeviceToken:deviceToken];
+    [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
 }
 
 
@@ -120,7 +111,8 @@
 - (void)clearUnreadNotificationOnServer {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSNumber *teamKey = [defaults objectForKey:kTeamKey];
-
+    
     [[CLAWebApiClient sharedInstance] setBadge:@0 forTeam:teamKey];
 }
+
 @end

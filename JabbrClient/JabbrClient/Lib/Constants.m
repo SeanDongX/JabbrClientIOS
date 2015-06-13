@@ -14,27 +14,28 @@
 
 #ifdef DEBUG
 
+    NSString *const kAuzreNotificationHubName = @"collarapush";
+
     #if TARGET_IPHONE_SIMULATOR
 
-    //NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
-    NSString *const kServerBaseUrl = @"http://www.collara.co/";
+        //NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
+        NSString *const kServerBaseUrl = @"http://www.collara.co/";
     #else
 
-    //NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";
-    NSString *const kServerBaseUrl = @"http://www.collara.co/";
+        //NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";
+        NSString *const kServerBaseUrl = @"http://www.collara.co/";
     #endif
 
 #else
 
     NSString *const kServerBaseUrl = @"http://www.collara.co/";
+    NSString *const kAuzreNotificationHubName = @"collarapushprod";
 
 #endif
 
 NSString *const kApiPath = @"api/v1/";
 
-NSString *const kAuzreNotificationHubName = @"collarapush";
 NSString *const kAzureNotificationHubConnectionString = @"Endpoint=sb://collarapush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=PiHeM88D6LWhitL1452bcQ1rEnxzu55R/eVbKseOhos=";
-
 
 NSTimeInterval const kMessageClientReconnectInterval = 5.0;
 
@@ -68,6 +69,7 @@ NSString *const kUsername = @"Username";
 NSString *const kAuthToken = @"AuthToken";
 NSString *const kLastAuthDate = @"LastAuthDate";
 NSString *const kTeamKey = @"TeamKey";
+NSString *const kDeviceToken = @"DeviceToken";
 
 NSString *const kMessageId = @"MessageIdKey";
 NSString *const kRoomName = @"RoomNameKey";

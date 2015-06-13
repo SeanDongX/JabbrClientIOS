@@ -7,9 +7,13 @@
 //
 
 #import "CLAWebApiClient.h"
-#import "AuthManager.h"
+
 #import "AFNetworking.h"
+
+//Util
+#import "AuthManager.h"
 #import "Constants.h"
+#import "CLAAzureHubPushNotificationService.h"
 
 @interface CLAWebApiClient()
 
@@ -142,6 +146,7 @@ static bool isFirstAccess = YES;
          else {
              [[AuthManager sharedInstance] cacheAuthToken:token];
              [[AuthManager sharedInstance] cacheUsername:username];
+             [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
              NSLog(@"Received and cached username %@ and token %@", username, token);
          }
          
@@ -214,6 +219,11 @@ static bool isFirstAccess = YES;
 }
 
 - (void)setBadge:(NSNumber *)count forTeam:(NSNumber *)teamKey  {
+    
+    if (count == nil ||teamKey == nil) {
+        return;
+    }
+    
     NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/notification/setunread/", count, @"/?teamkey=", teamKey, @"&token=", [self getToken]];
     NSString *requestUrl = [array componentsJoinedByString:@""];
     

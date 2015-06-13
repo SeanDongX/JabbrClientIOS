@@ -16,8 +16,9 @@
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
 
-//API Client
+//Services
 #import "CLAWebApiClient.h"
+#import "CLAAzureHubPushNotificationService.h"
 
 @interface CLACreateTeamViewController ()
 
@@ -147,6 +148,7 @@
 
 - (void)signOut {
     [[AuthManager sharedInstance] signOut];
+    [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
     [self switchToSignInView];
 }

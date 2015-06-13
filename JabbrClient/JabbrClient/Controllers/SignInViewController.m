@@ -8,12 +8,15 @@
 
 #import "SignInViewController.h"
 
-//Util
+//Utils
 #import "Constants.h"
 #import "AuthManager.h"
-#import "CLAWebApiClient.h"
 #import "CLAToastManager.h"
 #import "MBProgressHUD.h"
+
+//Services
+#import "CLAWebApiClient.h"
+#import "CLAAzureHubPushNotificationService.h"
 
 //Contorls
 #import "CLARoundFrameButton.h"
@@ -104,6 +107,7 @@
 
 - (void)processSignInResult: (NSString *)errorMessage {
     if (errorMessage == nil) {
+        [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
         [self cleanUpForm];
         [self switchToMainView];
     }

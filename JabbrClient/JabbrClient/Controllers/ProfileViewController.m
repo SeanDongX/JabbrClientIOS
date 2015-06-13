@@ -11,10 +11,11 @@
 //Util
 #import "Constants.h"
 #import <FontAwesomeKit/FAKIonIcons.h>
-
-//Auth & MessageClient
 #import "AuthManager.h"
+
+//Service
 #import "CLASignalRMessageClient.h"
+#import "CLAAzureHubPushNotificationService.h"
 
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
@@ -70,6 +71,7 @@
 }
 - (IBAction)signOutClicked:(id)sender {
     [[AuthManager sharedInstance] signOut];
+    [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
     [[CLASignalRMessageClient sharedInstance].roomRepository removeAllObjects];
     [self switchToSignInView];

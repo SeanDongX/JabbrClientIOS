@@ -12,3 +12,6 @@ JabbrClient/Podfile.lock
 *.xcbkptlist
 
 *.xcworkspace
+
+JabbrClient/build
+JabbrClient/infer-out

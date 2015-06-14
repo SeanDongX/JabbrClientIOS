@@ -9,13 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "ObjectiveCGenerics.h"
 
+//Data Models
+#import "CLAMessage.h"
+#import "CLAUser.h"
+
+
 GENERICSABLE(CLARoom)
 
 @interface CLARoom : NSObject<CLARoom>
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSArray *users;
-@property (nonatomic, strong) NSArray *owners;
+@property (nonatomic) NSInteger unread;
+@property (nonatomic, strong) NSArray<CLAUser> *users;
+@property (nonatomic, strong) NSArray<CLAUser> *owners;
+@property (nonatomic, strong) NSMutableArray<CLAMessage> *messages;
 
 - (NSString *)getHandle;
 + (NSString *)getHandle: (NSString *)roomName;

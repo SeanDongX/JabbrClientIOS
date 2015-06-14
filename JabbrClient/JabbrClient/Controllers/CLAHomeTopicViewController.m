@@ -65,10 +65,10 @@
 }
 
 - (void)updateTeam:(NSNotification *)notification {
-    CLATeamViewModel *teamViewModel = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
-    
+    CLATeamViewModel *teamViewModel = [self getTeam];
+    self.rooms = [teamViewModel.rooms allValues];
     if (teamViewModel != nil) {
-        [self updateRooms:teamViewModel.rooms];
+        [self updateRooms:self.rooms];
         
         if (teamViewModel.team != nil) {
             self.welcomeLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Welcome to join team %@", nil), teamViewModel.team.name];
@@ -76,14 +76,8 @@
     }
 }
 
-- (void)updateRooms: (NSArray *)rooms {
+- (void)updateRooms: (NSArray<CLARoom> *)rooms {
     if (rooms != nil) {
-        NSMutableArray *chatThreadArray = [NSMutableArray array];
-        for (CLARoom *room in rooms) {
-            [chatThreadArray addObject:room];
-        }
-        
-        self.rooms = chatThreadArray;
         [self.topicTableView reloadData];
     }
 }
@@ -211,6 +205,9 @@
 
 #pragma mark -
 #pragma mark Private Methods
+- (CLATeamViewModel *)getTeam {
+    return [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
+}
 
 - (void)filterContentForSearchText:(NSString*)searchText
 {

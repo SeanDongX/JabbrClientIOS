@@ -76,6 +76,7 @@ NSString *const kRoomName = @"RoomNameKey";
 
 NSString *const kEventTeamUpdated = @"EventTeamUpdatedKey";
 NSString *const kEventNoTeam = @"EventNoTeamKey";
+NSString *const kEventRoomUpdated = @"EventRoomUpdatedKey";
 
 int const kTeamNameMaxLength = 50;
 
@@ -178,6 +179,8 @@ NSString *const kNotificationAppUrl = @"appUrl";
 }
 
 + (UIColor*)warningColor {
-    return [UIColor colorWithRed:(246/255.0) green:(95/255.0) blue:(77/255.0) alpha:1];
+    return [UIColor colorWithRed:(237/255.0) green:(85/255.0) blue:(101/255.0) alpha:1];
 }
+
+
 @end

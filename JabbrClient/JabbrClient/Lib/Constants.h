@@ -56,6 +56,7 @@ FOUNDATION_EXPORT NSString *const kRoomName;
 
 FOUNDATION_EXPORT NSString *const kEventTeamUpdated;
 FOUNDATION_EXPORT NSString *const kEventNoTeam;
+FOUNDATION_EXPORT NSString *const kEventRoomUpdated;
 
 FOUNDATION_EXPORT int const kTeamNameMaxLength;
 

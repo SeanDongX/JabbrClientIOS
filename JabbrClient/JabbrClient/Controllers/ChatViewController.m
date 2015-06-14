@@ -100,11 +100,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     self.senderDisplayName = self.messageClient.username;
 }
 
-
-- (NSMutableDictionary*)getChatThreadRepository {
-    return self.messageClient.roomRepository;
-}
-
 #pragma mark -
 #pragma mark - Menu Setup
 
@@ -155,11 +150,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
     self.currentRoom = chatThread;
     self.navigationItem.title = [NSString stringWithFormat:@"#%@", self.currentRoom.name];
     
-    if (![[self getChatThreadRepository] objectForKey:self.currentRoom.name]) {
-        [[self getChatThreadRepository] setObject:[NSMutableArray array] forKey:self.currentRoom.name];
-        [self initialzeCurrentThread];
-    }
-    
+    [self initialzeCurrentThread];
+  
     [self joinUserToRoomModel];
     [self.messageClient joinRoom:self.currentRoom.name];
     [self.messageClient loadRoom:self.currentRoom.name];
@@ -173,31 +165,35 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [self sendTeamUpdatedEventNotification];
 }
 
-- (NSMutableArray<CLAMessage> *)getCurrentMessageThread {
-    return (NSMutableArray<CLAMessage> *)[[self getChatThreadRepository] objectForKey:self.currentRoom.name];
+- (CLARoom *)getRoom:(NSString*)roomName {
+    return[[self.messageClient.dataRepository getDefaultTeam].rooms objectForKey:roomName];
 }
+
+- (NSMutableArray<CLAMessage> *)getCurrentRoomMessages {
+    return [self getMessagesForRoom:self.currentRoom.name];
+}
+
+- (NSMutableArray<CLAMessage> *)getMessagesForRoom:(NSString*)roomName {
+    return [self getRoom:roomName].messages;
+}
+
 
 - (void)setCurrentMessageThread:(NSMutableArray *)messages {
-    [[self getChatThreadRepository] setObject:messages forKey:self.currentRoom.name];
+    CLARoom *room = [[self.messageClient.dataRepository getDefaultTeam].rooms objectForKey:self.currentRoom.name];
+    room.messages = messages;
 }
 
-- (void)addMessage:(CLAMessage *)message toRoom: (NSString*)threadTitle {
+- (void)addMessage:(CLAMessage *)message toRoom:(NSString*)roomName {
     if (!message) {
         return;
     }
     
     //default to current thead
-    if (!threadTitle) {
-        [[self getCurrentMessageThread] addObject:message];
+    if (!roomName) {
+        [[self getCurrentRoomMessages] addObject:message];
     }
     else {
-        NSMutableArray* messages = [[self getChatThreadRepository] objectForKey:threadTitle];
-        if (!message) {
-            messages = [NSMutableArray array];
-            [[self getChatThreadRepository] setObject:messages forKey:threadTitle];
-        }
-        
-        [messages addObject:message];
+       [[self getMessagesForRoom:roomName] addObject:message];
     }
 }
 
@@ -245,7 +241,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (CLAMessage *)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    return [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
 }
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -256,7 +252,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
      *  Otherwise, return your previously created bubble image data objects.
      */
     
-    CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *message = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
         return self.outgoingBubbleImageView;
@@ -267,7 +263,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *message = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
 
     NSString *username = [message.senderId uppercaseString];
     NSInteger subStringIndex = username.length > 1 ? 1 : username.length;
@@ -292,7 +288,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
-    CLAMessage *message = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *message = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     
     /**
      *  iOS7-style sender name labels
@@ -302,7 +298,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     if (indexPath.item - 1 > 0) {
-        CLAMessage *previousMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item - 1];
+        CLAMessage *previousMessage = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId] isEqualToString:message.senderId]) {
             return nil;
         }
@@ -321,7 +317,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark - UICollectionView DataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [[self getCurrentMessageThread] count];
+    return [[self getCurrentRoomMessages] count];
 }
 
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -344,7 +340,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
      *  Instead, override the properties you want on `self.collectionView.collectionViewLayout` from `viewDidLoad`
      */
     
-    CLAMessage *msg = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *msg = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     
     if (!msg.isMediaMessage) {
         
@@ -382,13 +378,13 @@ static NSString * const kDefaultChatThread = @"collarabot";
     /**
      *  iOS7-style sender name labels
      */
-    CLAMessage *currentMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *currentMessage = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     if ([[currentMessage senderId] isEqualToString:self.senderId]) {
         return 0.0f;
     }
     
     if (indexPath.item - 1 > 0) {
-        CLAMessage *previousMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item - 1];
+        CLAMessage *previousMessage = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId] isEqualToString:[currentMessage senderId]]) {
             return 0.0f;
         }
@@ -407,10 +403,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender {
-    NSMutableArray<CLAMessage> *chatThreads = [self getCurrentMessageThread];
+    NSMutableArray<CLAMessage> *messages = [self getCurrentRoomMessages];
     
-    if (chatThreads != nil && chatThreads.count > 0){
-        CLAMessage *earliestMessage = [chatThreads objectAtIndex:0];
+    if (messages != nil && messages.count > 0){
+        CLAMessage *earliestMessage = [messages objectAtIndex:0];
         if (earliestMessage != nil)
         {
             self.showLoadEarlierMessagesHeader = false;
@@ -509,7 +505,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     //Cautious check to see if the message is has been loaded before
-    NSArray<CLAMessage> *currentMessages = [[self getChatThreadRepository] objectForKey:room];
+    NSArray<CLAMessage> *currentMessages = [self getMessagesForRoom:room];
     
     if (earlierMessages != nil && earlierMessages.count > 0
         && currentMessages != nil && currentMessages.count > 0) {
@@ -538,7 +534,9 @@ static NSString * const kDefaultChatThread = @"collarabot";
     earlierMessages = nil;
     currentMessages = nil;
     
-    [[self getChatThreadRepository] setObject:aggregatedMessage forKey:room];
+    CLARoom *claRoom = [self getRoom:room];
+    claRoom.messages = nil;
+    claRoom.messages = aggregatedMessage;
     
     [self finishReceivingMessageAnimated:FALSE];
     self.showLoadEarlierMessagesHeader = TRUE;
@@ -547,7 +545,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)reaplceMessageId:(NSString *)tempMessageId withMessageId:(NSString *)serverMessageId {
     
-    NSMutableArray *currentMessages = [self getCurrentMessageThread];
+    NSMutableArray *currentMessages = [self getCurrentRoomMessages];
     
     for (CLAMessage *message in currentMessages) {
         if ([CLAUtility isString:message.oId caseInsensitiveEqualTo:tempMessageId]) {
@@ -562,7 +560,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)sendMessage: (CLAMessage *)message {
     
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
-    [[self getCurrentMessageThread] addObject:message];
+    [[self getCurrentRoomMessages] addObject:message];
     [self finishSendingMessageAnimated:TRUE];
     [self.messageClient sendMessage:message inRoom:self.currentRoom.name];
 }
@@ -674,15 +672,19 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [[NSNotificationCenter defaultCenter] postNotificationName:kEventNoTeam object:nil userInfo:nil];
 }
 
+- (void)sendRoomUpdateEventNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEventRoomUpdated object:nil userInfo:nil];
+}
+
 - (NSDate *)getMessageDisplayDateAt:(NSIndexPath *)indexPath {
-    CLAMessage *currentMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item];
+    CLAMessage *currentMessage = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
 
     if (indexPath.item == 0) {
         return currentMessage.date;
     }
     else {
         
-        CLAMessage *previsousMessage = [[self getCurrentMessageThread] objectAtIndex:indexPath.item - 1];
+        CLAMessage *previsousMessage = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item - 1];
         if (currentMessage.date != nil
             && previsousMessage.date != nil
             && [currentMessage.date secondsFrom:previsousMessage.date] >= kMessageDisplayTimeGap) {
@@ -741,8 +743,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
             [user caseInsensitiveCompare:self.messageClient.username] == NSOrderedSame;
 }
 
-- (void)addUnread:(NSInteger)count toRoom: (NSString *)room {
-    //[self.messageClient.dataRepository getDefaultTeam]
+- (void)addUnread:(NSInteger)count toRoom: (NSString *)roomName {
+    CLARoom *room = [self getRoom:roomName];
+    room.unread += count;
+    [self sendRoomUpdateEventNotification];
 }
 
 @end

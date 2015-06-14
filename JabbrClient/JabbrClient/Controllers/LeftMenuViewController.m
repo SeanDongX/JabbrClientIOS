@@ -64,7 +64,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self updateChatThreads:self.rooms];
+    [self updateRooms:self.rooms];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -104,6 +104,8 @@
 #pragma mark Notifications
 - (void)subscribNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTeam:) name:kEventTeamUpdated object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRoom:) name:kEventRoomUpdated object:nil];
 }
 
 - (void)unsubscribNotifications {
@@ -114,14 +116,14 @@
     CLATeamViewModel *teamViewModel = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
     if (teamViewModel != nil) {
         
-        NSMutableArray *chatThreadArray = [NSMutableArray array];
-        for (CLARoom *room in teamViewModel.rooms) {
+        NSMutableArray *roomArray = [NSMutableArray array];
+        for (CLARoom *room in [teamViewModel.rooms allValues]) {
             
             if (room.users != nil && room.users.count > 0) {
             
                 for (CLAUser *user in room.users) {
                     if ([user isCurrentUser] != NO) {
-                        [chatThreadArray addObject:room];
+                        [roomArray addObject:room];
                         
                         break;
                     }
@@ -130,18 +132,24 @@
             }
         }
         
-        [self updateChatThreads:chatThreadArray];
+        [self updateRooms:roomArray];
     }
+}
+
+
+
+- (void)updateRoom:(NSNotification *)notification {
+    [self.tableView reloadData];
 }
 
 #pragma mark -
 #pragma mark - Public Methods
 
-- (void)updateChatThreads:(NSArray *)chatThreads {
+- (void)updateRooms:(NSArray<CLARoom> *)rooms {
     
     //Find current selected
     NSInteger currentSelected = -1;
-    NSString *selectedChatTitle = nil;
+    NSString *selectedRoomName = nil;
     
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     if (selectedIndexPath != nil) {
@@ -150,15 +158,15 @@
     
     if (self.rooms != nil && self.rooms.count > currentSelected) {
         CLARoom *selectedRoom = [self.rooms objectAtIndex:currentSelected];
-        selectedChatTitle = selectedRoom.name;
+        selectedRoomName = selectedRoom.name;
     }
     
-    //Update threads array and table view
-    self.rooms = chatThreads;
+    //Update room array and table view
+    self.rooms = rooms;
     [self.tableView reloadData];
     
     //select last selected, if any
-    [self selectRoom:selectedChatTitle closeMenu:NO];
+    [self selectRoom:selectedRoomName closeMenu:NO];
 }
 
 - (void)selectRoom: (NSString *)room closeMenu:(BOOL)close {
@@ -201,18 +209,26 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"MenuCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    CLARoom *room = [self getRoomAtRow:indexPath.row];
+    BOOL unreadHidden = room.unread <= 0;
+    NSString *counterText = room.unread > 99 ? @"99+" : [@(room.unread) stringValue];
     
-    CLARoom *room = [self getChatThreadAtRow:indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
     cell.textLabel.text = [room getHandle];
-
     cell.textLabel.textColor = [UIColor whiteColor];
     [cell setBackgroundColor:[UIColor clearColor]];
-    
     UIView *backgroundView = [UIView new];
     backgroundView.backgroundColor = [Constants highlightColor];
     cell.selectedBackgroundView = backgroundView;
+
+    UIView *unreadView = [cell.contentView viewWithTag:1];
+    unreadView.hidden = unreadHidden;
+    unreadView.backgroundColor = [Constants warningColor];
+    unreadView.layer.cornerRadius = 8;
+    unreadView.layer.masksToBounds = YES;
+    
+    UILabel *unreadLabel = (UILabel *)[cell.contentView viewWithTag:2];
+    unreadLabel.text = counterText;
     
     return cell;
 }
@@ -268,7 +284,9 @@
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
-        [chatViewController switchToRoom:[self getChatThreadAtRow:indexPath.row]];
+        CLARoom *room = [self getRoomAtRow:indexPath.row];
+        [self setRoom:room.name withUnread:0];
+        [chatViewController switchToRoom:room];
     }
     
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
@@ -329,7 +347,7 @@
     self.filteredChatThreads = [self.rooms filteredArrayUsingPredicate:resultPredicate];
 }
 
-- (CLARoom *)getChatThreadAtRow:(NSInteger)row {
+- (CLARoom *)getRoomAtRow:(NSInteger)row {
     if (self.isFiltered) {
         return [self.filteredChatThreads objectAtIndex:row];
     } else {
@@ -358,4 +376,12 @@
     }
 }
 
+- (void)setRoom:(NSString *)roomName withUnread:(NSInteger)count {
+    for (CLARoom *room in self.rooms) {
+        if ([room.name isEqual:roomName]) {
+            room.unread = count;
+            return;
+        }
+    }
+}
 @end

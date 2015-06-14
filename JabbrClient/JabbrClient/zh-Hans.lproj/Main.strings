@@ -71,6 +71,9 @@
 /* Class = "UIBarButtonItem"; title = "Docs"; ObjectID = "bRO-fd-KOx"; */
 "bRO-fd-KOx.title" = "文档";
 
+/* Class = "UILabel"; text = "99+"; ObjectID = "bdi-ZI-Ew4"; */
+"bdi-ZI-Ew4.text" = "99+";
+
 /* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "cLn-gR-ov7"; */
 "cLn-gR-ov7.title" = "菜单";
 

@@ -21,7 +21,7 @@ GENERICSABLE(CLATeamViewModel)
 @interface CLATeamViewModel : NSObject<CLATeamViewModel>
 
 @property (nonatomic, strong) CLATeam *team;
-@property (nonatomic, strong) NSArray<CLARoom> *rooms;
+@property (nonatomic, strong) NSMutableDictionary *rooms;
 @property (nonatomic, strong) NSArray<CLAUser> *users;
 
 - (CLAUser *)findUser:(NSString *)username;

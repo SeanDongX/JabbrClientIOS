@@ -26,7 +26,7 @@
         return;
     }
     
-    for (CLARoom *room in self.rooms) {
+    for (CLARoom *room in [self.rooms allValues]) {
         if ([room.name isEqualToString:roomName]) {
             BOOL userFound = FALSE;
             
@@ -56,7 +56,7 @@
     team.name = [teamDictionary objectForKey:@"Name"];
     team.key = [teamDictionary objectForKey:@"Key"];
     
-    NSMutableArray<CLARoom> *roomArray = [NSMutableArray array];
+    NSMutableDictionary *roomArray = [NSMutableDictionary dictionary];
     NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
     if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0){
         
@@ -76,7 +76,8 @@
             }
             
             claRoom.users = usersArray;
-            [roomArray addObject:claRoom];
+            claRoom.messages = [NSMutableArray array];
+            [roomArray setObject:claRoom forKey:claRoom.name];
         }
     }
     

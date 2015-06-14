@@ -10,10 +10,6 @@
 #import "DocumentThread.h"
 #import <JSQMessagesViewController/JSQMessages.h>
 
-static NSString * const kMe = @"mike";
-static NSString * const kJenifer = @"jenifer";
-static NSString * const kKate = @"kate";
-
 @implementation DemoData
 
 + (DemoData *)sharedDemoData {
@@ -28,7 +24,6 @@ static NSString * const kKate = @"kate";
 - (id)init {
     if (self = [super init]) {
         [self setupUsernamePassword];
-        [self setupAvatars];
         [self setupDocumentThreads];
     }
     return self;
@@ -38,20 +33,6 @@ static NSString * const kKate = @"kate";
     self.myUsername = @"Mike";
     self.mySenderId = @"Mike";
     self.myPassword = @"Password1";
-}
-
-
-- (void)setupAvatars {
-    
-    JSQMessagesAvatarImage *avatorUser1 = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"Avator_User1"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    
-    JSQMessagesAvatarImage *avatorUser2 = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"Avator_User2"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    
-    JSQMessagesAvatarImage *avatorUser3 = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"Avator_User3"] diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-    
-    self.avatars = @{ kMe : avatorUser2,
-                      kJenifer : avatorUser1,
-                      kKate: avatorUser3 };
 }
 
 - (void)setupDocumentThreads {

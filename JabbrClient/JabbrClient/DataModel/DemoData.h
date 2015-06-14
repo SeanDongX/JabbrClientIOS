@@ -14,8 +14,6 @@
 @property (nonatomic, strong) NSString *myPassword;
 @property (nonatomic, strong) NSString *mySenderId;
 
-@property (strong, nonatomic) NSDictionary *avatars;
-
 @property (nonatomic, strong) NSMutableArray *documentThreads;
 @property (nonatomic, strong) NSMutableArray *chatThreads;
 

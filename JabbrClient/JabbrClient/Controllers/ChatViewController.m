@@ -499,13 +499,17 @@ static NSString * const kDefaultChatThread = @"collarabot";
 }
 
 - (void)didLoadEarlierMessages:(NSArray<CLAMessage> *)earlierMessages inRoom:(NSString *)room {
-    if (room == nil || earlierMessages == nil || earlierMessages.count == 0){
-        self.showLoadEarlierMessagesHeader = FALSE;
+    NSInteger earlierMessageCount = earlierMessages.count;
+    
+    self.showLoadEarlierMessagesHeader = earlierMessageCount >= kLoadEarlierMessageCount;
+    
+    if (room == nil || earlierMessages == nil || earlierMessageCount == 0){
         return;
     }
     
     //Cautious check to see if the message is has been loaded before
     NSArray<CLAMessage> *currentMessages = [self getMessagesForRoom:room];
+    NSInteger currentMessageCount = currentMessages.count;
     
     if (earlierMessages != nil && earlierMessages.count > 0
         && currentMessages != nil && currentMessages.count > 0) {
@@ -538,8 +542,14 @@ static NSString * const kDefaultChatThread = @"collarabot";
     claRoom.messages = nil;
     claRoom.messages = aggregatedMessage;
     
-    [self finishReceivingMessageAnimated:FALSE];
-    self.showLoadEarlierMessagesHeader = TRUE;
+    [self finishReceivingMessageAnimated:NO];
+    
+    //focus on the precise message before the newly loaded earlier messages
+    if (earlierMessageCount > 0 && currentMessageCount > 0) {
+        [self.collectionView scrollToItemAtIndexPath: [NSIndexPath indexPathForRow:earlierMessageCount-1 inSection:0]
+                                atScrollPosition:UICollectionViewScrollPositionTop
+                                        animated:NO];
+    }
 }
 
 

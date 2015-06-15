@@ -93,6 +93,8 @@ NSString *const kNotificationAps = @"aps";
 NSString *const kNotificationAlert = @"alert";
 NSString *const kNotificationAppUrl = @"appUrl";
 
+int const kLoadEarlierMessageCount = 50;
+
 + (NSDictionary *)toasOptions {
     return @{
              kCRToastFontKey: [UIFont systemFontOfSize:16],

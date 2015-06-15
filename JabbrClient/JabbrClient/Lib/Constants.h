@@ -73,6 +73,8 @@ FOUNDATION_EXPORT NSString *const kNotificationAps;
 FOUNDATION_EXPORT NSString *const kNotificationAlert;
 FOUNDATION_EXPORT NSString *const kNotificationAppUrl;
 
+FOUNDATION_EXPORT int const kLoadEarlierMessageCount;
+
 + (NSDictionary *)toasOptions;
 
 + (UIImage *)menuIconImage;

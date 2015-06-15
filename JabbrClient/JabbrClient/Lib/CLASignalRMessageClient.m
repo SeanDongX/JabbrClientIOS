@@ -77,7 +77,6 @@ static bool isFirstAccess = YES;
         [self doesNotRecognizeSelector:_cmd];
     }
     self = [super init];
-    self.roomRepository = [NSMutableDictionary dictionary];
     self.dataRepository = [[CLAInMemoryDataRepository alloc] init];
     return self;
 }
@@ -143,6 +142,7 @@ static bool isFirstAccess = YES;
     [self.hub on:@"addMessage" perform:self selector:@selector(incomingMessage:)];
     [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
     [self.hub on:@"roomLoaded" perform:self selector:@selector(roomLoaded:)];
+    [self.hub on:@"joinRoom" perform:self selector:@selector(joinRoomReceived:)];
     //TODO: show error msg when connection failed
     
     //[self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
@@ -387,6 +387,32 @@ static bool isFirstAccess = YES;
     }
 
     [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];
+}
+
+- (void)joinRoomReceived: (NSArray *)data {
+    if (data == nil)
+    {
+        return;
+    }
+    
+    NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
+    CLARoom *room = [[CLARoom alloc] init];
+    room.name = [roomInfoDictionary objectForKey:@"Name"];
+    
+    CLATeamViewModel *team = [self.dataRepository getDefaultTeam];
+    NSMutableDictionary *rooms = team.rooms;
+    
+    BOOL isNewRoom = NO;
+    
+    if ([rooms objectForKey:room.name] == nil) {
+        isNewRoom = YES;
+        [rooms setObject:room forKey:room.name];
+        //join current user to room
+        CLAUser *currentUser = [team findUser:[[AuthManager sharedInstance] getUsername]];
+        [team joinUser:currentUser toRoom:room.name];
+    }
+    
+    [self.delegate didReceiveJoinRoom:room andUpdateRoom:isNewRoom];
 }
 
 

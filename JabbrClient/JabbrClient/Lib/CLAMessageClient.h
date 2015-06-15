@@ -44,7 +44,6 @@ typedef enum {
 
 @property (nonatomic, weak) id<CLAMessageClientDelegate> delegate;
 @property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSMutableDictionary *roomRepository;
 @property (nonatomic, strong) id<CLADataRepositoryProtocol> dataRepository;
 @property (nonatomic) BOOL teamLoaded;
 
@@ -85,10 +84,11 @@ typedef enum {
  **/
 - (void)didOpenConnection;
 - (void)didConnectionChnageState:(CLAConnectionState)oldState newState:(CLAConnectionState)newState;
-- (void)didReceiveTeams: (NSArray *)teams;
+- (void)didReceiveTeams:(NSArray *)teams;
+- (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update;
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room;
-- (void)didLoadEarlierMessages: (NSArray *) earlierMessages inRoom:(NSString*)room;
-- (void)didLoadUsers: (NSArray *) users inRoom:(NSString*)room;
+- (void)didLoadEarlierMessages:(NSArray<CLAMessage> *) earlierMessages inRoom:(NSString*)room;
+- (void)didLoadUsers:(NSArray <CLAUser> *) users inRoom:(NSString*)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 - (void)reaplceMessageId:(NSString *)tempMessageId withMessageId:(NSString *)serverMessageId;
 @optional

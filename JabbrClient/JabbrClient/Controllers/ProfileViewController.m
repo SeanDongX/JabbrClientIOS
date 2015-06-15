@@ -61,7 +61,7 @@
     
     NSString *initial = [self getUserRealName].length > 1 ? [[self getUserRealName] substringToIndex:1] : @"";
     
-    [self.profileImageView setImage:[JSQMessagesAvatarImageFactory avatarImageWithUserInitials:initial
+    [self.profileImageView setImage:[JSQMessagesAvatarImageFactory avatarImageWithUserInitials:[initial uppercaseString]
                                                backgroundColor: [Constants mainThemeContrastColor]
                                                      textColor: [UIColor whiteColor]
                                                           font:[UIFont systemFontOfSize:18]
@@ -76,7 +76,7 @@
     [[AuthManager sharedInstance] signOut];
     [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
-    [[CLASignalRMessageClient sharedInstance].roomRepository removeAllObjects];
+    //TODO:MessageClient clear data repository
     [self switchToSignInView];
 }
 

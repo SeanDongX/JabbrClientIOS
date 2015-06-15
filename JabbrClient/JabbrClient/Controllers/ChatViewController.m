@@ -145,9 +145,9 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 #pragma mark -
 #pragma mark - Chat Thread Methods
-- (void)switchToRoom:(CLARoom *)chatThread {
+- (void)switchToRoom:(CLARoom *)room {
     
-    self.currentRoom = chatThread;
+    self.currentRoom = room;
     self.navigationItem.title = [NSString stringWithFormat:@"#%@", self.currentRoom.name];
     
     [self initialzeCurrentThread];
@@ -454,11 +454,25 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
     
     [self sendTeamUpdatedEventNotification];
+}
+
+- (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update {
+    if ([self.currentRoom.name isEqual:room.name]) {
+        return;
+    }
     
-    if (self.preselectedTitle != nil) {
-        LeftMenuViewController *leftMenuViewController = (LeftMenuViewController *)self.slidingViewController.underLeftViewController;
-        [leftMenuViewController selectRoom:self.preselectedTitle closeMenu:YES];
-        self.preselectedTitle = nil;
+    if (update != NO) {
+        [self sendTeamUpdatedEventNotification];
+    }
+    
+    SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
+    
+    //make sure room switch works both ways, ie, when chat view is active main view or not
+    if (slidingViewController != nil) {
+        [slidingViewController switchToRoom:room.name];
+    }
+    else {
+        [self switchToRoom:room];
     }
 }
 

@@ -125,18 +125,6 @@
     [leftMenu selectRoom:room closeMenu:YES];
 }
 
-- (void)switchToRoomAtNextReload:(NSString *)room {
-    UINavigationController *navController = [self getNavigationControllerWithKeyIdentifier:kChatNavigationController];
-    
-    if (navController != nil) {
-        ChatViewController *chatViewController = (ChatViewController *)[navController.viewControllers objectAtIndex:0];
-        
-        if (chatViewController != nil) {
-            chatViewController.preselectedTitle = room;
-        }
-    }
-}
-
 #pragma mark -
 #pragma mark Private Methods
 

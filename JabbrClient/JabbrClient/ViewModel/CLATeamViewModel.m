@@ -39,6 +39,10 @@
             }
             
             if (userFound == FALSE) {
+                if (room.users == nil) {
+                    room.users = @[];
+                }
+                
                 NSMutableArray<CLAUser> *copyUsers = [room.users mutableCopy];
                 [copyUsers addObject:newUser];
                 room.users = copyUsers;

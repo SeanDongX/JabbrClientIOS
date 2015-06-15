@@ -65,7 +65,6 @@
         if (error == nil) {
             __strong __typeof(&*weakSelf)strongSelf = weakSelf;
             
-            [strongSelf.slidingMenuViewController switchToRoomAtNextReload:topic];
             [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
             [strongSelf dismissViewControllerAnimated:YES completion:nil];
         }

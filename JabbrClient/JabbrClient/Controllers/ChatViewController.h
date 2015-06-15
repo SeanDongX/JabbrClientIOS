@@ -17,8 +17,6 @@
 
 @interface ChatViewController : JSQMessagesViewController <CLAMessageClientDelegate>
 
-@property (strong, nonatomic) NSString *preselectedTitle;
-
 - (void)switchToRoom:(CLARoom *)room;
 
 - (void)didReceiveTeams: (NSArray *)userTeams;

@@ -18,6 +18,5 @@
 - (void)switchToSignInView;
 - (void)switchToCreateTeamView;
 - (void)switchToRoom: (NSString *)room;
-- (void)switchToRoomAtNextReload: (NSString *)room;
 
 @end

@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import <FontAwesomeKit/FAKIonIcons.h>
 #import "AuthManager.h"
+#import <JSQMessagesViewController/JSQMessages.h>
 
 //Service
 #import "CLASignalRMessageClient.h"
@@ -57,12 +58,14 @@
     
     FAKIonIcons *userIcon = [FAKIonIcons iosPersonIconWithSize:50];
     [userIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
-
-    [self.profileImageView setImage: [userIcon imageWithSize:CGSizeMake(50, 50)]];
-    self.profileImageView.layer.cornerRadius = 50;
-    self.profileImageView.layer.borderWidth = 2;
-    self.profileImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.profileImageView.layer.backgroundColor = [Constants mainThemeContrastColor].CGColor;
+    
+    NSString *initial = [self getUserRealName].length > 1 ? [[self getUserRealName] substringToIndex:1] : @"";
+    
+    [self.profileImageView setImage:[JSQMessagesAvatarImageFactory avatarImageWithUserInitials:initial
+                                               backgroundColor: [Constants mainThemeContrastColor]
+                                                     textColor: [UIColor whiteColor]
+                                                          font:[UIFont systemFontOfSize:18]
+                                                      diameter:50.0f].avatarImage];
 }
 
 

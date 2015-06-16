@@ -31,3 +31,6 @@
 "Members" = "Members";
 "Team invitation message" = "Hi, \n\n%@ has invited you to join him on team %@ on Collara. \n\nPlease follow the link to get started: %@ \n\nor use this invitation code directly in our app: %@ \n\n\nNeed Collara app? Download it form here: %@ \n\n\nTeam Collara";
 "Oops, something went wrong." = "Oops, something went wrong.";
+
+"PushNotificationMentionMessage" = "%@ mentioned you in %@ : %@";
+"PushNotificationRoomInviteMessage" = "%@ invited you to join %@";

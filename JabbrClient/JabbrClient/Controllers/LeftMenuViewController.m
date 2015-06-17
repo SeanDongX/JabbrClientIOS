@@ -10,6 +10,8 @@
 
 //Util
 #import "Constants.h"
+#import "CLAUtility.h"
+#import "DateTools.h"
 
 //Data Model
 #import "CLATeamViewModel.h"
@@ -29,6 +31,9 @@
 #import "ChatViewController.h"
 #import "CLACreateRoomViewController.h"
 
+//Custom Controls
+#import "BOZPongRefreshControl.h"
+
 @interface LeftMenuViewController ()
 
 @property (nonatomic, strong) NSArray<CLARoom> *rooms;
@@ -42,6 +47,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIImageView *homeIcon;
 @property (weak, nonatomic) IBOutlet UIButton *homeButton;
+
+@property (nonatomic, strong) BOZPongRefreshControl *pongRefreshControl;
+@property (nonatomic) BOOL isRefreshing;
 
 @end
 
@@ -70,6 +78,14 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.view endEditing:YES];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    self.pongRefreshControl = [BOZPongRefreshControl attachToTableView:self.tableView
+                                                     withRefreshTarget:self
+                                                      andRefreshAction:@selector(refreshTriggered)];
+    self.pongRefreshControl.backgroundColor = [Constants highlightColor];
 }
 
 - (void)setupMenu {
@@ -134,8 +150,9 @@
         
         [self updateRooms:roomArray];
     }
+    [self.tableView reloadData];
+    [self didFinishRefresh];
 }
-
 
 
 - (void)updateRoom:(NSNotification *)notification {
@@ -193,6 +210,53 @@
             return;
         }
     }
+}
+
+#pragma mark -
+#pragma mark - Pull To Resfresh
+
+- (void)refreshTriggered
+{
+    [CLAUtility setUserDefault:[NSDate date] forKey:kLastRefreshTime];
+    self.isRefreshing = TRUE;
+    [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
+    //team loading finished will be notified through kEventTeamUpdated notification which calls self.updateTeam method
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.pongRefreshControl scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.pongRefreshControl scrollViewDidEndDragging];
+}
+
+- (void)didFinishRefresh {
+
+    if (!self.isRefreshing) {
+        return;
+    }
+    
+    NSDate *lastRefreshTime = [CLAUtility getUserDefault:kLastRefreshTime];
+    NSTimeInterval remainTime = 0;
+    
+    if (![lastRefreshTime isEqual:[NSNull null]]) {
+        remainTime =  minRefreshLoadTime + [lastRefreshTime timeIntervalSinceNow];
+        remainTime = remainTime > minRefreshLoadTime ? minRefreshLoadTime : remainTime;
+    }
+    
+    [NSTimer scheduledTimerWithTimeInterval:remainTime
+                                     target:self
+                                   selector:@selector(finishRefresh)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)finishRefresh {
+    [self.pongRefreshControl finishedLoading];
+    self.isRefreshing = FALSE;
 }
 
 #pragma mark -

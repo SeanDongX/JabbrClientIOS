@@ -29,4 +29,10 @@
     return [defaults objectForKey:key];
 }
 
++ (void)setUserDefault:(id)value forKey:(NSString *)key {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:value forKey:key];
+    [defaults synchronize];
+}
+
 @end

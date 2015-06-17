@@ -95,6 +95,9 @@ NSString *const kNotificationAppUrl = @"appUrl";
 
 int const kLoadEarlierMessageCount = 50;
 
+NSString *const kLastRefreshTime = @"LastRefreshTimeKey";
+NSTimeInterval const minRefreshLoadTime = 3;
+
 + (NSDictionary *)toasOptions {
     return @{
              kCRToastFontKey: [UIFont systemFontOfSize:16],

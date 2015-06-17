@@ -27,6 +27,9 @@
 //View Controller
 #import "CLACreateRoomViewController.h"
 
+//Custom Controls
+#import "BOZPongRefreshControl.h"
+
 @interface CLAHomeMemberViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *teamMemberTableView;
@@ -36,6 +39,9 @@
 
 @property (strong, nonatomic) NSArray<CLAUser> *users;
 @property (strong, nonatomic) NSArray<CLAUser> *filteredUsers;
+
+@property (nonatomic, strong) BOZPongRefreshControl *pongRefreshControl;
+@property (nonatomic) BOOL isRefreshing;
 
 @end
 
@@ -54,6 +60,17 @@
     [self unsubscribNotifications];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    //The very first time this is called, the table view has a smaller size than the screen size
+    if (self.teamMemberTableView.frame.size.width >= [UIScreen mainScreen].bounds.size.width) {
+        self.pongRefreshControl = [BOZPongRefreshControl attachToTableView:self.teamMemberTableView
+                                                         withRefreshTarget:self
+                                                          andRefreshAction:@selector(refreshTriggered)];
+        self.pongRefreshControl.backgroundColor = [Constants highlightColor];
+    }
+}
+
 #pragma mark -
 #pragma mark Notifications
 - (void)subscribNotifications {
@@ -70,6 +87,8 @@
     if (teamViewModel != nil) {
         [self updateTeamMembers:teamViewModel.users];
     }
+    
+    [self didFinishRefresh];
 }
 
 - (void)updateTeamMembers: (NSArray *)users {
@@ -77,6 +96,53 @@
         self.users = users;
         [self.teamMemberTableView reloadData];
     }
+}
+
+#pragma mark -
+#pragma mark - Pull To Resfresh
+
+- (void)refreshTriggered
+{
+    [CLAUtility setUserDefault:[NSDate date] forKey:kLastRefreshTime];
+    self.isRefreshing = TRUE;
+    [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
+    //team loading finished will be notified through kEventTeamUpdated notification which calls self.updateTeam method
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.pongRefreshControl scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.pongRefreshControl scrollViewDidEndDragging];
+}
+
+- (void)didFinishRefresh {
+    
+    if (!self.isRefreshing) {
+        return;
+    }
+    
+    NSDate *lastRefreshTime = [CLAUtility getUserDefault:kLastRefreshTime];
+    NSTimeInterval remainTime = 0;
+    
+    if (![lastRefreshTime isEqual:[NSNull null]]) {
+        remainTime =  minRefreshLoadTime + [lastRefreshTime timeIntervalSinceNow];
+        remainTime = remainTime > minRefreshLoadTime ? minRefreshLoadTime : remainTime;
+    }
+    
+    [NSTimer scheduledTimerWithTimeInterval:remainTime
+                                     target:self
+                                   selector:@selector(finishRefresh)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)finishRefresh {
+    [self.pongRefreshControl finishedLoading];
+    self.isRefreshing = FALSE;
 }
 
 #pragma mark - XLPagerTabStripViewControllerDelegate

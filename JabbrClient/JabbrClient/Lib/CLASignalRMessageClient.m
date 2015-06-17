@@ -258,7 +258,7 @@ static bool isFirstAccess = YES;
     
     for (NSDictionary *teamDictionary in data) {
         CLATeamViewModel *teamViewModel = [CLATeamViewModel getFromData:teamDictionary];
-        [self.dataRepository addTeam:teamViewModel];
+        [self.dataRepository addOrUpdateTeam:teamViewModel];
     }
     
     CLATeamViewModel *myTeamViewModel = [self.dataRepository getDefaultTeam];

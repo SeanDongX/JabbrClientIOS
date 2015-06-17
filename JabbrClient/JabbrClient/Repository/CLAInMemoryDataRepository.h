@@ -15,6 +15,6 @@
 -(CLATeamViewModel *)get:(NSString*)name;
 -(CLATeamViewModel *)getDefaultTeam;
 -(NSArray<CLATeamViewModel> *)getTeams;
--(void)addTeam:(CLATeamViewModel *)team;
+-(void)addOrUpdateTeam:(CLATeamViewModel *)team;
 
 @end

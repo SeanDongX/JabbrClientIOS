@@ -39,8 +39,29 @@
     return self.teamViewModelArray;
 }
 
--(void)addTeam:(CLATeamViewModel *)team {
-    [self.teamViewModelArray addObject:team];
+-(void)addOrUpdateTeam:(CLATeamViewModel *)teamViewModel {
+    NSInteger foundIndex = [self findIndexForTeamKey:[teamViewModel.team.key intValue]];
+    
+    if (foundIndex >= 0) {
+        [self.teamViewModelArray replaceObjectAtIndex:foundIndex withObject:teamViewModel];
+    }
+    else {
+        [self.teamViewModelArray addObject:teamViewModel];
+    }
+}
+
+-(NSInteger)findIndexForTeamKey:(NSInteger)teamKey {
+    NSInteger foundIndex = -1;
+    
+    for (int i = 0; i< self.teamViewModelArray.count; i++) {
+        CLATeamViewModel *currentTeamViewModel = [self.teamViewModelArray objectAtIndex:i];
+        if ([currentTeamViewModel.team.key intValue] == teamKey) {
+            foundIndex = i;
+            break;
+        }
+    }
+    
+    return foundIndex;
 }
 
 @end

@@ -10,6 +10,7 @@
 
 //Util
 #import "Constants.h"
+#import "CLAUtility.h"
 #import "AuthManager.h"
 #import "CLAWebApiClient.h"
 #import "CLAAzureHubPushNotificationService.h"
@@ -109,10 +110,7 @@
 }
 
 - (void)clearUnreadNotificationOnServer {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
-    
-    [[CLAWebApiClient sharedInstance] setBadge:@0 forTeam:teamKey];
+    [[CLAWebApiClient sharedInstance] setBadge:@0 forTeam:[CLAUtility getUserDefault:kTeamKey]];
 }
 
 @end

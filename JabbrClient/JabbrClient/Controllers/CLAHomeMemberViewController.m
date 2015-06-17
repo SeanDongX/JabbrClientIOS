@@ -227,10 +227,7 @@
 - (void)shareInvite {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
-    
-    [[CLAWebApiClient sharedInstance] getInviteCodeForTeam:teamKey completion:^(NSString *invitationCode, NSString *errorMessage) {
+    [[CLAWebApiClient sharedInstance] getInviteCodeForTeam:[CLAUtility getUserDefault:kTeamKey] completion:^(NSString *invitationCode, NSString *errorMessage) {
         if (errorMessage != nil) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"We are terribly sorry, but some error happened.", nil) completionBlock:nil];
@@ -242,7 +239,7 @@
         
         NSString *teamName = teamViewModel.team.name;
         
-        NSString *username = [defaults objectForKey:kUsername];
+        NSString *username = [CLAUtility getUserDefault:kUsername];
         NSString *userFullName = username;
         
         CLAUser *user = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] findUser:username];

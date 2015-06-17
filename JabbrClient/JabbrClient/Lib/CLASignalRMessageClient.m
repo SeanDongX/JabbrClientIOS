@@ -10,6 +10,7 @@
 
 //Util
 #import "Constants.h"
+#import "CLAUtility.h"
 #import "AuthManager.h"
 
 //Data Model
@@ -107,11 +108,8 @@ static bool isFirstAccess = YES;
 - (void)makeConnection {
     
     NSString *server = kServerBaseUrl;
-    
     NSString *authToken = [[AuthManager sharedInstance] getCachedAuthToken];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *teamKey = [defaults objectForKey:kTeamKey];
+    NSNumber *teamKey = [CLAUtility getUserDefault:kTeamKey];
     
     if (authToken == nil) {
         //TODO: throw expcetion

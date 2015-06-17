@@ -24,4 +24,9 @@
     return firstString && [firstString caseInsensitiveCompare:secondString] == NSOrderedSame;
 }
 
++ (id)getUserDefault: (NSString *)key {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:key];
+}
+
 @end

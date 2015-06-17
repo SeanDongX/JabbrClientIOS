@@ -10,7 +10,8 @@
 
 @interface CLAUtility : NSObject
 
-+ (BOOL) isValidEmail:(NSString *)email;
-+ (BOOL) isString:(NSString *)firstString caseInsensitiveEqualTo:(NSString *)secondString;
++ (BOOL)isValidEmail:(NSString *)email;
++ (BOOL)isString:(NSString *)firstString caseInsensitiveEqualTo:(NSString *)secondString;
 
++ (id)getUserDefault: (NSString *)key;
 @end

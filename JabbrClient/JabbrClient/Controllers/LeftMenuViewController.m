@@ -121,7 +121,7 @@
 - (void)subscribNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTeam:) name:kEventTeamUpdated object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRoom:) name:kEventRoomUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveUnread:) name:kEventReceiveUnread object:nil];
 }
 
 - (void)unsubscribNotifications {
@@ -135,7 +135,7 @@
         NSMutableArray *roomArray = [NSMutableArray array];
         for (CLARoom *room in [teamViewModel.rooms allValues]) {
             
-            if (room.users != nil && room.users.count > 0) {
+            if (room.closed == false && room.users != nil && room.users.count > 0) {
             
                 for (CLAUser *user in room.users) {
                     if ([user isCurrentUser] != NO) {
@@ -148,14 +148,17 @@
             }
         }
         
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+        [roomArray sortUsingDescriptors:@[sortDescriptor]];
         [self updateRooms:roomArray];
     }
+    
     [self.tableView reloadData];
     [self didFinishRefresh];
 }
 
 
-- (void)updateRoom:(NSNotification *)notification {
+- (void)receiveUnread:(NSNotification *)notification {
     [self.tableView reloadData];
 }
 
@@ -163,27 +166,12 @@
 #pragma mark - Public Methods
 
 - (void)updateRooms:(NSArray<CLARoom> *)rooms {
-    
-    //Find current selected
-    NSInteger currentSelected = -1;
-    NSString *selectedRoomName = nil;
-    
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    if (selectedIndexPath != nil) {
-        currentSelected = selectedIndexPath.row;
-    }
-    
-    if (self.rooms != nil && self.rooms.count > currentSelected) {
-        CLARoom *selectedRoom = [self.rooms objectAtIndex:currentSelected];
-        selectedRoomName = selectedRoom.name;
-    }
-    
     //Update room array and table view
     self.rooms = rooms;
     [self.tableView reloadData];
     
     //select last selected, if any
-    [self selectRoom:selectedRoomName closeMenu:NO];
+    [self selectRoom:[CLAUtility getUserDefault:kSelectedRoomName] closeMenu:NO];
 }
 
 - (void)selectRoom: (NSString *)room closeMenu:(BOOL)close {

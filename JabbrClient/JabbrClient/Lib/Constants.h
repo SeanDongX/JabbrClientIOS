@@ -54,9 +54,11 @@ FOUNDATION_EXPORT NSString *const kDeviceToken;
 FOUNDATION_EXPORT NSString *const kMessageId;
 FOUNDATION_EXPORT NSString *const kRoomName;
 
+FOUNDATION_EXPORT NSString *const kSelectedRoomName;
+
 FOUNDATION_EXPORT NSString *const kEventTeamUpdated;
 FOUNDATION_EXPORT NSString *const kEventNoTeam;
-FOUNDATION_EXPORT NSString *const kEventRoomUpdated;
+FOUNDATION_EXPORT NSString *const kEventReceiveUnread;
 
 FOUNDATION_EXPORT int const kTeamNameMaxLength;
 

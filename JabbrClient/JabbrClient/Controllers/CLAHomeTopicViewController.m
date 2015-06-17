@@ -85,7 +85,12 @@
 
 - (void)updateTeam:(NSNotification *)notification {
     CLATeamViewModel *teamViewModel = [self getTeam];
-    self.rooms = [teamViewModel.rooms allValues];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"closed == %@", [NSNumber numberWithBool: NO]];
+    NSArray<CLARoom> *rooms = [[teamViewModel.rooms allValues] filteredArrayUsingPredicate:predicate];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    self.rooms = [rooms sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
     if (teamViewModel != nil) {
         [self updateRooms:self.rooms];
         
@@ -139,6 +144,7 @@
 - (void)didFinishRefresh {
     
     if (!self.isRefreshing) {
+        [self.topicTableView reloadData];
         return;
     }
     

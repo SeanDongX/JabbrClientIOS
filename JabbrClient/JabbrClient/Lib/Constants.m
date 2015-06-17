@@ -74,9 +74,11 @@ NSString *const kDeviceToken = @"DeviceToken";
 NSString *const kMessageId = @"MessageIdKey";
 NSString *const kRoomName = @"RoomNameKey";
 
+NSString *const kSelectedRoomName = @"SelectedRoomNameKey";
+
 NSString *const kEventTeamUpdated = @"EventTeamUpdatedKey";
 NSString *const kEventNoTeam = @"EventNoTeamKey";
-NSString *const kEventRoomUpdated = @"EventRoomUpdatedKey";
+NSString *const kEventReceiveUnread = @"EventReceiveUnreadKey";
 
 int const kTeamNameMaxLength = 50;
 

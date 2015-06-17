@@ -67,20 +67,7 @@
         for (id room in roomArrayFromDictionary) {
             NSDictionary *roomDictionary = room;
             CLARoom *claRoom = [[CLARoom alloc] init];
-            claRoom.name = [roomDictionary objectForKey:@"Name"];
-            
-            NSMutableArray *usersArray = [NSMutableArray array];
-            NSArray *usersDcitionaryArray = [roomDictionary objectForKey:@"Users"];
-            
-            if (usersDcitionaryArray != nil && usersDcitionaryArray.count > 0) {
-                for (NSDictionary *userDictionary in usersDcitionaryArray) {
-                    CLAUser *user = [CLAUser getFromData:userDictionary];
-                    [usersArray addObject:user];
-                }
-            }
-            
-            claRoom.users = usersArray;
-            claRoom.messages = [NSMutableArray array];
+            [claRoom getFromDictionary:roomDictionary];
             [roomArray setObject:claRoom forKey:claRoom.name];
         }
     }

@@ -146,6 +146,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark -
 #pragma mark - Chat Thread Methods
 - (void)switchToRoom:(CLARoom *)room {
+    [CLAUtility setUserDefault:room.name forKey:kSelectedRoomName];
     
     self.currentRoom = room;
     self.navigationItem.title = [NSString stringWithFormat:@"#%@", self.currentRoom.name];
@@ -476,6 +477,10 @@ static NSString * const kDefaultChatThread = @"collarabot";
     }
 }
 
+- (void)didReceiveUpdateRoom:(CLARoom *)room {
+    [self sendTeamUpdatedEventNotification];
+}
+
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room {
     [self addMessage:message toRoom:room];
     [self sendLocalNotificationFor:message inRoom:room];
@@ -489,7 +494,9 @@ static NSString * const kDefaultChatThread = @"collarabot";
         [self finishReceivingMessageAnimated:animated];
     }
     
-    [self addUnread:1 toRoom:room];
+    if (![room isEqualToString:self.currentRoom.name]) {
+        [self addUnread:1 toRoom:room];
+    }
 }
 
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
@@ -696,8 +703,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [[NSNotificationCenter defaultCenter] postNotificationName:kEventNoTeam object:nil userInfo:nil];
 }
 
-- (void)sendRoomUpdateEventNotification {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kEventRoomUpdated object:nil userInfo:nil];
+- (void)sendReceiveUnreadEventNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEventReceiveUnread object:nil userInfo:nil];
 }
 
 - (NSDate *)getMessageDisplayDateAt:(NSIndexPath *)indexPath {
@@ -770,7 +777,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)addUnread:(NSInteger)count toRoom: (NSString *)roomName {
     CLARoom *room = [self getRoom:roomName];
     room.unread += count;
-    [self sendRoomUpdateEventNotification];
+    [self sendReceiveUnreadEventNotification];
 }
 
 @end

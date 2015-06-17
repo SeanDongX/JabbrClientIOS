@@ -141,6 +141,7 @@ static bool isFirstAccess = YES;
     [self.hub on:@"setTyping" perform:self selector:@selector(setTyping:)];
     [self.hub on:@"roomLoaded" perform:self selector:@selector(roomLoaded:)];
     [self.hub on:@"joinRoom" perform:self selector:@selector(joinRoomReceived:)];
+    [self.hub on:@"updateRoom" perform:self selector:@selector(updateRoomReceived:)];
     //TODO: show error msg when connection failed
     
     //[self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
@@ -395,7 +396,7 @@ static bool isFirstAccess = YES;
     
     NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
     CLARoom *room = [[CLARoom alloc] init];
-    room.name = [roomInfoDictionary objectForKey:@"Name"];
+    [room getFromDictionary:roomInfoDictionary];
     
     CLATeamViewModel *team = [self.dataRepository getDefaultTeam];
     NSMutableDictionary *rooms = team.rooms;
@@ -413,6 +414,30 @@ static bool isFirstAccess = YES;
     [self.delegate didReceiveJoinRoom:room andUpdateRoom:isNewRoom];
 }
 
+- (void)updateRoomReceived: (NSArray *)data {
+    if (data == nil)
+    {
+        return;
+    }
+    
+    NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
+    CLARoom *room = [[CLARoom alloc] init];
+    [room getFromDictionary:roomInfoDictionary];
+    
+    CLATeamViewModel *team = [self.dataRepository getDefaultTeam];
+    
+    //update room does not carry information below room level
+    CLARoom *existingRoom = [team.rooms objectForKey:room.name];
+    if (existingRoom != nil) {
+        existingRoom.isPrivate = room.isPrivate;
+        existingRoom.closed = room.closed;
+        [self.delegate didReceiveUpdateRoom:existingRoom];
+    }
+    else {
+        [team.rooms setObject:room forKey:room.name];
+        [self.delegate didReceiveUpdateRoom:room];
+    }
+}
 
 #pragma mark - 
 #pragma mark - Join, Leave, Invite and etc. Commands

@@ -86,6 +86,7 @@ typedef enum {
 - (void)didConnectionChnageState:(CLAConnectionState)oldState newState:(CLAConnectionState)newState;
 - (void)didReceiveTeams:(NSArray *)teams;
 - (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update;
+- (void)didReceiveUpdateRoom:(CLARoom *)room;
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room;
 - (void)didLoadEarlierMessages:(NSArray<CLAMessage> *) earlierMessages inRoom:(NSString*)room;
 - (void)didLoadUsers:(NSArray <CLAUser> *) users inRoom:(NSString*)room;

@@ -8,15 +8,12 @@ target 'Collara' do
   pod 'DateTools'
   pod 'NJKWebViewProgress'
   pod 'JSQMessagesViewController'
-  pod 'ECSlidingViewController', :path => '~/Documents/workspace/ECSlidingViewController/'
-  #pod 'ECSlidingViewController', '~> 1.3'
+  pod 'ECSlidingViewController', :git => 'https://github.com/ECSlidingViewController/ECSlidingViewController.git'
   pod 'SignalR-ObjC', :path => '~/Documents/workspace/SignalR-ObjC/'
-  #pod 'SignalR-ObjC', '2.0.0.alpha1'
-  pod 'CRToast', '~> 0.0.7'
-  pod 'MBProgressHUD', '~> 0.8'
+  pod 'CRToast'
+  pod 'MBProgressHUD'
   pod 'Objective-C-Generics'
-  pod 'XLPagerTabStrip', :path => '~/Documents/workspace/XLPagerTabStrip/'
-  #pod 'XLPagerTabStrip', '~> 1.0'
+  pod 'XLPagerTabStrip', :git => 'https://github.com/xmartlabs/XLPagerTabStrip.git'
 end
 
 target 'CollaraTests' do

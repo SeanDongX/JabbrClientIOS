@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CLAKeyboardAwareViewController.h"
 
-@interface SignInViewController : CLAKeyboardAwareViewController
+@interface SignInViewController : UIViewController
 
 @end

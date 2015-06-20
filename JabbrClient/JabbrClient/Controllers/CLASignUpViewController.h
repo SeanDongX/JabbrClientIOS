@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CLAKeyboardAwareViewController.h"
 #import "SlidingViewController.h"
 
-@interface CLASignUpViewController : CLAKeyboardAwareViewController
+@interface CLASignUpViewController : UIViewController
 
 @property (strong, nonatomic)SlidingViewController *slidingViewController;
 

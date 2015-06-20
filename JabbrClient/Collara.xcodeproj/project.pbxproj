@@ -27,7 +27,6 @@
 		146C9BAD1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAC1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m */; };
 		146C9BB01AFC199500885F96 /* CLAWebApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */; };
 		146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */; };
-		146D83E31AF19F3300855C59 /* CLAKeyboardAwareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */; };
 		14805B781B298C9C007ACBE2 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */; };
 		14805B7E1B2A1DF5007ACBE2 /* CLANotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 14805B7D1B2A1DF5007ACBE2 /* CLANotification.m */; };
 		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
@@ -113,8 +112,6 @@
 		146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAWebApiClient.m; path = Lib/CLAWebApiClient.m; sourceTree = "<group>"; };
 		146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLASignUpViewController.h; sourceTree = "<group>"; };
 		146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLASignUpViewController.m; sourceTree = "<group>"; };
-		146D83E11AF19F3300855C59 /* CLAKeyboardAwareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAKeyboardAwareViewController.h; sourceTree = "<group>"; };
-		146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAKeyboardAwareViewController.m; sourceTree = "<group>"; };
 		14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMessaging.framework; path = JabbrClient/External/WindowsAzureMessaging.framework; sourceTree = "<group>"; };
 		14805B7C1B2A1DF5007ACBE2 /* CLANotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLANotification.h; sourceTree = "<group>"; };
 		14805B7D1B2A1DF5007ACBE2 /* CLANotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLANotification.m; sourceTree = "<group>"; };
@@ -368,8 +365,6 @@
 				149718551ADABFE400785D11 /* CLAPadBaseViewController.m */,
 				146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */,
 				146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */,
-				146D83E11AF19F3300855C59 /* CLAKeyboardAwareViewController.h */,
-				146D83E21AF19F3300855C59 /* CLAKeyboardAwareViewController.m */,
 				1407AA001AF50E4D00E42F2C /* CLAChatInfoViewController.h */,
 				1407AA011AF50E4D00E42F2C /* CLAChatInfoViewController.m */,
 				1463CB041AF955AD00BC2513 /* CLACreateTeamViewController.h */,
@@ -633,7 +628,6 @@
 				1404B5361AF118BB00363178 /* CLASignalRMessageClient.m in Sources */,
 				14B6FB551ACB4CF500E5B5A5 /* DocumentViewController.m in Sources */,
 				146C9BB01AFC199500885F96 /* CLAWebApiClient.m in Sources */,
-				146D83E31AF19F3300855C59 /* CLAKeyboardAwareViewController.m in Sources */,
 				149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */,
 				142BC9621B2CF25300E995D0 /* DemoData.m in Sources */,
 				14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */,

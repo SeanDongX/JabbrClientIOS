@@ -11,7 +11,7 @@
 //Util
 #import "Constants.h"
 #import "MBProgressHUD.h"
-
+#import "CLASignalRMessageClient.h"
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
@@ -51,7 +51,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, 0);
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (![CLASignalRMessageClient sharedInstance].teamLoaded) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -95,6 +97,8 @@
 }
 
 - (void)showCreateTeamView {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
     SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
     [slidingViewController switchToCreateTeamView];
 }

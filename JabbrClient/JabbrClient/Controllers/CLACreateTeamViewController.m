@@ -13,6 +13,8 @@
 #import "CLAToastManager.h"
 #import "AuthManager.h"
 #import "Masonry.h"
+#import "MBProgressHUD.h"
+
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
 
@@ -33,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupTextFields];
     [self setupNavBar];
     self.teamNameTextField.delegate = self;
     [self adjustScrollViewContentConstraint];
@@ -49,6 +52,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setupTextFields {
+    self.teamNameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.inviteCodeTextField.autocorrectionType = UITextAutocorrectionTypeNo;
 }
 
 - (void)setupNavBar {
@@ -80,13 +88,14 @@
     
     if ( teamName == nil || teamName.length == 0) {
         
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, an empty name. That will not work.", nil) completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, an empty team name. That will not work.", nil) completionBlock:nil];
     }
     else if (teamName.length > kTeamNameMaxLength) {
         
         [CLAToastManager showDefaultInfoToastWithText:[NSString stringWithFormat:NSLocalizedString(@"Sorry, but we will need you to keep you team name less than %d characters.", nil), kTeamNameMaxLength ]completionBlock:nil];
     }
     else {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
         CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
         __weak __typeof(&*self)weakSelf = self;
@@ -94,12 +103,13 @@
         [apiClient createTeam:teamName completionHandler: ^(NSString *errorMessage){
             __strong __typeof(&*weakSelf)strongSelf = weakSelf;
             
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
             if (errorMessage == nil) {
                 [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-                [strongSelf dismissViewControllerAnimated:YES completion: nil];
+                [strongSelf switchToMainView];
             }
             else {
-                
                 [CLAToastManager showDefaultInfoToastWithText:errorMessage completionBlock:nil];
             }
         
@@ -116,12 +126,16 @@
         [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, an empty invitation code. That will not work.", nil) completionBlock:nil];
     }
     else {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
         CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
         __weak __typeof(&*self)weakSelf = self;
         
         [apiClient joinTeam:inviteCode completionHandler: ^(NSString *errorMessage){
             __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
             if (errorMessage == nil) {
                 [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
                 [strongSelf dismissViewControllerAnimated:YES completion: nil];
@@ -168,4 +182,8 @@
     [slidingViewController switchToSignInView];
 }
 
+- (void)switchToMainView {
+    SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
+    [slidingViewController switchToMainView];
+}
 @end

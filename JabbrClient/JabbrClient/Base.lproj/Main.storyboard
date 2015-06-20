@@ -893,7 +893,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="f1E-VV-4sJ" secondAttribute="bottom" id="AbZ-dX-yMd"/>
                                     <constraint firstItem="f1E-VV-4sJ" firstAttribute="top" secondItem="iSt-kU-ZGX" secondAttribute="top" id="POV-4C-huD"/>
@@ -912,6 +912,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="ScrollViewContentView" destination="f1E-VV-4sJ" id="Xpl-Va-9Q3"/>
                         <outlet property="inviteCodeTextField" destination="Moy-Rd-2Cn" id="10E-82-d2m"/>
                         <outlet property="teamNameTextField" destination="dg4-Nx-u52" id="psc-Xi-wVr"/>
                     </connections>

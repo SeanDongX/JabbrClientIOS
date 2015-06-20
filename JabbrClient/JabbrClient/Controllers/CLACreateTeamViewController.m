@@ -12,7 +12,7 @@
 #import "Constants.h"
 #import "CLAToastManager.h"
 #import "AuthManager.h"
-
+#import "Masonry.h"
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
 
@@ -26,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *inviteCodeTextField;
 
+@property (weak, nonatomic) IBOutlet UIView *ScrollViewContentView;
 @end
 
 @implementation CLACreateTeamViewController
@@ -34,6 +35,15 @@
     [super viewDidLoad];
     [self setupNavBar];
     self.teamNameTextField.delegate = self;
+    [self adjustScrollViewContentConstraint];
+}
+
+- (void)adjustScrollViewContentConstraint {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+        [self.ScrollViewContentView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view.mas_centerX);
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

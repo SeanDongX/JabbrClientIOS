@@ -15,6 +15,7 @@ target 'Collara' do
   pod 'Objective-C-Generics'
   pod 'XLPagerTabStrip', :git => 'https://github.com/xmartlabs/XLPagerTabStrip.git'
   pod 'BOZPongRefreshControl'
+  pod 'Masonry'
 end
 
 target 'CollaraTests' do

@@ -38,7 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupButtons];
+    [self setupControls];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,9 +54,10 @@
     [super viewWillAppear:animated];
 }
 
-- (void)setupButtons {
+- (void)setupControls {
     [self.signInButton setButtonStyle:[UIColor whiteColor]];
     [self.signUpButton setButtonStyle:[UIColor whiteColor]];
+    self.usernameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
 }
 
 #pragma mark -

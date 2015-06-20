@@ -10,6 +10,7 @@
 
 //Util
 #import "Constants.h"
+#import "MBProgressHUD.h"
 
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
@@ -50,6 +51,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, 0);
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -63,6 +65,7 @@
 #pragma mark -
 #pragma mark Notifications
 - (void)subscribNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTeam) name:kEventTeamUpdated object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCreateTeamView) name:kEventNoTeam object:nil];
 }
 
@@ -70,13 +73,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-
 - (void)initUI {
     [self.menuItem setTitle:@""];
     [self.menuItem setWidth:30];
     [self.menuItem setImage: [Constants menuIconImage]];
 }
-
 
 #pragma mark -
 #pragma mark - Event Handlers
@@ -88,6 +89,10 @@
 
 #pragma mark -
 #pragma mark View Controller Event Handlers
+
+- (void)updateTeam {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+}
 
 - (void)showCreateTeamView {
     SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;

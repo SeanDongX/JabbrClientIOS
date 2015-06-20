@@ -35,12 +35,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupButtons];
+    [self setupControls];
 }
 
-- (void)setupButtons {
+- (void)setupControls {
     [self.signInButton setButtonStyle:[UIColor whiteColor]];
     [self.signUpButton setButtonStyle:[UIColor whiteColor]];
+    self.usernameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.nameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.emailTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    
 }
 
 #pragma mark - 

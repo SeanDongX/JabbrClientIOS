@@ -89,10 +89,10 @@
 
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationSettings* notificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [application registerUserNotificationSettings:notificationSettings];
+        [application registerForRemoteNotifications];
     } else {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+        [application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     }
 }
 
@@ -101,6 +101,9 @@
     [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
 }
 
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError: (NSError *)error {
+    NSLog(@"Failed to register device with error: %@", error.domain.description);
+}
 
 #pragma mark -
 #pragma mark Private Methods

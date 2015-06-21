@@ -483,7 +483,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 
 - (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room {
     [self addMessage:message toRoom:room];
-    [self sendLocalNotificationFor:message inRoom:room];
+    //[self sendLocalNotificationFor:message inRoom:room];
     
     NSInteger secondApart = [message.date secondsFrom:[NSDate date]];
     
@@ -727,32 +727,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     return nil;
 }
 
-- (void)sendLocalNotificationFor:(CLAMessage *)message inRoom:(NSString *)room  {
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-        return;
-    }
-    
-    //TODO: investigation if this is possible when app goes to background
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate date];
-    localNotification.alertBody = [NSString stringWithFormat:@"%@%@ %@%@: %@", kRoomPrefix, room, kUserPrefix, message.senderDisplayName, message.text];
-    localNotification.soundName=UILocalNotificationDefaultSoundName;
-    localNotification.timeZone = [NSTimeZone defaultTimeZone];
-    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-    
-    NSDictionary *infoDict= @{
-                                kRoomName: room,
-                                kMessageId: message.oId
-                            };
-    
-    localNotification.userInfo = infoDict;
-    
-    localNotification.alertAction = @"Open App";
-    localNotification.hasAction = YES;
-    
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-}
-
 - (void)showHud {
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -779,5 +753,31 @@ static NSString * const kDefaultChatThread = @"collarabot";
     room.unread += count;
     [self sendReceiveUnreadEventNotification];
 }
+
+//- (void)sendLocalNotificationFor:(CLAMessage *)message inRoom:(NSString *)room  {
+//    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+//        return;
+//    }
+//
+//    //TODO: investigation if this is possible when app goes to background
+//    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//    localNotification.fireDate = [NSDate date];
+//    localNotification.alertBody = [NSString stringWithFormat:@"%@%@ %@%@: %@", kRoomPrefix, room, kUserPrefix, message.senderDisplayName, message.text];
+//    localNotification.soundName=UILocalNotificationDefaultSoundName;
+//    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+//    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+//
+//    NSDictionary *infoDict= @{
+//                                kRoomName: room,
+//                                kMessageId: message.oId
+//                            };
+//
+//    localNotification.userInfo = infoDict;
+//
+//    localNotification.alertAction = @"Open App";
+//    localNotification.hasAction = YES;
+//
+//    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+//}
 
 @end

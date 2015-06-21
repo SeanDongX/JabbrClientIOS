@@ -102,6 +102,7 @@
     [defaults removeObjectForKey:kAuthToken];
     [defaults removeObjectForKey:kLastAuthDate];
     [defaults removeObjectForKey:kTeamKey];
+    [defaults removeObjectForKey:kInviteCode];
     [defaults synchronize];
     //Device Token should be not cleared
 }

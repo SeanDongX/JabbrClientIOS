@@ -291,41 +291,54 @@
 }
 
 - (void)shareInvite {
+    
+    NSString *inviteCode = [CLAUtility getUserDefault:kInviteCode];
+    if (inviteCode != nil) {
+        [self showInvite:inviteCode];
+        return;
+    }
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     [[CLAWebApiClient sharedInstance] getInviteCodeForTeam:[CLAUtility getUserDefault:kTeamKey] completion:^(NSString *invitationCode, NSString *errorMessage) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
         if (errorMessage != nil) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
             [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"We are terribly sorry, but some error happened.", nil) completionBlock:nil];
             return;
         }
-        
-        //TODO: use user full name instead
-        CLATeamViewModel *teamViewModel = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
-        
-        NSString *teamName = teamViewModel.team.name;
-        
-        NSString *username = [CLAUtility getUserDefault:kUsername];
-        NSString *userFullName = username;
-        
-        CLAUser *user = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] findUser:username];
-        
-        if (user != nil && user.realName != nil){
-            userFullName = user.realName;
-        }
-        
-        NSURL *inviteUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.collara.co/teams/join/?invitationId=%@", invitationCode]];
-        
-        //TODO: locale based app download url
-        NSURL *appDownloadUrl = [NSURL URLWithString:@"https://itunes.apple.com/app/id983440285"];
-        
-        NSString *invitationMessage = [NSString stringWithFormat:NSLocalizedString(@"Team invitation message", nil), userFullName, teamName, inviteUrl, invitationCode, appDownloadUrl];
-        
-        UIActivityViewController *activityViewController =
-        [[UIActivityViewController alloc] initWithActivityItems:@[invitationMessage]
-                                          applicationActivities:nil];
-        [self presentViewController:activityViewController animated:YES completion:nil];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+        [CLAUtility setUserDefault:invitationCode forKey:kInviteCode];
+        [self showInvite:invitationCode];
     }];
 }
+
+- (void)showInvite:(NSString *)invitationCode {
+    //TODO: use user full name instead
+    CLATeamViewModel *teamViewModel = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
+    
+    NSString *teamName = teamViewModel.team.name;
+    
+    NSString *username = [CLAUtility getUserDefault:kUsername];
+    NSString *userFullName = username;
+    
+    CLAUser *user = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] findUser:username];
+    
+    if (user != nil && user.realName != nil){
+        userFullName = user.realName;
+    }
+    
+    NSURL *inviteUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.collara.co/teams/join/?invitationId=%@", invitationCode]];
+    
+    //TODO: locale based app download url
+    NSURL *appDownloadUrl = [NSURL URLWithString:@"https://itunes.apple.com/app/id983440285"];
+    
+    NSString *invitationMessage = [NSString stringWithFormat:NSLocalizedString(@"Team invitation message", nil), userFullName, teamName, inviteUrl, invitationCode, appDownloadUrl];
+    
+    UIActivityViewController *activityViewController =
+    [[UIActivityViewController alloc] initWithActivityItems:@[invitationMessage]
+                                      applicationActivities:nil];
+    [self presentViewController:activityViewController animated:YES completion:nil];
+}
+
 @end

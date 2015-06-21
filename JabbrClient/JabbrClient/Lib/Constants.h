@@ -49,7 +49,7 @@ FOUNDATION_EXPORT NSString *const kAuthToken;
 FOUNDATION_EXPORT NSString *const kLastAuthDate;
 FOUNDATION_EXPORT NSString *const kTeamKey;
 FOUNDATION_EXPORT NSString *const kDeviceToken;
-
+FOUNDATION_EXPORT NSString *const kInviteCode;
 
 FOUNDATION_EXPORT NSString *const kMessageId;
 FOUNDATION_EXPORT NSString *const kRoomName;

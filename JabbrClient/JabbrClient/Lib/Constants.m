@@ -70,6 +70,7 @@ NSString *const kAuthToken = @"AuthToken";
 NSString *const kLastAuthDate = @"LastAuthDate";
 NSString *const kTeamKey = @"TeamKey";
 NSString *const kDeviceToken = @"DeviceToken";
+NSString *const kInviteCode = @"InviteCode";
 
 NSString *const kMessageId = @"MessageIdKey";
 NSString *const kRoomName = @"RoomNameKey";

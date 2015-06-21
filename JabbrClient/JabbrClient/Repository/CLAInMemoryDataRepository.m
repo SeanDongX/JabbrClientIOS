@@ -50,6 +50,13 @@
     }
 }
 
+- (void)deleteData {
+    [self.teamViewModelArray removeAllObjects];
+}
+
+#pragma mark -
+#pragma mark Priavte Methods
+
 -(NSInteger)findIndexForTeamKey:(NSInteger)teamKey {
     NSInteger foundIndex = -1;
     

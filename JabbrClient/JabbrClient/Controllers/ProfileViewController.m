@@ -76,6 +76,7 @@
     [[AuthManager sharedInstance] signOut];
     [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
+    [[CLASignalRMessageClient sharedInstance].dataRepository deleteData];
     //TODO:MessageClient clear data repository
     [self switchToSignInView];
 }

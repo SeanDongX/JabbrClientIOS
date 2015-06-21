@@ -9,8 +9,8 @@
 #import "CLACreateRoomViewController.h"
 #import "Constants.h"
 #import "SlidingViewController.h"
-#import "CLAToastManager.H"
-
+#import "CLAToastManager.h"
+#import "MBProgressHUD.h"
 @interface CLACreateRoomViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *topicLabel;
@@ -54,6 +54,7 @@
 }
 
 - (IBAction)goButtonClicked:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     NSString *topic = self.topicLabel.text;
     
@@ -81,6 +82,9 @@
                 [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, something went wrong. Let's try it again.", nil)completionBlock:nil];
             }
         }
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
     }];
 }
 

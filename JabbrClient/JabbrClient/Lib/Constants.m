@@ -15,6 +15,7 @@
 #ifdef DEBUG
 
     NSString *const kAuzreNotificationHubName = @"collarapush";
+    NSString *const kAzureNotificationHubConnectionString = @"Endpoint=sb://collarapush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=PiHeM88D6LWhitL1452bcQ1rEnxzu55R/eVbKseOhos=";
 
     #if TARGET_IPHONE_SIMULATOR
 
@@ -30,12 +31,11 @@
 
     NSString *const kServerBaseUrl = @"http://www.collara.co/";
     NSString *const kAuzreNotificationHubName = @"collarapushprod";
+    NSString *const kAzureNotificationHubConnectionString = @"Endpoint=sb://collarapush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=EPJy3FiyTILmIagkPX4f1YHP5rYG79BpZyj4FW0Xap8=";
 
 #endif
 
 NSString *const kApiPath = @"api/v1/";
-
-NSString *const kAzureNotificationHubConnectionString = @"Endpoint=sb://collarapush.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=PiHeM88D6LWhitL1452bcQ1rEnxzu55R/eVbKseOhos=";
 
 NSTimeInterval const kMessageClientReconnectInterval = 5.0;
 

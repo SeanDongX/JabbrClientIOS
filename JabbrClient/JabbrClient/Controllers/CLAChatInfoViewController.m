@@ -124,7 +124,7 @@
     
     CGRect frame = tableView.frame;
     
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 30)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, frame.size.width - 20, frame.size.height)];
     title.textColor = [UIColor whiteColor];
     
     

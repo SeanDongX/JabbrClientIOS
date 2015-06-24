@@ -16,7 +16,7 @@ target 'Collara' do
   pod 'XLPagerTabStrip', :git => 'https://github.com/xmartlabs/XLPagerTabStrip.git'
   pod 'BOZPongRefreshControl'
   pod 'Masonry'
-  pod 'TPKeyboardAvoiding'
+  pod 'TPKeyboardAvoiding', :git => 'https://github.com/wonderxboy/TPKeyboardAvoiding.git'
   pod 'TITokenField'
   pod 'XLForm'
 end

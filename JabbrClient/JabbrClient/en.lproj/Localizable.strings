@@ -40,3 +40,4 @@
 
 "PushNotificationMentionMessage" = "%@ mentioned you in %@ : %@";
 "PushNotificationRoomInviteMessage" = "%@ invited you to join %@";
+"It's lonely here, invite some and say hello." = "It's lonely here, invite some and say hello.";

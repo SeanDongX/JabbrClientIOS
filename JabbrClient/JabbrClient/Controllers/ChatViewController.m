@@ -17,6 +17,7 @@
 #import "MBProgressHUD.h"
 #import "CLAUtility.h"
 #import "MBProgressHUD.h"
+#import "CLAToastManager.h"
 
 //Data Model
 #import "CLATeam.h"
@@ -506,8 +507,9 @@
     
     self.showLoadEarlierMessagesHeader = earlierMessageCount >= kLoadEarlierMessageCount;
     
-    if (room == nil || earlierMessages == nil || earlierMessageCount == 0){
+    if (room == nil || earlierMessages == nil || earlierMessageCount == 0) {
         [self hideHud];
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"It's lonely here, invite some and say hello.", nil)completionBlock:nil];
         return;
     }
     

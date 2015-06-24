@@ -100,13 +100,12 @@ NSString * const kTextLabelColor = @"textLabel.color";
             row = [XLFormRowDescriptor formRowDescriptorWithTag:[user getHandle] rowType:XLFormRowDescriptorTypeInfo title:[user getHandle]];
             [section addFormRow:row];
         }
-    
     }
     
-    section = [XLFormSectionDescriptor formSectionWithTitle: NSLocalizedString(@"Select users to invite", nil)];
-    [form addFormSection:section];
-    
     if (notMemebers.count > 0) {
+        section = [XLFormSectionDescriptor formSectionWithTitle: NSLocalizedString(@"Select users to invite", nil)];
+        [form addFormSection:section];
+        
         for (CLAUser *user in notMemebers) {
             row = [XLFormRowDescriptor formRowDescriptorWithTag: [NSString stringWithFormat:@"%@%@", kInvitePrefix, user.name] rowType:XLFormRowDescriptorTypeBooleanSwitch title:[user getHandle]];
             [section addFormRow:row];
@@ -125,7 +124,7 @@ NSString * const kTextLabelColor = @"textLabel.color";
 
 - (void)leavelTopic:(id)sender {
     [[CLASignalRMessageClient sharedInstance] leaveRoom:self.roomViewModel.room.name];
-    [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"You will not receive message from this topic any more.", nil)completionBlock:nil];
+    [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"You will not receive notification about this topic any more.", nil)completionBlock:nil];
 }
 
 - (void)sendInvite:(id)sender {

@@ -688,9 +688,6 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Docs" id="eIt-t0-87j">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="rightMenuButtonTapped:" destination="vtJ-5i-UDw" id="ykf-R6-eVQ"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -1234,7 +1231,7 @@
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="qZ5-mw-GTl" propertyAccessControl="none">
-                            <rect key="frame" x="88.5" y="7" width="143" height="30"/>
+                            <rect key="frame" x="89" y="7" width="143" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.1019607843" green="0.70196078429999997" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <segments>

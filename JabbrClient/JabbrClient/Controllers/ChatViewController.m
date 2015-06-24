@@ -509,7 +509,7 @@
     
     if (room == nil || earlierMessages == nil || earlierMessageCount == 0) {
         [self hideHud];
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"It's lonely here, invite some and say hello.", nil)completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"It's lonely here, invite someone and say hello.", nil)completionBlock:nil];
         return;
     }
     

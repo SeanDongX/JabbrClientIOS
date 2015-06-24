@@ -74,8 +74,8 @@ NSString * const kTextLabelColor = @"textLabel.color";
     XLFormRowDescriptor *row;
     
     NSArray<CLAUser> *allUsers = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam].users;
-    NSMutableArray<CLAUser> *notMemebers = [NSMutableArray array];
-    [notMemebers addObjectsFromArray:allUsers];
+    NSMutableArray<CLAUser> *notMembers = [NSMutableArray array];
+    [notMembers addObjectsFromArray:allUsers];
     
     section = [XLFormSectionDescriptor formSectionWithTitle: NSLocalizedString(@"Topic", nil)];
     [form addFormSection:section];
@@ -91,13 +91,13 @@ NSString * const kTextLabelColor = @"textLabel.color";
     
     
     if (self.roomViewModel && self.roomViewModel.users) {
-        section = [XLFormSectionDescriptor formSectionWithTitle: NSLocalizedString(@"Memebers", nil)];
+        section = [XLFormSectionDescriptor formSectionWithTitle: NSLocalizedString(@"Members", nil)];
         [form addFormSection:section];
         
         for (CLAUser *user in self.roomViewModel.users) {
             for (CLAUser *innerUser in allUsers) {
                 if ([innerUser.name isEqualToString:user.name]) {
-                    [notMemebers removeObject:innerUser];
+                    [notMembers removeObject:innerUser];
                     break;
                 }
             }
@@ -107,11 +107,11 @@ NSString * const kTextLabelColor = @"textLabel.color";
         }
     }
     
-    if (notMemebers.count > 0) {
+    if (notMembers.count > 0) {
         section = [XLFormSectionDescriptor formSectionWithTitle: NSLocalizedString(@"Select users to invite", nil)];
         [form addFormSection:section];
         
-        for (CLAUser *user in notMemebers) {
+        for (CLAUser *user in notMembers) {
             row = [XLFormRowDescriptor formRowDescriptorWithTag: [NSString stringWithFormat:@"%@%@", kInvitePrefix, user.name] rowType:XLFormRowDescriptorTypeBooleanSwitch title:[user getHandle]];
             [section addFormRow:row];
         }

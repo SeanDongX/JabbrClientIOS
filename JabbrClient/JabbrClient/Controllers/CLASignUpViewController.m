@@ -113,7 +113,7 @@
     }
     
     if (![accountModel.password isEqual:accountModel.confirmPassword]) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, the passwords does not match.", nil) completionBlock:nil];
+        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, the passwords do not match.", nil) completionBlock:nil];
         return NO;
     }
     

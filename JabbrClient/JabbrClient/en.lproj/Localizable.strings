@@ -10,7 +10,7 @@
 "Topics (%@)" = "Topics (%@)";
 "Topic" = "Topic";
 "Leave" = "Leave";
-"Memebers" = "Memebers";
+"Members" = "Members";
 "Send Invite" = "Send Invite";
 "Invitation sent" = "Invitation sent";
 "Select users to invite" = "Select users to invite";
@@ -26,18 +26,18 @@
 "How about a password with more than 6 characters?" = "How about a password with more than 6 characters?";
 "We will need your email." = "We will need your email.";
 "We will need a valid email address." = "We will need a valid email address.";
-"Oops, the passwords does not match." = "Oops, the passwords does not match.";
-"You will not receive notification about this topic any more." = "You will not receive notification about  this topic any more.";
+"Oops, the passwords do not match." = "Oops, the passwords do not match.";
+"You will not receive notification about this topic any more." = "You will not receive notification about this topic any more.";
 "Oh, an empty name. That will not work."  = "Oh, an empty name. That will not work.";
 "Oh, an empty team name. That will not work." = "Oh, an empty team name. That will not work.";
 "Sorry, but we will need you to keep you team name less than %d characters." = "Sorry, but we will need you to keep you team name less than %d characters.";
 "Oh, an empty invitation code. That will not work." = "Oh, an empty invitation code. That will not work.";
 "Oh, something went wrong. Let's try it again." = "Oh, something went wrong. Let's try it again.";
 "Topics" = "Topics";
-"Members" = "Members";
+"" = "Members";
 "Team invitation message" = "Hi, \n\n%@ has invited you to join team %@ on Collara. \n\nPlease follow the link to get started: %@ \n\nor use this invitation code directly in Collara app: %@ \n\n\nNeed Collara app? Download it form here: %@ \n\n\nTeam Collara";
 "Oops, something went wrong." = "Oops, something went wrong.";
 
 "PushNotificationMentionMessage" = "%@ mentioned you in %@ : %@";
 "PushNotificationRoomInviteMessage" = "%@ invited you to join %@";
-"It's lonely here, invite some and say hello." = "It's lonely here, invite some and say hello.";
+"It's lonely here, invite someone and say hello." = "It's lonely here, invite someone and say hello.";

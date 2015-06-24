@@ -506,15 +506,18 @@
     NSInteger earlierMessageCount = earlierMessages.count;
     
     self.showLoadEarlierMessagesHeader = earlierMessageCount >= kLoadEarlierMessageCount;
+    NSArray<CLAMessage> *currentMessages = [self getMessagesForRoom:room];
     
     if (room == nil || earlierMessages == nil || earlierMessageCount == 0) {
         [self hideHud];
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"It's lonely here, invite someone and say hello.", nil)completionBlock:nil];
+        
+        if (currentMessages.count == 0) {
+            [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"It's lonely here, invite someone and say hello.", nil)completionBlock:nil];
+        }
         return;
     }
     
     //Cautious check to see if the message is has been loaded before
-    NSArray<CLAMessage> *currentMessages = [self getMessagesForRoom:room];
     NSInteger currentMessageCount = currentMessages.count;
     
     if (earlierMessages != nil && earlierMessages.count > 0

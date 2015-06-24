@@ -57,7 +57,6 @@ NSString *const kDocumentNavigationController = @"DocumentNavigationController";
 NSString *const kLeftMenuViewController = @"LeftMenuViewController";
 NSString *const kRightMenuViewController = @"RightMenuViewController";
 
-NSString *const kChatInfoViewController = @"ChatInfoViewController";
 NSString *const kCreateTeamViewController = @"CreateTeamViewController";
 NSString *const kCreateRoomViewController = @"CreateRoomViewController";
 
@@ -170,6 +169,12 @@ NSTimeInterval const minRefreshLoadTime = 3;
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
++ (UIImage *)topicSettingIcon {
+    FAKIonIcons *iccon = [FAKIonIcons iosSettingsIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
+}
+
 + (UIColor*)mainThemeColor {
     return [UIColor colorWithRed:(26/255.0) green:(179/255.0) blue:(148/255.0) alpha:1];
 }
@@ -190,5 +195,8 @@ NSTimeInterval const minRefreshLoadTime = 3;
     return [UIColor colorWithRed:(237/255.0) green:(85/255.0) blue:(101/255.0) alpha:1];
 }
 
++ (UIColor*)backgroundColor {
+    return [UIColor colorWithRed:(223/255.0) green:(223/255.0) blue:(223/255.0) alpha:1];
+}
 
 @end

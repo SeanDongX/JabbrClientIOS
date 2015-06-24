@@ -468,13 +468,12 @@ static bool isFirstAccess = YES;
     }];
 }
 
-- (void)inviteUser:(NSString *)username inRoom:(NSString *)room; {
+- (void)inviteUser:(NSString *)username inRoom:(NSString *)room {
     //{"H":"chat","M":"Send","A":[{"id":"40868be9-e5de-9fe1-77eb-f4f6a6b14972","content":"/invite mike","room":"TestRoom"}]...
-    [self invokeCommand:@"invite" withCommandParam:username fromRoom:room];
+    [self invokeCommand:@"invite" withCommandParam:[NSString stringWithFormat:@"%@ %@", username, room] fromRoom:@""];
 }
 
 - (void)joinRoom:(NSString *)room {
-    
     //{"H":"chat","M":"Send","A":[{"id":"883ea488-07eb-d63e-04d1-72bf8965c6f7","content":"/join testroom","room":"Welcome"}]...
     [self invokeCommand:@"join" withCommandParam:room fromRoom:@""];
 }

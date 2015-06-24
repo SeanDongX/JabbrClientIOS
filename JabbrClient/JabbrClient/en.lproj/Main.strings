@@ -5,9 +5,6 @@
 /* Class = "UILabel"; text = "Create your team to start"; ObjectID = "8GA-n0-fUR"; */
 "8GA-n0-fUR.text" = "Create your team to start";
 
-/* Class = "UIButton"; normalTitle = "Leave"; ObjectID = "8xb-02-c7C"; */
-"8xb-02-c7C.normalTitle" = "Leave";
-
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "9wN-Ke-SEM"; */
 "9wN-Ke-SEM.normalTitle" = "Sign In";
 
@@ -25,9 +22,6 @@
 
 /* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "JVD-7L-Ab0"; */
 "JVD-7L-Ab0.normalTitle" = "Sign Up";
-
-/* Class = "UILabel"; text = "#"; ObjectID = "KIr-Lu-VGj"; */
-"KIr-Lu-VGj.text" = "#";
 
 /* Class = "UIButton"; normalTitle = "Create Team"; ObjectID = "LlV-JF-2Lk"; */
 "LlV-JF-2Lk.normalTitle" = "Create Team";
@@ -55,9 +49,6 @@
 
 /* Class = "UINavigationItem"; title = "Document"; ObjectID = "USF-5o-XfX"; */
 "USF-5o-XfX.title" = "Document";
-
-/* Class = "UIButton"; normalTitle = "Invite"; ObjectID = "XOn-ai-3bw"; */
-"XOn-ai-3bw.normalTitle" = "Invite";
 
 /* Class = "UILabel"; text = "You are almost there"; ObjectID = "Ynb-a5-2Xd"; */
 "Ynb-a5-2Xd.text" = "You are almost there";

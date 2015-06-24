@@ -28,11 +28,8 @@
 //View Controller
 #import "UIViewController+ECSlidingViewController.h"
 #import "LeftMenuViewController.h"
-#import "CLAChatInfoViewController.h"
 #import "CLACreateTeamViewController.h"
-
-static NSString * const kDefaultChatThread = @"collarabot";
-
+#import "CLATopicInfoViewController.h"
 
 @interface ChatViewController ()
 
@@ -84,6 +81,7 @@ static NSString * const kDefaultChatThread = @"collarabot";
 - (void)viewWillAppear:(BOOL)animated {
     @try {
         [super viewWillAppear:animated];
+        self.title = [self.currentRoom getHandle];
         [self.collectionView reloadData];
     }
     @catch (NSException *exception) {
@@ -104,28 +102,18 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark - Menu Setup
 
 - (void)initMenu {
-    
     [self.leftMenuButton setTitle:@""];
     [self.leftMenuButton setWidth:30];
     [self.leftMenuButton setImage: [Constants menuIconImage]];
     
-    UIBarButtonItem *chatThreadSetupButon = [[UIBarButtonItem alloc] initWithImage:[Constants infoIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(showChatInfoView)];
-    
-    [chatThreadSetupButon setTitle: @""];
-    [chatThreadSetupButon setTintColor:[UIColor whiteColor]];
-
-    if (kFSDocumentEnabled != NO) {
-        [self.rightMenuButton setTitle:@""];
-        [self.rightMenuButton setWidth:30];
-        [self.rightMenuButton setImage: [Constants docIconImage]];
-        self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:(id)chatThreadSetupButon];
-    }
-    else {
-        [self.navigationItem setRightBarButtonItem:chatThreadSetupButon];
-    }
+    [self.rightMenuButton setTitle:@""];
+    [self.rightMenuButton setWidth:30];
+    [self.rightMenuButton setImage: [Constants topicSettingIcon]];
+    self.rightMenuButton.target = self;
+    self.rightMenuButton.action = @selector(showChatInfoView);
 }
 
-#pragma mark - 
+#pragma mark -
 #pragma mark - Initial Setup
 
 - (void)configJSQMessage {
@@ -149,8 +137,6 @@ static NSString * const kDefaultChatThread = @"collarabot";
     [CLAUtility setUserDefault:room.name forKey:kSelectedRoomName];
     
     self.currentRoom = room;
-    self.navigationItem.title = [NSString stringWithFormat:@"#%@", self.currentRoom.name];
-    
     [self initialzeCurrentThread];
   
     [self joinUserToRoomModel];
@@ -668,15 +654,8 @@ static NSString * const kDefaultChatThread = @"collarabot";
 #pragma mark View Controller Event Handlers
 
 - (void)showChatInfoView {
-    
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
-    
-    CLAChatInfoViewController *chatInfoViewController = [storyBoard instantiateViewControllerWithIdentifier:kChatInfoViewController];
-    
-    chatInfoViewController.roomViewModel = self.roomViewModel;
-    chatInfoViewController.messageClient = self.messageClient;
-    
-    [self presentViewController:chatInfoViewController animated:YES completion:nil];
+    CLATopicInfoViewController *c = [[CLATopicInfoViewController alloc] initWithRoom:self.roomViewModel];
+    [self.navigationController pushViewController:c animated:YES];
 }
 
 

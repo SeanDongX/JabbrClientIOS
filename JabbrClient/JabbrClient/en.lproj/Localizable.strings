@@ -8,8 +8,13 @@
 
 "Welcome to join team %@" = "Welcome to join team %@";
 "Topics (%@)" = "Topics (%@)";
+"Topic" = "Topic";
+"Leave" = "Leave";
+"Memebers" = "Memebers";
+"Send Invite" = "Send Invite";
+"Invitation sent" = "Invitation sent";
+"Select users to invite" = "Select users to invite";
 "Team members (%@)" = "Team members (%@)";
-"Topic participants (%lu)" = "Topic participants (%lu)";
 "Topic Settings" = "Topic Settings";
 "Create Topic" = "Create Topic";
 "Pick Your Team" = "Pick Your Team";

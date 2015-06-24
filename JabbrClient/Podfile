@@ -17,6 +17,8 @@ target 'Collara' do
   pod 'BOZPongRefreshControl'
   pod 'Masonry'
   pod 'TPKeyboardAvoiding'
+  pod 'TITokenField'
+  pod 'XLForm'
 end
 
 target 'CollaraTests' do

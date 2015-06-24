@@ -43,11 +43,10 @@
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[Constants closeIconImage] style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonClicked:)];
     [closeButton setTintColor:[UIColor whiteColor]];
     
-    navItem.rightBarButtonItem = closeButton;
+    navItem.leftBarButtonItem = closeButton;
     
     [self.view addSubview:navBar];
 }
-
 
 - (void)closeButtonClicked:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

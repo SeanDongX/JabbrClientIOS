@@ -16,7 +16,7 @@
 #import "DateTools.h"
 #import "MBProgressHUD.h"
 #import "CLAUtility.h"
-
+#import "MBProgressHUD.h"
 
 //Data Model
 #import "CLATeam.h"
@@ -135,7 +135,7 @@
 #pragma mark - Chat Thread Methods
 - (void)switchToRoom:(CLARoom *)room {
     [CLAUtility setUserDefault:room.name forKey:kSelectedRoomName];
-    
+    [self showHud];
     self.currentRoom = room;
     [self initialzeCurrentThread];
   
@@ -190,11 +190,6 @@
 - (IBAction)leftMenuButtonTapped:(id)sender {
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
 }
-
-- (IBAction)rightMenuButtonTapped:(id)sender {
-    [self.slidingViewController anchorTopViewToLeftAnimated:YES];
-}
-
 
 #pragma mark -
 #pragma mark - Event handlers
@@ -511,6 +506,7 @@
     self.showLoadEarlierMessagesHeader = earlierMessageCount >= kLoadEarlierMessageCount;
     
     if (room == nil || earlierMessages == nil || earlierMessageCount == 0){
+        [self hideHud];
         return;
     }
     
@@ -526,6 +522,7 @@
         for(int i = 0; i< currentMessages.count; i++) {
             CLAMessage *message = [currentMessages objectAtIndex:i];
             if ([message.oId isEqualToString: firstEarlierMessage.oId]) {
+                [self hideHud];
                 return;
             }
         }
@@ -557,6 +554,8 @@
                                 atScrollPosition:UICollectionViewScrollPositionTop
                                         animated:NO];
     }
+    
+    [self hideHud];
 }
 
 
@@ -707,7 +706,6 @@
 }
 
 - (void)showHud {
-    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 

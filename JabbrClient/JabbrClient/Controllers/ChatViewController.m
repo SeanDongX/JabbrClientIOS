@@ -81,8 +81,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     @try {
         [super viewWillAppear:animated];
-        self.title = [self.currentRoom getHandle];
         [self.collectionView reloadData];
+        self.title = [self.currentRoom getHandle];
     }
     @catch (NSException *exception) {
         NSLog(@"Exception: %@", exception.description);
@@ -137,6 +137,7 @@
     [CLAUtility setUserDefault:room.name forKey:kSelectedRoomName];
     [self showHud];
     self.currentRoom = room;
+    self.title = [self.currentRoom getHandle];
     [self initialzeCurrentThread];
   
     [self joinUserToRoomModel];

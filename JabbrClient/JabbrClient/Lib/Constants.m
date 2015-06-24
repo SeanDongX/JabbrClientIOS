@@ -107,7 +107,7 @@ NSTimeInterval const minRefreshLoadTime = 3;
              kCRToastNotificationTypeKey : @(CRToastTypeNavigationBar),
              kCRToastTextAlignmentKey: @(NSTextAlignmentLeft),
              kCRToastBackgroundColorKey : [Constants warningColor],
-             kCRToastTimeIntervalKey: @3,
+             kCRToastTimeIntervalKey: @2,
              kCRToastAnimationInTypeKey: @(CRToastAnimationTypeGravity),
              kCRToastAnimationOutTypeKey: @(CRToastAnimationTypeGravity),
              kCRToastAnimationInDirectionKey: @(CRToastAnimationDirectionTop),

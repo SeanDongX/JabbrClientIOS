@@ -11,7 +11,7 @@
 //Utils
 #import "CLASignalRMessageClient.h"
 #import "Constants.h"
-#import "CLAToastManager.h"
+#import "CLANotificationManager.h"
 
 NSString * const kTopicName = @"TopicName";
 NSString * const kLeaveTopicButton = @"LeaveTopicButton";
@@ -129,7 +129,7 @@ NSString * const kTextLabelColor = @"textLabel.color";
 
 - (void)leavelTopic:(id)sender {
     [[CLASignalRMessageClient sharedInstance] leaveRoom:self.roomViewModel.room.name];
-    [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"You will not receive notification about this topic any more.", nil)completionBlock:nil];
+    [CLANotificationManager showText:NSLocalizedString(@"You will not receive notification about this topic any more.", nil) forViewController:self withType:CLANotificationTypeMessage];
 }
 
 - (void)sendInvite:(id)sender {
@@ -151,7 +151,7 @@ NSString * const kTextLabelColor = @"textLabel.color";
     }
     
     if (matchFound) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Invitation sent", nil)completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"Invitation sent", nil) forViewController:self withType:CLANotificationTypeMessage];
     }
 }
 @end

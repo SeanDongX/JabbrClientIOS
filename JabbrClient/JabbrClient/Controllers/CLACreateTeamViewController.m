@@ -10,7 +10,7 @@
 
 //Util
 #import "Constants.h"
-#import "CLAToastManager.h"
+#import "CLANotificationManager.h"
 #import "AuthManager.h"
 #import "Masonry.h"
 #import "MBProgressHUD.h"
@@ -87,12 +87,10 @@
     NSString *teamName = self.teamNameTextField.text;
     
     if ( teamName == nil || teamName.length == 0) {
-        
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, an empty team name. That will not work.", nil) completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"Oh, an empty team name. That will not work.", nil) forViewController:self withType:CLANotificationTypeError];
     }
     else if (teamName.length > kTeamNameMaxLength) {
-        
-        [CLAToastManager showDefaultInfoToastWithText:[NSString stringWithFormat:NSLocalizedString(@"Sorry, but we will need you to keep you team name less than %d characters.", nil), kTeamNameMaxLength ]completionBlock:nil];
+        [CLANotificationManager showText:[NSString stringWithFormat:NSLocalizedString(@"Sorry, but we will need you to keep you team name less than %d characters.", nil), kTeamNameMaxLength] forViewController:self withType:CLANotificationTypeError];
     }
     else {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -110,7 +108,7 @@
                 [strongSelf switchToMainView];
             }
             else {
-                [CLAToastManager showDefaultInfoToastWithText:errorMessage completionBlock:nil];
+                [CLANotificationManager showText:errorMessage forViewController:strongSelf withType:CLANotificationTypeError];
             }
         
         }];
@@ -123,7 +121,7 @@
     
     if ( inviteCode == nil || inviteCode.length == 0) {
         
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, an empty invitation code. That will not work.", nil) completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"Oh, an empty invitation code. That will not work.", nil) forViewController:self withType:CLANotificationTypeWarning];
     }
     else {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -141,8 +139,7 @@
                 [strongSelf dismissViewControllerAnimated:YES completion: nil];
             }
             else {
-                
-                [CLAToastManager showDefaultInfoToastWithText:errorMessage completionBlock:nil];
+                [CLANotificationManager showText:errorMessage forViewController:strongSelf withType:CLANotificationTypeError];
             }
             
         }];

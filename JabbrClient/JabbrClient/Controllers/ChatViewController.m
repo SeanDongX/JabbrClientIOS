@@ -17,7 +17,7 @@
 #import "MBProgressHUD.h"
 #import "CLAUtility.h"
 #import "MBProgressHUD.h"
-#import "CLAToastManager.h"
+#import "CLANotificationManager.h"
 
 //Data Model
 #import "CLATeam.h"
@@ -512,7 +512,7 @@
         [self hideHud];
         
         if (currentMessages.count == 0) {
-            [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"It's lonely here, invite someone and say hello.", nil)completionBlock:nil];
+            [CLANotificationManager showText:NSLocalizedString(@"It's lonely here, invite someone and say hello.", nil) forViewController:self withType:CLANotificationTypeMessage];
         }
         return;
     }

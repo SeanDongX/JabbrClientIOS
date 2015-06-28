@@ -11,7 +11,7 @@
 //Utils
 #import "Constants.h"
 #import "AuthManager.h"
-#import "CLAToastManager.h"
+#import "CLANotificationManager.h"
 #import "MBProgressHUD.h"
 
 //Services
@@ -73,14 +73,12 @@
                 [NSCharacterSet whitespaceCharacterSet]];
     
     if (username == nil || username.length == 0) {
-        
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty username won't get very far.", nil)completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"Oops, an empty username won't get very far.", nil) forViewController:self withType:CLANotificationTypeWarning];
         return;
     }
     
     if (password == nil || password.length == 0) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty password won't get very far.", nil) completionBlock:nil];
-        
+        [CLANotificationManager showText:NSLocalizedString(@"Oops, an empty password won't get very far.", nil) forViewController:self withType:CLANotificationTypeWarning];
         return;
     }
     
@@ -113,7 +111,7 @@
         [self switchToMainView];
     }
     else {
-        [CLAToastManager showDefaultInfoToastWithText:errorMessage completionBlock:nil];
+        [CLANotificationManager showText:errorMessage forViewController:self withType:CLANotificationTypeError];
     }
 }
 

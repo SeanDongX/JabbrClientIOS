@@ -10,7 +10,7 @@
 
 //Util
 #import "Constants.h"
-#import "CLAToastManager.h"
+#import "CLANotificationManager.h"
 #import "CLAUtility.h"
 
 //Control
@@ -71,7 +71,7 @@
                 [strongSelf dismissViewControllerAnimated:YES completion:nil];
             }
             else {
-                [CLAToastManager showDefaultInfoToastWithText: errorMessage completionBlock:nil];
+                [CLANotificationManager showText: errorMessage forViewController:strongSelf withType:CLANotificationTypeError];
             }
         }];
     }
@@ -84,36 +84,31 @@
 - (BOOL)isValidAccountModel: (CLAUserRegistrationViewModel *)accountModel {
 
     if (accountModel.username.length == 0) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty username won't get very far.", nil) completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"Oops, an empty username won't get very far.", nil) forViewController:self withType:CLANotificationTypeWarning];
         return NO;
     }
 
     if (accountModel.name.length == 0) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty name won't get very far.", nil) completionBlock:nil];
-        return NO;
-    }
-    
-    if (accountModel.username.length == 0) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, an empty username won't get very far.", nil) completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"Oops, an empty name won't get very far.", nil) forViewController:self withType:CLANotificationTypeWarning];
         return NO;
     }
     
     if (accountModel.email.length == 0) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"We will need your email.", nil) completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"We will need your email.", nil) forViewController:self withType:CLANotificationTypeWarning];
         return NO;
     }
     
     if (![CLAUtility isValidEmail:accountModel.email]) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"We will need a valid email address.", nil) completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"We will need a valid email address.", nil) forViewController:self withType:CLANotificationTypeWarning];
         return NO;
     }
     if (accountModel.password.length < 6) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"How about a password with more than 6 characters?", nil) completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"How about a password with more than 6 characters?", nil) forViewController:self withType:CLANotificationTypeWarning];
         return NO;
     }
     
     if (![accountModel.password isEqual:accountModel.confirmPassword]) {
-        [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oops, the passwords do not match.", nil) completionBlock:nil];
+        [CLANotificationManager showText:NSLocalizedString(@"Oops, the passwords do not match.", nil) forViewController:self withType:CLANotificationTypeWarning];
         return NO;
     }
     

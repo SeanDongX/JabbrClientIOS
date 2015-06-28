@@ -10,7 +10,6 @@ target 'Collara' do
   pod 'JSQMessagesViewController'
   pod 'ECSlidingViewController', :git => 'https://github.com/ECSlidingViewController/ECSlidingViewController.git'
   pod 'SignalR-ObjC', :path => '~/Documents/workspace/SignalR-ObjC/'
-  pod 'CRToast'
   pod 'MBProgressHUD'
   pod 'Objective-C-Generics'
   pod 'XLPagerTabStrip', :git => 'https://github.com/xmartlabs/XLPagerTabStrip.git'
@@ -19,6 +18,7 @@ target 'Collara' do
   pod 'TPKeyboardAvoiding', :git => 'https://github.com/wonderxboy/TPKeyboardAvoiding.git'
   pod 'TITokenField'
   pod 'XLForm'
+  pod 'TSMessages'
 end
 
 target 'CollaraTests' do

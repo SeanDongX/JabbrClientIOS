@@ -13,7 +13,7 @@
 #import "CLAWebApiClient.h"
 #import "AuthManager.h"
 #import "MBProgressHUD.h"
-#import "CLAToastManager.h"
+#import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"
 #import "CLAUtility.h"
 //Data Model
@@ -304,7 +304,7 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
         if (errorMessage != nil) {
-            [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"We are terribly sorry, but some error happened.", nil) completionBlock:nil];
+            [CLANotificationManager showText:NSLocalizedString(@"We are terribly sorry, but some error happened.", nil) forViewController:self withType:CLANotificationTypeError];
             return;
         }
 

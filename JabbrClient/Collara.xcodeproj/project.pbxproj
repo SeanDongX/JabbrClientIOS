@@ -21,7 +21,7 @@
 		144D9EEC1AF035D6005EBAD2 /* CLARoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEB1AF035D6005EBAD2 /* CLARoom.m */; };
 		144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEE1AF03668005EBAD2 /* CLAUser.m */; };
 		1463CB061AF955AD00BC2513 /* CLACreateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */; };
-		1463CB0A1AF95D0A00BC2513 /* CLAToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB091AF95D0A00BC2513 /* CLAToastManager.m */; };
+		1463CB0A1AF95D0A00BC2513 /* CLANotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB091AF95D0A00BC2513 /* CLANotificationManager.m */; };
 		1463CB0D1AF9691300BC2513 /* CLACreateRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB0C1AF9691300BC2513 /* CLACreateRoomViewController.m */; };
 		14679E961AC8838900316C9C /* ObjectThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14679E951AC8838900316C9C /* ObjectThread.m */; };
 		146C9BAD1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAC1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m */; };
@@ -99,8 +99,8 @@
 		144D9EEE1AF03668005EBAD2 /* CLAUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAUser.m; path = JabbrClient/DataModel/CLAUser.m; sourceTree = SOURCE_ROOT; };
 		1463CB041AF955AD00BC2513 /* CLACreateTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLACreateTeamViewController.h; sourceTree = "<group>"; };
 		1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLACreateTeamViewController.m; sourceTree = "<group>"; };
-		1463CB081AF95D0A00BC2513 /* CLAToastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAToastManager.h; path = Lib/CLAToastManager.h; sourceTree = "<group>"; };
-		1463CB091AF95D0A00BC2513 /* CLAToastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAToastManager.m; path = Lib/CLAToastManager.m; sourceTree = "<group>"; };
+		1463CB081AF95D0A00BC2513 /* CLANotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLANotificationManager.h; path = Lib/CLANotificationManager.h; sourceTree = "<group>"; };
+		1463CB091AF95D0A00BC2513 /* CLANotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLANotificationManager.m; path = Lib/CLANotificationManager.m; sourceTree = "<group>"; };
 		1463CB0B1AF9691300BC2513 /* CLACreateRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLACreateRoomViewController.h; sourceTree = "<group>"; };
 		1463CB0C1AF9691300BC2513 /* CLACreateRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLACreateRoomViewController.m; sourceTree = "<group>"; };
 		14679E941AC8838900316C9C /* ObjectThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectThread.h; path = JabbrClient/DataModel/ObjectThread.h; sourceTree = SOURCE_ROOT; };
@@ -209,8 +209,8 @@
 				1404B5311AF10ED400363178 /* CLAMessageClient.h */,
 				1404B5341AF118BB00363178 /* CLASignalRMessageClient.h */,
 				1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */,
-				1463CB081AF95D0A00BC2513 /* CLAToastManager.h */,
-				1463CB091AF95D0A00BC2513 /* CLAToastManager.m */,
+				1463CB081AF95D0A00BC2513 /* CLANotificationManager.h */,
+				1463CB091AF95D0A00BC2513 /* CLANotificationManager.m */,
 				146C9BA81AFC172C00885F96 /* CLAApiClient.h */,
 				146C9BAE1AFC199500885F96 /* CLAWebApiClient.h */,
 				146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */,
@@ -597,7 +597,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				142046461AD1F866006143D5 /* SignInViewController.m in Sources */,
-				1463CB0A1AF95D0A00BC2513 /* CLAToastManager.m in Sources */,
+				1463CB0A1AF95D0A00BC2513 /* CLANotificationManager.m in Sources */,
 				14805B7E1B2A1DF5007ACBE2 /* CLANotification.m in Sources */,
 				14F5B5CC1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m in Sources */,
 				144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */,

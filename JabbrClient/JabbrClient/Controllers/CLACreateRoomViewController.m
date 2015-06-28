@@ -9,7 +9,7 @@
 #import "CLACreateRoomViewController.h"
 #import "Constants.h"
 #import "SlidingViewController.h"
-#import "CLAToastManager.h"
+#import "CLANotificationManager.h"
 #import "MBProgressHUD.h"
 @interface CLACreateRoomViewController ()
 
@@ -74,11 +74,10 @@
             NSString *errorDescription = [error.userInfo objectForKey:NSLocalizedDescriptionKey];
                                           
             if (errorDescription!= nil && errorDescription.length > 0) {
-                
-                [CLAToastManager showDefaultInfoToastWithText: errorDescription completionBlock:nil];
+                [CLANotificationManager showText:errorDescription forViewController:self withType:CLANotificationTypeError];
             }
             else {
-                [CLAToastManager showDefaultInfoToastWithText:NSLocalizedString(@"Oh, something went wrong. Let's try it again.", nil)completionBlock:nil];
+                 [CLANotificationManager showText:NSLocalizedString(@"Oh, something went wrong. Let's try it again.", nil) forViewController:self withType:CLANotificationTypeError];
             }
         }
         

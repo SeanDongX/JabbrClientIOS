@@ -14,13 +14,10 @@
 @implementation CLANotificationManager
 
 + (void)configure {
+    [TSMessage addCustomDesignFromFileWithName:@"CustomTSMessageNotificationDesign.json"];
 }
 
 + (void)showText:(NSString *)text forViewController:(UIViewController *)viewController withType: (CLANotificationType)type {
-    
-    if (type == CLANotificationTypeMessage) {
-        [[TSMessageView appearance] setBackgroundColor:[Constants highlightColor]];
-    }
     [TSMessage setDefaultViewController:viewController];
     [TSMessage showNotificationWithTitle:text type:(TSMessageNotificationType)type];
 }

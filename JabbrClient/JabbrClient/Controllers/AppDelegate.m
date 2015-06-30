@@ -14,6 +14,7 @@
 #import "AuthManager.h"
 #import "CLAWebApiClient.h"
 #import "CLAAzureHubPushNotificationService.h"
+#import "CLANotificationManager.h"
 
 //Data Model
 #import "CLANotification.h"
@@ -35,6 +36,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self registerNotification];
+    [CLANotificationManager configure];
     return YES;
 }
 							

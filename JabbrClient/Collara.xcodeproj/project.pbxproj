@@ -27,6 +27,7 @@
 		146C9BAD1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAC1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m */; };
 		146C9BB01AFC199500885F96 /* CLAWebApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */; };
 		146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */; };
+		147114DE1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json in Resources */ = {isa = PBXBuildFile; fileRef = 147114DD1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json */; };
 		14805B781B298C9C007ACBE2 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */; };
 		14805B7E1B2A1DF5007ACBE2 /* CLANotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 14805B7D1B2A1DF5007ACBE2 /* CLANotification.m */; };
 		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
@@ -112,6 +113,7 @@
 		146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAWebApiClient.m; path = Lib/CLAWebApiClient.m; sourceTree = "<group>"; };
 		146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLASignUpViewController.h; sourceTree = "<group>"; };
 		146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLASignUpViewController.m; sourceTree = "<group>"; };
+		147114DD1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = CustomTSMessageNotificationDesign.json; path = Lib/CustomTSMessageNotificationDesign.json; sourceTree = "<group>"; };
 		14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMessaging.framework; path = JabbrClient/External/WindowsAzureMessaging.framework; sourceTree = "<group>"; };
 		14805B7C1B2A1DF5007ACBE2 /* CLANotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLANotification.h; sourceTree = "<group>"; };
 		14805B7D1B2A1DF5007ACBE2 /* CLANotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLANotification.m; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */,
 				1463CB081AF95D0A00BC2513 /* CLANotificationManager.h */,
 				1463CB091AF95D0A00BC2513 /* CLANotificationManager.m */,
+				147114DD1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json */,
 				146C9BA81AFC172C00885F96 /* CLAApiClient.h */,
 				146C9BAE1AFC199500885F96 /* CLAWebApiClient.h */,
 				146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */,
@@ -517,6 +520,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14B515801ABF138A0000CC4F /* Main.storyboard in Resources */,
+				147114DE1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json in Resources */,
 				142150881B035E1500D18214 /* Localizable.strings in Resources */,
 				14B515851ABF138A0000CC4F /* LaunchScreen.xib in Resources */,
 				14B515821ABF138A0000CC4F /* Images.xcassets in Resources */,

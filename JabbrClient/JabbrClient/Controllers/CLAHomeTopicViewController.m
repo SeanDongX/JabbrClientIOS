@@ -236,14 +236,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UINavigationController *navController = nil;
     
-    navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
+    navController = [((SlidingViewController *)self.slidingViewController) getNavigationControllerWithKeyIdentifier:kChatNavigationController];
     
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
-        [chatViewController switchToRoom:[self getRoomAtRow:indexPath.row]];
+        chatViewController.room = [self getRoomAtRow:indexPath.row];
     }
     
+    [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     [self.slidingViewController resetTopViewAnimated:YES];
 }
 

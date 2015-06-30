@@ -40,8 +40,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightMenuButton;
 
-@property (nonatomic, strong) CLARoom *currentRoom;
-
 @property (nonatomic, strong) CLASignalRMessageClient *messageClient;
 
 @property (nonatomic, strong) JSQMessagesBubbleImage* incomingBubbleImageView;
@@ -81,9 +79,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     @try {
+        [self switchToRoom:self.room];
         [super viewWillAppear:animated];
-        [self.collectionView reloadData];
-        self.title = [self.currentRoom getHandle];
     }
     @catch (NSException *exception) {
         NSLog(@"Exception: %@", exception.description);
@@ -137,20 +134,19 @@
 - (void)switchToRoom:(CLARoom *)room {
     [CLAUtility setUserDefault:room.name forKey:kSelectedRoomName];
     [self showHud];
-    self.currentRoom = room;
-    self.title = [self.currentRoom getHandle];
+    self.title = [self.room getHandle];
     [self initialzeCurrentThread];
   
     [self joinUserToRoomModel];
-    [self.messageClient joinRoom:self.currentRoom.name];
-    [self.messageClient loadRoom:self.currentRoom.name];
+    [self.messageClient joinRoom:self.room.name];
+    [self.messageClient loadRoom:self.room.name];
     [self.collectionView reloadData];
 }
 
 - (void)joinUserToRoomModel {
     CLATeamViewModel *teamViewModel = [self.messageClient.dataRepository getDefaultTeam];
     CLAUser *currentUser = [teamViewModel findUser:[[AuthManager sharedInstance] getUsername]];
-    [teamViewModel joinUser:currentUser toRoom:self.currentRoom.name];
+    [teamViewModel joinUser:currentUser toRoom:self.room.name];
     [self sendTeamUpdatedEventNotification];
 }
 
@@ -159,7 +155,7 @@
 }
 
 - (NSMutableArray<CLAMessage> *)getCurrentRoomMessages {
-    return [self getMessagesForRoom:self.currentRoom.name];
+    return [self getMessagesForRoom:self.room.name];
 }
 
 - (NSMutableArray<CLAMessage> *)getMessagesForRoom:(NSString*)roomName {
@@ -168,7 +164,7 @@
 
 
 - (void)setCurrentMessageThread:(NSMutableArray *)messages {
-    CLARoom *room = [[self.messageClient.dataRepository getDefaultTeam].rooms objectForKey:self.currentRoom.name];
+    CLARoom *room = [[self.messageClient.dataRepository getDefaultTeam].rooms objectForKey:self.room.name];
     room.messages = messages;
 }
 
@@ -218,7 +214,7 @@
 }
 
 - (void)textFieldTextChanged:(id)sender {
-    [self.messageClient sendTypingFromUser:self.messageClient.username inRoom:self.currentRoom.name];
+    [self.messageClient sendTypingFromUser:self.messageClient.username inRoom:self.room.name];
 }
 
 #pragma mark -
@@ -394,7 +390,7 @@
         if (earliestMessage != nil)
         {
             self.showLoadEarlierMessagesHeader = false;
-            [self.messageClient getPreviousMessages:earliestMessage.oId inRoom:self.currentRoom.name];
+            [self.messageClient getPreviousMessages:earliestMessage.oId inRoom:self.room.name];
         }
     }
 }
@@ -441,7 +437,7 @@
 }
 
 - (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update {
-    if ([self.currentRoom.name isEqual:room.name]) {
+    if ([self.room.name isEqual:room.name]) {
         return;
     }
     
@@ -477,7 +473,7 @@
         [self finishReceivingMessageAnimated:animated];
     }
     
-    if (![room isEqualToString:self.currentRoom.name]) {
+    if (![room isEqualToString:self.room.name]) {
         [self addUnread:1 toRoom:room];
     }
 }
@@ -584,7 +580,7 @@
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     [[self getCurrentRoomMessages] addObject:message];
     [self finishSendingMessageAnimated:TRUE];
-    [self.messageClient sendMessage:message inRoom:self.currentRoom.name];
+    [self.messageClient sendMessage:message inRoom:self.room.name];
 }
 
 
@@ -592,7 +588,7 @@
     self.roomViewModel = [[CLARoomViewModel alloc] init];
     
     CLARoom *room = [[CLARoom alloc] init];
-    room.name = self.currentRoom.name;
+    room.name = self.room.name;
     
     self.roomViewModel.room = room;
 }
@@ -722,8 +718,8 @@
 
 - (BOOL)isCUrrentRoom:(NSString *)room {
     return room != nil &&
-            self.currentRoom != nil &&
-            [room caseInsensitiveCompare:self.currentRoom.name] == NSOrderedSame;
+            self.room != nil &&
+            [room caseInsensitiveCompare:self.room.name] == NSOrderedSame;
 }
 
 - (BOOL)isCurrentUser:(NSString *)user {

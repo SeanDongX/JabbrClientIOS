@@ -17,12 +17,10 @@
 
 @interface ChatViewController : JSQMessagesViewController <CLAMessageClientDelegate>
 
-- (void)switchToRoom:(CLARoom *)room;
+@property (nonatomic, strong) CLARoom *room;
 
 - (void)didReceiveTeams: (NSArray *)userTeams;
-
 - (void)didReceiveMessage: (id<JSQMessageData>) message inRoom:(NSString*)room;
-
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 
 @end

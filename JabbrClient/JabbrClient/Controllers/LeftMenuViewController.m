@@ -331,15 +331,17 @@
 
     UINavigationController *navController = nil;
         
-    navController = [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
+    navController = [((SlidingViewController *)self.slidingViewController) getNavigationControllerWithKeyIdentifier:kChatNavigationController];
     
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
         CLARoom *room = [self getRoomAtRow:indexPath.row];
         [self setRoom:room.name withUnread:0];
-        [chatViewController switchToRoom:room];
+        chatViewController.room = room;
     }
+    
+    [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
     [self.slidingViewController resetTopViewAnimated:YES];

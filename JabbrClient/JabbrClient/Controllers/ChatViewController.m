@@ -655,8 +655,8 @@
 #pragma mark View Controller Event Handlers
 
 - (void)showChatInfoView {
-    CLATopicInfoViewController *c = [[CLATopicInfoViewController alloc] initWithRoom:self.roomViewModel];
-    [self.navigationController pushViewController:c animated:YES];
+    CLATopicInfoViewController *topicInfoView = [[CLATopicInfoViewController alloc] initWithRoom:self.roomViewModel];
+    [self.navigationController pushViewController:topicInfoView animated:YES];
 }
 
 

@@ -221,7 +221,7 @@
     
     [headerView addSubview:title];
     
-    title.text = [NSString stringWithFormat: NSLocalizedString(@"Topics (%@)", nil), [self getRoomCountString]];
+    title.text = [NSString stringWithFormat: NSLocalizedString(@"All Topics (%@)", nil), [self getRoomCountString]];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];
     [addButton addTarget:self action:@selector(showCreateTopicView) forControlEvents:UIControlEventTouchUpInside];

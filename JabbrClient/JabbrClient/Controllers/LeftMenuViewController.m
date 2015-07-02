@@ -300,8 +300,8 @@
     
     CGRect frame = tableView.frame;
     
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 100, 30)];
-    title.text = [NSString stringWithFormat:NSLocalizedString(@"Topics (%@)", nil), [self getRoomCountString]];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, frame.size.width-15-60, 30)];
+    title.text = [NSString stringWithFormat:NSLocalizedString(@"My Topics (%@)", nil), [self getRoomCountString]];
     title.textColor = [UIColor whiteColor];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];

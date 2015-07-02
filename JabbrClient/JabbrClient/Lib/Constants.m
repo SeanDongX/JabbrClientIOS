@@ -192,7 +192,7 @@ NSTimeInterval const minRefreshLoadTime = 3;
 }
 
 + (UIColor*)warningColor {
-    return [UIColor colorWithRed:(237/255.0) green:(85/255.0) blue:(101/255.0) alpha:1];
+    return [UIColor colorWithRed:(248/255.0) green:(172/255.0) blue:(89/255.0) alpha:1];
 }
 
 + (UIColor*)backgroundColor {

@@ -19,6 +19,7 @@
 //View Controller
 #import "CLAHomeTopicViewController.h"
 #import "CLAHomeMemberViewController.h"
+#import "CLAHomeNotificationViiewController.h"
 
 @interface CLAHomeMasterViewController ()
 
@@ -113,7 +114,10 @@
     
     CLAHomeMemberViewController *homeMemberViewController = [storyBoard instantiateViewControllerWithIdentifier:kHomeMemberViewController];
     
-    return @[homeTopicViewController, homeMemberViewController];
+    
+    CLAHomeNotificationViiewController *notificationViewController = [[CLAHomeNotificationViiewController alloc] init];
+    
+    return @[homeTopicViewController, homeMemberViewController, notificationViewController];
 }
 
 @end

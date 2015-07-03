@@ -16,9 +16,11 @@
 #import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"
 #import "CLAUtility.h"
+
 //Data Model
 #import "CLAUser.h"
 #import "CLATeamViewModel.h"
+#import "CLANotificationMessage.h"
 
 //Menu
 #import "UIViewController+ECSlidingViewController.h"
@@ -41,6 +43,7 @@
 
 - (void)viewDidLoad {
     [self addTalbeView];
+    [self loadNotifications];
 }
 
 - (void)addTalbeView {
@@ -49,6 +52,24 @@
     self.tableView.dataSource = self;
 }
 
+- (void)loadNotifications {
+    [[CLAWebApiClient sharedInstance] getNotificationsFor:[CLAUtility getUserDefault:kTeamKey] completion:^(NSArray *result, NSString *errorMessage) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        for (NSDictionary *notificationDictionary in result) {
+//            CLANotificationMessage *notification = [[CLANotificationMessage alloc] init];
+//            notification.notificationKey = [notificationDictionary objectForKey:@"notificationKey"];
+//            notification.fromUserName = [notificationDictionary objectForKey:@"fromUserName"];
+//            notification.roomName = [notificationDictionary objectForKey:@"roomName"];
+//            notification.when = [notificationDictionary objectForKey:@"when"];
+        }
+        
+        if (errorMessage != nil) {
+            [CLANotificationManager showText:NSLocalizedString(@"We are terribly sorry, but some error happened.", nil) forViewController:self withType:CLANotificationTypeError];
+            return;
+        }
+    }];
+}
 - (void)viewDidLayoutSubviews
 {
     //The very first time this is called, the table view has a smaller size than the screen size

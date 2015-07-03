@@ -18,7 +18,7 @@
 - (void)createTeam:(NSString *)name completionHandler:(void(^)(NSString *errorMessage))completion;
 - (void)joinTeam:(NSString *)invitationCode completionHandler:(void(^)(NSString *errorMessage))completion;
 - (void)getInviteCodeForTeam:(NSNumber *)team completion:(void(^)(NSString *invitationCode, NSString *errorMessage))completion;
-- (void)sendInviteFor:(NSString *)team to:(NSString *)email completion: (void(^)(NSString *token, NSString *errorMessage))completion;
-
+- (void)sendInviteFor:(NSString *)team to:(NSString *)email completion:(void(^)(NSString *token, NSString *errorMessage))completion;
+- (void)getNotificationsFor:(NSString *)team completion:(void(^)(NSArray *result, NSString *errorMessage))completion;
 - (void)setBadge:(NSNumber *)count forTeam:(NSNumber *)teamKey;
 @end

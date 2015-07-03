@@ -218,6 +218,23 @@ static bool isFirstAccess = YES;
      }];
 }
 
+#pragma mark -
+#pragma mark Notification
+- (void)getNotificationsFor:(NSString *)team completion:(void(^)(NSString *result, NSString *errorMessage))completion {
+    NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/notification/?teamkey=", team, @"&token=", [self getToken]];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager GET:requestUrl parameters:nil
+                         success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         completion(responseObject, nil);
+     }
+                         failure:
+     ^(AFHTTPRequestOperation *operation, NSError *error) {
+         completion(nil, [self getResponseErrorMessage:error]);
+     }];
+}
+
 - (void)setBadge:(NSNumber *)count forTeam:(NSNumber *)teamKey  {
     
     if (count == nil ||teamKey == nil) {
@@ -228,11 +245,11 @@ static bool isFirstAccess = YES;
     NSString *requestUrl = [array componentsJoinedByString:@""];
     
     [self.connectionManager POST:requestUrl parameters:nil
-                     success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-                     }
-                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                         NSLog(@"Set badge faield with error: %@", [self getResponseErrorMessage:error]);
-                     }];
+                         success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             NSLog(@"Set badge faield with error: %@", [self getResponseErrorMessage:error]);
+                         }];
     
 }
 

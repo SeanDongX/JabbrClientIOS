@@ -19,6 +19,7 @@ target 'Collara' do
   pod 'TITokenField'
   pod 'XLForm'
   pod 'TSMessages'
+  pod 'MagicalRecord'
 end
 
 target 'CollaraTests' do

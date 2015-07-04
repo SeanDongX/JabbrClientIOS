@@ -16,6 +16,7 @@
 #import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"
 #import "CLAUtility.h"
+#import "MagicalRecord.h"
 
 //Data Model
 #import "CLAUser.h"
@@ -54,15 +55,27 @@
 
 - (void)loadNotifications {
     [[CLAWebApiClient sharedInstance] getNotificationsFor:[CLAUtility getUserDefault:kTeamKey] completion:^(NSArray *result, NSString *errorMessage) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         
-        for (NSDictionary *notificationDictionary in result) {
-//            CLANotificationMessage *notification = [[CLANotificationMessage alloc] init];
-//            notification.notificationKey = [notificationDictionary objectForKey:@"notificationKey"];
-//            notification.fromUserName = [notificationDictionary objectForKey:@"fromUserName"];
-//            notification.roomName = [notificationDictionary objectForKey:@"roomName"];
-//            notification.when = [notificationDictionary objectForKey:@"when"];
-        }
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            for (NSDictionary *dataDictionary in result) {
+                NSNumber *notificationKey = [dataDictionary objectForKey:@"notificationKey"];
+                
+                CLANotificationMessage *existingNotification = [CLANotificationMessage MR_findFirstByAttribute:@"notificationKey" withValue:notificationKey];
+                
+                if (existingNotification != nil) {
+                    [existingNotification updateExisting:dataDictionary];
+                }
+                else {
+                    CLANotificationMessage  *notification = [CLANotificationMessage MR_createEntityInContext:localContext];
+                    [notification parseData:dataDictionary];
+                }
+            }
+            
+        } completion:^(BOOL success, NSError *error) {
+            [self.tableView reloadData];
+            [self finishRefresh];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
         
         if (errorMessage != nil) {
             [CLANotificationManager showText:NSLocalizedString(@"We are terribly sorry, but some error happened.", nil) forViewController:self withType:CLANotificationTypeError];
@@ -81,22 +94,6 @@
     }
 }
 
-- (void)updateTeam:(NSNotification *)notification {
-    CLATeamViewModel *teamViewModel = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
-    
-    if (teamViewModel != nil) {
-        [self updatetNotifications:teamViewModel.users];
-    }
-    
-    [self didFinishRefresh];
-}
-
-- (void)updatetNotifications: (NSArray *)users {
-    if (users != nil) {
-        [self.tableView reloadData];
-    }
-}
-
 #pragma mark -
 #pragma mark - Pull To Resfresh
 
@@ -104,8 +101,7 @@
 {
     [CLAUtility setUserDefault:[NSDate date] forKey:kLastRefreshTime];
     self.isRefreshing = TRUE;
-    [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-    //team loading finished will be notified through kEventTeamUpdated notification which calls self.updateTeam method
+    [self loadNotifications];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -160,12 +156,21 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return [CLANotificationMessage MR_findAll].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NotificationCell"];
+    NSString *cellIdentifier = @"NotificationCell";
     
+    //TODO:design cell
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+    }
+    
+    CLANotificationMessage *notification = [[CLANotificationMessage MR_findAllSortedBy:@"when" ascending:NO]objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@: %@", notification.when, notification.message];
     cell.textLabel.textColor = [Constants mainThemeContrastColor];
     [cell setBackgroundColor:[UIColor clearColor]];
     

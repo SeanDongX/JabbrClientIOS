@@ -8,7 +8,6 @@
 
 #import "Constants.h"
 #import <FontAwesomeKit/FAKIonIcons.h>
-#import "CRToast.h"
 
 @implementation Constants
 
@@ -99,21 +98,6 @@ int const kLoadEarlierMessageCount = 50;
 
 NSString *const kLastRefreshTime = @"LastRefreshTimeKey";
 NSTimeInterval const minRefreshLoadTime = 3;
-
-+ (NSDictionary *)toasOptions {
-    return @{
-             kCRToastFontKey: [UIFont systemFontOfSize:16],
-             kCRToastTextColorKey: [UIColor whiteColor],
-             kCRToastNotificationTypeKey : @(CRToastTypeNavigationBar),
-             kCRToastTextAlignmentKey: @(NSTextAlignmentLeft),
-             kCRToastBackgroundColorKey : [Constants warningColor],
-             kCRToastTimeIntervalKey: @2,
-             kCRToastAnimationInTypeKey: @(CRToastAnimationTypeGravity),
-             kCRToastAnimationOutTypeKey: @(CRToastAnimationTypeGravity),
-             kCRToastAnimationInDirectionKey: @(CRToastAnimationDirectionTop),
-             kCRToastAnimationOutDirectionKey: @(CRToastAnimationDirectionTop)
-            };
-}
 
 + (UIImage *)menuIconImage {
     FAKIonIcons *iccon = [FAKIonIcons naviconIconWithSize:30];

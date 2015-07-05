@@ -138,8 +138,8 @@
     [self initialzeCurrentThread];
   
     [self joinUserToRoomModel];
-    [self.messageClient joinRoom:self.room.name];
-    [self.messageClient loadRoom:self.room.name];
+    [self.messageClient joinRoom:room.name];
+    [self.messageClient loadRoom:room.name];
     [self.collectionView reloadData];
 }
 

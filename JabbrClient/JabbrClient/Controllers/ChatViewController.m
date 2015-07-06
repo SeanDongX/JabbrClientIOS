@@ -437,7 +437,7 @@
 }
 
 - (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update {
-    if ([self.room.name isEqual:room.name]) {
+    if (self.room == nil || (room.name != nil &&[self.room.name isEqual:room.name])) {
         return;
     }
     

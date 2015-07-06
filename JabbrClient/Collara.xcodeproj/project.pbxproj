@@ -10,6 +10,7 @@
 		1404B5361AF118BB00363178 /* CLASignalRMessageClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */; };
 		1413226B1B3A17ED008659BD /* CLATopicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1413226A1B3A17ED008659BD /* CLATopicInfoViewController.m */; };
 		1419E8E91B1E271C0057CAC5 /* CLAInMemoryDataRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */; };
+		141F59271B4B2BCA004CF3F4 /* Collara_UI_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141F59261B4B2BCA004CF3F4 /* Collara_UI_Tests.swift */; };
 		142046431AD1EC91006143D5 /* AuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* AuthManager.m */; };
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
@@ -60,6 +61,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		141F59291B4B2BCA004CF3F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 14B515661ABF138A0000CC4F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 14B5156D1ABF138A0000CC4F;
+			remoteInfo = Collara;
+		};
 		14B5158B1ABF138A0000CC4F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 14B515661ABF138A0000CC4F /* Project object */;
@@ -79,6 +87,9 @@
 		1419E8E41B1E26ED0057CAC5 /* CLADataRepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLADataRepositoryProtocol.h; path = Repository/CLADataRepositoryProtocol.h; sourceTree = "<group>"; };
 		1419E8E71B1E271C0057CAC5 /* CLAInMemoryDataRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAInMemoryDataRepository.h; path = Repository/CLAInMemoryDataRepository.h; sourceTree = "<group>"; };
 		1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAInMemoryDataRepository.m; path = Repository/CLAInMemoryDataRepository.m; sourceTree = "<group>"; };
+		141F59241B4B2BCA004CF3F4 /* Collara UI Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Collara UI Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		141F59261B4B2BCA004CF3F4 /* Collara_UI_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collara_UI_Tests.swift; sourceTree = "<group>"; };
+		141F59281B4B2BCA004CF3F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		142046411AD1EC91006143D5 /* AuthManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthManager.h; path = Lib/AuthManager.h; sourceTree = "<group>"; };
 		142046421AD1EC91006143D5 /* AuthManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthManager.m; path = Lib/AuthManager.m; sourceTree = "<group>"; };
 		142046441AD1F866006143D5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
@@ -183,6 +194,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		141F59211B4B2BCA004CF3F4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14B5156B1ABF138A0000CC4F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -210,6 +228,15 @@
 				1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */,
 			);
 			name = Repository;
+			sourceTree = "<group>";
+		};
+		141F59251B4B2BCA004CF3F4 /* Collara UI Tests */ = {
+			isa = PBXGroup;
+			children = (
+				141F59261B4B2BCA004CF3F4 /* Collara_UI_Tests.swift */,
+				141F59281B4B2BCA004CF3F4 /* Info.plist */,
+			);
+			path = "Collara UI Tests";
 			sourceTree = "<group>";
 		};
 		142046401AD1EC58006143D5 /* Lib */ = {
@@ -302,6 +329,7 @@
 				1421508A1B035E1500D18214 /* Localizable.strings */,
 				14B515701ABF138A0000CC4F /* JabbrClient */,
 				14B5158D1ABF138A0000CC4F /* JabbrClientTests */,
+				141F59251B4B2BCA004CF3F4 /* Collara UI Tests */,
 				14B5156F1ABF138A0000CC4F /* Products */,
 				14805B741B29864C007ACBE2 /* External */,
 				5B31BC541338B01E45F1B8EB /* Pods */,
@@ -314,6 +342,7 @@
 			children = (
 				14B5156E1ABF138A0000CC4F /* Collara.app */,
 				14B5158A1ABF138A0000CC4F /* CollaraTests.xctest */,
+				141F59241B4B2BCA004CF3F4 /* Collara UI Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -473,6 +502,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		141F59231B4B2BCA004CF3F4 /* Collara UI Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 141F592D1B4B2BCA004CF3F4 /* Build configuration list for PBXNativeTarget "Collara UI Tests" */;
+			buildPhases = (
+				141F59201B4B2BCA004CF3F4 /* Sources */,
+				141F59211B4B2BCA004CF3F4 /* Frameworks */,
+				141F59221B4B2BCA004CF3F4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				141F592A1B4B2BCA004CF3F4 /* PBXTargetDependency */,
+			);
+			name = "Collara UI Tests";
+			productName = "Collara UI Tests";
+			productReference = 141F59241B4B2BCA004CF3F4 /* Collara UI Tests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		14B5156D1ABF138A0000CC4F /* Collara */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 14B515941ABF138A0000CC4F /* Build configuration list for PBXNativeTarget "Collara" */;
@@ -523,6 +570,10 @@
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = Collara;
 				TargetAttributes = {
+					141F59231B4B2BCA004CF3F4 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 14B5156D1ABF138A0000CC4F;
+					};
 					14B5156D1ABF138A0000CC4F = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = S4FWSQQRWN;
@@ -554,11 +605,19 @@
 			targets = (
 				14B5156D1ABF138A0000CC4F /* Collara */,
 				14B515891ABF138A0000CC4F /* CollaraTests */,
+				141F59231B4B2BCA004CF3F4 /* Collara UI Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		141F59221B4B2BCA004CF3F4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14B5156C1ABF138A0000CC4F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -653,6 +712,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		141F59201B4B2BCA004CF3F4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				141F59271B4B2BCA004CF3F4 /* Collara_UI_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14B5156A1ABF138A0000CC4F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -713,6 +780,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		141F592A1B4B2BCA004CF3F4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 14B5156D1ABF138A0000CC4F /* Collara */;
+			targetProxy = 141F59291B4B2BCA004CF3F4 /* PBXContainerItemProxy */;
+		};
 		14B5158C1ABF138A0000CC4F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 14B5156D1ABF138A0000CC4F /* Collara */;
@@ -754,6 +826,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		141F592B1B4B2BCA004CF3F4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Collara UI Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.collara.Collara-UI-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_TARGET_NAME = Collara;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		141F592C1B4B2BCA004CF3F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Collara UI Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.collara.Collara-UI-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Collara;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 		14B515921ABF138A0000CC4F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -919,6 +1023,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		141F592D1B4B2BCA004CF3F4 /* Build configuration list for PBXNativeTarget "Collara UI Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				141F592B1B4B2BCA004CF3F4 /* Debug */,
+				141F592C1B4B2BCA004CF3F4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		14B515691ABF138A0000CC4F /* Build configuration list for PBXProject "Collara" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

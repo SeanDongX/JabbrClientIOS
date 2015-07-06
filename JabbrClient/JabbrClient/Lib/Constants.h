@@ -79,8 +79,6 @@ FOUNDATION_EXPORT int const kLoadEarlierMessageCount;
 FOUNDATION_EXPORT NSString *const kLastRefreshTime;
 FOUNDATION_EXPORT NSTimeInterval const minRefreshLoadTime;
 
-+ (NSDictionary *)toasOptions;
-
 + (UIImage *)menuIconImage;
 + (UIImage *)homeImage;
 + (UIImage *)settingsImage;

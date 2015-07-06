@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "CLANotificationManager.h"
 #import "CLAUtility.h"
+#import "MBProgressHUD.h"
 
 //Control
 #import "CLARoundFrameButton.h"
@@ -51,6 +52,7 @@
 #pragma mark Event Handlers
 
 - (IBAction)signUpClicked:(id)sender {
+    [MBProgressHUD showHUDAddedTo: self.view animated:YES];
     
     CLAUserRegistrationViewModel *accountModel = [[CLAUserRegistrationViewModel alloc] init];
     accountModel.username = [self usernameTextField].text;
@@ -73,7 +75,12 @@
             else {
                 [CLANotificationManager showText: errorMessage forViewController:strongSelf withType:CLANotificationTypeError];
             }
+            
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         }];
+    }
+    else {
+       [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }
 }
 

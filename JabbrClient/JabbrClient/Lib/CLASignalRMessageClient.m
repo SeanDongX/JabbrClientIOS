@@ -360,12 +360,17 @@ static bool isFirstAccess = YES;
 }
 
 - (void)roomLoaded:(NSArray *)data {
-    if (data == nil)
+    if (data == nil || data.count == 0)
     {
         return;
     }
     
     NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
+    
+    if (roomInfoDictionary == nil || roomInfoDictionary == (id)[NSNull null]) {
+        return;
+    }
+    
     NSString *room = [roomInfoDictionary objectForKey:@"Name"];
     
     

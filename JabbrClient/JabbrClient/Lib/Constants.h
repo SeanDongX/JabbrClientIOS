@@ -89,6 +89,7 @@ FOUNDATION_EXPORT NSTimeInterval const minRefreshLoadTime;
 + (UIImage *)addIconImage;
 + (UIImage *)signOutImage;
 + (UIImage *)topicSettingIcon;
++ (UIImage *)unreadIcon;
 
 + (UIColor *)mainThemeColor;
 + (UIColor *)tableHeaderColor;

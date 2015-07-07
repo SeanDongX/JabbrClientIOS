@@ -12,6 +12,7 @@
 "Topic" = "Topic";
 "Leave" = "Leave";
 "Members" = "Members";
+"Alerts" = "Alerts"; 
 "Send Invite" = "Send Invite";
 "Invitation sent" = "Invitation sent";
 "Select users to invite" = "Select users to invite";

@@ -159,6 +159,12 @@ NSTimeInterval const minRefreshLoadTime = 3;
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
++ (UIImage *)unreadIcon {
+    FAKIonIcons *iccon = [FAKIonIcons iosCircleFilledIconWithSize:10];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[Constants highlightColor]];
+    return [iccon imageWithSize:CGSizeMake(10, 10)];
+}
+
 + (UIColor*)mainThemeColor {
     return [UIColor colorWithRed:(26/255.0) green:(179/255.0) blue:(148/255.0) alpha:1];
 }

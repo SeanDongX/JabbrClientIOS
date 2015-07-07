@@ -32,6 +32,7 @@
 
 //Custom Controls
 #import "BOZPongRefreshControl.h"
+#import "CLANotifictionTableViewCell.h"
 
 @interface CLAHomeNotificationViiewController ()
 
@@ -144,7 +145,7 @@
 
 -(NSString *)titleForPagerTabStripViewController:(XLPagerTabStripViewController *)pagerTabStripViewController
 {
-    return NSLocalizedString(@"Notifs", nil);
+    return NSLocalizedString(@"Alerts", nil);
 }
 
 -(UIColor *)colorForPagerTabStripViewController:(XLPagerTabStripViewController *)pagerTabStripViewController
@@ -159,25 +160,28 @@
     return [CLANotificationMessage MR_findAll].count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellIdentifier = @"NotificationCell";
     
-    //TODO:design cell
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    CLANotifictionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell = [[CLANotifictionTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     
-    CLANotificationMessage *notification = [[CLANotificationMessage MR_findAllSortedBy:@"when" ascending:NO]objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@: %@", notification.when, notification.message];
-    cell.textLabel.textColor = [Constants mainThemeContrastColor];
-    [cell setBackgroundColor:[UIColor clearColor]];
+    cell.notification = [[CLANotificationMessage MR_findAllSortedBy:@"when" ascending:NO]objectAtIndex:indexPath.row];
     
     UIView *backgroundView = [UIView new];
     backgroundView.backgroundColor = [Constants highlightColor];
     cell.selectedBackgroundView = backgroundView;
     
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+
     return cell;
 }
 
@@ -190,7 +194,7 @@
 #pragma mark - TableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    //TODO:show detail view
 }
 
 #pragma mark -

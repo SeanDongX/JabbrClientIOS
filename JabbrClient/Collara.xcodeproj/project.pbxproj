@@ -14,6 +14,7 @@
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
 		142150881B035E1500D18214 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1421508A1B035E1500D18214 /* Localizable.strings */; };
+		14240C0C1B4811A800012E5A /* CLANotifictionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14240C0B1B4811A800012E5A /* CLANotifictionTableViewCell.m */; };
 		142BC9621B2CF25300E995D0 /* DemoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 142BC9611B2CF25300E995D0 /* DemoData.m */; };
 		142FFA6B1AFD4B3C0076DB6E /* CLAUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FFA6A1AFD4B3C0076DB6E /* CLAUtility.m */; };
 		1430E00C1AF6DFF300F2D974 /* CLARoomViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */; };
@@ -90,6 +91,8 @@
 		142150891B035E1500D18214 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1421508C1B035F9900D18214 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1421508E1B036A2700D18214 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		14240C0A1B4811A800012E5A /* CLANotifictionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLANotifictionTableViewCell.h; path = CustomControl/CLANotifictionTableViewCell.h; sourceTree = "<group>"; };
+		14240C0B1B4811A800012E5A /* CLANotifictionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLANotifictionTableViewCell.m; path = CustomControl/CLANotifictionTableViewCell.m; sourceTree = "<group>"; };
 		142BC9601B2CF25300E995D0 /* DemoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoData.h; path = JabbrClient/DataModel/DemoData.h; sourceTree = SOURCE_ROOT; };
 		142BC9611B2CF25300E995D0 /* DemoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DemoData.m; path = JabbrClient/DataModel/DemoData.m; sourceTree = SOURCE_ROOT; };
 		142FFA691AFD4B3C0076DB6E /* CLAUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAUtility.h; path = Lib/CLAUtility.h; sourceTree = "<group>"; };
@@ -443,6 +446,8 @@
 			children = (
 				14F8677D1B020D2A00CF751F /* CLARoundFrameButton.h */,
 				14F8677E1B020D2A00CF751F /* CLARoundFrameButton.m */,
+				14240C0A1B4811A800012E5A /* CLANotifictionTableViewCell.h */,
+				14240C0B1B4811A800012E5A /* CLANotifictionTableViewCell.m */,
 			);
 			name = CustomControl;
 			sourceTree = "<group>";
@@ -664,6 +669,7 @@
 				144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
 				14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */,
+				14240C0C1B4811A800012E5A /* CLANotifictionTableViewCell.m in Sources */,
 				14E637331B472DC6000A802C /* CLAHomeNotificationViiewController.m in Sources */,
 				1419E8E91B1E271C0057CAC5 /* CLAInMemoryDataRepository.m in Sources */,
 				14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */,

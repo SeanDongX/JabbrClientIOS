@@ -27,8 +27,9 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
 
-//View Controller
+//View Controllers
 #import "CLACreateRoomViewController.h"
+#import "CLANotificationContentViewController.h"
 
 //Custom Controls
 #import "BOZPongRefreshControl.h"
@@ -45,6 +46,9 @@
 
 - (void)viewDidLoad {
     [self addTalbeView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [self loadNotifications];
 }
 
@@ -61,7 +65,7 @@
             for (NSDictionary *dataDictionary in result) {
                 NSNumber *notificationKey = [dataDictionary objectForKey:@"notificationKey"];
                 
-                CLANotificationMessage *existingNotification = [CLANotificationMessage MR_findFirstByAttribute:@"notificationKey" withValue:notificationKey];
+                CLANotificationMessage *existingNotification = [CLANotificationMessage MR_findFirstByAttribute:@"notificationKey" withValue:notificationKey inContext:localContext];
                 
                 if (existingNotification != nil) {
                     [existingNotification updateExisting:dataDictionary];
@@ -195,18 +199,31 @@
 #pragma mark - TableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //TODO:show detail view
+    [self showNotificationContent:[[CLANotificationMessage MR_findAllSortedBy:@"when" ascending:NO]objectAtIndex:indexPath.row]];
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
-
-- (void)showCreateTopicView {
+- (void)showNotificationContent:(CLANotificationMessage *)notification  {
+    if (notification == nil) {
+        return;
+    }
+    
+    [[CLAWebApiClient sharedInstance] setRead:notification
+                                   completion:^(NSArray *result, NSString *errorMessage) {
+                                       [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                                           CLANotificationMessage *existingNotification = [CLANotificationMessage MR_findFirstByAttribute:@"notificationKey" withValue:notification.notificationKey inContext:localContext];
+                                           existingNotification.read = @1;
+                                       } completion:^(BOOL success, NSError *error) {
+                                       }];
+    }];
+    
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
-    CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
-    [self presentViewController:createRoomViewController animated:YES completion:nil];
+    CLANotificationContentViewController *notificationViewController = [storyBoard instantiateViewControllerWithIdentifier:kNotificationContentViewController];
+    notificationViewController.notification = notification;
+    [self presentViewController:notificationViewController animated:YES completion:nil];
 }
 
 @end

@@ -235,6 +235,21 @@ static bool isFirstAccess = YES;
      }];
 }
 
+- (void)setRead:(CLANotificationMessage *)notification completion:(void(^)(NSArray *result, NSString *errorMessage))completion {
+    NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/notification/setread/", notification.notificationKey, @"/?token=", [self getToken]];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl parameters:nil
+                        success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         completion(responseObject, nil);
+     }
+                        failure:
+     ^(AFHTTPRequestOperation *operation, NSError *error) {
+         completion(nil, [self getResponseErrorMessage:error]);
+     }];
+}
+
 - (void)setBadge:(NSNumber *)count forTeam:(NSNumber *)teamKey  {
     
     if (count == nil ||teamKey == nil) {
@@ -250,7 +265,6 @@ static bool isFirstAccess = YES;
                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                              NSLog(@"Set badge faield with error: %@", [self getResponseErrorMessage:error]);
                          }];
-    
 }
 
 #pragma mark -

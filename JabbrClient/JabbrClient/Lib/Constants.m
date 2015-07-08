@@ -59,6 +59,8 @@ NSString *const kRightMenuViewController = @"RightMenuViewController";
 NSString *const kCreateTeamViewController = @"CreateTeamViewController";
 NSString *const kCreateRoomViewController = @"CreateRoomViewController";
 
+NSString *const kNotificationContentViewController = @"NotificationContentViewController";
+
 NSString *const kUserPrefix = @"@";
 NSString *const kRoomPrefix = @"#";
 NSString *const kDocPrefix = @">";

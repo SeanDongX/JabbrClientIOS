@@ -38,7 +38,7 @@
     
     self.message.text = self.notification.message;
     
-    self.unreadImageView.hidden = self.notification.read;
+    self.unreadImageView.hidden = [self.notification.read isEqualToNumber:@1];
     
     JSQMessagesAvatarImage *jSQMessagesAvatarImage =
     [JSQMessagesAvatarImageFactory avatarImageWithUserInitials:[[self.notification.fromUserName substringToIndex:1] capitalizedString]

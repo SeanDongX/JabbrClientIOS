@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CLAUserRegistrationViewModel.h"
+#import "CLANotificationMessage.h"
 
 @protocol CLAApiClient;
 
@@ -20,5 +21,6 @@
 - (void)getInviteCodeForTeam:(NSNumber *)team completion:(void(^)(NSString *invitationCode, NSString *errorMessage))completion;
 - (void)sendInviteFor:(NSString *)team to:(NSString *)email completion:(void(^)(NSString *token, NSString *errorMessage))completion;
 - (void)getNotificationsFor:(NSString *)team completion:(void(^)(NSArray *result, NSString *errorMessage))completion;
+- (void)setRead:(CLANotificationMessage *)notification completion:(void(^)(NSArray *result, NSString *errorMessage))completion;
 - (void)setBadge:(NSNumber *)count forTeam:(NSNumber *)teamKey;
 @end

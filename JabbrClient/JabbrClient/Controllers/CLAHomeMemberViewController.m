@@ -265,7 +265,6 @@
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
-    createRoomViewController.slidingMenuViewController = (SlidingViewController *)self.slidingViewController;
     [self presentViewController:createRoomViewController animated:YES completion:nil];
 }
 

@@ -84,6 +84,7 @@
         }
     }];
 }
+
 - (void)viewDidLayoutSubviews
 {
     //The very first time this is called, the table view has a smaller size than the screen size
@@ -205,7 +206,6 @@
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
     CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
-    createRoomViewController.slidingMenuViewController = (SlidingViewController *)self.slidingViewController;
     [self presentViewController:createRoomViewController animated:YES completion:nil];
 }
 

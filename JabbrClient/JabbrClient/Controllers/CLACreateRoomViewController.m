@@ -8,7 +8,6 @@
 
 #import "CLACreateRoomViewController.h"
 #import "Constants.h"
-#import "SlidingViewController.h"
 #import "CLANotificationManager.h"
 #import "MBProgressHUD.h"
 @interface CLACreateRoomViewController ()

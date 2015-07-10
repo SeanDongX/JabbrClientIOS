@@ -18,11 +18,9 @@
 
     #if TARGET_IPHONE_SIMULATOR
 
-        //NSString *const kServerBaseUrl = @"http://192.168.31.202:16207/";
-        NSString *const kServerBaseUrl = @"http://www.collara.co/";
+        NSString *const kServerBaseUrl = @"http://collara-test.azurewebsites.net/";
     #else
 
-        //NSString *const kServerBaseUrl = @"http://colla-team.azurewebsites.net/";
         NSString *const kServerBaseUrl = @"http://www.collara.co/";
     #endif
 
@@ -35,6 +33,8 @@
 #endif
 
 NSString *const kApiPath = @"api/v1/";
+
+NSString *const kForgotPasswordPath = @"account/requestresetpassword/";
 
 NSTimeInterval const kMessageClientReconnectInterval = 5.0;
 

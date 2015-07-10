@@ -116,6 +116,9 @@
 /* Class = "UIButton"; normalTitle = "Sign out"; ObjectID = "vR8-jy-CjL"; */
 "vR8-jy-CjL.normalTitle" = "Sign out";
 
+/* Class = "UIButton"; normalTitle = "Forgot Password"; ObjectID = "vgh-Ic-yXL"; */
+"vgh-Ic-yXL.normalTitle" = "Forgot Password";
+
 /* Class = "UILabel"; text = "Or join a team with inviatation code"; ObjectID = "xNi-xF-Kk5"; */
 "xNi-xF-Kk5.text" = "Or join a team with inviatation code";
 

@@ -116,6 +116,9 @@
 /* Class = "UIButton"; normalTitle = "Sign out"; ObjectID = "vR8-jy-CjL"; */
 "vR8-jy-CjL.normalTitle" = "退出";
 
+/* Class = "UIButton"; normalTitle = "Forgot Password"; ObjectID = "vgh-Ic-yXL"; */
+"vgh-Ic-yXL.normalTitle" = "忘记密码啦";
+
 /* Class = "UILabel"; text = "Or join a team with inviatation code"; ObjectID = "xNi-xF-Kk5"; */
 "xNi-xF-Kk5.text" = "也可以使用团队邀请码的哦";
 

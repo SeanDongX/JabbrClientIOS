@@ -1,4 +1,10 @@
 
+/* Class = "UILabel"; text = "Topic"; ObjectID = "4Ud-ZO-HdC"; */
+"4Ud-ZO-HdC.text" = "话题";
+
+/* Class = "UILabel"; text = "When"; ObjectID = "4bI-h6-faN"; */
+"4bI-h6-faN.text" = "时间";
+
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "6vg-UG-eAB"; */
 "6vg-UG-eAB.placeholder" = "邮箱";
 
@@ -16,6 +22,9 @@
 
 /* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "C1u-My-kQW"; */
 "C1u-My-kQW.normalTitle" = "注册";
+
+/* Class = "UILabel"; text = "Message"; ObjectID = "Ed4-3R-qkR"; */
+"Ed4-3R-qkR.text" = "Message";
 
 /* Class = "UIButton"; normalTitle = "Join Team"; ObjectID = "Ie1-LK-m1i"; */
 "Ie1-LK-m1i.normalTitle" = "加入团队";
@@ -97,6 +106,9 @@
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "qeo-G0-hFE"; */
 "qeo-G0-hFE.text" = "名称";
+
+/* Class = "UILabel"; text = "User"; ObjectID = "r2a-nj-fdg"; */
+"r2a-nj-fdg.text" = "用户";
 
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "rhd-Pn-tdl"; */
 "rhd-Pn-tdl.normalTitle" = "登录";

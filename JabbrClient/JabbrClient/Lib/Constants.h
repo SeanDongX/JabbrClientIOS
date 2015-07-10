@@ -39,6 +39,8 @@ FOUNDATION_EXPORT NSString *const kRightMenuViewController;
 FOUNDATION_EXPORT NSString *const kCreateTeamViewController;
 FOUNDATION_EXPORT NSString *const kCreateRoomViewController;
 
+FOUNDATION_EXPORT NSString *const kNotificationContentViewController;
+
 FOUNDATION_EXPORT NSString *const kUserPrefix;
 FOUNDATION_EXPORT NSString *const kRoomPrefix;
 FOUNDATION_EXPORT NSString *const kDocPrefix;
@@ -89,6 +91,7 @@ FOUNDATION_EXPORT NSTimeInterval const minRefreshLoadTime;
 + (UIImage *)addIconImage;
 + (UIImage *)signOutImage;
 + (UIImage *)topicSettingIcon;
++ (UIImage *)unreadIcon;
 
 + (UIColor *)mainThemeColor;
 + (UIColor *)tableHeaderColor;

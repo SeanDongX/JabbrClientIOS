@@ -115,9 +115,9 @@
     CLAHomeMemberViewController *homeMemberViewController = [storyBoard instantiateViewControllerWithIdentifier:kHomeMemberViewController];
     
     
-    //CLAHomeNotificationViiewController *notificationViewController = [[CLAHomeNotificationViiewController alloc] init];
+    CLAHomeNotificationViiewController *notificationViewController = [[CLAHomeNotificationViiewController alloc] init];
     
-    return @[homeTopicViewController, homeMemberViewController];//, notificationViewController];
+    return @[homeTopicViewController, homeMemberViewController, notificationViewController];
 }
 
 @end

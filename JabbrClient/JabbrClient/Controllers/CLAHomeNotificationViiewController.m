@@ -27,11 +27,13 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
 
-//View Controller
+//View Controllers
 #import "CLACreateRoomViewController.h"
+#import "CLANotificationContentViewController.h"
 
 //Custom Controls
 #import "BOZPongRefreshControl.h"
+#import "CLANotifictionTableViewCell.h"
 
 @interface CLAHomeNotificationViiewController ()
 
@@ -44,6 +46,9 @@
 
 - (void)viewDidLoad {
     [self addTalbeView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [self loadNotifications];
 }
 
@@ -60,7 +65,7 @@
             for (NSDictionary *dataDictionary in result) {
                 NSNumber *notificationKey = [dataDictionary objectForKey:@"notificationKey"];
                 
-                CLANotificationMessage *existingNotification = [CLANotificationMessage MR_findFirstByAttribute:@"notificationKey" withValue:notificationKey];
+                CLANotificationMessage *existingNotification = [CLANotificationMessage MR_findFirstByAttribute:@"notificationKey" withValue:notificationKey inContext:localContext];
                 
                 if (existingNotification != nil) {
                     [existingNotification updateExisting:dataDictionary];
@@ -83,6 +88,7 @@
         }
     }];
 }
+
 - (void)viewDidLayoutSubviews
 {
     //The very first time this is called, the table view has a smaller size than the screen size
@@ -144,7 +150,7 @@
 
 -(NSString *)titleForPagerTabStripViewController:(XLPagerTabStripViewController *)pagerTabStripViewController
 {
-    return NSLocalizedString(@"Notifs", nil);
+    return NSLocalizedString(@"Alerts", nil);
 }
 
 -(UIColor *)colorForPagerTabStripViewController:(XLPagerTabStripViewController *)pagerTabStripViewController
@@ -159,25 +165,28 @@
     return [CLANotificationMessage MR_findAll].count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellIdentifier = @"NotificationCell";
     
-    //TODO:design cell
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    CLANotifictionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell = [[CLANotifictionTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     
-    CLANotificationMessage *notification = [[CLANotificationMessage MR_findAllSortedBy:@"when" ascending:NO]objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@: %@", notification.when, notification.message];
-    cell.textLabel.textColor = [Constants mainThemeContrastColor];
-    [cell setBackgroundColor:[UIColor clearColor]];
+    cell.notification = [[CLANotificationMessage MR_findAllSortedBy:@"when" ascending:NO]objectAtIndex:indexPath.row];
     
     UIView *backgroundView = [UIView new];
     backgroundView.backgroundColor = [Constants highlightColor];
     cell.selectedBackgroundView = backgroundView;
     
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+
     return cell;
 }
 
@@ -190,19 +199,31 @@
 #pragma mark - TableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [self showNotificationContent:[[CLANotificationMessage MR_findAllSortedBy:@"when" ascending:NO]objectAtIndex:indexPath.row]];
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
-
-- (void)showCreateTopicView {
+- (void)showNotificationContent:(CLANotificationMessage *)notification  {
+    if (notification == nil) {
+        return;
+    }
+    
+    [[CLAWebApiClient sharedInstance] setRead:notification
+                                   completion:^(NSArray *result, NSString *errorMessage) {
+                                       [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                                           CLANotificationMessage *existingNotification = [CLANotificationMessage MR_findFirstByAttribute:@"notificationKey" withValue:notification.notificationKey inContext:localContext];
+                                           existingNotification.read = @1;
+                                       } completion:^(BOOL success, NSError *error) {
+                                       }];
+    }];
+    
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoard bundle: nil];
     
-    CLACreateRoomViewController *createRoomViewController = [storyBoard instantiateViewControllerWithIdentifier:kCreateRoomViewController];
-    createRoomViewController.slidingMenuViewController = (SlidingViewController *)self.slidingViewController;
-    [self presentViewController:createRoomViewController animated:YES completion:nil];
+    CLANotificationContentViewController *notificationViewController = [storyBoard instantiateViewControllerWithIdentifier:kNotificationContentViewController];
+    notificationViewController.notification = notification;
+    [self presentViewController:notificationViewController animated:YES completion:nil];
 }
 
 @end

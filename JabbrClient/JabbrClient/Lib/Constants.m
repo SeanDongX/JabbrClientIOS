@@ -59,6 +59,8 @@ NSString *const kRightMenuViewController = @"RightMenuViewController";
 NSString *const kCreateTeamViewController = @"CreateTeamViewController";
 NSString *const kCreateRoomViewController = @"CreateRoomViewController";
 
+NSString *const kNotificationContentViewController = @"NotificationContentViewController";
+
 NSString *const kUserPrefix = @"@";
 NSString *const kRoomPrefix = @"#";
 NSString *const kDocPrefix = @">";
@@ -157,6 +159,12 @@ NSTimeInterval const minRefreshLoadTime = 3;
     FAKIonIcons *iccon = [FAKIonIcons iosSettingsIconWithSize:30];
     [iccon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
     return [iccon imageWithSize:CGSizeMake(30, 30)];
+}
+
++ (UIImage *)unreadIcon {
+    FAKIonIcons *iccon = [FAKIonIcons iosCircleFilledIconWithSize:10];
+    [iccon addAttribute:NSForegroundColorAttributeName value:[Constants highlightColor]];
+    return [iccon imageWithSize:CGSizeMake(10, 10)];
 }
 
 + (UIColor*)mainThemeColor {

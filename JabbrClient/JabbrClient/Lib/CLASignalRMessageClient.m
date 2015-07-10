@@ -142,7 +142,6 @@ static bool isFirstAccess = YES;
     [self.hub on:@"roomLoaded" perform:self selector:@selector(roomLoaded:)];
     [self.hub on:@"joinRoom" perform:self selector:@selector(joinRoomReceived:)];
     [self.hub on:@"updateRoom" perform:self selector:@selector(updateRoomReceived:)];
-    //TODO: show error msg when connection failed
     
     //[self.hub on:@"sendPrivateMessage" perform:self selector:@selector(sendPrivateMessage:)];
     //[self.hub on:@"updateActivity" perform:self selector:@selector(updateActivity:)];
@@ -294,8 +293,6 @@ static bool isFirstAccess = YES;
     [self.delegate didReceiveMessage:[self getMessageFromRawData:messageDictionary] inRoom:room];
 }
 
-
-
 - (void)replaceMessage:(NSArray *)data {
 ///{"C":"d-479787E6-A,0|B,7|C,0|D,7|E,0|F,2|G,2|H,6|I,2|J,2|K,2","M":[{"H":"Chat","M":"replaceMessage","A":["eb5e07e5-4327-86ee-20bd-e4556387ecd3",{"HtmlEncoded":false,"Id":"1b45008d-..."}...
     //TODO: mark message as sent
@@ -313,7 +310,6 @@ static bool isFirstAccess = YES;
         [self.delegate reaplceMessageId:tempMessageId withMessageId: serverMessageId];
     }
 }
-
 
 - (CLAMessage *)getMessageFromRawData:(NSDictionary *)messageDictionary {
     NSString *userName = @"Unknown";
@@ -444,6 +440,9 @@ static bool isFirstAccess = YES;
     }
 }
 
+- (void)errorReceviced: (NSString *)errorMessage {
+    //TODO: call delegeate to show error message on UI
+}
 #pragma mark - 
 #pragma mark - Join, Leave, Invite and etc. Commands
 
@@ -488,8 +487,15 @@ static bool isFirstAccess = YES;
 }
 
 - (void)invokeGetTeam {
-    [self.hub invoke:@"GetTeams" withArgs:@[] completionHandler:^(id data){
-        [self loadTeamData:data];
+    [self.hub invoke:@"GetTeams" withArgs:@[] complexCompletionHandler:^(id data, NSError *error){
+        if (error != nil) {
+            [self errorReceviced:@"Loading error"];
+            [self reconnect];
+            //TODO:check if there is internet, stop reconnect after a few tries
+        }
+        else {
+            [self loadTeamData:data];
+        }
     }];
 }
 

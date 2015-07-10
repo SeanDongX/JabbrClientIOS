@@ -220,7 +220,7 @@ static bool isFirstAccess = YES;
 
 #pragma mark -
 #pragma mark Notification
-- (void)getNotificationsFor:(NSString *)team completion:(void(^)(NSString *result, NSString *errorMessage))completion {
+- (void)getNotificationsFor:(NSString *)team completion:(void(^)(NSArray *result, NSString *errorMessage))completion {
     NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/notification/?teamkey=", team, @"&token=", [self getToken]];
     NSString *requestUrl = [array componentsJoinedByString:@""];
     
@@ -230,6 +230,21 @@ static bool isFirstAccess = YES;
          completion(responseObject, nil);
      }
                          failure:
+     ^(AFHTTPRequestOperation *operation, NSError *error) {
+         completion(nil, [self getResponseErrorMessage:error]);
+     }];
+}
+
+- (void)setRead:(CLANotificationMessage *)notification completion:(void(^)(NSArray *result, NSString *errorMessage))completion {
+    NSArray *array = @[kServerBaseUrl, kApiPath,  @"accounts/notification/setread/", notification.notificationKey, @"/?token=", [self getToken]];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl parameters:nil
+                        success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         completion(responseObject, nil);
+     }
+                        failure:
      ^(AFHTTPRequestOperation *operation, NSError *error) {
          completion(nil, [self getResponseErrorMessage:error]);
      }];
@@ -250,7 +265,6 @@ static bool isFirstAccess = YES;
                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                              NSLog(@"Set badge faield with error: %@", [self getResponseErrorMessage:error]);
                          }];
-    
 }
 
 #pragma mark -

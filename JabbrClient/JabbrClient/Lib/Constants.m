@@ -36,6 +36,8 @@
 
 NSString *const kApiPath = @"api/v1/";
 
+NSString *const kForgotPasswordPath = @"account/requestresetpassword/";
+
 NSTimeInterval const kMessageClientReconnectInterval = 5.0;
 
 BOOL const kFSDocumentEnabled = NO;

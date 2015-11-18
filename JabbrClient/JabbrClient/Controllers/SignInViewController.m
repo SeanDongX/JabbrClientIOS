@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet CLARoundFrameButton *signInButton;
 @property (weak, nonatomic) IBOutlet CLARoundFrameButton *signUpButton;
+@property (weak, nonatomic) IBOutlet CLARoundFrameButton *forgotPasswordButton;
 @end
 
 @implementation SignInViewController
@@ -57,6 +58,7 @@
 - (void)setupControls {
     [self.signInButton setButtonStyle:[UIColor whiteColor]];
     [self.signUpButton setButtonStyle:[UIColor whiteColor]];
+    [self.forgotPasswordButton setButtonStyle:[UIColor whiteColor]];
     self.usernameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
 }
 
@@ -101,6 +103,10 @@
     CLASignUpViewController *signUpViewController = [storyBoard instantiateViewControllerWithIdentifier:kSignUpController];
     signUpViewController.slidingViewController = (SlidingViewController *)self.navigationController.slidingViewController;
     [self presentViewController:signUpViewController animated:YES completion:nil];
+}
+
+- (IBAction)forgotPasswordClicked:(id)sender {
+    [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:[NSString stringWithFormat:@"%@%@", kServerBaseUrl, kForgotPasswordPath]]];
 }
 
 

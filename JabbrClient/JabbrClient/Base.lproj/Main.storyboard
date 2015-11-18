@@ -477,6 +477,22 @@
                                             <action selector="signUpClicked:" destination="DHK-1X-jo0" eventType="touchUpInside" id="XP1-hO-vh2"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgh-Ic-yXL" userLabel="Forget Password" customClass="CLARoundFrameButton">
+                                        <rect key="frame" x="40" y="471" width="240" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="240" id="6vA-xa-rat"/>
+                                            <constraint firstAttribute="height" constant="30" id="nZP-Gx-2KH"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="Forgot Password">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="forgotPasswordClicked:" destination="DHK-1X-jo0" eventType="touchUpInside" id="sSf-bQ-F3x"/>
+                                            <action selector="signUpClicked:" destination="DHK-1X-jo0" eventType="touchUpInside" id="nGE-F3-3TM"/>
+                                        </connections>
+                                    </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Axg-ob-q0b">
                                         <rect key="frame" x="40" y="191" width="240" height="45"/>
                                         <constraints>
@@ -501,7 +517,9 @@
                                     <constraint firstAttribute="bottom" secondItem="C1u-My-kQW" secondAttribute="bottom" constant="73" id="TZW-ZF-JVa"/>
                                     <constraint firstItem="C1u-My-kQW" firstAttribute="top" secondItem="9wN-Ke-SEM" secondAttribute="bottom" constant="20" id="YLT-se-T15"/>
                                     <constraint firstAttribute="centerX" secondItem="Axg-ob-q0b" secondAttribute="centerX" id="eIG-Vc-oDF"/>
+                                    <constraint firstItem="vgh-Ic-yXL" firstAttribute="top" secondItem="C1u-My-kQW" secondAttribute="bottom" constant="40" id="ljo-j0-9Iz"/>
                                     <constraint firstItem="eoW-RA-sJz" firstAttribute="top" secondItem="Axg-ob-q0b" secondAttribute="bottom" constant="20" id="qit-m0-3Ib"/>
+                                    <constraint firstAttribute="centerX" secondItem="vgh-Ic-yXL" secondAttribute="centerX" id="y5f-pm-I8m"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -515,6 +533,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="u0d-2I-NZw"/>
                     <connections>
+                        <outlet property="forgotPasswordButton" destination="vgh-Ic-yXL" id="nJd-UC-FsY"/>
                         <outlet property="passwordTextField" destination="eoW-RA-sJz" id="ee4-Oi-Vam"/>
                         <outlet property="signInButton" destination="9wN-Ke-SEM" id="FS1-MS-nbV"/>
                         <outlet property="signUpButton" destination="C1u-My-kQW" id="Jv8-Rs-B0D"/>
@@ -976,7 +995,7 @@
                                                             <constraint firstAttribute="height" constant="21" id="E2E-VO-n26"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topic" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ud-ZO-HdC">

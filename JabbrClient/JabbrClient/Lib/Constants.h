@@ -14,6 +14,8 @@
 FOUNDATION_EXPORT NSString *const kServerBaseUrl;
 FOUNDATION_EXPORT NSString *const kApiPath;
 
+FOUNDATION_EXPORT NSString *const kForgotPasswordPath;
+
 FOUNDATION_EXPORT NSString *const kAuzreNotificationHubName;
 FOUNDATION_EXPORT NSString *const kAzureNotificationHubConnectionString;
 

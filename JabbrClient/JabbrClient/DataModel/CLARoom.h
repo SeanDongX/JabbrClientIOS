@@ -19,7 +19,9 @@ GENERICSABLE(CLARoom)
 @interface CLARoom : NSObject<CLARoom>
 
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *displayName;
 @property (nonatomic) BOOL isPrivate;
+@property (nonatomic) BOOL isDirectRoom;
 @property (nonatomic) BOOL closed;
 @property (nonatomic) NSInteger unread;
 @property (nonatomic, strong) NSArray<CLAUser> *users;
@@ -29,5 +31,6 @@ GENERICSABLE(CLARoom)
 - (void)getFromDictionary:(NSDictionary*)dictionary;
 
 - (NSString *)getHandle;
-+ (NSString *)getHandle: (NSString *)roomName;
++ (NSString *)getRoomHandle: (NSString *)roomName;
++ (NSString *)getDirectRoomHandle: (NSString *)roomName;
 @end

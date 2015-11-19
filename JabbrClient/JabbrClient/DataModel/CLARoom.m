@@ -16,7 +16,9 @@
 
 - (void)getFromDictionary:(NSDictionary*)dictionary {
     self.name = [dictionary objectForKey:@"Name"];
+    self.displayName = [dictionary objectForKey:@"DisplayName"];
     self.isPrivate = [[dictionary objectForKey:@"Private"] boolValue];
+    self.isDirectRoom = [[dictionary objectForKey:@"IsDirectRoom"] boolValue];
     self.closed = [[dictionary objectForKey:@"Closed"] boolValue];
     
     NSMutableArray *usersArray = [NSMutableArray array];
@@ -35,11 +37,14 @@
 
 
 - (NSString *)getHandle {
-    return [CLARoom getHandle:self.name];
+    return self.isDirectRoom ? [CLARoom getDirectRoomHandle:self.displayName] : [CLARoom getRoomHandle:self.displayName];
 }
 
-+ (NSString *)getHandle: (NSString *)roomName {
++ (NSString *)getRoomHandle: (NSString *)roomName {
     return [NSString stringWithFormat:@"%@%@", kRoomPrefix, roomName];
 }
 
++ (NSString *)getDirectRoomHandle: (NSString *)roomName {
+    return [NSString stringWithFormat:@"%@%@", kUserPrefix, roomName];
+}
 @end

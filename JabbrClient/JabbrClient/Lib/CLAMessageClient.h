@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <JSQMessagesViewController/JSQMessages.h>
 #import "CLAMessage.h"
-#import "SRHubservable.h"
 
 //Data
 #import "CLATeamViewModel.h"

@@ -9,6 +9,7 @@
 #import "CLAHomeNotificationViiewController.h"
 
 //Util
+#import <MagicalRecord/MagicalRecord.h>
 #import "Constants.h"
 #import "CLAWebApiClient.h"
 #import "AuthManager.h"
@@ -16,7 +17,6 @@
 #import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"
 #import "CLAUtility.h"
-#import "MagicalRecord.h"
 
 //Data Model
 #import "CLAUser.h"

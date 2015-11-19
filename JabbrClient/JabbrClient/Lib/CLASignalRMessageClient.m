@@ -118,10 +118,10 @@ static bool isFirstAccess = YES;
     self.username = [[AuthManager sharedInstance] getUsername];
     
     if (teamKey != nil && teamKey.intValue > 0){
-        self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"team=%d&token=%@", teamKey.intValue, authToken]];
+        self.connection = [SRHubConnection connectionWithURLString:server queryString: @{ @"team" : teamKey.stringValue, @"token" : authToken }];
     }
     else {
-        self.connection = [SRHubConnection connectionWithURL:server queryString: [NSString stringWithFormat:@"token=%@", authToken]];
+        self.connection = [SRHubConnection connectionWithURLString:server queryString: @{ @"token" : authToken }];
     }
     
     self.hub = [self.connection createHubProxy:@"Chat"];
@@ -227,13 +227,15 @@ static bool isFirstAccess = YES;
         return;
     }
     
-    [self.hub invoke:@"GetPreviousMessages" withArgs:@[messageId] completionHandler:^(NSArray *data) {
-        
+    [self.hub invoke:@"GetPreviousMessages" withArgs:@[messageId] completionHandler:^(id response, NSError *error) {
         NSMutableArray *earlierMessageArray = [NSMutableArray array];
         
-        if (data != nil && data.count > 0){
-            for(NSDictionary *messageDictionary in data) {
-                [earlierMessageArray addObject:[self getMessageFromRawData:messageDictionary]];
+        if (response!= nil){
+            NSArray *messages = response;
+            if (messages != nil && messages.count > 0) {
+                for(NSDictionary *messageDictionary in messages) {
+                    [earlierMessageArray addObject:[self getMessageFromRawData:messageDictionary]];
+                }
             }
         }
         
@@ -487,14 +489,19 @@ static bool isFirstAccess = YES;
 }
 
 - (void)invokeGetTeam {
-    [self.hub invoke:@"GetTeams" withArgs:@[] complexCompletionHandler:^(id data, NSError *error){
+    
+    [self.hub invoke:@"GetTeams" withArgs:@[] completionHandler:^(id response, NSError *error){
         if (error != nil) {
             [self errorReceviced:@"Loading error"];
             [self reconnect];
             //TODO:check if there is internet, stop reconnect after a few tries
         }
         else {
-            [self loadTeamData:data];
+            if (response != nil)
+            {
+                NSArray *rooms = response;
+                [self loadTeamData:response];
+            }
         }
     }];
 }

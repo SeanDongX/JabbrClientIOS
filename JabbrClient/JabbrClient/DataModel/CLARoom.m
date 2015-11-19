@@ -20,7 +20,7 @@
     self.closed = [[dictionary objectForKey:@"Closed"] boolValue];
     
     NSMutableArray *usersArray = [NSMutableArray array];
-    NSArray *usersDcitionaryArray = [dictionary objectForKey:@"Users"];
+    NSArray *usersDcitionaryArray = [dictionary objectForKey:@"AllUsersInRoom"];
     
     if (usersDcitionaryArray != nil && usersDcitionaryArray != (id)[NSNull null]) {
         for (NSDictionary *userDictionary in usersDcitionaryArray) {

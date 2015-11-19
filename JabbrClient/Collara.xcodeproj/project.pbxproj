@@ -495,6 +495,7 @@
 				14F4B0E61AD4930200AE5C9A /* ShellScript */,
 				14BE49C31B039368005C04E9 /* ShellScript */,
 				14E637381B47308D000A802C /* ShellScript */,
+				74581CEDAE148AA55FE2F413 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -629,6 +630,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		74581CEDAE148AA55FE2F413 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Collara/Pods-Collara-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		A3B140121ACC4F90D6E73EAF /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

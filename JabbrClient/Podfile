@@ -2,14 +2,13 @@
 # platform :ios, '7.0'
 
 target 'Collara' do
-  platform :ios, '7.0'
-  pod 'SocketRocket'
+  platform :ios, '8.0'
   pod 'FontAwesomeKit/IonIcons'
   pod 'DateTools'
   pod 'NJKWebViewProgress'
   pod 'JSQMessagesViewController'
   pod 'ECSlidingViewController', :git => 'https://github.com/ECSlidingViewController/ECSlidingViewController.git'
-  pod 'SignalR-ObjC', :path => '~/Documents/workspace/SignalR-ObjC/'
+  pod 'SignalR-ObjC', :git => 'https://github.com/wonderxboy/SignalR-ObjC.git', :commit => 'eae1110'
   pod 'MBProgressHUD'
   pod 'Objective-C-Generics'
   pod 'XLPagerTabStrip', :git => 'https://github.com/xmartlabs/XLPagerTabStrip.git'

@@ -315,6 +315,8 @@ static bool isFirstAccess = YES;
 
 - (CLAMessage *)getMessageFromRawData:(NSDictionary *)messageDictionary {
     NSString *userName = @"Unknown";
+    NSString *userInitials = @"Unknown";
+    
     NSDictionary *userData = [messageDictionary objectForKey:@"User"];
     
     NSString *dateString = [messageDictionary objectForKey:@"When"];
@@ -325,18 +327,22 @@ static bool isFirstAccess = YES;
     [formatter setLocale:posix];
     NSDate *date = [formatter dateFromString:dateString];
     
-    if (userData && [userData objectForKey:@"Name"])
-    {
-        userName = [[userData objectForKey:@"Name"] lowercaseString];
+    if (userData) {
+        if ([userData objectForKey:@"Name"]) {
+            userName = [[userData objectForKey:@"Name"] lowercaseString];
+            userInitials = userName;
+        }
+        
+        if ([userData objectForKey:@"Initials"]) {
+            userInitials = [userData objectForKey:@"Initials"];
+        }
     }
     
     NSString *oId = [messageDictionary objectForKey:@"Id"];
     
-    NSString *senderId = userName;
-    
     return[[CLAMessage alloc] initWithOId:oId
-                                 SenderId:senderId
-                        senderDisplayName:userName
+                                 SenderId:userName
+                        senderDisplayName:userInitials
                                      date:date
                                      text:[messageDictionary objectForKey:@"Content"]];
 }

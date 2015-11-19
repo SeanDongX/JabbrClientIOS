@@ -244,13 +244,7 @@
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     CLAMessage *message = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
-
-    NSString *username = [message.senderId uppercaseString];
-    NSInteger subStringIndex = username.length > 1 ? 1 : username.length;
-    
-    NSString *alias = [username substringToIndex:subStringIndex];
-    
-   return [JSQMessagesAvatarImageFactory avatarImageWithUserInitials:alias
+   return [JSQMessagesAvatarImageFactory avatarImageWithUserInitials:message.senderDisplayName
                                                      backgroundColor: [Constants mainThemeContrastColor]
                                                                                         textColor: [UIColor whiteColor]
                                                                                              font:[UIFont systemFontOfSize:13.0f]
@@ -287,7 +281,7 @@
     /**
      *  Don't specify attributes to use the defaults.
      */
-    return [[NSAttributedString alloc] initWithString:message.senderDisplayName];
+    return [[NSAttributedString alloc] initWithString:message.senderId];
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {

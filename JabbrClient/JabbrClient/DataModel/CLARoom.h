@@ -31,6 +31,4 @@ GENERICSABLE(CLARoom)
 - (void)getFromDictionary:(NSDictionary*)dictionary;
 
 - (NSString *)getHandle;
-+ (NSString *)getRoomHandle: (NSString *)roomName;
-+ (NSString *)getDirectRoomHandle: (NSString *)roomName;
 @end

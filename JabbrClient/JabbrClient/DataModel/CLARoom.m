@@ -37,14 +37,7 @@
 
 
 - (NSString *)getHandle {
-    return self.isDirectRoom ? [CLARoom getDirectRoomHandle:self.displayName] : [CLARoom getRoomHandle:self.displayName];
+    return self.displayName;
 }
 
-+ (NSString *)getRoomHandle: (NSString *)roomName {
-    return [NSString stringWithFormat:@"%@%@", kRoomPrefix, roomName];
-}
-
-+ (NSString *)getDirectRoomHandle: (NSString *)roomName {
-    return [NSString stringWithFormat:@"%@%@", kUserPrefix, roomName];
-}
 @end

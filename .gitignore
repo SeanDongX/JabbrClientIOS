@@ -15,3 +15,4 @@ JabbrClient/Podfile.lock
 
 JabbrClient/build
 JabbrClient/infer-out
+JabbrClient/fastlane

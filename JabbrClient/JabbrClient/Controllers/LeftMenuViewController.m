@@ -37,8 +37,8 @@
 @interface LeftMenuViewController ()
 
 @property (nonatomic, strong) NSArray<CLARoom> *rooms;
-
-@property (nonatomic, strong) NSArray<CLARoom> *filteredChatThreads;
+@property (nonatomic, strong) NSMutableDictionary *roomDictionary;
+@property (nonatomic, strong) NSMutableDictionary *filteredRoomDictionary;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic) BOOL isFiltered;
@@ -57,6 +57,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initData];
     [self setupMenu];
     [self setupBottomMenus];
     [self subscribNotifications];
@@ -86,6 +87,11 @@
                                                      withRefreshTarget:self
                                                       andRefreshAction:@selector(refreshTriggered)];
     self.pongRefreshControl.backgroundColor = [Constants highlightColor];
+}
+
+- (void)initData {
+    self.roomDictionary = [NSMutableDictionary dictionary];
+    self.filteredRoomDictionary = [NSMutableDictionary dictionary];
 }
 
 - (void)setupMenu {
@@ -166,12 +172,26 @@
 #pragma mark - Public Methods
 
 - (void)updateRooms:(NSArray<CLARoom> *)rooms {
-    //Update room array and table view
+    [self.roomDictionary removeAllObjects];
+    
+    NSPredicate *publicRoomRredicate = [NSPredicate predicateWithFormat:@"(isPrivate == %@)", @NO];
+    NSArray *publicRooms = [rooms filteredArrayUsingPredicate:publicRoomRredicate];
+
+    NSPredicate *privateRoomRredicate = [NSPredicate predicateWithFormat:@"(isPrivate == %@) AND (isDirectRoom == %@)", @YES, @NO];
+    NSArray *privateRooms = [rooms filteredArrayUsingPredicate:privateRoomRredicate];
+    
+    NSPredicate *directRoomRredicate = [NSPredicate predicateWithFormat:@"(isDirectRoom == %@)", @YES];
+    NSArray *directRooms = [rooms filteredArrayUsingPredicate:directRoomRredicate];
+    
+    [self.roomDictionary setObject:publicRooms == nil ? [NSArray array] : publicRooms forKey:@"0"];
+    [self.roomDictionary setObject:privateRooms == nil ? [NSArray array] : privateRooms forKey:@"1"];
+    [self.roomDictionary setObject:directRooms == nil ? [NSArray array] : directRooms forKey:@"2"];
+    
     self.rooms = rooms;
     [self.tableView reloadData];
     
-    //select last selected, if any
-    [self selectRoom:[CLAUtility getUserDefault:kSelectedRoomName] closeMenu:NO];
+    //select last selected, if any, TODO:support section
+    //[self selectRoom:[CLAUtility getUserDefault:kSelectedRoomName] closeMenu:NO];
 }
 
 - (void)selectRoom: (NSString *)room closeMenu:(BOOL)close {
@@ -253,15 +273,23 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return [self getRoomCount];
-            
+        case 1:
+        case 2:
+            return [self getRoomCountAtSection:section];
+
         default:
             return 0;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CLARoom *room = [self getRoomAtRow:indexPath.row];
+    CLARoom *room = [self getRoom:indexPath];
+    
+    if (room == nil)
+    {
+        return nil;
+    }
+    
     BOOL unreadHidden = room.unread <= 0;
     NSString *counterText = room.unread > 99 ? @"99+" : [@(room.unread) stringValue];
     
@@ -288,7 +316,7 @@
 #pragma mark - Table Section
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 3;
 }
 
 
@@ -301,7 +329,8 @@
     CGRect frame = tableView.frame;
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, frame.size.width-15-60, 30)];
-    title.text = [NSString stringWithFormat:NSLocalizedString(@"My Topics (%@)", nil), [self getRoomCountString]];
+
+    title.text = [self getSectionHeaderString:section];
     title.textColor = [UIColor whiteColor];
     
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width-60, 10, 30, 30)];
@@ -336,7 +365,7 @@
     ChatViewController *chatViewController = [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
-        CLARoom *room = [self getRoomAtRow:indexPath.row];
+        CLARoom *room = [self getRoom:indexPath];
         [self setRoom:room.name withUnread:0];
         chatViewController.room = room;
     }
@@ -396,37 +425,53 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText
 {
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
-    self.filteredChatThreads = [self.rooms filteredArrayUsingPredicate:resultPredicate];
-}
-
-- (CLARoom *)getRoomAtRow:(NSInteger)row {
-    if (self.isFiltered) {
-        return [self.filteredChatThreads objectAtIndex:row];
-    } else {
-        return [self.rooms objectAtIndex:row];
-    }
-}
-
-- (NSUInteger)getRoomCount {
-    if (self.isFiltered) {
-        return self.filteredChatThreads == nil ? 0 : self.filteredChatThreads.count;
-    }
-    else {
-        return self.rooms == nil ? 0 : self.rooms.count;
-    }
-}
-
-- (NSString *)getRoomCountString {
-    NSUInteger filterCount = self.filteredChatThreads == nil ? 0 : self.filteredChatThreads.count;
-    NSUInteger totalCount = self.rooms == nil ? 0 : self.rooms.count;
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"displayName contains[c] %@", searchText];
     
-    if (self.isFiltered) {
-        return [NSString stringWithFormat:@"%lu/%lu", (unsigned long)filterCount, (unsigned long)totalCount];
+    for (NSString *key in self.roomDictionary.allKeys)
+    {
+        NSArray *rooms = [self.roomDictionary objectForKey:key];
+        NSArray *filteredRooms = [rooms filteredArrayUsingPredicate:searchPredicate];
+        [self.filteredRoomDictionary setObject:filteredRooms forKey:key];
     }
-    else {
-        return [NSString stringWithFormat:@"%lu", (unsigned long)totalCount];
+}
+
+- (CLARoom *)getRoom:(NSIndexPath *)indexPath
+{
+    NSString *key = [NSString stringWithFormat: @"%ld", (long)indexPath.section];
+    NSArray *roomArray = [[self getCurrentRoomDictionary] objectForKey:key];
+    return roomArray == nil ? nil : [roomArray objectAtIndex:indexPath.row];
+}
+
+- (NSUInteger)getRoomCountAtSection:(NSInteger *)section {
+    NSString *key = [NSString stringWithFormat: @"%ld", (long)section];
+    NSArray *targetArray = [[self getCurrentRoomDictionary] objectForKey:key];
+    return targetArray == nil ? 0 : targetArray.count;
+}
+
+- (NSString *)getSectionHeaderString:(NSInteger)section {
+    NSString *count = [self getRoomCountStringAtSection:section];
+    
+    switch (section) {
+        case 0:
+            return [NSString stringWithFormat:NSLocalizedString(@"Public Topics (%@)", nil), count];
+            
+        case 1:
+            return [NSString stringWithFormat:NSLocalizedString(@"Private Topics (%@)", nil), count];
+        
+        case 2:
+            return [NSString stringWithFormat:NSLocalizedString(@"Direct Messages (%@)", nil), count];
+            
+        default:
+            return @"";
     }
+}
+
+- (NSString *)getRoomCountStringAtSection:(NSInteger)section {
+    return [NSString stringWithFormat:@"%lu", (unsigned long)[self getRoomCountAtSection:section]];
+}
+
+- (NSDictionary *)getCurrentRoomDictionary {
+    return self.isFiltered ? self.filteredRoomDictionary : self.roomDictionary;
 }
 
 - (void)setRoom:(NSString *)roomName withUnread:(NSInteger)count {

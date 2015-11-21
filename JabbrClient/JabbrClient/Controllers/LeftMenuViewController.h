@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeftMenuViewController : UIViewController <UITableViewDataSource, UISearchBarDelegate>
+@interface LeftMenuViewController
+    : UIViewController <UITableViewDataSource, UISearchBarDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property(weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (void)selectRoom:(NSString *)room closeMenu:(BOOL)close;
 

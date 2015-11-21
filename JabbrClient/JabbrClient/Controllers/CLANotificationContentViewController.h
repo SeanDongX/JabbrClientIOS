@@ -11,6 +11,6 @@
 
 @interface CLANotificationContentViewController : UIViewController
 
-@property (strong, nonatomic) CLANotificationMessage *notification;
+@property(strong, nonatomic) CLANotificationMessage *notification;
 
 @end

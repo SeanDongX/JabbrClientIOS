@@ -98,7 +98,7 @@ FOUNDATION_EXPORT NSTimeInterval const minRefreshLoadTime;
 + (UIColor *)mainThemeColor;
 + (UIColor *)tableHeaderColor;
 + (UIColor *)highlightColor;
-+ (UIColor*)mainThemeContrastColor;
-+ (UIColor*)warningColor;
-+ (UIColor*)backgroundColor;
++ (UIColor *)mainThemeContrastColor;
++ (UIColor *)warningColor;
++ (UIColor *)backgroundColor;
 @end

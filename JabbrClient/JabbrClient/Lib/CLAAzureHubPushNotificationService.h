@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "CLAPushNotificationService.h"
 
-@interface CLAAzureHubPushNotificationService : NSObject <CLAPushNotificationService>
+@interface CLAAzureHubPushNotificationService
+    : NSObject <CLAPushNotificationService>
 
 + (id)sharedInstance;
 

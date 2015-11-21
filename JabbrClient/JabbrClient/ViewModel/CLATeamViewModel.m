@@ -12,80 +12,81 @@
 @implementation CLATeamViewModel
 
 - (CLAUser *)findUser:(NSString *)username {
-    for (CLAUser *user in self.users) {
-        if([CLAUtility isString:username caseInsensitiveEqualTo:user.name]) {
-            return user;
-        }
+  for (CLAUser *user in self.users) {
+    if ([CLAUtility isString:username caseInsensitiveEqualTo:user.name]) {
+      return user;
     }
-    
-    return nil;
+  }
+
+  return nil;
 }
 
 - (void)joinUser:(CLAUser *)newUser toRoom:(NSString *)roomName {
-    if (newUser == nil || newUser.name == nil) {
-        return;
-    }
-    
-    for (CLARoom *room in [self.rooms allValues]) {
-        if ([room.name isEqualToString:roomName]) {
-            BOOL userFound = FALSE;
-            
-            for (CLAUser *user in room.users) {
-                if([CLAUtility isString:newUser.name caseInsensitiveEqualTo:user.name]) {
-                    userFound = TRUE;
-                    //break on first user instance found
-                    break;
-                }
-            }
-            
-            if (userFound == FALSE) {
-                if (room.users == nil) {
-                    room.users = @[];
-                }
-                
-                NSMutableArray<CLAUser> *copyUsers = [room.users mutableCopy];
-                [copyUsers addObject:newUser];
-                room.users = copyUsers;
-            }
-            
-            //return on first room instance found
-            return;
+  if (newUser == nil || newUser.name == nil) {
+    return;
+  }
+
+  for (CLARoom *room in [self.rooms allValues]) {
+    if ([room.name isEqualToString:roomName]) {
+      BOOL userFound = FALSE;
+
+      for (CLAUser *user in room.users) {
+        if ([CLAUtility isString:newUser.name
+                caseInsensitiveEqualTo:user.name]) {
+          userFound = TRUE;
+          // break on first user instance found
+          break;
         }
+      }
+
+      if (userFound == FALSE) {
+        if (room.users == nil) {
+          room.users = @[];
+        }
+
+        NSMutableArray<CLAUser> *copyUsers = [room.users mutableCopy];
+        [copyUsers addObject:newUser];
+        room.users = copyUsers;
+      }
+
+      // return on first room instance found
+      return;
     }
+  }
 }
 
-+ (CLATeamViewModel *)getFromData: (NSDictionary *)teamDictionary {
-    
-    CLATeam *team = [[CLATeam alloc] init];
-    team.name = [teamDictionary objectForKey:@"Name"];
-    team.key = [teamDictionary objectForKey:@"Key"];
-    
-    NSMutableDictionary *roomArray = [NSMutableDictionary dictionary];
-    NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
-    if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0){
-        
-        for (id room in roomArrayFromDictionary) {
-            NSDictionary *roomDictionary = room;
-            CLARoom *claRoom = [[CLARoom alloc] init];
-            [claRoom getFromDictionary:roomDictionary];
-            [roomArray setObject:claRoom forKey:claRoom.name];
-        }
++ (CLATeamViewModel *)getFromData:(NSDictionary *)teamDictionary {
+
+  CLATeam *team = [[CLATeam alloc] init];
+  team.name = [teamDictionary objectForKey:@"Name"];
+  team.key = [teamDictionary objectForKey:@"Key"];
+
+  NSMutableDictionary *roomArray = [NSMutableDictionary dictionary];
+  NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"Rooms"];
+  if (roomArrayFromDictionary != nil && roomArrayFromDictionary.count > 0) {
+
+    for (id room in roomArrayFromDictionary) {
+      NSDictionary *roomDictionary = room;
+      CLARoom *claRoom = [[CLARoom alloc] init];
+      [claRoom getFromDictionary:roomDictionary];
+      [roomArray setObject:claRoom forKey:claRoom.name];
     }
-    
-    NSMutableArray<CLAUser> *userArray = [NSMutableArray array];
-    NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
-    if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0){
-        
-        for (id userDictionary in userArrayFromDictionary) {
-            [userArray addObject:[CLAUser getFromData:userDictionary]];
-        }
+  }
+
+  NSMutableArray<CLAUser> *userArray = [NSMutableArray array];
+  NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
+  if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0) {
+
+    for (id userDictionary in userArrayFromDictionary) {
+      [userArray addObject:[CLAUser getFromData:userDictionary]];
     }
-    
-    CLATeamViewModel *teamViewModel = [[CLATeamViewModel alloc] init];
-    teamViewModel.team = team;
-    teamViewModel.rooms = roomArray;
-    teamViewModel.users = userArray;
-    
-    return teamViewModel;
+  }
+
+  CLATeamViewModel *teamViewModel = [[CLATeamViewModel alloc] init];
+  teamViewModel.team = team;
+  teamViewModel.rooms = roomArray;
+  teamViewModel.users = userArray;
+
+  return teamViewModel;
 }
 @end

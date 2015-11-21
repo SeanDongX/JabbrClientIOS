@@ -12,14 +12,13 @@
 
 @implementation CLANotification
 
+- (instancetype)init:(NSDictionary *)dictionary {
+  self = [self init];
 
--(instancetype)init: (NSDictionary *)dictionary {
-    self = [self init];
-    
-    NSDictionary *notificationBody = [dictionary objectForKey:kNotificationAps];
-    self.alert = [notificationBody objectForKey:kNotificationAlert];
-    self.appUrl = [notificationBody objectForKey:kNotificationAppUrl];
-    return  self;
+  NSDictionary *notificationBody = [dictionary objectForKey:kNotificationAps];
+  self.alert = [notificationBody objectForKey:kNotificationAlert];
+  self.appUrl = [notificationBody objectForKey:kNotificationAppUrl];
+  return self;
 }
 
 @end

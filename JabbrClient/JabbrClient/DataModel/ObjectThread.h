@@ -10,8 +10,7 @@
 
 @interface ObjectThread : NSObject
 
-@property (nonatomic, strong) NSUUID *oid;
-@property (nonatomic, strong) NSString *name;
-
+@property(nonatomic, strong) NSUUID *oid;
+@property(nonatomic, strong) NSString *name;
 
 @end

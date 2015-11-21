@@ -10,7 +10,7 @@
 #import <JSQMessagesViewController/JSQMessages.h>
 #import "CLAMessage.h"
 
-//Data
+// Data
 #import "CLATeamViewModel.h"
 #import "CLADataRepositoryProtocol.h"
 #import "CLAInMemoryDataRepository.h"
@@ -22,12 +22,11 @@
 @protocol CLAMessageFailureInfo;
 
 typedef enum {
-    CLAConnecting,
-    CLAConnected,
-    CLAReconnecting,
-    CLADisconnected
+  CLAConnecting,
+  CLAConnected,
+  CLAReconnecting,
+  CLADisconnected
 } CLAConnectionState;
-
 
 @protocol CLAMessageClient <NSObject>
 
@@ -41,10 +40,10 @@ typedef enum {
  * @see SINMessageClientDelegate
  */
 
-@property (nonatomic, weak) id<CLAMessageClientDelegate> delegate;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) id<CLADataRepositoryProtocol> dataRepository;
-@property (nonatomic) BOOL teamLoaded;
+@property(nonatomic, weak) id<CLAMessageClientDelegate> delegate;
+@property(nonatomic, strong) NSString *username;
+@property(nonatomic, strong) id<CLADataRepositoryProtocol> dataRepository;
+@property(nonatomic) BOOL teamLoaded;
 
 - (void)connect;
 - (void)disconnect;
@@ -57,13 +56,13 @@ typedef enum {
 - (void)sendTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room;
 
-
-- (void)createRoom:(NSString *)roomName completionBlock:(void (^)(NSError*))completion;
+- (void)createRoom:(NSString *)roomName
+    completionBlock:(void (^)(NSError *))completion;
 - (void)inviteUser:(NSString *)username inRoom:(NSString *)room;
 - (void)joinRoom:(NSString *)room;
 - (void)leaveRoom:(NSString *)room;
 
-- (void)invokeGetTeam; 
+- (void)invokeGetTeam;
 @end
 
 /**
@@ -82,23 +81,28 @@ typedef enum {
  *
  **/
 - (void)didOpenConnection;
-- (void)didConnectionChnageState:(CLAConnectionState)oldState newState:(CLAConnectionState)newState;
+- (void)didConnectionChnageState:(CLAConnectionState)oldState
+                        newState:(CLAConnectionState)newState;
 - (void)didReceiveTeams:(NSArray *)teams;
 - (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update;
 - (void)didReceiveUpdateRoom:(CLARoom *)room;
-- (void)didReceiveMessage: (CLAMessage *) message inRoom:(NSString*)room;
-- (void)didLoadEarlierMessages:(NSArray<CLAMessage> *) earlierMessages inRoom:(NSString*)room;
-- (void)didLoadUsers:(NSArray <CLAUser> *) users inRoom:(NSString*)room;
+- (void)didReceiveMessage:(CLAMessage *)message inRoom:(NSString *)room;
+- (void)didLoadEarlierMessages:(NSArray<CLAMessage> *)earlierMessages
+                        inRoom:(NSString *)room;
+- (void)didLoadUsers:(NSArray<CLAUser> *)users inRoom:(NSString *)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
-- (void)reaplceMessageId:(NSString *)tempMessageId withMessageId:(NSString *)serverMessageId;
+- (void)reaplceMessageId:(NSString *)tempMessageId
+           withMessageId:(NSString *)serverMessageId;
 @optional
 
 /**
- * Tells the delegate that a message for a specific recipient has been sent by the local user.
+ * Tells the delegate that a message for a specific recipient has been sent by
+ *the local user.
  *
  * This method is called when a message is sent from
  * the local message client (i.e. -[SINMessageClient sendMessage:]).
- * This callback is triggered on all devices on which the local user is logged in.
+ * This callback is triggered on all devices on which the local user is logged
+ *in.
  *
  * @param message Message that was sent.
  *
@@ -120,7 +124,8 @@ typedef enum {
  *
  * @param message The message that could not be delivered.
  **/
-- (void)messageFailed:(CLAMessage *)message info:(id<CLAMessageFailureInfo>)messageFailureInfo;
+- (void)messageFailed:(CLAMessage *)message
+                 info:(id<CLAMessageFailureInfo>)messageFailureInfo;
 
 /**
  * Tells the delegate that a message has been delivered (to a particular
@@ -149,10 +154,10 @@ typedef enum {
  * @see SINPushPair
  *
  **/
-- (void)message:(CLAMessage *)message shouldSendPushNotifications:(NSArray *)pushPairs;
+- (void)message:(CLAMessage *)message
+    shouldSendPushNotifications:(NSArray *)pushPairs;
 
 @end
-
 
 /**
  * CLAMessageDeliveryInfo contains additional information pertaining
@@ -164,13 +169,13 @@ typedef enum {
 @protocol CLAMessageDeliveryInfo <NSObject>
 
 /** The message's identifier */
-@property (nonatomic, readonly, copy) NSString *messageId;
+@property(nonatomic, readonly, copy) NSString *messageId;
 
 /** The identifier of the recipient */
-@property (nonatomic, readonly, copy) NSString *recipientId;
+@property(nonatomic, readonly, copy) NSString *recipientId;
 
 /** Server-side-based timestamp */
-@property (nonatomic, readonly, copy) NSDate *timestamp;
+@property(nonatomic, readonly, copy) NSDate *timestamp;
 
 @end
 
@@ -183,13 +188,12 @@ typedef enum {
 @protocol CLAMessageFailureInfo <NSObject>
 
 /** The message's identifier */
-@property (nonatomic, readonly, copy) NSString *messageId;
+@property(nonatomic, readonly, copy) NSString *messageId;
 
 /** The identifier of the recipient */
-@property (nonatomic, readonly, copy) NSString *recipientId;
+@property(nonatomic, readonly, copy) NSString *recipientId;
 
 /** The error reason */
-@property (nonatomic, readonly, copy) NSError *error;
+@property(nonatomic, readonly, copy) NSError *error;
 
 @end
-

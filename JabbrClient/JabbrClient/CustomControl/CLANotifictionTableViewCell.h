@@ -11,6 +11,6 @@
 
 @interface CLANotifictionTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) CLANotificationMessage *notification;
+@property(strong, nonatomic) CLANotificationMessage *notification;
 
 @end

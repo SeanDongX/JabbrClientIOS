@@ -12,15 +12,16 @@
 #import "CLAMessage.h"
 #import "CLAMessageClient.h"
 
-//Data Models
+// Data Models
 #import "CLARoom.h"
 
-@interface ChatViewController : JSQMessagesViewController <CLAMessageClientDelegate>
+@interface ChatViewController
+    : JSQMessagesViewController <CLAMessageClientDelegate>
 
-@property (nonatomic, strong) CLARoom *room;
+@property(nonatomic, strong) CLARoom *room;
 
-- (void)didReceiveTeams: (NSArray *)userTeams;
-- (void)didReceiveMessage: (id<JSQMessageData>) message inRoom:(NSString*)room;
+- (void)didReceiveTeams:(NSArray *)userTeams;
+- (void)didReceiveMessage:(id<JSQMessageData>)message inRoom:(NSString *)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 
 @end

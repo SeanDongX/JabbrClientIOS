@@ -10,10 +10,11 @@
 #import "XLForm.h"
 #import "XLFormViewController.h"
 
-//Data Models
+// Data Models
 #import "CLARoomViewModel.h"
 
-@interface CLATopicInfoViewController : XLFormViewController<UITextFieldDelegate>
+@interface CLATopicInfoViewController
+    : XLFormViewController <UITextFieldDelegate>
 
 - (instancetype)initWithRoom:(CLARoomViewModel *)roomViewModel;
 

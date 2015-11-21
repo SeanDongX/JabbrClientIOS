@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface CLATeam : NSObject
-@property  (nonatomic, strong) NSString *name;
-@property  (nonatomic, strong) NSNumber *key;
+@property(nonatomic, strong) NSString *name;
+@property(nonatomic, strong) NSNumber *key;
 @end

@@ -10,14 +10,16 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, CLANotificationType) {
-    CLANotificationTypeMessage = 0,
-    CLANotificationTypeWarning,
-    CLANotificationTypeError,
-    CLANotificationTypeSuccess
+  CLANotificationTypeMessage = 0,
+  CLANotificationTypeWarning,
+  CLANotificationTypeError,
+  CLANotificationTypeSuccess
 };
 
 @interface CLANotificationManager : NSObject
 
 + (void)configure;
-+ (void)showText:(NSString *)text forViewController:(UIViewController *)viewController withType: (CLANotificationType)type;
++ (void)showText:(NSString *)text
+    forViewController:(UIViewController *)viewController
+             withType:(CLANotificationType)type;
 @end

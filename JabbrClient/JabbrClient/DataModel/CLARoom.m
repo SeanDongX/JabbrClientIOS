@@ -8,36 +8,35 @@
 
 #import "CLARoom.h"
 
-//Util
+// Util
 #import "Constants.h"
 
 @implementation CLARoom
 
+- (void)getFromDictionary:(NSDictionary *)dictionary {
+  self.name = [dictionary objectForKey:@"Name"];
+  self.displayName = [dictionary objectForKey:@"DisplayName"];
+  self.isPrivate = [[dictionary objectForKey:@"Private"] boolValue];
+  self.isDirectRoom = [[dictionary objectForKey:@"IsDirectRoom"] boolValue];
+  self.closed = [[dictionary objectForKey:@"Closed"] boolValue];
 
-- (void)getFromDictionary:(NSDictionary*)dictionary {
-    self.name = [dictionary objectForKey:@"Name"];
-    self.displayName = [dictionary objectForKey:@"DisplayName"];
-    self.isPrivate = [[dictionary objectForKey:@"Private"] boolValue];
-    self.isDirectRoom = [[dictionary objectForKey:@"IsDirectRoom"] boolValue];
-    self.closed = [[dictionary objectForKey:@"Closed"] boolValue];
-    
-    NSMutableArray *usersArray = [NSMutableArray array];
-    NSArray *usersDcitionaryArray = [dictionary objectForKey:@"AllUsersInRoom"];
-    
-    if (usersDcitionaryArray != nil && usersDcitionaryArray != (id)[NSNull null]) {
-        for (NSDictionary *userDictionary in usersDcitionaryArray) {
-            CLAUser *user = [CLAUser getFromData:userDictionary];
-            [usersArray addObject:user];
-        }
+  NSMutableArray *usersArray = [NSMutableArray array];
+  NSArray *usersDcitionaryArray = [dictionary objectForKey:@"AllUsersInRoom"];
+
+  if (usersDcitionaryArray != nil &&
+      usersDcitionaryArray != (id)[NSNull null]) {
+    for (NSDictionary *userDictionary in usersDcitionaryArray) {
+      CLAUser *user = [CLAUser getFromData:userDictionary];
+      [usersArray addObject:user];
     }
-    
-    self.users = usersArray;
-    self.messages = [NSMutableArray array];
+  }
+
+  self.users = usersArray;
+  self.messages = [NSMutableArray array];
 }
 
-
 - (NSString *)getHandle {
-    return self.displayName;
+  return self.displayName;
 }
 
 @end

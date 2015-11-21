@@ -8,25 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
-//Util
+// Util
 #import "ObjectiveCGenerics.h"
 
-//Data Model
+// Data Model
 #import "CLATeam.h"
 #import "CLAUser.h"
 #import "CLARoom.h"
 
 GENERICSABLE(CLATeamViewModel)
 
-@interface CLATeamViewModel : NSObject<CLATeamViewModel>
+@interface CLATeamViewModel : NSObject <CLATeamViewModel>
 
-@property (nonatomic, strong) CLATeam *team;
-@property (nonatomic, strong) NSMutableDictionary *rooms;
-@property (nonatomic, strong) NSArray<CLAUser> *users;
+@property(nonatomic, strong) CLATeam *team;
+@property(nonatomic, strong) NSMutableDictionary *rooms;
+@property(nonatomic, strong) NSArray<CLAUser> *users;
 
 - (CLAUser *)findUser:(NSString *)username;
 - (void)joinUser:(CLAUser *)newUser toRoom:(NSString *)roomName;
 
-+ (CLATeamViewModel *)getFromData: (NSDictionary *)data;
++ (CLATeamViewModel *)getFromData:(NSDictionary *)data;
 
 @end

@@ -9,5 +9,5 @@
 #import "ObjectThread.h"
 
 @interface DocumentThread : ObjectThread
-@property (nonatomic, strong) NSURL *url;
+@property(nonatomic, strong) NSURL *url;
 @end

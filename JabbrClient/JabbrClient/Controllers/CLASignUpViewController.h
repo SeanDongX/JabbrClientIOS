@@ -11,6 +11,6 @@
 
 @interface CLASignUpViewController : UIViewController
 
-@property (strong, nonatomic)SlidingViewController *slidingViewController;
+@property(strong, nonatomic) SlidingViewController *slidingViewController;
 
 @end

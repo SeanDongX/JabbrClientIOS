@@ -10,12 +10,12 @@
 
 @interface DemoData : NSObject
 
-@property (nonatomic, strong) NSString *myUsername;
-@property (nonatomic, strong) NSString *myPassword;
-@property (nonatomic, strong) NSString *mySenderId;
+@property(nonatomic, strong) NSString *myUsername;
+@property(nonatomic, strong) NSString *myPassword;
+@property(nonatomic, strong) NSString *mySenderId;
 
-@property (nonatomic, strong) NSMutableArray *documentThreads;
-@property (nonatomic, strong) NSMutableArray *chatThreads;
+@property(nonatomic, strong) NSMutableArray *documentThreads;
+@property(nonatomic, strong) NSMutableArray *chatThreads;
 
 + (DemoData *)sharedDemoData;
 

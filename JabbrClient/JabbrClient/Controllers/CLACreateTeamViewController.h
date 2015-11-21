@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-//Message Client
+// Message Client
 #import "CLASignalRMessageClient.h"
 
-//View Controllers
+// View Controllers
 #import "SlidingViewController.h"
 
 @interface CLACreateTeamViewController : UIViewController <UITextFieldDelegate>
 
-@property (strong, nonatomic) SlidingViewController *slidingMenuViewController;
+@property(strong, nonatomic) SlidingViewController *slidingMenuViewController;
 
 @end

@@ -20,7 +20,7 @@
 - (NSString *)getUsername;
 - (NSData *)getCachedDeviceToken;
 
-- (void)cacheAuthToken: (NSString *)authToken;
+- (void)cacheAuthToken:(NSString *)authToken;
 - (void)cacheUsername:(NSString *)username;
 - (void)cacheDeviceToken:(NSData *)deviceToken;
 @end

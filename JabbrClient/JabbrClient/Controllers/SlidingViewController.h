@@ -9,14 +9,16 @@
 #import "ECSlidingViewController.h"
 
 @interface SlidingViewController : ECSlidingViewController
-@property  NSMutableDictionary *mainViewControllersCache;
+@property NSMutableDictionary *mainViewControllersCache;
 
-- (UINavigationController *)getNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier;
-- (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:(NSString *)keyIdentifier;
+- (UINavigationController *)getNavigationControllerWithKeyIdentifier:
+        (NSString *)keyIdentifier;
+- (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:
+        (NSString *)keyIdentifier;
 - (void)clearControllerCache;
 - (void)switchToMainView;
 - (void)switchToSignInView;
 - (void)switchToCreateTeamView;
-- (void)switchToRoom: (NSString *)room;
+- (void)switchToRoom:(NSString *)room;
 
 @end

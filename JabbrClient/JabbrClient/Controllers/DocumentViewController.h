@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Collara. All rights reserved.
 //
 
-
 #import <UIKit/UIKit.h>
 #import "NJKWebViewProgressView.h"
 #import "NJKWebViewProgress.h"
 #import "DocumentThread.h"
 
-@interface DocumentViewController : UIViewController<UIWebViewDelegate, NJKWebViewProgressDelegate>
+@interface DocumentViewController
+    : UIViewController <UIWebViewDelegate, NJKWebViewProgressDelegate>
 
 - (void)loadDocumentThread:(DocumentThread *)documentThread;
 @end

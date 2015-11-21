@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RightMenuViewController : UIViewController <UITableViewDataSource>
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property(weak, nonatomic) IBOutlet UITableView *tableView;
 @end

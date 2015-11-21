@@ -14,11 +14,15 @@
 @implementation CLANotificationManager
 
 + (void)configure {
-    [TSMessage addCustomDesignFromFileWithName:@"CustomTSMessageNotificationDesign.json"];
+  [TSMessage addCustomDesignFromFileWithName:
+                 @"CustomTSMessageNotificationDesign.json"];
 }
 
-+ (void)showText:(NSString *)text forViewController:(UIViewController *)viewController withType: (CLANotificationType)type {
-    [TSMessage setDefaultViewController:viewController];
-    [TSMessage showNotificationWithTitle:text type:(TSMessageNotificationType)type];
++ (void)showText:(NSString *)text
+    forViewController:(UIViewController *)viewController
+             withType:(CLANotificationType)type {
+  [TSMessage setDefaultViewController:viewController];
+  [TSMessage showNotificationWithTitle:text
+                                  type:(TSMessageNotificationType)type];
 }
 @end

@@ -11,7 +11,7 @@
 
 @protocol CLADataRepositoryProtocol <NSObject>
 
-- (CLATeamViewModel *)get:(NSString*)name;
+- (CLATeamViewModel *)get:(NSString *)name;
 - (CLATeamViewModel *)getDefaultTeam;
 - (NSArray<CLATeamViewModel> *)getTeams;
 - (void)addOrUpdateTeam:(CLATeamViewModel *)team;

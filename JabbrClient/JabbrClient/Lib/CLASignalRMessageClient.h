@@ -12,14 +12,15 @@
 
 #import "SignalR.h"
 
-@interface CLASignalRMessageClient : NSObject <CLAMessageClient, SRConnectionDelegate>
+@interface CLASignalRMessageClient
+    : NSObject <CLAMessageClient, SRConnectionDelegate>
 
-@property (nonatomic, weak) id<CLAMessageClientDelegate> delegate;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic) BOOL connected;
-@property (nonatomic, strong) id<CLADataRepositoryProtocol> dataRepository;
-@property (nonatomic) BOOL teamLoaded;
+@property(nonatomic, weak) id<CLAMessageClientDelegate> delegate;
+@property(nonatomic, strong) NSString *username;
+@property(nonatomic) BOOL connected;
+@property(nonatomic, strong) id<CLADataRepositoryProtocol> dataRepository;
+@property(nonatomic) BOOL teamLoaded;
 
-+ (CLASignalRMessageClient*)sharedInstance;
++ (CLASignalRMessageClient *)sharedInstance;
 
 @end

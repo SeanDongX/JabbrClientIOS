@@ -36,106 +36,106 @@
 @synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application
-    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  [self registerNotification];
-  [CLANotificationManager configure];
-  [MagicalRecord setupCoreDataStackWithStoreNamed:@"AppModel"];
-
-  return YES;
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self registerNotification];
+    [CLANotificationManager configure];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"AppModel"];
+    
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-  /*
-   Sent when the application is about to move from active to inactive state.
-   This can occur for certain types of temporary interruptions (such as an
-   incoming phone call or SMS message) or when the user quits the application
-   and it begins the transition to the background state.
-   Use this method to pause ongoing tasks, disable timers, and throttle down
-   OpenGL ES frame rates. Games should use this method to pause the game.
-   */
+    /*
+     Sent when the application is about to move from active to inactive state.
+     This can occur for certain types of temporary interruptions (such as an
+     incoming phone call or SMS message) or when the user quits the application
+     and it begins the transition to the background state.
+     Use this method to pause ongoing tasks, disable timers, and throttle down
+     OpenGL ES frame rates. Games should use this method to pause the game.
+     */
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-  /*
-   Use this method to release shared resources, save user data, invalidate
-   timers, and store enough application state information to restore your
-   application to its current state in case it is terminated later.
-   If your application supports background execution, this method is called
-   instead of applicationWillTerminate: when the user quits.
-   */
+    /*
+     Use this method to release shared resources, save user data, invalidate
+     timers, and store enough application state information to restore your
+     application to its current state in case it is terminated later.
+     If your application supports background execution, this method is called
+     instead of applicationWillTerminate: when the user quits.
+     */
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-  /*
-   Called as part of the transition from the background to the inactive state;
-   here you can undo many of the changes made on entering the background.
-   */
+    /*
+     Called as part of the transition from the background to the inactive state;
+     here you can undo many of the changes made on entering the background.
+     */
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-  if (application.applicationIconBadgeNumber != 0) {
-    application.applicationIconBadgeNumber = 0;
-    [self clearUnreadNotificationOnServer];
-  }
-
-  [self processNotificaton:self.lastNotification];
+    if (application.applicationIconBadgeNumber != 0) {
+        application.applicationIconBadgeNumber = 0;
+        [self clearUnreadNotificationOnServer];
+    }
+    
+    [self processNotificaton:self.lastNotification];
 }
 
 - (void)application:(UIApplication *)application
-    didReceiveRemoteNotification:(NSDictionary *)userInfo
-          fetchCompletionHandler:
-              (void (^)(UIBackgroundFetchResult))completionHandler {
-
-  self.lastNotification = [[CLANotification alloc] init:userInfo];
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:
+(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    self.lastNotification = [[CLANotification alloc] init:userInfo];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-  [MagicalRecord cleanUp];
+    [MagicalRecord cleanUp];
 }
 
 - (void)registerNotification {
-  UIApplication *application = [UIApplication sharedApplication];
-
-  if ([application
-          respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-    UIUserNotificationSettings *notificationSettings =
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    if ([application
+         respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationSettings *notificationSettings =
         [UIUserNotificationSettings
-            settingsForTypes:UIUserNotificationTypeAlert |
-                             UIUserNotificationTypeBadge |
-                             UIUserNotificationTypeSound
-                  categories:nil];
-    [application registerUserNotificationSettings:notificationSettings];
-    [application registerForRemoteNotifications];
-  } else {
-    [application
-        registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                            UIRemoteNotificationTypeSound |
-                                            UIRemoteNotificationTypeAlert)];
-  }
+         settingsForTypes:UIUserNotificationTypeAlert |
+         UIUserNotificationTypeBadge |
+         UIUserNotificationTypeSound
+         categories:nil];
+        [application registerUserNotificationSettings:notificationSettings];
+        [application registerForRemoteNotifications];
+    } else {
+        [application
+         registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                             UIRemoteNotificationTypeSound |
+                                             UIRemoteNotificationTypeAlert)];
+    }
 }
 
 - (void)application:(UIApplication *)application
-    didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-  [[AuthManager sharedInstance] cacheDeviceToken:deviceToken];
-  [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [[AuthManager sharedInstance] cacheDeviceToken:deviceToken];
+    [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
 }
 
 - (void)application:(UIApplication *)application
-    didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-  NSLog(@"Failed to register device with error: %@", error.domain.description);
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed to register device with error: %@", error.domain.description);
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
 - (void)processNotificaton:(CLANotification *)notification {
-  // TODO: process appurl
+    // TODO: process appurl
 }
 
 - (void)clearUnreadNotificationOnServer {
-  [[CLAWebApiClient sharedInstance]
-      setBadge:@0
-       forTeam:[CLAUtility getUserDefault:kTeamKey]];
+    [[CLAWebApiClient sharedInstance]
+     setBadge:@0
+     forTeam:[CLAUtility getUserDefault:kTeamKey]];
 }
 
 @end

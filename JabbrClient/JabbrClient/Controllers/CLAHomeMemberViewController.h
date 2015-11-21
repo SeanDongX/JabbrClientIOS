@@ -10,7 +10,7 @@
 #import "XLPagerTabStripViewController.h"
 
 @interface CLAHomeMemberViewController
-    : UIViewController <UITableViewDataSource, XLPagerTabStripChildItem,
-                        UISearchBarDelegate>
+: UIViewController <UITableViewDataSource, XLPagerTabStripChildItem,
+UISearchBarDelegate>
 
 @end

@@ -14,7 +14,7 @@
 #import "CLARoomViewModel.h"
 
 @interface CLATopicInfoViewController
-    : XLFormViewController <UITextFieldDelegate>
+: XLFormViewController <UITextFieldDelegate>
 
 - (instancetype)initWithRoom:(CLARoomViewModel *)roomViewModel;
 

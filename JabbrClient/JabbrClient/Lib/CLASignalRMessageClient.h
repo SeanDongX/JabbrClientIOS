@@ -13,7 +13,7 @@
 #import "SignalR.h"
 
 @interface CLASignalRMessageClient
-    : NSObject <CLAMessageClient, SRConnectionDelegate>
+: NSObject <CLAMessageClient, SRConnectionDelegate>
 
 @property(nonatomic, weak) id<CLAMessageClientDelegate> delegate;
 @property(nonatomic, strong) NSString *username;

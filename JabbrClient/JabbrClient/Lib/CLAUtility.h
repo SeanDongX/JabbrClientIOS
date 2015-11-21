@@ -12,7 +12,7 @@
 
 + (BOOL)isValidEmail:(NSString *)email;
 + (BOOL)isString:(NSString *)firstString
-    caseInsensitiveEqualTo:(NSString *)secondString;
+caseInsensitiveEqualTo:(NSString *)secondString;
 
 + (id)getUserDefault:(NSString *)key;
 + (void)setUserDefault:(id)value forKey:(NSString *)key;

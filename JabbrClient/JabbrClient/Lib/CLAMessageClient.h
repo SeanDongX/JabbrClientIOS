@@ -22,10 +22,10 @@
 @protocol CLAMessageFailureInfo;
 
 typedef enum {
-  CLAConnecting,
-  CLAConnected,
-  CLAReconnecting,
-  CLADisconnected
+    CLAConnecting,
+    CLAConnected,
+    CLAReconnecting,
+    CLADisconnected
 } CLAConnectionState;
 
 @protocol CLAMessageClient <NSObject>
@@ -57,7 +57,7 @@ typedef enum {
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room;
 
 - (void)createRoom:(NSString *)roomName
-    completionBlock:(void (^)(NSError *))completion;
+   completionBlock:(void (^)(NSError *))completion;
 - (void)inviteUser:(NSString *)username inRoom:(NSString *)room;
 - (void)joinRoom:(NSString *)room;
 - (void)leaveRoom:(NSString *)room;
@@ -97,12 +97,12 @@ typedef enum {
 
 /**
  * Tells the delegate that a message for a specific recipient has been sent by
- *the local user.
+ * the local user.
  *
  * This method is called when a message is sent from
  * the local message client (i.e. -[SINMessageClient sendMessage:]).
  * This callback is triggered on all devices on which the local user is logged
- *in.
+ * in.
  *
  * @param message Message that was sent.
  *
@@ -155,7 +155,7 @@ typedef enum {
  *
  **/
 - (void)message:(CLAMessage *)message
-    shouldSendPushNotifications:(NSArray *)pushPairs;
+shouldSendPushNotifications:(NSArray *)pushPairs;
 
 @end
 

@@ -10,9 +10,9 @@
 #import "ObjectiveCGenerics.h"
 
 typedef enum {
-  CLAUserStatusActive,
-  CLAUserStatusInactive,
-  CLAUserStatusOffline
+    CLAUserStatusActive,
+    CLAUserStatusInactive,
+    CLAUserStatusOffline
 } CLAUserStatus;
 
 GENERICSABLE(CLAUser)

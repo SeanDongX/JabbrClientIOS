@@ -10,6 +10,6 @@
 #import "XLPagerTabStripViewController.h"
 
 @interface CLAHomeNotificationViiewController
-    : UITableViewController <UITableViewDataSource, XLPagerTabStripChildItem>
+: UITableViewController <UITableViewDataSource, XLPagerTabStripChildItem>
 
 @end

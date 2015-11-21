@@ -30,56 +30,56 @@ static CLAWebApiClient *SINGLETON = nil;
 static bool isFirstAccess = YES;
 
 + (id)sharedInstance {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    isFirstAccess = NO;
-    SINGLETON = [[super allocWithZone:NULL] init];
-  });
-
-  return SINGLETON;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        isFirstAccess = NO;
+        SINGLETON = [[super allocWithZone:NULL] init];
+    });
+    
+    return SINGLETON;
 }
 
 #pragma mark - Life Cycle
 
 + (id)allocWithZone:(NSZone *)zone {
-  return [self sharedInstance];
+    return [self sharedInstance];
 }
 
 + (id)copyWithZone:(struct _NSZone *)zone {
-  return [self sharedInstance];
+    return [self sharedInstance];
 }
 
 + (id)mutableCopyWithZone:(struct _NSZone *)zone {
-  return [self sharedInstance];
+    return [self sharedInstance];
 }
 
 - (id)copy {
-  return [[CLAWebApiClient alloc] init];
+    return [[CLAWebApiClient alloc] init];
 }
 
 - (id)mutableCopy {
-  return [[CLAWebApiClient alloc] init];
+    return [[CLAWebApiClient alloc] init];
 }
 
 - (id)init {
-  if (SINGLETON) {
-    return SINGLETON;
-  }
-  if (isFirstAccess) {
-    [self doesNotRecognizeSelector:_cmd];
-  }
-
-  NSString *appLocale =
-      [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
-
-  self = [super init];
-  self.connectionManager = [AFHTTPRequestOperationManager manager];
-  self.connectionManager.requestSerializer =
-      [AFJSONRequestSerializer serializer];
-  [self.connectionManager.requestSerializer setValue:appLocale
-                                  forHTTPHeaderField:@"Accept-Language"];
-
-  return self;
+    if (SINGLETON) {
+        return SINGLETON;
+    }
+    if (isFirstAccess) {
+        [self doesNotRecognizeSelector:_cmd];
+    }
+    
+    NSString *appLocale =
+    [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+    
+    self = [super init];
+    self.connectionManager = [AFHTTPRequestOperationManager manager];
+    self.connectionManager.requestSerializer =
+    [AFJSONRequestSerializer serializer];
+    [self.connectionManager.requestSerializer setValue:appLocale
+                                    forHTTPHeaderField:@"Accept-Language"];
+    
+    return self;
 }
 
 #pragma mark -
@@ -87,167 +87,167 @@ static bool isFirstAccess = YES;
 
 - (void)createAccount:(CLAUserRegistrationViewModel *)userRegistrationModel
     completionHandler:(void (^)(NSString *errorMessage))completion {
-
-  NSArray *array = @[ kServerBaseUrl, kApiPath, @"accounts/signup" ];
-  NSString *requestUrl = [array componentsJoinedByString:@""];
-
-  NSDictionary *params = @{
-    @"Username" : userRegistrationModel.username,
-    @"Name" : userRegistrationModel.name,
-    @"Email" : userRegistrationModel.email,
-    @"Password" : userRegistrationModel.password,
-    @"ConfirmPassword" : userRegistrationModel.confirmPassword,
-  };
-
-  [self.connectionManager POST:requestUrl
-      parameters:params
-      success:^(AFHTTPRequestOperation *operation,
-                NSDictionary *responseObject) {
-        NSString *token = [responseObject objectForKey:@"token"];
-        NSString *message = nil;
-        if (token == nil || token.length == 0) {
-          message = NSLocalizedString(
-              @"We are terribly sorry, but some error happened.", nil);
-        } else {
-          [[AuthManager sharedInstance] cacheAuthToken:token];
-          [[AuthManager sharedInstance]
-              cacheUsername:userRegistrationModel.username];
-        }
-
-        completion(message);
-
-      }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion([self getResponseErrorMessage:error]);
-      }];
+    
+    NSArray *array = @[ kServerBaseUrl, kApiPath, @"accounts/signup" ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    NSDictionary *params = @{
+                             @"Username" : userRegistrationModel.username,
+                             @"Name" : userRegistrationModel.name,
+                             @"Email" : userRegistrationModel.email,
+                             @"Password" : userRegistrationModel.password,
+                             @"ConfirmPassword" : userRegistrationModel.confirmPassword,
+                             };
+    
+    [self.connectionManager POST:requestUrl
+                      parameters:params
+                         success:^(AFHTTPRequestOperation *operation,
+                                   NSDictionary *responseObject) {
+                             NSString *token = [responseObject objectForKey:@"token"];
+                             NSString *message = nil;
+                             if (token == nil || token.length == 0) {
+                                 message = NSLocalizedString(
+                                                             @"We are terribly sorry, but some error happened.", nil);
+                             } else {
+                                 [[AuthManager sharedInstance] cacheAuthToken:token];
+                                 [[AuthManager sharedInstance]
+                                  cacheUsername:userRegistrationModel.username];
+                             }
+                             
+                             completion(message);
+                             
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             completion([self getResponseErrorMessage:error]);
+                         }];
 }
 
 - (void)signInWith:(NSString *)username
-             password:(NSString *)password
-    completionHandler:(void (^)(NSString *errorMessage))completion {
-  NSArray *array = @[ kServerBaseUrl, kApiPath, @"accounts/signin" ];
-  NSString *requestUrl = [array componentsJoinedByString:@""];
-
-  NSDictionary *params = @{
-    @"Username" : username,
-    @"Password" : password,
-  };
-
-  [self.connectionManager POST:requestUrl
-      parameters:params
-      success:^(AFHTTPRequestOperation *operation,
-                NSDictionary *responseObject) {
-        NSString *token = [responseObject objectForKey:@"token"];
-        NSString *message = nil;
-        if (token == nil || token.length == 0) {
-          message = NSLocalizedString(
-              @"We are terribly sorry, but we can not sign you in now.", nil);
-        } else {
-          [[AuthManager sharedInstance] cacheAuthToken:token];
-          [[AuthManager sharedInstance] cacheUsername:username];
-          [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
-          NSLog(@"Received and cached username %@ and token %@", username,
-                token);
-        }
-
-        completion(message);
-      }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion([self getResponseErrorMessage:error]);
-      }];
+          password:(NSString *)password
+ completionHandler:(void (^)(NSString *errorMessage))completion {
+    NSArray *array = @[ kServerBaseUrl, kApiPath, @"accounts/signin" ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    NSDictionary *params = @{
+                             @"Username" : username,
+                             @"Password" : password,
+                             };
+    
+    [self.connectionManager POST:requestUrl
+                      parameters:params
+                         success:^(AFHTTPRequestOperation *operation,
+                                   NSDictionary *responseObject) {
+                             NSString *token = [responseObject objectForKey:@"token"];
+                             NSString *message = nil;
+                             if (token == nil || token.length == 0) {
+                                 message = NSLocalizedString(
+                                                             @"We are terribly sorry, but we can not sign you in now.", nil);
+                             } else {
+                                 [[AuthManager sharedInstance] cacheAuthToken:token];
+                                 [[AuthManager sharedInstance] cacheUsername:username];
+                                 [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
+                                 NSLog(@"Received and cached username %@ and token %@", username,
+                                       token);
+                             }
+                             
+                             completion(message);
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             completion([self getResponseErrorMessage:error]);
+                         }];
 }
 
 - (void)createTeam:(NSString *)name
-    completionHandler:(void (^)(NSString *errorMessage))completion {
-  NSArray *array = @[
-    kServerBaseUrl,
-    kApiPath,
-    @"accounts/team/",
-    name,
-    @"?token=",
-    [self getToken]
-  ];
-  NSString *requestUrl = [array componentsJoinedByString:@""];
-
-  [self.connectionManager POST:requestUrl
-      parameters:nil
-      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completion(nil);
-      }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion([self getResponseErrorMessage:error]);
-      }];
+ completionHandler:(void (^)(NSString *errorMessage))completion {
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/team/",
+                       name,
+                       @"?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl
+                      parameters:nil
+                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                             completion(nil);
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             completion([self getResponseErrorMessage:error]);
+                         }];
 }
 
 - (void)joinTeam:(NSString *)invitationCode
-    completionHandler:(void (^)(NSString *errorMessage))completion {
-  NSArray *array = @[
-    kServerBaseUrl,
-    kApiPath,
-    @"accounts/team/join/",
-    invitationCode,
-    @"/?token=",
-    [self getToken]
-  ];
-  NSString *requestUrl = [array componentsJoinedByString:@""];
-
-  [self.connectionManager POST:requestUrl
-      parameters:nil
-      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completion(nil);
-      }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion([self getResponseErrorMessage:error]);
-      }];
+completionHandler:(void (^)(NSString *errorMessage))completion {
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/team/join/",
+                       invitationCode,
+                       @"/?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl
+                      parameters:nil
+                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                             completion(nil);
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             completion([self getResponseErrorMessage:error]);
+                         }];
 }
 
 - (void)getInviteCodeForTeam:(NSNumber *)teamKey
                   completion:(void (^)(NSString *invitationCode,
                                        NSString *errorMessage))completion {
-  NSArray *array = @[
-    kServerBaseUrl,
-    kApiPath,
-    @"accounts/team/",
-    teamKey,
-    @"/invite/?token=",
-    [self getToken]
-  ];
-  NSString *requestUrl = [array componentsJoinedByString:@""];
-
-  [self.connectionManager GET:requestUrl
-      parameters:nil
-      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completion([responseObject objectForKey:@"id"], nil);
-      }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion(nil, [self getResponseErrorMessage:error]);
-      }];
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/team/",
+                       teamKey,
+                       @"/invite/?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager GET:requestUrl
+                     parameters:nil
+                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                            completion([responseObject objectForKey:@"id"], nil);
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            completion(nil, [self getResponseErrorMessage:error]);
+                        }];
 }
 
 - (void)sendInviteFor:(NSNumber *)team
                    to:(NSString *)email
            completion:
-               (void (^)(NSString *token, NSString *errorMessage))completion {
-  NSArray *array = @[
-    kServerBaseUrl,
-    kApiPath,
-    @"accounts/team/",
-    team,
-    @"/sendinvite/",
-    email,
-    @"/?token=",
-    [self getToken]
-  ];
-  NSString *requestUrl = [array componentsJoinedByString:@""];
-
-  [self.connectionManager POST:requestUrl
-      parameters:nil
-      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completion(responseObject, nil);
-      }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion(nil, [self getResponseErrorMessage:error]);
-      }];
+(void (^)(NSString *token, NSString *errorMessage))completion {
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/team/",
+                       team,
+                       @"/sendinvite/",
+                       email,
+                       @"/?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl
+                      parameters:nil
+                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                             completion(responseObject, nil);
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             completion(nil, [self getResponseErrorMessage:error]);
+                         }];
 }
 
 #pragma mark -
@@ -255,106 +255,106 @@ static bool isFirstAccess = YES;
 - (void)getNotificationsFor:(NSString *)team
                  completion:(void (^)(NSArray *result,
                                       NSString *errorMessage))completion {
-  NSArray *array = @[
-    kServerBaseUrl,
-    kApiPath,
-    @"accounts/notification/?teamkey=",
-    team,
-    @"&token=",
-    [self getToken]
-  ];
-  NSString *requestUrl = [array componentsJoinedByString:@""];
-
-  [self.connectionManager GET:requestUrl
-      parameters:nil
-      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completion(responseObject, nil);
-      }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion(nil, [self getResponseErrorMessage:error]);
-      }];
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/notification/?teamkey=",
+                       team,
+                       @"&token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager GET:requestUrl
+                     parameters:nil
+                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                            completion(responseObject, nil);
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            completion(nil, [self getResponseErrorMessage:error]);
+                        }];
 }
 
 - (void)setRead:(CLANotificationMessage *)notification
      completion:(void (^)(NSArray *result, NSString *errorMessage))completion {
-  NSArray *array = @[
-    kServerBaseUrl,
-    kApiPath,
-    @"accounts/notification/setread/",
-    notification.notificationKey,
-    @"/?token=",
-    [self getToken]
-  ];
-  NSString *requestUrl = [array componentsJoinedByString:@""];
-
-  [self.connectionManager POST:requestUrl
-      parameters:nil
-      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completion(responseObject, nil);
-      }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion(nil, [self getResponseErrorMessage:error]);
-      }];
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/notification/setread/",
+                       notification.notificationKey,
+                       @"/?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl
+                      parameters:nil
+                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                             completion(responseObject, nil);
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             completion(nil, [self getResponseErrorMessage:error]);
+                         }];
 }
 
 - (void)setBadge:(NSNumber *)count forTeam:(NSNumber *)teamKey {
-
-  if (count == nil || teamKey == nil) {
-    return;
-  }
-
-  NSArray *array = @[
-    kServerBaseUrl,
-    kApiPath,
-    @"accounts/notification/setunread/",
-    count,
-    @"/?teamkey=",
-    teamKey,
-    @"&token=",
-    [self getToken]
-  ];
-  NSString *requestUrl = [array componentsJoinedByString:@""];
-
-  [self.connectionManager POST:requestUrl
-      parameters:nil
-      success:^(AFHTTPRequestOperation *operation,
-                NSDictionary *responseObject) {
-      }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Set badge faield with error: %@",
-              [self getResponseErrorMessage:error]);
-      }];
+    
+    if (count == nil || teamKey == nil) {
+        return;
+    }
+    
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/notification/setunread/",
+                       count,
+                       @"/?teamkey=",
+                       teamKey,
+                       @"&token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl
+                      parameters:nil
+                         success:^(AFHTTPRequestOperation *operation,
+                                   NSDictionary *responseObject) {
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             NSLog(@"Set badge faield with error: %@",
+                                   [self getResponseErrorMessage:error]);
+                         }];
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
 - (NSString *)getToken {
-  return [[AuthManager sharedInstance] getCachedAuthToken];
+    return [[AuthManager sharedInstance] getCachedAuthToken];
 }
 
 - (NSString *)getResponseErrorMessage:(NSError *)error {
-  NSError *localError = nil;
-  NSString *errorMessage = nil;
-
-  NSData *errorData =
-      error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-
-  if (errorData != nil) {
-    NSDictionary *parsedObject =
+    NSError *localError = nil;
+    NSString *errorMessage = nil;
+    
+    NSData *errorData =
+    error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+    
+    if (errorData != nil) {
+        NSDictionary *parsedObject =
         [NSJSONSerialization JSONObjectWithData:errorData
                                         options:0
                                           error:&localError];
-
-    errorMessage = [parsedObject valueForKey:@"message"];
-  }
-
-  if (errorMessage == nil || errorMessage.length == 0) {
-    errorMessage = NSLocalizedString(
-        @"We are terribly sorry, but some error happened.", nil);
-  }
-
-  return errorMessage;
+        
+        errorMessage = [parsedObject valueForKey:@"message"];
+    }
+    
+    if (errorMessage == nil || errorMessage.length == 0) {
+        errorMessage = NSLocalizedString(
+                                         @"We are terribly sorry, but some error happened.", nil);
+    }
+    
+    return errorMessage;
 }
 
 @end

@@ -12,7 +12,7 @@
 #import "DocumentThread.h"
 
 @interface DocumentViewController
-    : UIViewController <UIWebViewDelegate, NJKWebViewProgressDelegate>
+: UIViewController <UIWebViewDelegate, NJKWebViewProgressDelegate>
 
 - (void)loadDocumentThread:(DocumentThread *)documentThread;
 @end

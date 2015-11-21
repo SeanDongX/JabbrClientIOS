@@ -28,7 +28,7 @@ GENERICSABLE(CLAMessage)
  *  otherwise it contains the message text.
  */
 @interface CLAMessage
-    : NSObject <JSQMessageData, NSCoding, NSCopying, CLAMessage>
+: NSObject <JSQMessageData, NSCoding, NSCopying, CLAMessage>
 
 @property(copy, nonatomic) NSString *oId;
 
@@ -76,13 +76,13 @@ GENERICSABLE(CLAMessage)
 
 /**
  *  Initializes and returns a message object having the given senderId,
- *displayName, text,
+ * displayName, text,
  *  and current system date.
  *
  *  @param senderId    The unique identifier for the user who sent the message.
- *This value must not be `nil`.
+ * This value must not be `nil`.
  *  @param displayName The display name for the user who sent the message. This
- *value must not be `nil`.
+ * value must not be `nil`.
  *  @param text        The body text of the message. This value must not be
  *`nil`.
  *
@@ -98,16 +98,16 @@ GENERICSABLE(CLAMessage)
 
 /**
  *  Initializes and returns a message object having the given senderId,
- *senderDisplayName, date, and text.
+ * senderDisplayName, date, and text.
  *
  *  @param senderId          The unique identifier for the user who sent the
- *message. This value must not be `nil`.
+ * message. This value must not be `nil`.
  *  @param senderDisplayName The display name for the user who sent the message.
- *This value must not be `nil`.
+ * This value must not be `nil`.
  *  @param date              The date that the message was sent. This value must
- *not be `nil`.
+ * not be `nil`.
  *  @param text              The body text of the message. This value must not
- *be `nil`.
+ * be `nil`.
  *
  *  @discussion Initializing a `JSQMessage` with this method will set
  *`isMediaMessage` to `NO`.
@@ -121,13 +121,13 @@ GENERICSABLE(CLAMessage)
                        text:(NSString *)text;
 /**
  *  Initializes and returns a message object having the given senderId,
- *displayName, media,
+ * displayName, media,
  *  and current system date.
  *
  *  @param senderId    The unique identifier for the user who sent the message.
- *This value must not be `nil`.
+ * This value must not be `nil`.
  *  @param displayName The display name for the user who sent the message. This
- *value must not be `nil`.
+ * value must not be `nil`.
  *  @param media       The media data for the message. This value must not be
  *`nil`.
  *
@@ -143,16 +143,16 @@ GENERICSABLE(CLAMessage)
 
 /**
  *  Initializes and returns a message object having the given senderId,
- *displayName, date, and media.
+ * displayName, date, and media.
  *
  *  @param senderId          The unique identifier for the user who sent the
- *message. This value must not be `nil`.
+ * message. This value must not be `nil`.
  *  @param senderDisplayName The display name for the user who sent the message.
- *This value must not be `nil`.
+ * This value must not be `nil`.
  *  @param date              The date that the message was sent. This value must
- *not be `nil`.
+ * not be `nil`.
  *  @param media             The media data for the message. This value must not
- *be `nil`.
+ * be `nil`.
  *
  *  @discussion Initializing a `JSQMessage` with this method will set
  *`isMediaMessage` to `YES`.

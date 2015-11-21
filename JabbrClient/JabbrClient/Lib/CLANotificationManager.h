@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, CLANotificationType) {
-  CLANotificationTypeMessage = 0,
-  CLANotificationTypeWarning,
-  CLANotificationTypeError,
-  CLANotificationTypeSuccess
+typedef NS_ENUM (NSInteger, CLANotificationType) {
+    CLANotificationTypeMessage = 0,
+    CLANotificationTypeWarning,
+    CLANotificationTypeError,
+    CLANotificationTypeSuccess
 };
 
 @interface CLANotificationManager : NSObject
 
 + (void)configure;
 + (void)showText:(NSString *)text
-    forViewController:(UIViewController *)viewController
-             withType:(CLANotificationType)type;
+forViewController:(UIViewController *)viewController
+        withType:(CLANotificationType)type;
 @end

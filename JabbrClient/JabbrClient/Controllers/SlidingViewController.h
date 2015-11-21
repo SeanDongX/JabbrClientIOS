@@ -12,9 +12,9 @@
 @property NSMutableDictionary *mainViewControllersCache;
 
 - (UINavigationController *)getNavigationControllerWithKeyIdentifier:
-        (NSString *)keyIdentifier;
+(NSString *)keyIdentifier;
 - (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:
-        (NSString *)keyIdentifier;
+(NSString *)keyIdentifier;
 - (void)clearControllerCache;
 - (void)switchToMainView;
 - (void)switchToSignInView;

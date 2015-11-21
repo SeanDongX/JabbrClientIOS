@@ -16,7 +16,7 @@
 #import "CLARoom.h"
 
 @interface ChatViewController
-    : JSQMessagesViewController <CLAMessageClientDelegate>
+: JSQMessagesViewController <CLAMessageClientDelegate>
 
 @property(nonatomic, strong) CLARoom *room;
 

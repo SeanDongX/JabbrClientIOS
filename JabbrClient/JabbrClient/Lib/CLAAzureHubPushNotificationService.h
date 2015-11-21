@@ -10,7 +10,7 @@
 #import "CLAPushNotificationService.h"
 
 @interface CLAAzureHubPushNotificationService
-    : NSObject <CLAPushNotificationService>
+: NSObject <CLAPushNotificationService>
 
 + (id)sharedInstance;
 

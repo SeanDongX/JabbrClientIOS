@@ -68,37 +68,38 @@
     
     __weak __typeof(&*self) weakSelf = self;
     
-    [messageClient createRoom:topic
-              completionBlock:^(NSError *error) {
-                  if (error == nil) {
-                      __strong __typeof(&*weakSelf) strongSelf = weakSelf;
-                      
-                      [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-                      [strongSelf dismissViewControllerAnimated:YES completion:nil];
-                  } else {
-                      
-                      // TODO: define error code
-                      NSString *errorDescription =
-                      [error.userInfo objectForKey:NSLocalizedDescriptionKey];
-                      
-                      if (errorDescription != nil && errorDescription.length > 0) {
-	                         [CLANotificationManager showText:errorDescription
-                                            forViewController:self
-                                                     withType:CLANotificationTypeError];
-                      } else {
-	                         [CLANotificationManager
-                              showText:NSLocalizedString(@"Oh, something went "
-                                                         @"wrong. Let's try "
-                                                         @"it again.",
-                                                         nil)
-                              forViewController:self
-                              withType:CLANotificationTypeError];
-                      }
-                  }
-                  
-                  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                  
-              }];
+    [messageClient createRoomWithType:self.roomType
+                                 name:topic
+                      completionBlock:^(NSError *error) {
+                          if (error == nil) {
+                              __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+                              
+                              [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
+                              [strongSelf dismissViewControllerAnimated:YES completion:nil];
+                          } else {
+                              
+                              // TODO: define error code
+                              NSString *errorDescription =
+                              [error.userInfo objectForKey:NSLocalizedDescriptionKey];
+                              
+                              if (errorDescription != nil && errorDescription.length > 0) {
+                                  [CLANotificationManager showText:errorDescription
+                                                 forViewController:self
+                                                          withType:CLANotificationTypeError];
+                              } else {
+                                  [CLANotificationManager
+                                   showText:NSLocalizedString(@"Oh, something went "
+                                                              @"wrong. Let's try "
+                                                              @"it again.",
+                                                              nil)
+                                   forViewController:self
+                                   withType:CLANotificationTypeError];
+                              }
+                          }
+                          
+                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                          
+                      }];
 }
 
 #pragma mark -

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <JSQMessagesViewController/JSQMessages.h>
 #import "CLAMessage.h"
+#import "Constants.h"
 
 // Data
 #import "CLATeamViewModel.h"
@@ -56,8 +57,8 @@ typedef enum {
 - (void)sendTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room;
 
-- (void)createRoom:(NSString *)roomName
-   completionBlock:(void (^)(NSError *))completion;
+- (void)createRoomWithType:(RoomType)roomType name:(NSString *)roomName
+           completionBlock:(void (^)(NSError *))completion;
 - (void)inviteUser:(NSString *)username inRoom:(NSString *)room;
 - (void)joinRoom:(NSString *)room;
 - (void)leaveRoom:(NSString *)room;

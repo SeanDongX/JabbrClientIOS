@@ -488,11 +488,29 @@ static bool isFirstAccess = YES;
     [self.hub invoke:@"Send" withArgs:@[ messageData ]];
 }
 
-- (void)createRoom:(NSString *)roomName
-   completionBlock:(void (^)(NSError *))completion {
+- (void)createRoomWithType: (RoomType)roomType name:(NSString *)roomName
+           completionBlock:(void (^)(NSError *))completion {
+    NSString *command = @"create";
+    
+    switch (roomType) {
+        case RoomTypePulbic:
+            command = @"create";
+            break;
+            
+        case RoomTypePrivate:
+            command = @"createprivate";
+            break;
+            
+        case RoomTypeDirect:
+            command = @"createdirect";
+            break;
+            
+        default:
+            break;
+    }
     
     NSString *commandText =
-    [NSString stringWithFormat:@"/%@ %@", @"create", roomName];
+    [NSString stringWithFormat:@"/%@ %@", command, roomName];
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
     [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
     [messageData setObject:commandText forKey:@"content"];

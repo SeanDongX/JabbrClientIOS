@@ -137,7 +137,7 @@
 - (void)switchToRoom:(CLARoom *)room {
     [CLAUtility setUserDefault:room.name forKey:kSelectedRoomName];
     [self showHud];
-    self.title = [self.room getHandle];
+    self.title = self.room.displayName;
     [self initialzeCurrentThread];
     
     [self joinUserToRoomModel];
@@ -166,12 +166,6 @@
 
 - (NSMutableArray<CLAMessage> *)getMessagesForRoom:(NSString *)roomName {
     return [self getRoom:roomName].messages;
-}
-
-- (void)setCurrentMessageThread:(NSMutableArray *)messages {
-    CLARoom *room = [[self.messageClient.dataRepository getDefaultTeam].rooms
-                     objectForKey:self.room.name];
-    room.messages = messages;
 }
 
 - (void)addMessage:(CLAMessage *)message toRoom:(NSString *)roomName {
@@ -649,8 +643,8 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 - (void)initialzeCurrentThread {
     self.roomViewModel = [[CLARoomViewModel alloc] init];
     
-    CLARoom *room = [[CLARoom alloc] init];
-    room.name = self.room.name;
+    CLARoom *room = [[self.messageClient.dataRepository getDefaultTeam].rooms
+                     objectForKey:self.room.name];
     
     self.roomViewModel.room = room;
 }

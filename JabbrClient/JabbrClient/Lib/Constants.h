@@ -83,6 +83,12 @@ FOUNDATION_EXPORT int const kLoadEarlierMessageCount;
 FOUNDATION_EXPORT NSString *const kLastRefreshTime;
 FOUNDATION_EXPORT NSTimeInterval const minRefreshLoadTime;
 
+typedef NS_ENUM (NSInteger, RoomType) {
+    RoomTypePulbic,
+    RoomTypePrivate,
+    RoomTypeDirect,
+};
+
 + (UIImage *)menuIconImage;
 + (UIImage *)homeImage;
 + (UIImage *)settingsImage;

@@ -369,9 +369,10 @@ viewForHeaderInSection:(NSInteger)section {
     
     UIButton *addButton = [[UIButton alloc]
                            initWithFrame:CGRectMake(frame.size.width - 60, 10, 30, 30)];
+    addButton.tag = section;
     
     [addButton addTarget:self
-                  action:@selector(showCreateTopicView)
+                  action:@selector(showCreateTopicView:)
         forControlEvents:UIControlEventTouchUpInside];
     
     [addButton setImage:[Constants addIconImage] forState:UIControlStateNormal];
@@ -424,13 +425,32 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark -
 #pragma mark - Event Handlers
 
-- (void)showCreateTopicView {
+- (void)showCreateTopicView:(id)sender {
     
     UIStoryboard *storyBoard =
     [UIStoryboard storyboardWithName:kMainStoryBoard bundle:nil];
     
     CLACreateRoomViewController *createRoomViewController = [storyBoard
                                                              instantiateViewControllerWithIdentifier:kCreateRoomViewController];
+    UIButton *senderButton = sender;
+    if (senderButton != nil) {
+        switch (senderButton.tag) {
+            case 0:
+                createRoomViewController.roomType = RoomTypePulbic;
+                break;
+                
+            case 1:
+                createRoomViewController.roomType = RoomTypePrivate;
+                break;
+                
+            case 2:
+                createRoomViewController.roomType = RoomTypeDirect;
+                break;
+            default:
+                break;
+        }
+    }
+    
     [self presentViewController:createRoomViewController
                        animated:YES
                      completion:nil];

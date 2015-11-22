@@ -11,4 +11,6 @@
 
 @interface CLACreateRoomViewController : UIViewController <UITextFieldDelegate>
 
+@property(nonatomic) NSInteger roomType;
+
 @end

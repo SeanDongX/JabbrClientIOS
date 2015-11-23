@@ -108,6 +108,11 @@ int const kLoadEarlierMessageCount = 50;
 NSString *const kLastRefreshTime = @"LastRefreshTimeKey";
 NSTimeInterval const minRefreshLoadTime = 3;
 
+NSString *const kTopicName = @"TopicName";
+NSString *const kLeaveTopicButton = @"LeaveTopicButton";
+NSString *const kSendInviteButton = @"SendInviteButton";
+NSString *const kInvitePrefix = @"Invite-";
+
 + (UIImage *)menuIconImage {
     FAKIonIcons *iccon = [FAKIonIcons naviconIconWithSize:30];
     [iccon addAttribute:NSForegroundColorAttributeName

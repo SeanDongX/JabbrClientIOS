@@ -13,11 +13,6 @@
 #import "Constants.h"
 #import "CLANotificationManager.h"
 
-NSString *const kTopicName = @"TopicName";
-NSString *const kLeaveTopicButton = @"LeaveTopicButton";
-NSString *const kSendInviteButton = @"SendInviteButton";
-NSString *const kInvitePrefix = @"Invite-";
-
 NSString *const kTextLabelColor = @"textLabel.color";
 
 @interface CLATopicInfoViewController ()
@@ -85,7 +80,7 @@ NSString *const kTextLabelColor = @"textLabel.color";
     row = [XLFormRowDescriptor
            formRowDescriptorWithTag:kTopicName
            rowType:XLFormRowDescriptorTypeName
-           title:[self.roomViewModel.room getHandle]];
+           title:self.roomViewModel.room.displayName];
     row.disabled = @YES;
     [section addFormRow:row];
     

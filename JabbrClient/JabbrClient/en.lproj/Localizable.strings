@@ -43,3 +43,11 @@
 "PushNotificationMentionMessage" = "%@ mentioned you in %@ : %@";
 "PushNotificationRoomInviteMessage" = "%@ invited you to join %@";
 "It's lonely here, invite someone and say hello." = "It's lonely here, invite someone and say hello.";
+
+"Create Public Topic" = "Create Public Topic";
+"Create Private Topic" = "Create Private Topic";
+"Send Direct Message" = "Send Direct Message";
+"Only letters and \"-\" please"  = "Only letters and \"-\" please";
+"Go" = "Go";
+"Name" = "Name";
+"Select a team member" = "Select a team member";

@@ -28,7 +28,7 @@
 #import "SlidingViewController.h"
 
 // View Controllers
-#import "CLACreateRoomViewController.h"
+#import "CLACreateTopicViewController.h"
 #import "CLANotificationContentViewController.h"
 
 // Custom Controls

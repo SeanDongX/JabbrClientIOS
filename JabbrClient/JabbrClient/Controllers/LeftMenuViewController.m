@@ -29,7 +29,7 @@
 
 // View Controller
 #import "ChatViewController.h"
-#import "CLACreateRoomViewController.h"
+#import "CLACreateTopicViewController.h"
 
 // Custom Controls
 #import "BOZPongRefreshControl.h"
@@ -426,32 +426,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Event Handlers
 
 - (void)showCreateTopicView:(id)sender {
-    
-    UIStoryboard *storyBoard =
-    [UIStoryboard storyboardWithName:kMainStoryBoard bundle:nil];
-    
-    CLACreateRoomViewController *createRoomViewController = [storyBoard
-                                                             instantiateViewControllerWithIdentifier:kCreateRoomViewController];
     UIButton *senderButton = sender;
-    if (senderButton != nil) {
-        switch (senderButton.tag) {
-            case 0:
-                createRoomViewController.roomType = RoomTypePulbic;
-                break;
-                
-            case 1:
-                createRoomViewController.roomType = RoomTypePrivate;
-                break;
-                
-            case 2:
-                createRoomViewController.roomType = RoomTypeDirect;
-                break;
-            default:
-                break;
-        }
-    }
-    
-    [self presentViewController:createRoomViewController
+    CLACreateTopicViewController *createTopicViewController =
+    [[CLACreateTopicViewController alloc] initWithRoomType:senderButton.tag];
+    [self presentViewController:createTopicViewController
                        animated:YES
                      completion:nil];
 }

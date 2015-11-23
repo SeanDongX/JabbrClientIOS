@@ -21,7 +21,7 @@
 #import "SlidingViewController.h"
 
 // View Controller
-#import "CLACreateRoomViewController.h"
+#import "CLACreateTopicViewController.h"
 #import "ChatViewController.h"
 #import "CLACreateTeamViewController.h"
 
@@ -243,8 +243,10 @@ viewForHeaderInSection:(NSInteger)section {
     UIButton *addButton = [[UIButton alloc]
                            initWithFrame:CGRectMake(frame.size.width - 60, 10, 30, 30)];
     [addButton addTarget:self
-                  action:@selector(showCreateTopicView)
+                  action:@selector(showCreateTopicView:)
         forControlEvents:UIControlEventTouchUpInside];
+    addButton.tag = section;
+    
     [addButton setImage:[Constants addIconImage] forState:UIControlStateNormal];
     [headerView addSubview:addButton];
     
@@ -275,13 +277,11 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark -
 #pragma mark - Event Handlers
 
-- (void)showCreateTopicView {
-    UIStoryboard *storyBoard =
-    [UIStoryboard storyboardWithName:kMainStoryBoard bundle:nil];
-    
-    CLACreateRoomViewController *createRoomViewController = [storyBoard
-                                                             instantiateViewControllerWithIdentifier:kCreateRoomViewController];
-    [self presentViewController:createRoomViewController
+- (void)showCreateTopicView:(id)sender {
+    UIButton *senderButton = sender;
+    CLACreateTopicViewController *createTopicViewController =
+    [[CLACreateTopicViewController alloc] initWithRoomType:senderButton.tag];
+    [self presentViewController:createTopicViewController
                        animated:YES
                      completion:nil];
 }

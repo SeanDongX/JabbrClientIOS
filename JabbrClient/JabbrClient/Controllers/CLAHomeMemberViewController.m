@@ -24,8 +24,6 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
 
-// View Controller
-#import "CLACreateRoomViewController.h"
 
 // Custom Controls
 #import "BOZPongRefreshControl.h"
@@ -270,17 +268,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     } else {
         return [self.users objectAtIndex:row];
     }
-}
-
-- (void)showCreateTopicView {
-    UIStoryboard *storyBoard =
-    [UIStoryboard storyboardWithName:kMainStoryBoard bundle:nil];
-    
-    CLACreateRoomViewController *createRoomViewController = [storyBoard
-                                                             instantiateViewControllerWithIdentifier:kCreateRoomViewController];
-    [self presentViewController:createRoomViewController
-                       animated:YES
-                     completion:nil];
 }
 
 - (NSUInteger)getTeamMemberCount {

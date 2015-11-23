@@ -83,6 +83,11 @@ FOUNDATION_EXPORT int const kLoadEarlierMessageCount;
 FOUNDATION_EXPORT NSString *const kLastRefreshTime;
 FOUNDATION_EXPORT NSTimeInterval const minRefreshLoadTime;
 
+FOUNDATION_EXPORT NSString *const kTopicName;
+FOUNDATION_EXPORT NSString *const kLeaveTopicButton;
+FOUNDATION_EXPORT NSString *const kSendInviteButton;
+FOUNDATION_EXPORT NSString *const kInvitePrefix;
+
 typedef NS_ENUM (NSInteger, RoomType) {
     RoomTypePulbic,
     RoomTypePrivate,

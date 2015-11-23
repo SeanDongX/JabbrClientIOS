@@ -14,6 +14,9 @@
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "9wN-Ke-SEM"; */
 "9wN-Ke-SEM.normalTitle" = "Sign In";
 
+/* Class = "UIButton"; normalTitle = "Go"; ObjectID = "9yc-pk-ljP"; */
+"9yc-pk-ljP.normalTitle" = "Go";
+
 /* Class = "UITextField"; placeholder = "Username"; ObjectID = "Axg-ob-q0b"; */
 "Axg-ob-q0b.placeholder" = "Username";
 
@@ -40,6 +43,9 @@
 
 /* Class = "UIButton"; normalTitle = "Home"; ObjectID = "NZt-5J-PuY"; */
 "NZt-5J-PuY.normalTitle" = "Home";
+
+/* Class = "UITextField"; placeholder = "Topic"; ObjectID = "P6Z-Tn-z7G"; */
+"P6Z-Tn-z7G.placeholder" = "Topic";
 
 /* Class = "UITextField"; placeholder = "Repeat Password"; ObjectID = "PIN-Zw-1xS"; */
 "PIN-Zw-1xS.placeholder" = "Repeat Password";
@@ -88,6 +94,9 @@
 
 /* Class = "UITextField"; placeholder = "Name"; ObjectID = "ieG-St-eJJ"; */
 "ieG-St-eJJ.placeholder" = "Name";
+
+/* Class = "UILabel"; text = "Only letters and \"-\" please"; ObjectID = "lRr-MZ-gLy"; */
+"lRr-MZ-gLy.text" = "Only letters and \"-\" please";
 
 /* Class = "UISegmentedControl"; qZ5-mw-GTl.segmentTitles[0] = "Topics"; ObjectID = "qZ5-mw-GTl"; */
 "qZ5-mw-GTl.segmentTitles[0]" = "Topics";

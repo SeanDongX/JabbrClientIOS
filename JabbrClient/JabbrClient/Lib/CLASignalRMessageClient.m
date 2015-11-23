@@ -518,9 +518,9 @@ static bool isFirstAccess = YES;
     
     [self.hub invoke:@"Send"
             withArgs:@[ messageData ]
-   completionHandler:^(id data, NSError *error) {
-       completion(error);
-   }];
+complexCompletionHandler:^(id data, NSError *error) {
+    completion(error);
+}];
 }
 
 - (void)inviteUser:(NSString *)username inRoom:(NSString *)room {

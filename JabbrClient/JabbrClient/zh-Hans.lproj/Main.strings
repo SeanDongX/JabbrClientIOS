@@ -15,7 +15,7 @@
 "9wN-Ke-SEM.normalTitle" = "登录";
 
 /* Class = "UIButton"; normalTitle = "Go"; ObjectID = "9yc-pk-ljP"; */
-"9yc-pk-ljP.normalTitle" = "Go";
+"9yc-pk-ljP.normalTitle" = "确认";
 
 /* Class = "UITextField"; placeholder = "Username"; ObjectID = "Axg-ob-q0b"; */
 "Axg-ob-q0b.placeholder" = "用户名";
@@ -24,7 +24,7 @@
 "C1u-My-kQW.normalTitle" = "注册";
 
 /* Class = "UILabel"; text = "Message"; ObjectID = "Ed4-3R-qkR"; */
-"Ed4-3R-qkR.text" = "Message";
+"Ed4-3R-qkR.text" = "消息";
 
 /* Class = "UIButton"; normalTitle = "Join Team"; ObjectID = "Ie1-LK-m1i"; */
 "Ie1-LK-m1i.normalTitle" = "加入团队";
@@ -58,6 +58,9 @@
 
 /* Class = "UINavigationItem"; title = "Document"; ObjectID = "USF-5o-XfX"; */
 "USF-5o-XfX.title" = "文档";
+
+/* Class = "UILabel"; text = "Or join an existing topic"; ObjectID = "W3W-9R-R8t"; */
+"W3W-9R-R8t.text" = "或加入已有话题";
 
 /* Class = "UILabel"; text = "You are almost there"; ObjectID = "Ynb-a5-2Xd"; */
 "Ynb-a5-2Xd.text" = "马上就到了哦";
@@ -112,6 +115,9 @@
 
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "rhd-Pn-tdl"; */
 "rhd-Pn-tdl.normalTitle" = "登录";
+
+/* Class = "UILabel"; text = "Create a new topic"; ObjectID = "urC-OO-6Jd"; */
+"urC-OO-6Jd.text" = "新建话题";
 
 /* Class = "UIButton"; normalTitle = "Sign out"; ObjectID = "vR8-jy-CjL"; */
 "vR8-jy-CjL.normalTitle" = "退出";

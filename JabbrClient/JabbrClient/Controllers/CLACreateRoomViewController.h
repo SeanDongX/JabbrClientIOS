@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CLASignalRMessageClient.h"
 
-@interface CLACreateRoomViewController : UIViewController <UITextFieldDelegate>
+@interface CLACreateRoomViewController : UIViewController <UITableViewDataSource, UISearchBarDelegate, UITextFieldDelegate>
 
 @property(nonatomic) RoomType roomType;
 

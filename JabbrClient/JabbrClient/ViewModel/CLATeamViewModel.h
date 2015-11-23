@@ -24,6 +24,8 @@ GENERICSABLE(CLATeamViewModel)
 @property(nonatomic, strong) NSMutableDictionary *rooms;
 @property(nonatomic, strong) NSArray<CLAUser> *users;
 
+- (NSArray<CLARoom> *)getJoinedRooms;
+- (NSArray<CLARoom> *)getNotJoinedRooms;
 - (CLAUser *)findUser:(NSString *)username;
 - (void)joinUser:(CLAUser *)newUser toRoom:(NSString *)roomName;
 

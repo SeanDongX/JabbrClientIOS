@@ -11,6 +11,46 @@
 
 @implementation CLATeamViewModel
 
+- (NSArray<CLARoom> *)getJoinedRooms {
+    NSMutableArray *roomArray = [NSMutableArray array];
+    for (CLARoom *room in [self.rooms allValues]) {
+        if (room.closed == false && room.users != nil && room.users.count > 0) {
+            for (CLAUser *user in room.users) {
+                if ([user isCurrentUser] != NO) {
+                    [roomArray addObject:room];
+                    break;
+                }
+            }
+        }
+    }
+    
+    return roomArray;
+}
+
+- (NSArray<CLARoom> *)getNotJoinedRooms {
+    NSMutableArray *roomArray = [NSMutableArray array];
+    for (CLARoom *room in [self.rooms allValues]) {
+        if (room.closed == true || room.users == nil || room.users.count == 0) {
+            [roomArray addObject:room];
+        }
+        else if (room.users != nil && room.users.count > 0) {
+            BOOL userInRoom = NO;
+            for (CLAUser *user in room.users) {
+                if ([user isCurrentUser] != NO) {
+                    userInRoom = YES;
+                    break;
+                }
+            }
+            
+            if (userInRoom == NO) {
+                [roomArray addObject:room];
+            }
+        }
+    }
+    
+    return roomArray;
+}
+
 - (CLAUser *)findUser:(NSString *)username {
     for (CLAUser *user in self.users) {
         if ([CLAUtility isString:username caseInsensitiveEqualTo:user.name]) {

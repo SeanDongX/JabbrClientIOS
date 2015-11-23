@@ -12,7 +12,15 @@
 #import "MBProgressHUD.h"
 @interface CLACreateRoomViewController ()
 
-@property(weak, nonatomic) IBOutlet UITextField *topicLabel;
+@property (weak, nonatomic) IBOutlet UITextField *topicLabel;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property(nonatomic) BOOL isFiltered;
+
+@property (strong, nonatomic) NSMutableArray<CLARoom> *tableItems;
+@property (strong, nonatomic) NSMutableArray<CLARoom> *filteredtableItems;
+
 @end
 
 @implementation CLACreateRoomViewController
@@ -20,6 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNavBar];
+    [self setupData];
     self.topicLabel.delegate = self;
 }
 
@@ -52,6 +61,16 @@
     navItem.leftBarButtonItem = closeButton;
     
     [self.view addSubview:navBar];
+}
+
+- (void)setupData {
+    
+    self.tableItems = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam].getNotJoinedRooms;
+    
+    self.filteredtableItems = [NSMutableArray array];
+    for (CLARoom *room in self.tableItems) {
+        [self.filteredtableItems addObject:room];
+    }
 }
 
 - (void)closeButtonClicked:(id)sender {
@@ -100,6 +119,77 @@
                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                           
                       }];
+}
+
+#pragma mark -
+#pragma Search Bar Delegate Methods
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)text {
+    if (text.length == 0) {
+        self.isFiltered = FALSE;
+    } else {
+        self.isFiltered = TRUE;
+        [self filterContentForSearchText:text];
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (void)filterContentForSearchText:(NSString *)searchText {
+    NSPredicate *resultPredicate =
+    [NSPredicate predicateWithFormat:@"displayName contains[c] %@", searchText];
+    self.filteredtableItems = [self.tableItems filteredArrayUsingPredicate:resultPredicate];
+}
+
+#pragma mark -
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return self.filteredtableItems.count;
+            
+        default:
+            return 0;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell =
+    [tableView dequeueReusableCellWithIdentifier:@"ItemCell"];
+    CLARoom *room = self.filteredtableItems[indexPath.row];
+    cell.textLabel.text = room.displayName;
+    
+    cell.textLabel.textColor = [Constants mainThemeContrastColor];
+    [cell setBackgroundColor:[UIColor clearColor]];
+    
+    UIView *backgroundView = [UIView new];
+    backgroundView.backgroundColor = [Constants highlightColor];
+    cell.selectedBackgroundView = backgroundView;
+    
+    return cell;
+}
+
+#pragma mark - Table Section
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+heightForHeaderInSection:(NSInteger)section {
+    return 0;
+}
+
+#pragma mark - TableView Delegate
+
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UINavigationController *navController = nil;
+    CLARoom *selectedRoom = self.filteredtableItems[indexPath.row];
+    NSLog(@"%@ selected", selectedRoom.name);
 }
 
 #pragma mark -

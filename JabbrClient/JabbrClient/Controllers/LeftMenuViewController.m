@@ -153,21 +153,7 @@
     [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
     if (teamViewModel != nil) {
         
-        NSMutableArray *roomArray = [NSMutableArray array];
-        for (CLARoom *room in [teamViewModel.rooms allValues]) {
-            
-            if (room.closed == false && room.users != nil && room.users.count > 0) {
-                
-                for (CLAUser *user in room.users) {
-                    if ([user isCurrentUser] != NO) {
-                        [roomArray addObject:room];
-                        
-                        break;
-                    }
-                }
-            }
-        }
-        
+        NSMutableArray *roomArray = [teamViewModel getJoinedRooms];
         NSSortDescriptor *sortDescriptor =
         [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         [roomArray sortUsingDescriptors:@[ sortDescriptor ]];

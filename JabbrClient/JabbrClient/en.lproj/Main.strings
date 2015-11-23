@@ -59,6 +59,9 @@
 /* Class = "UINavigationItem"; title = "Document"; ObjectID = "USF-5o-XfX"; */
 "USF-5o-XfX.title" = "Document";
 
+/* Class = "UILabel"; text = "Or join an existing topic"; ObjectID = "W3W-9R-R8t"; */
+"W3W-9R-R8t.text" = "Or join an existing topic";
+
 /* Class = "UILabel"; text = "You are almost there"; ObjectID = "Ynb-a5-2Xd"; */
 "Ynb-a5-2Xd.text" = "You are almost there";
 
@@ -112,6 +115,9 @@
 
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "rhd-Pn-tdl"; */
 "rhd-Pn-tdl.normalTitle" = "Sign In";
+
+/* Class = "UILabel"; text = "Create a new topic"; ObjectID = "urC-OO-6Jd"; */
+"urC-OO-6Jd.text" = "Create a new topic";
 
 /* Class = "UIButton"; normalTitle = "Sign out"; ObjectID = "vR8-jy-CjL"; */
 "vR8-jy-CjL.normalTitle" = "Sign out";

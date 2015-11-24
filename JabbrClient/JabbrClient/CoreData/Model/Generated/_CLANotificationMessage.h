@@ -5,12 +5,12 @@
 
 
 extern const struct CLANotificationMessageAttributes {
-    __unsafe_unretained NSString *fromUserName;
-    __unsafe_unretained NSString *message;
-    __unsafe_unretained NSString *notificationKey;
-    __unsafe_unretained NSString *read;
-    __unsafe_unretained NSString *roomName;
-    __unsafe_unretained NSString *when;
+	__unsafe_unretained NSString *fromUserName;
+	__unsafe_unretained NSString *message;
+	__unsafe_unretained NSString *notificationKey;
+	__unsafe_unretained NSString *read;
+	__unsafe_unretained NSString *roomName;
+	__unsafe_unretained NSString *when;
 } CLANotificationMessageAttributes;
 
 extern const struct CLANotificationMessageRelationships {

@@ -30,7 +30,7 @@
 - (NSArray<CLARoom> *)getNotJoinedRooms {
     NSMutableArray *roomArray = [NSMutableArray array];
     for (CLARoom *room in [self.rooms allValues]) {
-        if (room.closed == true || room.users == nil || room.users.count == 0) {
+        if (room.closed == true || room.users == nil || room.users.count == 0 || room.isDirectRoom != NO) {
             [roomArray addObject:room];
         }
         else if (room.users != nil && room.users.count > 0) {

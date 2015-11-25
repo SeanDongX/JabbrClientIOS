@@ -44,8 +44,8 @@
 /* Class = "UIButton"; normalTitle = "Home"; ObjectID = "NZt-5J-PuY"; */
 "NZt-5J-PuY.normalTitle" = "Home";
 
-/* Class = "UITextField"; placeholder = "Topic"; ObjectID = "P6Z-Tn-z7G"; */
-"P6Z-Tn-z7G.placeholder" = "Topic";
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "P6Z-Tn-z7G"; */
+"P6Z-Tn-z7G.placeholder" = "Name";
 
 /* Class = "UITextField"; placeholder = "Repeat Password"; ObjectID = "PIN-Zw-1xS"; */
 "PIN-Zw-1xS.placeholder" = "Repeat Password";

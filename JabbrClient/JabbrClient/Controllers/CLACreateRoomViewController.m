@@ -10,9 +10,16 @@
 #import "Constants.h"
 #import "CLANotificationManager.h"
 #import "MBProgressHUD.h"
+#import "Masonry.h"
+
 @interface CLACreateRoomViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *topicLabel;
+@property (weak, nonatomic) IBOutlet UIView *rootScrollView;
+@property (weak, nonatomic) IBOutlet UIView *upperViewContainer;
+@property (weak, nonatomic) IBOutlet UIView *lowerViewContainer;
+
+@property (weak, nonatomic) IBOutlet UILabel *createTopicLabel;
+@property (weak, nonatomic) IBOutlet UITextField *topicNameTextField;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -23,22 +30,23 @@
 
 @end
 
+//TODO: open room when crated or joined
 @implementation CLACreateRoomViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupNavBar];
+    [self setupUi];
     [self setupData];
-    self.topicLabel.delegate = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)setupUi {
+    [self setupNavBar];
+    [self setupFormItem];
+    [self updateConstraints];
+    self.topicNameTextField.delegate = self;
 }
 
 - (void)setupNavBar {
-    
     UINavigationBar *navBar = [[UINavigationBar alloc]
                                initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds),
                                                         kStatusBarHeight)];
@@ -63,13 +71,79 @@
     [self.view addSubview:navBar];
 }
 
+- (void)setupFormItem {
+    switch (self.roomType) {
+        case RoomTypePulbic:
+            self.createTopicLabel.text = NSLocalizedString(@"Create Public Topic", nil);
+            break;
+            
+        case RoomTypePrivate:
+            self.createTopicLabel.text = NSLocalizedString(@"Create Pirvate Topic", nil);
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)updateConstraints {
+    
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    
+    [self.rootScrollView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(screenHeight);
+    }];
+    
+    if (self.roomType == RoomTypeDirect) {
+        [self.upperViewContainer setHidden:YES];
+        [self.upperViewContainer mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kStatusBarHeight);
+        }];
+        
+        [self.lowerViewContainer mas_updateConstraints:^(MASConstraintMaker *make) {
+            //TODO: fix lower container height
+            make.height.mas_equalTo(screenHeight - kStatusBarHeight);
+        }];
+    }
+    else {
+        [self.lowerViewContainer mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(screenHeight - 300);
+        }];
+    }
+}
+
 - (void)setupData {
+    NSArray<CLARoom> *notJoinedRooms = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] getNotJoinedRooms];
     
-    self.tableItems = [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam].getNotJoinedRooms;
-    
+    self.tableItems = [NSMutableArray array];
     self.filteredtableItems = [NSMutableArray array];
-    for (CLARoom *room in self.tableItems) {
-        [self.filteredtableItems addObject:room];
+    for (CLARoom *room in notJoinedRooms) {
+        
+        switch (self.roomType) {
+            case RoomTypePulbic:
+                if (room.isPrivate == NO) {
+                    [self.tableItems addObject:room];
+                    [self.filteredtableItems addObject:room];
+                }
+                break;
+                
+            case RoomTypePrivate:
+                if (room.isPrivate != NO && room.isDirectRoom == NO) {
+                    [self.tableItems addObject:room];
+                    [self.filteredtableItems addObject:room];
+                }
+                break;
+                
+            case RoomTypeDirect:
+                if (room.isDirectRoom != NO) {
+                    [self.tableItems addObject:room];
+                    [self.filteredtableItems addObject:room];
+                }
+                break;
+                
+            default:
+                break;
+        }
     }
 }
 
@@ -79,16 +153,17 @@
 
 - (IBAction)goButtonClicked:(id)sender {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    NSString *topic = self.topicLabel.text;
-    
+    [self invokeCreateTopic: self.topicNameTextField.text withRoomType:self.roomType];
+}
+
+- (void)invokeCreateTopic:(NSString *)name withRoomType:(RoomType)roomType {
     CLASignalRMessageClient *messageClient =
     [CLASignalRMessageClient sharedInstance];
     
     __weak __typeof(&*self) weakSelf = self;
     
-    [messageClient createRoomWithType:self.roomType
-                                 name:topic
+    [messageClient createRoomWithType:roomType
+                                 name:name
                       completionBlock:^(NSError *error) {
                           if (error == nil) {
                               __strong __typeof(&*weakSelf) strongSelf = weakSelf;
@@ -189,7 +264,15 @@ heightForHeaderInSection:(NSInteger)section {
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UINavigationController *navController = nil;
     CLARoom *selectedRoom = self.filteredtableItems[indexPath.row];
-    NSLog(@"%@ selected", selectedRoom.name);
+    
+    if (self.roomType == RoomTypeDirect) {
+        NSString *roomName = [selectedRoom.displayName substringFromIndex:1];
+        [self invokeCreateTopic:roomName withRoomType:self.roomType];
+    }
+    else {
+        [[CLASignalRMessageClient sharedInstance] joinRoom:selectedRoom.name];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark -
@@ -207,7 +290,7 @@ replacementString:(NSString *)string {
         NSString *newString =
         [textField.text stringByReplacingCharactersInRange:range
                                                 withString:@"-"];
-        self.topicLabel.text = newString;
+        self.topicNameTextField.text = newString;
         
         return NO;
     }

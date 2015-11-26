@@ -67,7 +67,7 @@
     }
     
     for (CLARoom *room in [self.rooms allValues]) {
-        if ([room.name isEqualToString:roomName]) {
+        if (room.name != nil && [room.name isEqualToString:roomName]) {
             BOOL userFound = FALSE;
             
             for (CLAUser *user in room.users) {

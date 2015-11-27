@@ -171,67 +171,22 @@
 #pragma mark -
 #pragma mark - Public Methods
 
-- (void)updateRooms:(NSArray<CLARoom> *)rooms {
-    [self.roomDictionary removeAllObjects];
+- (void)selectRoom:(CLARoom *)room closeMenu:(BOOL)close {
     
-    NSPredicate *publicRoomRredicate =
-    [NSPredicate predicateWithFormat:@"(isPrivate == %@)", @NO];
-    NSArray *publicRooms =
-    [rooms filteredArrayUsingPredicate:publicRoomRredicate];
-    
-    NSPredicate *privateRoomRredicate = [NSPredicate
-                                         predicateWithFormat:@"(isPrivate == %@) AND (isDirectRoom == %@)", @YES,
-                                         @NO];
-    NSArray *privateRooms =
-    [rooms filteredArrayUsingPredicate:privateRoomRredicate];
-    
-    NSPredicate *directRoomRredicate =
-    [NSPredicate predicateWithFormat:@"(isDirectRoom == %@)", @YES];
-    NSArray *directRooms =
-    [rooms filteredArrayUsingPredicate:directRoomRredicate];
-    
-    [self.roomDictionary
-     setObject:publicRooms == nil ?[NSArray array] : publicRooms
-     forKey:@"0"];
-    [self.roomDictionary
-     setObject:privateRooms == nil ?[NSArray array] : privateRooms
-     forKey:@"1"];
-    [self.roomDictionary
-     setObject:directRooms == nil ?[NSArray array] : directRooms
-     forKey:@"2"];
-    
-    self.rooms = rooms;
-    [self.tableView reloadData];
-    
-    // select last selected, if any, TODO:support section
-    //[self selectRoom:[CLAUtility getUserDefault:kSelectedRoomName]
-    // closeMenu:NO];
-}
-
-- (void)selectRoom:(NSString *)room closeMenu:(BOOL)close {
-    // TODO: support section
     if (room == nil) {
         return;
     }
     
     [self.tableView reloadData];
+    if (close != NO) {
+        [self openRoom:room];
+    }
     
-    for (int key = 0; key < self.rooms.count; key++) {
-        CLARoom *thread = [self.rooms objectAtIndex:key];
-        
-        if ([thread.name isEqualToString:room]) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:key inSection:0];
-            
-            [self.tableView selectRowAtIndexPath:indexPath
-                                        animated:NO
-                                  scrollPosition:UITableViewScrollPositionMiddle];
-            
-            if (close != NO) {
-                [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-            }
-            
-            return;
-        }
+    NSIndexPath *indexPath = [self getIndexPath:room];
+    if (indexPath != nil) {
+        [self.tableView selectRowAtIndexPath:indexPath
+                                    animated:NO
+                              scrollPosition:UITableViewScrollPositionMiddle];
     }
 }
 
@@ -383,29 +338,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // You normally wouldn't need to do anything like this, but we're changing
     // transitions
     // dynamically so everything needs to start in a consistent state.
-    self.slidingViewController.topViewController.view.layer.transform =
-    CATransform3DMakeScale(1, 1, 1);
-    
-    UINavigationController *navController = nil;
-    
-    navController = [((SlidingViewController *)self.slidingViewController)
-                     getNavigationControllerWithKeyIdentifier:kChatNavigationController];
-    
-    ChatViewController *chatViewController =
-    [navController.viewControllers objectAtIndex:0];
-    
-    if (chatViewController != nil) {
-        CLARoom *room = [self getRoom:indexPath];
-        [self setRoom:room.name withUnread:0];
-        chatViewController.room = room;
+    CLARoom *room = [self getRoom:indexPath];
+    if (room != nil) {
+        [self openRoom: room];
     }
-    
-    [((SlidingViewController *)self.slidingViewController)
-     setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
-    
-    [navController.view
-     addGestureRecognizer:self.slidingViewController.panGesture];
-    [self.slidingViewController resetTopViewAnimated:YES];
 }
 
 #pragma mark -
@@ -479,6 +415,58 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark -
 #pragma mark Private Methods
 
+- (void)updateRooms:(NSArray<CLARoom> *)rooms {
+    [self.roomDictionary removeAllObjects];
+    
+    NSPredicate *publicRoomRredicate =
+    [NSPredicate predicateWithFormat:@"(isPrivate == %@)", @NO];
+    NSArray *publicRooms =
+    [rooms filteredArrayUsingPredicate:publicRoomRredicate];
+    
+    NSPredicate *privateRoomRredicate = [NSPredicate
+                                         predicateWithFormat:@"(isPrivate == %@) AND (isDirectRoom == %@)", @YES,
+                                         @NO];
+    NSArray *privateRooms =
+    [rooms filteredArrayUsingPredicate:privateRoomRredicate];
+    
+    NSPredicate *directRoomRredicate =
+    [NSPredicate predicateWithFormat:@"(isDirectRoom == %@)", @YES];
+    NSArray *directRooms =
+    [rooms filteredArrayUsingPredicate:directRoomRredicate];
+    
+    [self.roomDictionary
+     setObject:publicRooms == nil ?[NSArray array] : publicRooms
+     forKey:@"0"];
+    [self.roomDictionary
+     setObject:privateRooms == nil ?[NSArray array] : privateRooms
+     forKey:@"1"];
+    [self.roomDictionary
+     setObject:directRooms == nil ?[NSArray array] : directRooms
+     forKey:@"2"];
+    
+    [self.filteredRoomDictionary
+     setObject:publicRooms == nil ?[NSArray array] : publicRooms
+     forKey:@"0"];
+    [self.filteredRoomDictionary
+     setObject:privateRooms == nil ?[NSArray array] : privateRooms
+     forKey:@"1"];
+    [self.filteredRoomDictionary
+     setObject:directRooms == nil ?[NSArray array] : directRooms
+     forKey:@"2"];
+    
+    self.rooms = rooms;
+    [self.tableView reloadData];
+}
+
+- (void)selectRoomName:(NSString *)name closeMenu:(BOOL)close {
+    for (CLARoom *room in self.rooms) {
+        if ([room.name isEqualToString:name]) {
+            [self selectRoom:room closeMenu:close];
+            return;
+        }
+    }
+}
+
 - (void)filterContentForSearchText:(NSString *)searchText {
     NSPredicate *searchPredicate = [NSPredicate
                                     predicateWithFormat:@"displayName contains[c] %@", searchText];
@@ -495,6 +483,31 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *key = [NSString stringWithFormat:@"%ld", (long)indexPath.section];
     NSArray *roomArray = [[self getCurrentRoomDictionary] objectForKey:key];
     return roomArray == nil ? nil :[roomArray objectAtIndex:indexPath.row];
+}
+
+- (NSIndexPath *)getIndexPath:(CLARoom *)room {
+    NSInteger section = 0;
+    if (room.isDirectRoom != NO) {
+        section = 2;
+    } else if (room.isPrivate != NO && room.isDirectRoom == NO) {
+        section = 1;
+    }
+    
+    NSString *key = [NSString stringWithFormat:@"%ld", (long)section];
+    NSArray *roomArray = [[self getCurrentRoomDictionary] objectForKey:key];
+    
+    if (roomArray == nil) {
+        return nil;
+    }
+    
+    for (NSInteger k = 0; k < roomArray.count; k++ ) {
+        CLARoom *sectionRoom = [roomArray objectAtIndex:k];
+        if ([sectionRoom.name isEqualToString:room.name]) {
+            return [NSIndexPath indexPathForRow:k inSection:section];
+        }
+    }
+    
+    return nil;
 }
 
 - (NSUInteger)getRoomCountAtSection:(NSInteger *)section {
@@ -531,7 +544,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSDictionary *)getCurrentRoomDictionary {
-    return self.isFiltered ? self.filteredRoomDictionary : self.roomDictionary;
+    return self.filteredRoomDictionary;
 }
 
 - (void)setRoom:(NSString *)roomName withUnread:(NSInteger)count {
@@ -542,4 +555,30 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
 }
+
+
+- (void)openRoom: (CLARoom *)room {
+    self.slidingViewController.topViewController.view.layer.transform =
+    CATransform3DMakeScale(1, 1, 1);
+    
+    UINavigationController *navController = nil;
+    
+    navController = [((SlidingViewController *)self.slidingViewController)
+                     getNavigationControllerWithKeyIdentifier:kChatNavigationController];
+    
+    ChatViewController *chatViewController =
+    [navController.viewControllers objectAtIndex:0];
+    
+    [((SlidingViewController *)self.slidingViewController)
+     setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
+    if (chatViewController != nil) {
+        [self setRoom:room.name withUnread:0];
+        chatViewController.room = room;
+    }
+    
+    [navController.view
+     addGestureRecognizer:self.slidingViewController.panGesture];
+    [self.slidingViewController resetTopViewAnimated:YES];
+}
+
 @end

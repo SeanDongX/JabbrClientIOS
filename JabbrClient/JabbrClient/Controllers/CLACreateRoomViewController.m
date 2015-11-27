@@ -157,8 +157,7 @@
 }
 
 - (void)invokeCreateTopic:(NSString *)name withRoomType:(RoomType)roomType {
-    CLASignalRMessageClient *messageClient =
-    [CLASignalRMessageClient sharedInstance];
+    CLASignalRMessageClient *messageClient = [CLASignalRMessageClient sharedInstance];
     
     __weak __typeof(&*self) weakSelf = self;
     

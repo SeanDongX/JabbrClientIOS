@@ -141,7 +141,6 @@
     [self initialzeCurrentThread];
     
     [self joinUserToRoomModel];
-    [self.messageClient joinRoom:room.name];
     [self.messageClient loadRoom:room.name];
     [self.collectionView reloadData];
 }
@@ -487,13 +486,12 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
         [self sendTeamUpdatedEventNotification];
     }
     
-    SlidingViewController *slidingViewController =
-    (SlidingViewController *)self.slidingViewController;
+    SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
     
     // make sure room switch works both ways, ie, when chat view is active main
     // view or not
     if (slidingViewController != nil) {
-        [slidingViewController switchToRoom:room.name];
+        [slidingViewController switchToRoom:room];
     } else {
         [self switchToRoom:room];
     }

@@ -126,9 +126,8 @@
     [self resetTopViewAnimated:TRUE];
 }
 
-- (void)switchToRoom:(NSString *)room {
-    LeftMenuViewController *leftMenu =
-    (LeftMenuViewController *)self.underLeftViewController;
+- (void)switchToRoom:(CLARoom *)room {
+    LeftMenuViewController *leftMenu = (LeftMenuViewController *)self.underLeftViewController;
     [leftMenu selectRoom:room closeMenu:YES];
 }
 

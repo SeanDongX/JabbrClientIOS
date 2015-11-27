@@ -7,6 +7,7 @@
 //
 
 #import "ECSlidingViewController.h"
+#import "CLARoom.h"
 
 @interface SlidingViewController : ECSlidingViewController
 @property NSMutableDictionary *mainViewControllersCache;
@@ -19,6 +20,6 @@
 - (void)switchToMainView;
 - (void)switchToSignInView;
 - (void)switchToCreateTeamView;
-- (void)switchToRoom:(NSString *)room;
+- (void)switchToRoom:(CLARoom *)room;
 
 @end

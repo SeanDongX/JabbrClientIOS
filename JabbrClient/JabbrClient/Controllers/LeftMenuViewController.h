@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CLARoom.h"
 
 @interface LeftMenuViewController
 : UIViewController <UITableViewDataSource, UISearchBarDelegate>
 
 @property(weak, nonatomic) IBOutlet UITableView *tableView;
 
-- (void)selectRoom:(NSString *)room closeMenu:(BOOL)close;
-
+- (void)selectRoom:(CLARoom *)room closeMenu:(BOOL)close;
 @end

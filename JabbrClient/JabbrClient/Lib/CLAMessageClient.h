@@ -63,6 +63,7 @@ typedef enum {
 - (void)joinRoom:(NSString *)room;
 - (void)leaveRoom:(NSString *)room;
 
+- (void)updateActivity; //TODO: call this when user interact with the app
 - (void)invokeGetTeam;
 @end
 

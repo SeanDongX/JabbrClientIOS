@@ -79,7 +79,16 @@ static bool isFirstAccess = YES;
     }
     self = [super init];
     self.dataRepository = [[CLAInMemoryDataRepository alloc] init];
+    [self setupActicityTimer];
     return self;
+}
+
+- (void)setupActicityTimer {
+    [NSTimer scheduledTimerWithTimeInterval:30
+                                     target:self
+                                   selector:@selector(updateActivity)
+                                   userInfo:nil
+                                    repeats:YES];
 }
 
 #pragma mark -
@@ -539,6 +548,10 @@ static bool isFirstAccess = YES;
 
 - (void)leaveRoom:(NSString *)room {
     [self invokeCommand:@"leave" withCommandParam:room fromRoom:@""];
+}
+
+- (void)updateActivity {
+    [self.hub invoke:@"updateActivity" withArgs:@[]];
 }
 
 - (void)invokeGetTeam {

@@ -78,15 +78,6 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    @try {
-        [self switchToRoom:self.room];
-        [super viewWillAppear:animated];
-    } @catch (NSException *exception) {
-        NSLog(@"Exception: %@", exception.description);
-    }
-}
-
 - (void)connect {
     self.messageClient = [CLASignalRMessageClient sharedInstance];
     self.messageClient.delegate = self;
@@ -101,6 +92,7 @@
 
 - (void)setActiveRoom:(CLARoom *)room {
     self.room = room;
+    [self.messageClient joinRoom:room.name];
     [self switchToRoom:room];
 }
 

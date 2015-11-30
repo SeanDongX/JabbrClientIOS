@@ -246,7 +246,7 @@
         case 0:
         case 1:
         case 2:
-            return [self getRoomCountAtSection:section];
+            return [self getRoomCountAtSection:section filterCount:YES];
             
         default:
             return 0;
@@ -403,9 +403,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)text {
     if (text.length == 0) {
-        self.isFiltered = FALSE;
+        self.isFiltered = NO;
+        [self resetFilter];
     } else {
-        self.isFiltered = TRUE;
+        self.isFiltered = YES;
         [self filterContentForSearchText:text];
     }
     
@@ -444,18 +445,22 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
      setObject:directRooms == nil ?[NSArray array] : directRooms
      forKey:@"2"];
     
-    [self.filteredRoomDictionary
-     setObject:publicRooms == nil ?[NSArray array] : publicRooms
-     forKey:@"0"];
-    [self.filteredRoomDictionary
-     setObject:privateRooms == nil ?[NSArray array] : privateRooms
-     forKey:@"1"];
-    [self.filteredRoomDictionary
-     setObject:directRooms == nil ?[NSArray array] : directRooms
-     forKey:@"2"];
+    [self resetFilter];
     
     self.rooms = rooms;
     [self.tableView reloadData];
+}
+
+- (void)resetFilter {
+    [self.filteredRoomDictionary
+     setObject:[self.roomDictionary objectForKey:@"0"]
+     forKey:@"0"];
+    [self.filteredRoomDictionary
+     setObject:[self.roomDictionary objectForKey:@"1"]
+     forKey:@"1"];
+    [self.filteredRoomDictionary
+     setObject:[self.roomDictionary objectForKey:@"2"]
+     forKey:@"2"];
 }
 
 - (void)selectRoomName:(NSString *)name closeMenu:(BOOL)close {
@@ -510,9 +515,17 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     return nil;
 }
 
-- (NSUInteger)getRoomCountAtSection:(NSInteger *)section {
+- (NSUInteger)getRoomCountAtSection:(NSInteger *)section filterCount:(BOOL)filtered {
     NSString *key = [NSString stringWithFormat:@"%ld", (long)section];
-    NSArray *targetArray = [[self getCurrentRoomDictionary] objectForKey:key];
+    NSArray *targetArray;
+    
+    if (filtered == NO) {
+        targetArray = [self.roomDictionary objectForKey:key];
+    }
+    else {
+        targetArray = [self.filteredRoomDictionary objectForKey:key];
+    }
+    
     return targetArray == nil ? 0 : targetArray.count;
 }
 
@@ -539,8 +552,15 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSString *)getRoomCountStringAtSection:(NSInteger)section {
-    return [NSString stringWithFormat:@"%lu", (unsigned long)[self
-                                                              getRoomCountAtSection:section]];
+    NSInteger originalCount = [self getRoomCountAtSection:section filterCount:NO];
+    
+    if (self.isFiltered != NO)
+    {
+        NSInteger filteredCount = [self getRoomCountAtSection:section filterCount:YES];
+        return [NSString stringWithFormat:@"%lu/%lu", (unsigned long)filteredCount, (unsigned long)originalCount];
+    } else {
+        return [NSString stringWithFormat:@"%lu", (unsigned long)originalCount];
+    }
 }
 
 - (NSDictionary *)getCurrentRoomDictionary {

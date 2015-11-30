@@ -33,6 +33,8 @@
 
 @interface ChatViewController ()
 
+@property(nonatomic, strong) CLARoom *room;
+
 @property(strong, nonatomic) CLARoomViewModel *roomViewModel;
 
 @property(weak, nonatomic) IBOutlet UIBarButtonItem *leftMenuButton;
@@ -95,6 +97,58 @@
 }
 
 #pragma mark -
+#pragma mark - Public Methods
+
+- (void)setActiveRoom:(CLARoom *)room {
+    self.room = room;
+    [self switchToRoom:room];
+}
+
+- (void)didReceiveTeams:(NSArray *)teams {
+    if (teams == nil || teams.count == 0 || teams[0] == nil) {
+        [self showCreateTeamView];
+        [self sendNoTeamEventNotification];
+        return;
+    }
+    
+    [self sendTeamUpdatedEventNotification];
+}
+
+
+- (void)didReceiveMessage:(CLAMessage *)message inRoom:(NSString *)room {
+    [self addMessage:message toRoom:room];
+    //[self sendLocalNotificationFor:message inRoom:room];
+    
+    NSInteger secondApart = [message.date secondsFrom:[NSDate date]];
+    
+    BOOL animated =
+    secondApart > -1 * kMessageLoadAnimateTimeThreshold ? TRUE : FALSE;
+    
+    // TODO: also show messages of the same user from other client in current
+    // thread
+    if (![self isCurrentUser:message.senderId] && [self isCUrrentRoom:room]) {
+        [self finishReceivingMessageAnimated:animated];
+    }
+    
+    if (![room isEqualToString:self.room.name]) {
+        [self addUnread:1 toRoom:room];
+    }
+}
+
+- (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
+    if (![self isCurrentUser:user] && [self isCUrrentRoom:room]) {
+        
+        self.showTypingIndicator = TRUE;
+        [self scrollToBottomAnimated:YES];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC),
+                       dispatch_get_main_queue(), ^{
+                           self.showTypingIndicator = FALSE;
+                       });
+    }
+}
+
+#pragma mark -
 #pragma mark - Menu Setup
 
 - (void)initMenu {
@@ -134,6 +188,8 @@
 
 #pragma mark -
 #pragma mark - Chat Thread Methods
+
+
 - (void)switchToRoom:(CLARoom *)room {
     [CLAUtility setUserDefault:room.name forKey:kSelectedRoomName];
     [self showHud];
@@ -224,7 +280,12 @@
 
 - (CLAMessage *)collectionView:(JSQMessagesCollectionView *)collectionView
  messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
+    NSArray<CLAMessage> *messages = [self getCurrentRoomMessages];
+    if (messages == nil || messages.count < indexPath.item + 1) {
+        return nil;
+    }
+    
+    return [messages objectAtIndex:indexPath.item];
 }
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:
@@ -466,16 +527,6 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-- (void)didReceiveTeams:(NSArray *)teams {
-    if (teams == nil || teams.count == 0 || teams[0] == nil) {
-        [self showCreateTeamView];
-        [self sendNoTeamEventNotification];
-        return;
-    }
-    
-    [self sendTeamUpdatedEventNotification];
-}
-
 - (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update {
     if (self.room == nil ||
         (room.name != nil && [self.room.name isEqual:room.name])) {
@@ -499,39 +550,6 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)didReceiveUpdateRoom:(CLARoom *)room {
     [self sendTeamUpdatedEventNotification];
-}
-
-- (void)didReceiveMessage:(CLAMessage *)message inRoom:(NSString *)room {
-    [self addMessage:message toRoom:room];
-    //[self sendLocalNotificationFor:message inRoom:room];
-    
-    NSInteger secondApart = [message.date secondsFrom:[NSDate date]];
-    
-    BOOL animated =
-    secondApart > -1 * kMessageLoadAnimateTimeThreshold ? TRUE : FALSE;
-    
-    // TODO: also show messages of the same user from other client in current
-    // thread
-    if (![self isCurrentUser:message.senderId] && [self isCUrrentRoom:room]) {
-        [self finishReceivingMessageAnimated:animated];
-    }
-    
-    if (![room isEqualToString:self.room.name]) {
-        [self addUnread:1 toRoom:room];
-    }
-}
-
-- (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
-    if (![self isCurrentUser:user] && [self isCUrrentRoom:room]) {
-        
-        self.showTypingIndicator = TRUE;
-        [self scrollToBottomAnimated:YES];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC),
-                       dispatch_get_main_queue(), ^{
-                           self.showTypingIndicator = FALSE;
-                       });
-    }
 }
 
 - (void)didLoadUsers:(NSArray *)users inRoom:(NSString *)room {

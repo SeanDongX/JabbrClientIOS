@@ -573,7 +573,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
      setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     if (chatViewController != nil) {
         [self setRoom:room.name withUnread:0];
-        chatViewController.room = room;
+        [chatViewController setActiveRoom:room];
     }
     
     [navController.view

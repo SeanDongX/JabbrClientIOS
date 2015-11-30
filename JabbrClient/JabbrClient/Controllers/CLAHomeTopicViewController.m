@@ -264,7 +264,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
-        chatViewController.room = [self getRoomAtRow:indexPath.row];
+        [chatViewController setActiveRoom:[self getRoomAtRow:indexPath.row]];
     }
     
     [((SlidingViewController *)self.slidingViewController)

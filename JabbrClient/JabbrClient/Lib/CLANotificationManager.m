@@ -25,4 +25,8 @@ forViewController:(UIViewController *)viewController
     [TSMessage showNotificationWithTitle:text
                                     type:(TSMessageNotificationType)type];
 }
+
++ (void)dismiss {
+    [TSMessage dismissActiveNotification];
+}
 @end

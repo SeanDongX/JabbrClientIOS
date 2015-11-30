@@ -22,4 +22,6 @@ typedef NS_ENUM (NSInteger, CLANotificationType) {
 + (void)showText:(NSString *)text
 forViewController:(UIViewController *)viewController
         withType:(CLANotificationType)type;
++ (void)dismiss;
+
 @end

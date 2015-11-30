@@ -78,6 +78,11 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [CLANotificationManager dismiss];
+    [super viewWillAppear:animated];
+}
+
 - (void)connect {
     self.messageClient = [CLASignalRMessageClient sharedInstance];
     self.messageClient.delegate = self;

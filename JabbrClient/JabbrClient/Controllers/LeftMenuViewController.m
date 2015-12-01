@@ -238,6 +238,7 @@
 - (void)finishRefresh {
     [self.pongRefreshControl finishedLoading];
     self.isRefreshing = FALSE;
+    [self.tableView reloadData];
 }
 
 #pragma mark -

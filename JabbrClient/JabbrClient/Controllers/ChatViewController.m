@@ -530,6 +530,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
         return;
     }
     
+    //FixMe: add room to left menu
     if (update != NO) {
         [self sendTeamUpdatedEventNotification];
     }

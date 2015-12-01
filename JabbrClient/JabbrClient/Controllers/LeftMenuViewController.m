@@ -35,6 +35,7 @@
 #import "BOZPongRefreshControl.h"
 
 @interface LeftMenuViewController ()
+@property(nonatomic, strong) CLARoom *selectedRoom;
 
 @property(nonatomic, strong) NSArray<CLARoom> *rooms;
 @property(nonatomic, strong) NSMutableDictionary *roomDictionary;
@@ -75,8 +76,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     [self updateRooms:self.rooms];
+    self.searchBar.text = nil;
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self selectTableViewRowForRoom:self.selectedRoom];
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -182,12 +189,8 @@
         [self openRoom:room];
     }
     
-    NSIndexPath *indexPath = [self getIndexPath:room];
-    if (indexPath != nil) {
-        [self.tableView selectRowAtIndexPath:indexPath
-                                    animated:NO
-                              scrollPosition:UITableViewScrollPositionMiddle];
-    }
+    self.selectedRoom = room;
+    [self selectTableViewRowForRoom:room];
 }
 
 #pragma mark -
@@ -340,6 +343,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // dynamically so everything needs to start in a consistent state.
     CLARoom *room = [self getRoom:indexPath];
     if (room != nil) {
+        self.selectedRoom = room;
         [self openRoom: room];
     }
 }
@@ -415,6 +419,15 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark -
 #pragma mark Private Methods
+
+- (void)selectTableViewRowForRoom:(CLARoom *)room {
+    NSIndexPath *indexPath = [self getIndexPath:room];
+    if (indexPath != nil) {
+        [self.tableView selectRowAtIndexPath:indexPath
+                                    animated:NO
+                              scrollPosition:UITableViewScrollPositionMiddle];
+    }
+}
 
 - (void)updateRooms:(NSArray<CLARoom> *)rooms {
     [self.roomDictionary removeAllObjects];

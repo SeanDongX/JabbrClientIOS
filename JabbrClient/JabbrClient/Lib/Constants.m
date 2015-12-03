@@ -21,7 +21,7 @@ NSString *const kAzureNotificationHubConnectionString =
 
 #if TARGET_IPHONE_SIMULATOR
 
-NSString *const kServerBaseUrl = @"http://test.collara.co/";
+NSString *const kServerBaseUrl = @"http://192.168.1.53:16207/";
 #else
 
 NSString *const kServerBaseUrl = @"http://test.collara.co/";

@@ -447,15 +447,20 @@ heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     /**
      *  iOS7-style sender name labels
      */
-    CLAMessage *currentMessage =
-    [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
+    
+    NSArray<CLAMessage> *roomMessages = [self getCurrentRoomMessages];
+    
+    if (indexPath.item >= roomMessages.count) {
+        return 0.0f;
+    }
+    
+    CLAMessage *currentMessage = [roomMessages objectAtIndex:indexPath.item];
     if ([[currentMessage senderId] isEqualToString:self.senderId]) {
         return 0.0f;
     }
     
     if (indexPath.item - 1 > 0) {
-        CLAMessage *previousMessage =
-        [[self getCurrentRoomMessages] objectAtIndex:indexPath.item - 1];
+        CLAMessage *previousMessage = [roomMessages objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId]
              isEqualToString:[currentMessage senderId]]) {
             return 0.0f;
@@ -479,10 +484,10 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
                 header:
 (JSQMessagesLoadEarlierHeaderView *)headerView
 didTapLoadEarlierMessagesButton:(UIButton *)sender {
-    NSMutableArray<CLAMessage> *messages = [self getCurrentRoomMessages];
+    NSMutableArray<CLAMessage> *roomMessages = [self getCurrentRoomMessages];
     
-    if (messages != nil && messages.count > 0) {
-        CLAMessage *earliestMessage = [messages objectAtIndex:0];
+    if (roomMessages != nil && roomMessages.count > 0) {
+        CLAMessage *earliestMessage = [roomMessages objectAtIndex:0];
         if (earliestMessage != nil) {
             self.showLoadEarlierMessagesHeader = false;
             [self.messageClient getPreviousMessages:earliestMessage.oId
@@ -764,15 +769,20 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSDate *)getMessageDisplayDateAt:(NSIndexPath *)indexPath {
-    CLAMessage *currentMessage =
-    [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
+    NSArray<CLAMessage> *roomeMessages = [self getCurrentRoomMessages];
+    
+    if (indexPath.item >= roomeMessages.count)
+    {
+        return nil;
+    }
+    
+    CLAMessage *currentMessage = [roomeMessages objectAtIndex:indexPath.item];
     
     if (indexPath.item == 0) {
         return currentMessage.date;
     } else {
         
-        CLAMessage *previsousMessage =
-        [[self getCurrentRoomMessages] objectAtIndex:indexPath.item - 1];
+        CLAMessage *previsousMessage = [roomeMessages objectAtIndex:indexPath.item - 1];
         if (currentMessage.date != nil && previsousMessage.date != nil &&
             [currentMessage.date secondsFrom:previsousMessage.date] >=
             kMessageDisplayTimeGap) {

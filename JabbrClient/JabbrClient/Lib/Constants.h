@@ -89,6 +89,12 @@ typedef NS_ENUM (NSInteger, RoomType) {
     RoomTypeDirect,
 };
 
+typedef NS_ENUM (NSInteger, MessageType) {
+    MessageTypeText,
+    MessageTypeImage,
+    MessageTypeDocument,
+};
+
 + (UIImage *)menuIconImage;
 + (UIImage *)homeImage;
 + (UIImage *)settingsImage;

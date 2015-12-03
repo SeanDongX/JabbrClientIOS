@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "CLAUtility.h"
 #import "AuthManager.h"
+#import "CLAMessageFactory.h"
 
 // Data Model
 #import "CLATeam.h"
@@ -26,6 +27,8 @@
 
 @property(nonatomic, strong) SRHubConnection *connection;
 @property(nonatomic, strong) SRHubProxy *hub;
+
+@property(nonatomic, strong) CLAMessageFactory *messageFactory;
 
 @end
 
@@ -80,6 +83,7 @@ static bool isFirstAccess = YES;
     self = [super init];
     self.dataRepository = [[CLAInMemoryDataRepository alloc] init];
     [self setupActicityTimer];
+    self.messageFactory = [[CLAMessageFactory alloc] init];
     return self;
 }
 
@@ -344,38 +348,7 @@ static bool isFirstAccess = YES;
 }
 
 - (CLAMessage *)getMessageFromRawData:(NSDictionary *)messageDictionary {
-    NSString *userName = @"Unknown";
-    NSString *userInitials = @"Unknown";
-    
-    NSDictionary *userData = [messageDictionary objectForKey:@"User"];
-    
-    NSString *dateString = [messageDictionary objectForKey:@"When"];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-    // Always use this locale when parsing fixed format date strings
-    NSLocale *posix = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    [formatter setLocale:posix];
-    NSDate *date = [formatter dateFromString:dateString];
-    
-    if (userData) {
-        if ([userData objectForKey:@"Name"]) {
-            userName = [[userData objectForKey:@"Name"] lowercaseString];
-            userInitials = userName;
-        }
-        
-        if ([userData objectForKey:@"Initials"]) {
-            userInitials = [userData objectForKey:@"Initials"];
-        }
-    }
-    
-    NSString *oId = [messageDictionary objectForKey:@"Id"];
-    
-    return [[CLAMessage alloc]
-            initWithOId:oId
-            SenderId:userName
-            senderDisplayName:userInitials
-            date:date
-            text:[messageDictionary objectForKey:@"Content"]];
+    return [self.messageFactory create:messageDictionary];
 }
 
 - (void)setTyping:(NSArray *)data {

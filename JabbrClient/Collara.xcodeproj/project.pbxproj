@@ -33,6 +33,7 @@
 		14805B781B298C9C007ACBE2 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */; };
 		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
 		149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149718551ADABFE400785D11 /* CLAPadBaseViewController.m */; };
+		1498579D1C0FA9D2001D0A18 /* CLAMessageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498579C1C0FA9D2001D0A18 /* CLAMessageFactory.m */; };
 		149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */; };
 		14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A836021AD177E4001F33E4 /* SlidingViewController.m */; };
 		14B515741ABF138A0000CC4F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515731ABF138A0000CC4F /* main.m */; };
@@ -129,6 +130,8 @@
 		14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DocumentThread+Category.m"; path = "JabbrClient/DataModel/DocumentThread+Category.m"; sourceTree = SOURCE_ROOT; };
 		149718541ADABFE400785D11 /* CLAPadBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAPadBaseViewController.h; sourceTree = "<group>"; };
 		149718551ADABFE400785D11 /* CLAPadBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAPadBaseViewController.m; sourceTree = "<group>"; };
+		1498579B1C0FA9D2001D0A18 /* CLAMessageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMessageFactory.h; path = Message/CLAMessageFactory.h; sourceTree = "<group>"; };
+		1498579C1C0FA9D2001D0A18 /* CLAMessageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMessageFactory.m; path = Message/CLAMessageFactory.m; sourceTree = "<group>"; };
 		149F99361AC4D0A200525EA7 /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
 		149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		14A836011AD177E4001F33E4 /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingViewController.h; sourceTree = "<group>"; };
@@ -279,6 +282,15 @@
 			name = External;
 			sourceTree = "<group>";
 		};
+		1498579A1C0FA92F001D0A18 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				1498579B1C0FA9D2001D0A18 /* CLAMessageFactory.h */,
+				1498579C1C0FA9D2001D0A18 /* CLAMessageFactory.m */,
+			);
+			name = Message;
+			sourceTree = "<group>";
+		};
 		149F99311AC4D07000525EA7 /* Menus */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +343,7 @@
 				14E637341B472ECC000A802C /* CoreData */,
 				14679E931AC8832900316C9C /* DataModel */,
 				14BEBC3C1AF2E63600F2470C /* ViewModel */,
+				1498579A1C0FA92F001D0A18 /* Message */,
 				1419E8E31B1E26CB0057CAC5 /* Repository */,
 				14F8677C1B020C5D00CF751F /* CustomControl */,
 				149F994A1AC4D0FD00525EA7 /* StoryBoards */,
@@ -707,6 +720,7 @@
 				14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */,
 				14BE49C61B039D5C005C04E9 /* CLAHomeTopicViewController.m in Sources */,
 				142FFA6B1AFD4B3C0076DB6E /* CLAUtility.m in Sources */,
+				1498579D1C0FA9D2001D0A18 /* CLAMessageFactory.m in Sources */,
 				1413226B1B3A17ED008659BD /* CLATopicInfoViewController.m in Sources */,
 				1463CB061AF955AD00BC2513 /* CLACreateTeamViewController.m in Sources */,
 				14D905211B1BB98400B6DF63 /* CLAHomeMasterViewController.m in Sources */,

@@ -7,9 +7,6 @@
 //
 
 #import "CLAMessageFactory.h"
-#import "Constants.h"
-#import "JSQPhotoMediaItem.h"
-#import <SDWebImage/SDWebImageManager.h>
 
 @implementation CLAMessageFactory
 
@@ -44,62 +41,12 @@
     NSString *oId = [messageDictionary objectForKey:@"Id"];
     NSString *text = [messageDictionary objectForKey:@"Content"];
     
-    id mediaData = [self getMessageData:text];
-    
-    if (mediaData != nil) {
-        return [[CLAMessage alloc]
-                initWithOId:oId
-                SenderId:userName
-                senderDisplayName:userInitials
-                date:date
-                media:mediaData];
-    }
-    
     return [[CLAMessage alloc]
             initWithOId:oId
             SenderId:userName
             senderDisplayName:userInitials
             date:date
             text:text];
-}
-
-#pragma mark -
-#pragma mark - Private Methods
-
-- (MessageType)getMessageType:(NSString *)text {
-    NSPredicate *textTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"https?:\\/\\/.*\\.(?:png|jpg)"];
-    
-    if ([textTest evaluateWithObject:text]) {
-        return MessageTypeImage;
-    }
-    
-    return MessageTypeText;
-}
-
-- (id<JSQMessageMediaData>)getMessageData:(NSString *)messageText {
-    switch ([self getMessageType:messageText]) {
-        case MessageTypeImage:
-            return [self getImage:messageText];
-        default:
-            return nil;
-    }
-}
-
-- (id<JSQMessageMediaData>)getImage:(NSString *)messageText {
-    JSQPhotoMediaItem *mediaData = [[JSQPhotoMediaItem alloc] initWithImage:nil];
-    
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:messageText]
-                                                    options:0
-                                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                                       // progression tracking code
-                                                   }
-                                                  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                                                      if (image) {
-                                                          mediaData.image = image;
-                                                      }
-                                                  }];
-    
-    return mediaData;
 }
 
 @end

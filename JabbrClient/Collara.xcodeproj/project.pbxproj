@@ -34,6 +34,7 @@
 		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
 		149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149718551ADABFE400785D11 /* CLAPadBaseViewController.m */; };
 		1498579D1C0FA9D2001D0A18 /* CLAMessageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498579C1C0FA9D2001D0A18 /* CLAMessageFactory.m */; };
+		149857A01C11083A001D0A18 /* CLADisplayMessageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498579F1C11083A001D0A18 /* CLADisplayMessageFactory.m */; };
 		149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */; };
 		14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A836021AD177E4001F33E4 /* SlidingViewController.m */; };
 		14B515741ABF138A0000CC4F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515731ABF138A0000CC4F /* main.m */; };
@@ -132,6 +133,8 @@
 		149718551ADABFE400785D11 /* CLAPadBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAPadBaseViewController.m; sourceTree = "<group>"; };
 		1498579B1C0FA9D2001D0A18 /* CLAMessageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMessageFactory.h; path = Message/CLAMessageFactory.h; sourceTree = "<group>"; };
 		1498579C1C0FA9D2001D0A18 /* CLAMessageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMessageFactory.m; path = Message/CLAMessageFactory.m; sourceTree = "<group>"; };
+		1498579E1C11083A001D0A18 /* CLADisplayMessageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLADisplayMessageFactory.h; path = Message/CLADisplayMessageFactory.h; sourceTree = "<group>"; };
+		1498579F1C11083A001D0A18 /* CLADisplayMessageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLADisplayMessageFactory.m; path = Message/CLADisplayMessageFactory.m; sourceTree = "<group>"; };
 		149F99361AC4D0A200525EA7 /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
 		149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		14A836011AD177E4001F33E4 /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingViewController.h; sourceTree = "<group>"; };
@@ -285,6 +288,8 @@
 		1498579A1C0FA92F001D0A18 /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				1498579E1C11083A001D0A18 /* CLADisplayMessageFactory.h */,
+				1498579F1C11083A001D0A18 /* CLADisplayMessageFactory.m */,
 				1498579B1C0FA9D2001D0A18 /* CLAMessageFactory.h */,
 				1498579C1C0FA9D2001D0A18 /* CLAMessageFactory.m */,
 			);
@@ -700,6 +705,7 @@
 				1463CB0A1AF95D0A00BC2513 /* CLANotificationManager.m in Sources */,
 				14F5B5CC1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m in Sources */,
 				14BD95131B474131001051E5 /* CLANotification.m in Sources */,
+				149857A01C11083A001D0A18 /* CLADisplayMessageFactory.m in Sources */,
 				144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,
 				14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */,

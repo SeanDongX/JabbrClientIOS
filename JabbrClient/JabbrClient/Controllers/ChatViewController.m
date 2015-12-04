@@ -17,6 +17,7 @@
 #import "CLAUtility.h"
 #import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
+#import "CLADisplayMessageFactory.h"
 
 // Data Model
 #import "CLATeam.h"
@@ -43,6 +44,8 @@
 
 @property(nonatomic, strong) CLASignalRMessageClient *messageClient;
 
+@property(nonatomic, strong) CLADisplayMessageFactory *displayMessageFactory;
+
 @property(nonatomic, strong) JSQMessagesBubbleImage *incomingBubbleImageView;
 @property(nonatomic, strong) JSQMessagesBubbleImage *outgoingBubbleImageView;
 
@@ -64,6 +67,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.displayMessageFactory = [[CLADisplayMessageFactory alloc] init];
     [self initMenu];
     [self configJSQMessage];
     
@@ -213,7 +217,25 @@
 }
 
 - (NSMutableArray<CLAMessage> *)getCurrentRoomMessages {
-    return [self getMessagesForRoom:self.room.name];
+    NSMutableArray<CLAMessage> *messages = [self getMessagesForRoom:self.room.name];
+    if (messages == nil)
+    {
+        return nil;
+    }
+    
+    __weak __typeof(&*self) weakSelf = self;
+    
+    for (NSInteger i = 0; i< messages.count; i++)  {
+        
+        CLAMessage *message = [self.displayMessageFactory create:[messages objectAtIndex:i]
+                                               completionHandler:^() {
+                                                   [weakSelf.collectionView reloadData];
+                                               }];
+        
+        [messages setObject:message atIndexedSubscript:i];
+    }
+    
+    return messages;
 }
 
 - (NSMutableArray<CLAMessage> *)getMessagesForRoom:(NSString *)roomName {
@@ -275,8 +297,7 @@
 #pragma mark -
 #pragma mark - JSQMessages CollectionView DataSource
 
-- (CLAMessage *)collectionView:(JSQMessagesCollectionView *)collectionView
- messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CLAMessage *)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray<CLAMessage> *messages = [self getCurrentRoomMessages];
     if (messages == nil || messages.count < indexPath.item + 1) {
         return nil;

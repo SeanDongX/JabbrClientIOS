@@ -270,6 +270,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     else {
         [[CLASignalRMessageClient sharedInstance] joinRoom:selectedRoom.name];
+        [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

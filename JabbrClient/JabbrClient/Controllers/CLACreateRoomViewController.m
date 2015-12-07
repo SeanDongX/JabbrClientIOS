@@ -164,10 +164,9 @@
     [messageClient createRoomWithType:roomType
                                  name:name
                       completionBlock:^(NSError *error) {
+                          __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+                          
                           if (error == nil) {
-                              __strong __typeof(&*weakSelf) strongSelf = weakSelf;
-                              
-                              [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
                               [strongSelf dismissViewControllerAnimated:YES completion:nil];
                           } else {
                               
@@ -177,7 +176,7 @@
                               
                               if (errorDescription != nil && errorDescription.length > 0) {
                                   [CLANotificationManager showText:errorDescription
-                                                 forViewController:self
+                                                 forViewController:strongSelf
                                                           withType:CLANotificationTypeError];
                               } else {
                                   [CLANotificationManager
@@ -185,12 +184,12 @@
                                                               @"wrong. Let's try "
                                                               @"it again.",
                                                               nil)
-                                   forViewController:self
+                                   forViewController:strongSelf
                                    withType:CLANotificationTypeError];
                               }
                           }
                           
-                          [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                          [MBProgressHUD hideAllHUDsForView:strongSelf.view animated:YES];
                           
                       }];
 }

@@ -172,9 +172,6 @@
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
     self.showLoadEarlierMessagesHeader = YES;
     
-    // TODO:show and implement attachment functionality
-    self.inputToolbar.contentView.leftBarButtonItem = nil;
-    
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero;
     
     JSQMessagesBubbleImageFactory *bubbleImageFactory =
@@ -278,7 +275,13 @@
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
-    // TODO:implement
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Take Photo", @"Use Last Photo", @"Choose From Library", nil];
+    
+    [actionSheet showInView:self.view];
 }
 
 - (void)setupOutgoingTypingEventHandler {
@@ -755,6 +758,13 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     SlidingViewController *slidingViewController =
     (SlidingViewController *)self.slidingViewController;
     [slidingViewController switchToCreateTeamView];
+}
+
+#pragma mark -
+#pragma mark Action Sheet Delegate Methods
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"%ld", buttonIndex);
 }
 
 #pragma mark -

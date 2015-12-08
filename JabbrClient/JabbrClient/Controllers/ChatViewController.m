@@ -18,6 +18,7 @@
 #import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
 #import "CLADisplayMessageFactory.h"
+#import "CLAMediaManager.h"
 
 // Data Model
 #import "CLATeam.h"
@@ -31,6 +32,7 @@
 #import "LeftMenuViewController.h"
 #import "CLACreateTeamViewController.h"
 #import "CLATopicInfoViewController.h"
+
 
 @interface ChatViewController ()
 
@@ -765,6 +767,24 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSLog(@"%ld", buttonIndex);
+    if (buttonIndex == 0) {
+        [CLAMediaManager presentPhotoCamera:self canEdit: YES];
+    } else if (buttonIndex == 2) {
+        [CLAMediaManager presentPhotoLibrary:self canEdit:YES];
+    } else if (buttonIndex == 1) {
+        
+    }
+    
+}
+
+
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSURL *video = info[UIImagePickerControllerMediaURL];
+    UIImage *picture = info[UIImagePickerControllerEditedImage];
+    //[self messageSend:nil Video:video Picture:picture Audio:nil];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -

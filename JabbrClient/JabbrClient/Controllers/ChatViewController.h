@@ -16,7 +16,7 @@
 #import "CLARoom.h"
 
 @interface ChatViewController
-: JSQMessagesViewController <CLAMessageClientDelegate, UIActionSheetDelegate>
+: JSQMessagesViewController <CLAMessageClientDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate>
 
 - (void)setActiveRoom:(CLARoom *)room;
 - (void)didReceiveTeams:(NSArray *)userTeams;

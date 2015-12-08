@@ -10,6 +10,7 @@
 		1404B5361AF118BB00363178 /* CLASignalRMessageClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */; };
 		14076F061B4DD05E00240794 /* CLANotificationContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14076F051B4DD05E00240794 /* CLANotificationContentViewController.m */; };
 		1413226B1B3A17ED008659BD /* CLATopicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1413226A1B3A17ED008659BD /* CLATopicInfoViewController.m */; };
+		14190E0B1C176630000861F2 /* CLAMediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 14190E0A1C176630000861F2 /* CLAMediaManager.m */; };
 		1419E8E91B1E271C0057CAC5 /* CLAInMemoryDataRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */; };
 		142046431AD1EC91006143D5 /* AuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* AuthManager.m */; };
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
@@ -82,6 +83,8 @@
 		14076F051B4DD05E00240794 /* CLANotificationContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLANotificationContentViewController.m; sourceTree = "<group>"; };
 		141322691B3A17ED008659BD /* CLATopicInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLATopicInfoViewController.h; sourceTree = "<group>"; };
 		1413226A1B3A17ED008659BD /* CLATopicInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLATopicInfoViewController.m; sourceTree = "<group>"; };
+		14190E091C176630000861F2 /* CLAMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMediaManager.h; path = Lib/CLAMediaManager.h; sourceTree = "<group>"; };
+		14190E0A1C176630000861F2 /* CLAMediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMediaManager.m; path = Lib/CLAMediaManager.m; sourceTree = "<group>"; };
 		1419E8E41B1E26ED0057CAC5 /* CLADataRepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLADataRepositoryProtocol.h; path = Repository/CLADataRepositoryProtocol.h; sourceTree = "<group>"; };
 		1419E8E71B1E271C0057CAC5 /* CLAInMemoryDataRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAInMemoryDataRepository.h; path = Repository/CLAInMemoryDataRepository.h; sourceTree = "<group>"; };
 		1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAInMemoryDataRepository.m; path = Repository/CLAInMemoryDataRepository.m; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 				14F5B5C71B2CD710005FDCC3 /* CLAPushNotificationService.h */,
 				14F5B5CA1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.h */,
 				14F5B5CB1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m */,
+				14190E091C176630000861F2 /* CLAMediaManager.h */,
+				14190E0A1C176630000861F2 /* CLAMediaManager.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -746,6 +751,7 @@
 				14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */,
 				146C9BAD1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m in Sources */,
 				14F8677F1B020D2A00CF751F /* CLARoundFrameButton.m in Sources */,
+				14190E0B1C176630000861F2 /* CLAMediaManager.m in Sources */,
 				14E637371B472EFA000A802C /* AppModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

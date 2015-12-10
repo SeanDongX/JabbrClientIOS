@@ -8,6 +8,8 @@
 
 #import "ChatViewController.h"
 
+#import <AssetsLibrary/AssetsLibrary.h>
+
 // Util
 #import "AuthManager.h"
 #import "ObjectThread.h"
@@ -19,6 +21,7 @@
 #import "CLANotificationManager.h"
 #import "CLADisplayMessageFactory.h"
 #import "CLAMediaManager.h"
+#import "CLAWebApiClient.h"
 
 // Data Model
 #import "CLATeam.h"
@@ -774,17 +777,43 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     } else if (buttonIndex == 1) {
         
     }
-    
 }
 
 
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSURL *video = info[UIImagePickerControllerMediaURL];
-    UIImage *picture = info[UIImagePickerControllerEditedImage];
-    //[self messageSend:nil Video:video Picture:picture Audio:nil];
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    //__weak __typeof(&*self) weakSelf = self;
+    [[[ALAssetsLibrary alloc] init] assetForURL:[info valueForKey:UIImagePickerControllerReferenceURL]
+                                    resultBlock:^(ALAsset *imageAsset) {
+                                        UIImage *image = info[UIImagePickerControllerEditedImage];
+                                        ALAssetRepresentation *imageRep = [imageAsset defaultRepresentation];
+                                        [[CLAWebApiClient sharedInstance] uploadImage:image
+                                                                            imageName:[imageRep filename]
+                                                                             fromRoom:self.room.name
+                                                                              success:^(id responseObject) {
+                                                                                  [picker dismissViewControllerAnimated: YES completion: nil];
+                                                                                  //TODO:scroll to lastest message
+                                                                              } failure:^(NSError *error) {
+                                                                                  [CLANotificationManager
+                                                                                   showText:
+                                                                                   NSLocalizedString(
+                                                                                                     @"Image upload failed.",
+                                                                                                     nil)
+                                                                                   forViewController:picker
+                                                                                   withType:CLANotificationTypeError];
+                                                                              }];
+                                    }
+                                   failureBlock:^(NSError *error) {
+                                       [CLANotificationManager
+                                        showText:
+                                        NSLocalizedString(
+                                                          @"Image upload failed.",
+                                                          nil)
+                                        forViewController:picker
+                                        withType:CLANotificationTypeError];
+                                   }];
+    
 }
 
 #pragma mark -

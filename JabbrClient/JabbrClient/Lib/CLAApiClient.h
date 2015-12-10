@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "CLAUserRegistrationViewModel.h"
 #import "CLANotificationMessage.h"
 
@@ -36,4 +37,11 @@ completionHandler:(void (^)(NSString *errorMessage))completion;
 - (void)setRead:(CLANotificationMessage *)notification
      completion:(void (^)(NSArray *result, NSString *errorMessage))completion;
 - (void)setBadge:(NSNumber *)count forTeam:(NSNumber *)teamKey;
+
+- (void)uploadImage:(UIImage *)image
+          imageName:(NSString *)imageName
+           fromRoom:(NSString *)roomName
+            success:(void (^)(id responseObject))success
+            failure:(void (^)(NSError *error))failure;
+
 @end

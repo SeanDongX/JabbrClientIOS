@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface CLAUtility : NSObject
 
@@ -16,4 +17,8 @@ caseInsensitiveEqualTo:(NSString *)secondString;
 
 + (id)getUserDefault:(NSString *)key;
 + (void)setUserDefault:(id)value forKey:(NSString *)key;
+
++ (NSString *)getUrlString:(UIImage *)image;
++ (NSDictionary *)getImagePostData:(UIImage *)image imageName:(NSString *)imageName fromRoom:(NSString *)roomName;
+
 @end

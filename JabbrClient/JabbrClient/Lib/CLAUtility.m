@@ -8,6 +8,10 @@
 
 #import "CLAUtility.h"
 
+
+#import "Constants.h"
+#import "AuthManager.h"
+
 @implementation CLAUtility
 
 + (BOOL)isValidEmail:(NSString *)email {
@@ -39,4 +43,19 @@ caseInsensitiveEqualTo:(NSString *)secondString {
     [defaults synchronize];
 }
 
++ (NSString *)getUrlString:(UIImage *)image {
+    return [NSString stringWithFormat:@"data:%@;base64,%@",
+            kMimeTypeJpeg,
+            [UIImagePNGRepresentation(image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
+}
+
++ (NSDictionary *)getImagePostData:(UIImage *)image imageName:(NSString *)imageName fromRoom:(NSString *)roomName {
+    NSDictionary *dictionary = @{ kFileUploadFile : [CLAUtility getUrlString:image],
+                                  kFileUploadFileName : imageName,
+                                  kFileUploadType : kMimeTypeJpeg,
+                                  kTeamKey : [CLAUtility getUserDefault:kTeamKey],
+                                  kFileUploadRoom: roomName};
+    
+    return dictionary;
+}
 @end

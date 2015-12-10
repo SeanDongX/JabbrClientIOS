@@ -14,6 +14,7 @@
 #import "AuthManager.h"
 #import "Constants.h"
 #import "CLAAzureHubPushNotificationService.h"
+#import "CLAUtility.h"
 
 @interface CLAWebApiClient ()
 
@@ -324,6 +325,36 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
                              NSLog(@"Set badge faield with error: %@",
                                    [self getResponseErrorMessage:error]);
                          }];
+}
+
+- (void)uploadImage:(UIImage *)image
+          imageName:(NSString *)imageName
+           fromRoom:(NSString *)roomName
+            success:(void (^)(id responseObject))success
+            failure:(void (^)(NSError *error))failure
+{
+    NSArray *urlArray = @[kServerBaseUrl,
+                          kFileUploadPath,
+                          @"/?token=",
+                          [self getToken]
+                          ];
+    
+    NSString *requestUrl = [urlArray componentsJoinedByString: @""];
+    
+    NSDictionary *parameters = [CLAUtility getImagePostData: image imageName: imageName fromRoom: roomName];
+    
+    AFHTTPRequestOperationManager *connectionManager = [AFHTTPRequestOperationManager manager];
+    //Use http serializer instead of json serilaizer in self.connectionManager
+    connectionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    [connectionManager POST: requestUrl
+                 parameters: parameters
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        success(responseObject);
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        failure(error);
+                    }];
 }
 
 #pragma mark -

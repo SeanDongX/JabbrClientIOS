@@ -21,7 +21,7 @@ NSString *const kAzureNotificationHubConnectionString =
 
 #if TARGET_IPHONE_SIMULATOR
 
-NSString *const kServerBaseUrl = @"http://192.168.1.53:16207/";
+NSString *const kServerBaseUrl = @"http://192.168.1.56:16207/";
 #else
 
 NSString *const kServerBaseUrl = @"http://test.collara.co/";
@@ -107,6 +107,13 @@ int const kLoadEarlierMessageCount = 50;
 
 NSString *const kLastRefreshTime = @"LastRefreshTimeKey";
 NSTimeInterval const minRefreshLoadTime = 3;
+
+NSString *const kFileUploadPath = @"upload-file";
+NSString *const kFileUploadFile = @"file";
+NSString *const kFileUploadType = @"type";
+NSString *const kFileUploadRoom = @"room";
+NSString *const kFileUploadFileName = @"filename";
+NSString *const kMimeTypeJpeg = @"image/jpeg";
 
 + (UIImage *)menuIconImage {
     FAKIonIcons *iccon = [FAKIonIcons naviconIconWithSize:30];

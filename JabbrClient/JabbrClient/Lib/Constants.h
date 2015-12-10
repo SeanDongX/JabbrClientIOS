@@ -83,6 +83,13 @@ FOUNDATION_EXPORT int const kLoadEarlierMessageCount;
 FOUNDATION_EXPORT NSString *const kLastRefreshTime;
 FOUNDATION_EXPORT NSTimeInterval const minRefreshLoadTime;
 
+FOUNDATION_EXPORT NSString *const kFileUploadPath;
+FOUNDATION_EXPORT NSString *const kFileUploadFile;
+FOUNDATION_EXPORT NSString *const kFileUploadType;
+FOUNDATION_EXPORT NSString *const kFileUploadRoom;
+FOUNDATION_EXPORT NSString *const kFileUploadFileName;
+FOUNDATION_EXPORT NSString *const kMimeTypeJpeg;
+
 typedef NS_ENUM (NSInteger, RoomType) {
     RoomTypePulbic,
     RoomTypePrivate,

@@ -128,9 +128,7 @@
     BOOL animated =
     secondApart > -1 * kMessageLoadAnimateTimeThreshold ? TRUE : FALSE;
     
-    // TODO: also show messages of the same user from other client in current
-    // thread
-    if (![self isCurrentUser:message.senderId] && [self isCUrrentRoom:room]) {
+    if ([self isCUrrentRoom:room]) {
         [self finishReceivingMessageAnimated:animated];
     }
     

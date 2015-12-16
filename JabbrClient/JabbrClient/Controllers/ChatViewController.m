@@ -8,8 +8,6 @@
 
 #import "ChatViewController.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
-
 // Util
 #import "AuthManager.h"
 #import "ObjectThread.h"
@@ -783,37 +781,32 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    //__weak __typeof(&*self) weakSelf = self;
-    [[[ALAssetsLibrary alloc] init] assetForURL:[info valueForKey:UIImagePickerControllerReferenceURL]
-                                    resultBlock:^(ALAsset *imageAsset) {
-                                        UIImage *image = info[UIImagePickerControllerEditedImage];
-                                        ALAssetRepresentation *imageRep = [imageAsset defaultRepresentation];
-                                        [[CLAWebApiClient sharedInstance] uploadImage:image
-                                                                            imageName:[imageRep filename]
-                                                                             fromRoom:self.room.name
-                                                                              success:^(id responseObject) {
-                                                                                  [picker dismissViewControllerAnimated: YES completion: nil];
-                                                                                  //TODO:scroll to lastest message
-                                                                              } failure:^(NSError *error) {
-                                                                                  [CLANotificationManager
-                                                                                   showText:
-                                                                                   NSLocalizedString(
-                                                                                                     @"Image upload failed.",
-                                                                                                     nil)
-                                                                                   forViewController:picker
-                                                                                   withType:CLANotificationTypeError];
-                                                                              }];
-                                    }
-                                   failureBlock:^(NSError *error) {
-                                       [CLANotificationManager
-                                        showText:
-                                        NSLocalizedString(
-                                                          @"Image upload failed.",
-                                                          nil)
-                                        forViewController:picker
-                                        withType:CLANotificationTypeError];
-                                   }];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"yyyy_MM_dd_hh_mm_ss"];
+    NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [dateFormatter stringFromDate:[NSDate date]]];
     
+    UIImage *image = nil;
+    image = info[UIImagePickerControllerEditedImage];
+    [picker dismissViewControllerAnimated: YES completion: nil];
+    [self showHud];
+    
+    __weak __typeof(&*self) weakSelf = self;
+    [[CLAWebApiClient sharedInstance] uploadImage:image
+                                        imageName:imageName
+                                         fromRoom:self.room.name
+                                          success:^(id responseObject) {
+                                              [weakSelf hideHud];
+                                              [weakSelf scrollToBottomAnimated:YES];
+                                          } failure:^(NSError *error) {
+                                              [weakSelf hideHud];
+                                              [CLANotificationManager
+                                               showText:
+                                               NSLocalizedString(
+                                                                 @"Upload failed",
+                                                                 nil)
+                                               forViewController:weakSelf
+                                               withType:CLANotificationTypeError];
+                                          }];
 }
 
 #pragma mark -

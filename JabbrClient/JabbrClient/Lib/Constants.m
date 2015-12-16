@@ -24,7 +24,8 @@ NSString *const kAzureNotificationHubConnectionString =
 NSString *const kServerBaseUrl = @"http://192.168.1.56:16207/";
 #else
 
-NSString *const kServerBaseUrl = @"http://test.collara.co/";
+NSString *const kServerBaseUrl = @"http://192.168.1.56:16207/";
+//NSString *const kServerBaseUrl = @"http://test.collara.co/";
 #endif
 
 #else

@@ -341,7 +341,7 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
     
     NSString *requestUrl = [urlArray componentsJoinedByString: @""];
     
-    NSDictionary *parameters = [CLAUtility getImagePostData: image imageName: imageName fromRoom: roomName];
+    NSDictionary *parameters = [CLAUtility getImagePostData:image imageName:imageName fromRoom:roomName];
     
     AFHTTPRequestOperationManager *connectionManager = [AFHTTPRequestOperationManager manager];
     //Use http serializer instead of json serilaizer in self.connectionManager

@@ -165,4 +165,11 @@ GENERICSABLE(CLAMessage)
                        date:(NSDate *)date
                       media:(id<JSQMessageMediaData>)media;
 
+
+- (instancetype)initWithOId:(NSString *)oId
+                   SenderId:(NSString *)senderId
+          senderDisplayName:(NSString *)senderDisplayName
+                       date:(NSDate *)date
+                      media:(id<JSQMessageMediaData>)media
+                       text:(NSString *)text;
 @end

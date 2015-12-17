@@ -125,8 +125,7 @@
     
     NSInteger secondApart = [message.date secondsFrom:[NSDate date]];
     
-    BOOL animated =
-    secondApart > -1 * kMessageLoadAnimateTimeThreshold ? TRUE : FALSE;
+    BOOL animated = secondApart > -1 * kMessageLoadAnimateTimeThreshold ? TRUE : FALSE;
     
     if ([self isCUrrentRoom:room]) {
         [self finishReceivingMessageAnimated:animated];
@@ -332,9 +331,7 @@ collectionView
     return self.incomingBubbleImageView;
 }
 
-- (id<JSQMessageAvatarImageDataSource>)collectionView:
-(JSQMessagesCollectionView *)
-collectionView
+- (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
                     avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     CLAMessage *message =
@@ -347,8 +344,7 @@ collectionView
             diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
 }
 
-- (NSAttributedString *)collectionView:
-(JSQMessagesCollectionView *)collectionView
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView
 attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     NSDate *displayDate = [self getMessageDisplayDateAt:indexPath];
     
@@ -360,8 +356,7 @@ attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
             attributedTimestampForDate:displayDate];
 }
 
-- (NSAttributedString *)collectionView:
-(JSQMessagesCollectionView *)collectionView
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView
 attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     CLAMessage *message =
     [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
@@ -387,8 +382,7 @@ attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     return [[NSAttributedString alloc] initWithString:message.senderId];
 }
 
-- (NSAttributedString *)collectionView:
-(JSQMessagesCollectionView *)collectionView
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView
 attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
     return nil;
 }
@@ -400,8 +394,7 @@ attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
     return [[self getCurrentRoomMessages] count];
 }
 
-- (UICollectionViewCell *)collectionView:
-(JSQMessagesCollectionView *)collectionView
+- (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     /**
      *  Override point for customizing cells
@@ -451,8 +444,7 @@ attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Adjusting cell label heights
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)
-collectionViewLayout
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout
 heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     
     NSDate *displayDate = [self getMessageDisplayDateAt:indexPath];
@@ -464,10 +456,8 @@ heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     return kJSQMessagesCollectionViewCellLabelHeightDefault;
 }
 
-- (CGFloat)collectionView:
-(JSQMessagesCollectionView *)
-collectionView layout:(JSQMessagesCollectionViewFlowLayout *)
-collectionViewLayout
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout
 heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     /**
      *  iOS7-style sender name labels
@@ -496,8 +486,7 @@ heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
-                   layout:(JSQMessagesCollectionViewFlowLayout *)
-collectionViewLayout
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout
 heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
     return 0.0f;
 }
@@ -506,8 +495,7 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Responding to collection view tap events
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
-                header:
-(JSQMessagesLoadEarlierHeaderView *)headerView
+                header:(JSQMessagesLoadEarlierHeaderView *)headerView
 didTapLoadEarlierMessagesButton:(UIButton *)sender {
     NSMutableArray<CLAMessage> *roomMessages = [self getCurrentRoomMessages];
     
@@ -529,6 +517,12 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender {
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
 didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
+    CLAMessage *message = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
+    
+    if (message != nil && [CLADisplayMessageFactory getMessageType:message.text] != MessageTypeText) {
+        NSLog(@"Show preview here");
+    }
+    
     NSLog(@"Tapped message bubble!");
 }
 
@@ -767,7 +761,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSLog(@"%ld", buttonIndex);
     if (buttonIndex == 0) {
-        [CLAMediaManager presentPhotoCamera:self canEdit: YES];
+        [CLAMediaManager presentPhotoCamera:self canEdit:YES];
     } else if (buttonIndex == 2) {
         [CLAMediaManager presentPhotoLibrary:self canEdit:YES];
     } else if (buttonIndex == 1) {
@@ -775,13 +769,12 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat: @"yyyy_MM_dd_hh_mm_ss"];
-    NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [dateFormatter stringFromDate:[NSDate date]]];
+    NSString *imageName = [NSString stringWithFormat:@"%@.JPG", [dateFormatter stringFromDate:[NSDate date]]];
     
     UIImage *image = nil;
     image = info[UIImagePickerControllerEditedImage];

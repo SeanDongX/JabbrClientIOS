@@ -84,6 +84,27 @@
                    SenderId:(NSString *)senderId
           senderDisplayName:(NSString *)senderDisplayName
                        date:(NSDate *)date
+                      media:(id<JSQMessageMediaData>)media
+                       text:(NSString *)text {
+    NSParameterAssert(media != nil);
+    
+    self = [self initWithOId:oId
+                    SenderId:senderId
+           senderDisplayName:senderDisplayName
+                        date:date
+                       media:media];
+    if (self) {
+        //TODO:set text without dead loop
+        //_text = text;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithOId:(NSString *)oId
+                   SenderId:(NSString *)senderId
+          senderDisplayName:(NSString *)senderDisplayName
+                       date:(NSDate *)date
                     isMedia:(BOOL)isMedia {
     NSParameterAssert(oId != nil);
     NSParameterAssert(senderId != nil);

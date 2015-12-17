@@ -4,6 +4,7 @@
 target 'Collara' do
   platform :ios, '8.0'
   pod 'FontAwesomeKit/IonIcons'
+  pod 'FontAwesomeKit/FontAwesome'
   pod 'DateTools'
   pod 'NJKWebViewProgress'
   pod 'JSQMessagesViewController'

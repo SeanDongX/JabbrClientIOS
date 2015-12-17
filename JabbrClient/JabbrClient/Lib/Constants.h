@@ -113,6 +113,7 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIImage *)signOutImage;
 + (UIImage *)topicSettingIcon;
 + (UIImage *)unreadIcon;
++ (UIImage *)documentIconLarge;
 
 + (UIColor *)mainThemeColor;
 + (UIColor *)tableHeaderColor;

@@ -8,6 +8,7 @@
 
 #import "Constants.h"
 #import <FontAwesomeKit/FAKIonIcons.h>
+#import <FontAwesomeKit/FAKFontAwesome.h>
 
 @implementation Constants
 
@@ -191,6 +192,13 @@ NSString *const kMimeTypeJpeg = @"image/jpeg";
     [iccon addAttribute:NSForegroundColorAttributeName
                   value:[Constants highlightColor]];
     return [iccon imageWithSize:CGSizeMake(10, 10)];
+}
+
++ (UIImage *)documentIconLarge {
+    FAKFontAwesome *iccon = [FAKFontAwesome fileTextIconWithSize:100];
+    [iccon addAttribute:NSForegroundColorAttributeName
+                  value:[Constants highlightColor]];
+    return [iccon imageWithSize:CGSizeMake(210, 150)];
 }
 
 + (UIColor *)mainThemeColor {

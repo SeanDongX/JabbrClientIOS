@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CLAMessage.h"
 
 @interface CLAMediaManager : NSObject
 
 
-+ (BOOL) presentPhotoCamera:(UIViewController *)target canEdit:(BOOL)canEdit;
-+ (BOOL) presentPhotoLibrary:(UIViewController *)target canEdit:(BOOL)canEdit;
++ (BOOL) presentPhotoCamera:(id)target canEdit:(BOOL)canEdit;
++ (BOOL) presentPhotoLibrary:(id)target canEdit:(BOOL)canEdit;
 
++ (void) openMediaMessage:(CLAMessage *)message from:(id)target;
 @end

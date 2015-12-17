@@ -519,11 +519,9 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender {
 didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     CLAMessage *message = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     
-    if (message != nil && [CLADisplayMessageFactory getMessageType:message.text] != MessageTypeText) {
-        NSLog(@"Show preview here");
+    if (message != nil) {
+        [CLAMediaManager openMediaMessage:message from:self];
     }
-    
-    NSLog(@"Tapped message bubble!");
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView

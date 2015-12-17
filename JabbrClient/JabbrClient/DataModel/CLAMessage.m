@@ -94,8 +94,7 @@
                         date:date
                        media:media];
     if (self) {
-        //TODO:set text without dead loop
-        //_text = text;
+        _mediaUrl = text;
     }
     
     return self;

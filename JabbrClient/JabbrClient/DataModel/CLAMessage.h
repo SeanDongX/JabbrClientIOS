@@ -27,8 +27,7 @@ GENERICSABLE(CLAMessage)
  * also contains a media attachment,
  *  otherwise it contains the message text.
  */
-@interface CLAMessage
-: NSObject <JSQMessageData, NSCoding, NSCopying, CLAMessage>
+@interface CLAMessage : NSObject <JSQMessageData, NSCoding, NSCopying, CLAMessage>
 
 @property(copy, nonatomic) NSString *oId;
 
@@ -71,6 +70,8 @@ GENERICSABLE(CLAMessage)
  *  That is, if `isMediaMessage` is equal to `NO` then this value will be `nil`.
  */
 @property(copy, nonatomic, readonly) id<JSQMessageMediaData> media;
+
+@property(copy, nonatomic, readonly) NSString *mediaUrl;
 
 #pragma mark - Initialization
 

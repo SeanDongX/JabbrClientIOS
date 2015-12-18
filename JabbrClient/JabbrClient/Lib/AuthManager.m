@@ -89,6 +89,27 @@
     [self clearCache];
 }
 
+- (void)cacheTaskServiceAuthInfo:(NSDictionary *)data {
+    [self cacheObject:[data objectForKey:kTaskUsername] forKey:kTaskUsername];
+    [self cacheObject:[data objectForKey:kTaskUserId] forKey:kTaskUserId];
+    [self cacheObject:[data objectForKey:kTaskAuthToken] forKey:kTaskAuthToken];
+    [self cacheObject:[data objectForKey:kTaskAuthExpire] forKey:kTaskAuthExpire];
+}
+
+- (NSString *)getTaskAuthFrameUrl {
+    NSArray *array = @[
+                       kTaskServiceRootUrl,
+                       kTaskAuthPagePath,
+                       @"?userId=",
+                       [self getCachedObjectForKey:kTaskUserId],
+                       @"&token=",
+                       [self getCachedObjectForKey:kTaskAuthToken],
+                       @"&expires=",
+                       [self getCachedObjectForKey:kTaskAuthExpire],
+                       ];
+    return [[array componentsJoinedByString:@""] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+
 #pragma mark -
 #pragma Private Methods
 

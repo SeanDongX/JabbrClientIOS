@@ -14,6 +14,10 @@
 FOUNDATION_EXPORT NSString *const kServerBaseUrl;
 FOUNDATION_EXPORT NSString *const kApiPath;
 
+FOUNDATION_EXPORT NSString *const kTaskServiceRootUrl;
+FOUNDATION_EXPORT NSString *const kTaskAuthPagePath;
+
+
 FOUNDATION_EXPORT NSString *const kForgotPasswordPath;
 
 FOUNDATION_EXPORT NSString *const kAuzreNotificationHubName;
@@ -53,6 +57,11 @@ FOUNDATION_EXPORT NSString *const kLastAuthDate;
 FOUNDATION_EXPORT NSString *const kTeamKey;
 FOUNDATION_EXPORT NSString *const kDeviceToken;
 FOUNDATION_EXPORT NSString *const kInviteCode;
+
+FOUNDATION_EXPORT NSString *const kTaskUsername;
+FOUNDATION_EXPORT NSString *const kTaskUserId;
+FOUNDATION_EXPORT NSString *const kTaskAuthToken;
+FOUNDATION_EXPORT NSString *const kTaskAuthExpire;
 
 FOUNDATION_EXPORT NSString *const kMessageId;
 FOUNDATION_EXPORT NSString *const kRoomName;

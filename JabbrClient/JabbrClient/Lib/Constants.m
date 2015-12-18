@@ -14,24 +14,25 @@
 
 #ifdef DEBUG
 
+//NSString *const kServerBaseUrl = @"http://192.168.1.56:16207/";
+NSString *const kServerBaseUrl = @"http://test.collara.co/";
+NSString *const kTaskServiceRootUrl = @"http://task.collara.co/";
+
 NSString *const kAuzreNotificationHubName = @"collarapush";
 NSString *const kAzureNotificationHubConnectionString =
 @"Endpoint=sb://collarapush.servicebus.windows.net/"
 @";SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey="
 @"PiHeM88D6LWhitL1452bcQ1rEnxzu55R/eVbKseOhos=";
 
-#if TARGET_IPHONE_SIMULATOR
-
-NSString *const kServerBaseUrl = @"http://192.168.1.56:16207/";
-#else
-
-NSString *const kServerBaseUrl = @"http://192.168.1.56:16207/";
-//NSString *const kServerBaseUrl = @"http://test.collara.co/";
-#endif
-
 #else
 
 NSString *const kServerBaseUrl = @"http://www.collara.co/";
+NSString *const kTaskServiceRootUrl = @"http://task.collara.co/";
+
+FOUNDATION_EXPORT NSString *const kTaskServiceRootUrl;
+FOUNDATION_EXPORT NSString *const kTaskAuthPagePath;
+
+
 NSString *const kAuzreNotificationHubName = @"collarapushprod";
 NSString *const kAzureNotificationHubConnectionString =
 @"Endpoint=sb://collarapush.servicebus.windows.net/"
@@ -40,7 +41,10 @@ NSString *const kAzureNotificationHubConnectionString =
 
 #endif
 
+
 NSString *const kApiPath = @"api/v1/";
+
+NSString *const kTaskAuthPagePath = @"authframe.html";
 
 NSString *const kForgotPasswordPath = @"account/requestresetpassword/";
 
@@ -67,8 +71,7 @@ NSString *const kRightMenuViewController = @"RightMenuViewController";
 NSString *const kCreateTeamViewController = @"CreateTeamViewController";
 NSString *const kCreateRoomViewController = @"CreateRoomViewController";
 
-NSString *const kNotificationContentViewController =
-@"NotificationContentViewController";
+NSString *const kNotificationContentViewController = @"NotificationContentViewController";
 
 NSString *const kUserPrefix = @"@";
 NSString *const kRoomPrefix = @"#";
@@ -80,6 +83,11 @@ NSString *const kLastAuthDate = @"LastAuthDate";
 NSString *const kTeamKey = @"TeamKey";
 NSString *const kDeviceToken = @"DeviceToken";
 NSString *const kInviteCode = @"InviteCode";
+
+NSString *const kTaskUsername = @"username";
+NSString *const kTaskUserId = @"userId";
+NSString *const kTaskAuthToken = @"token";
+NSString *const kTaskAuthExpire = @"expires";
 
 NSString *const kMessageId = @"MessageIdKey";
 NSString *const kRoomName = @"RoomNameKey";

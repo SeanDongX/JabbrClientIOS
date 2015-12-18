@@ -20,6 +20,7 @@
 		142BC9621B2CF25300E995D0 /* DemoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 142BC9611B2CF25300E995D0 /* DemoData.m */; };
 		142FFA6B1AFD4B3C0076DB6E /* CLAUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FFA6A1AFD4B3C0076DB6E /* CLAUtility.m */; };
 		1430E00C1AF6DFF300F2D974 /* CLARoomViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */; };
+		1433D8D81C24AD7900DE4F33 /* CLATaskWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1433D8D71C24AD7900DE4F33 /* CLATaskWebViewController.m */; };
 		144D9EE91AF03528005EBAD2 /* CLATeam.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EE81AF03528005EBAD2 /* CLATeam.m */; };
 		144D9EEC1AF035D6005EBAD2 /* CLARoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEB1AF035D6005EBAD2 /* CLARoom.m */; };
 		144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D9EEE1AF03668005EBAD2 /* CLAUser.m */; };
@@ -107,6 +108,8 @@
 		142FFA6A1AFD4B3C0076DB6E /* CLAUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAUtility.m; path = Lib/CLAUtility.m; sourceTree = "<group>"; };
 		1430E00A1AF6DFF300F2D974 /* CLARoomViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoomViewModel.h; path = ViewModel/CLARoomViewModel.h; sourceTree = "<group>"; };
 		1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARoomViewModel.m; path = ViewModel/CLARoomViewModel.m; sourceTree = "<group>"; };
+		1433D8D61C24AD7900DE4F33 /* CLATaskWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLATaskWebViewController.h; sourceTree = "<group>"; };
+		1433D8D71C24AD7900DE4F33 /* CLATaskWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLATaskWebViewController.m; sourceTree = "<group>"; };
 		144D9EE71AF03528005EBAD2 /* CLATeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATeam.h; path = JabbrClient/DataModel/CLATeam.h; sourceTree = SOURCE_ROOT; };
 		144D9EE81AF03528005EBAD2 /* CLATeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLATeam.m; path = JabbrClient/DataModel/CLATeam.m; sourceTree = SOURCE_ROOT; };
 		144D9EEA1AF035D6005EBAD2 /* CLARoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoom.h; path = JabbrClient/DataModel/CLARoom.h; sourceTree = SOURCE_ROOT; };
@@ -425,6 +428,8 @@
 				1413226A1B3A17ED008659BD /* CLATopicInfoViewController.m */,
 				14076F041B4DD05E00240794 /* CLANotificationContentViewController.h */,
 				14076F051B4DD05E00240794 /* CLANotificationContentViewController.m */,
+				1433D8D61C24AD7900DE4F33 /* CLATaskWebViewController.h */,
+				1433D8D71C24AD7900DE4F33 /* CLATaskWebViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -710,6 +715,7 @@
 				1463CB0A1AF95D0A00BC2513 /* CLANotificationManager.m in Sources */,
 				14F5B5CC1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m in Sources */,
 				14BD95131B474131001051E5 /* CLANotification.m in Sources */,
+				1433D8D81C24AD7900DE4F33 /* CLATaskWebViewController.m in Sources */,
 				149857A01C11083A001D0A18 /* CLADisplayMessageFactory.m in Sources */,
 				144D9EEF1AF03668005EBAD2 /* CLAUser.m in Sources */,
 				14B515AF1ABF14C90000CC4F /* AppDelegate.m in Sources */,

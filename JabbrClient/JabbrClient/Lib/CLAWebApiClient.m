@@ -113,6 +113,7 @@ static bool isFirstAccess = YES;
                                  [[AuthManager sharedInstance] cacheAuthToken:token];
                                  [[AuthManager sharedInstance]
                                   cacheUsername:userRegistrationModel.username];
+                                 [self cacheTaskServiceToken];
                              }
                              
                              completion(message);
@@ -147,6 +148,8 @@ static bool isFirstAccess = YES;
                                  [[AuthManager sharedInstance] cacheAuthToken:token];
                                  [[AuthManager sharedInstance] cacheUsername:username];
                                  [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
+                                 [self cacheTaskServiceToken];
+                                 
                                  NSLog(@"Received and cached username %@ and token %@", username,
                                        token);
                              }
@@ -388,4 +391,24 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
     return errorMessage;
 }
 
+- (void)cacheTaskServiceToken {
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"tasks/token/?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager GET:requestUrl
+                     parameters:nil
+                        success:^(AFHTTPRequestOperation *operation,
+                                  NSDictionary *responseObject) {
+                            [[AuthManager sharedInstance] cacheTaskServiceAuthInfo:responseObject];
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            NSLog(@"Request task token failed: %@",
+                                  [self getResponseErrorMessage:error]);
+                        }];
+}
 @end

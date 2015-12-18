@@ -23,4 +23,7 @@
 - (void)cacheAuthToken:(NSString *)authToken;
 - (void)cacheUsername:(NSString *)username;
 - (void)cacheDeviceToken:(NSData *)deviceToken;
+- (void)cacheTaskServiceAuthInfo:(NSDictionary *)data;
+- (NSString *)getTaskAuthFrameUrl;
+
 @end

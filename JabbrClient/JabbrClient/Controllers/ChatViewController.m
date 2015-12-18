@@ -15,7 +15,6 @@
 #import "DateTools.h"
 #import "MBProgressHUD.h"
 #import "CLAUtility.h"
-#import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
 #import "CLADisplayMessageFactory.h"
 #import "CLAMediaManager.h"
@@ -33,6 +32,7 @@
 #import "LeftMenuViewController.h"
 #import "CLACreateTeamViewController.h"
 #import "CLATopicInfoViewController.h"
+#import "CLATaskWebViewController.h"
 
 
 @interface ChatViewController ()
@@ -742,9 +742,14 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark View Controller Event Handlers
 
 - (void)showChatInfoView {
-    CLATopicInfoViewController *topicInfoView =
-    [[CLATopicInfoViewController alloc] initWithRoom:self.roomViewModel];
-    [self.navigationController pushViewController:topicInfoView animated:YES];
+    //    CLATopicInfoViewController *topicInfoView =
+    //    [[CLATopicInfoViewController alloc] initWithRoom:self.roomViewModel];
+    //    [self.navigationController pushViewController:topicInfoView animated:YES];
+    //
+    
+    CLATaskWebViewController *taskView = [[CLATaskWebViewController alloc] init];
+    taskView.roomName = self.room.name;
+    [self.navigationController pushViewController:taskView animated:YES];
 }
 
 - (void)showCreateTeamView {

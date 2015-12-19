@@ -282,7 +282,7 @@
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Take Photo", @"Use Last Photo", @"Choose From Library", nil];
+                                                    otherButtonTitles:@"Take Photo", @"Choose From Library", nil];
     
     [actionSheet showInView:self.view];
 }
@@ -772,10 +772,8 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"%ld", buttonIndex);
     if (buttonIndex == 0) {
         [CLAMediaManager presentPhotoCamera:self canEdit:YES];
-    } else if (buttonIndex == 2) {
-        [CLAMediaManager presentPhotoLibrary:self canEdit:YES];
     } else if (buttonIndex == 1) {
-        
+        [CLAMediaManager presentPhotoLibrary:self canEdit:YES];
     }
 }
 

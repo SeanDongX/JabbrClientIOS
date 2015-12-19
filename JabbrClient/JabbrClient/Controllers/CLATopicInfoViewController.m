@@ -50,11 +50,6 @@ NSString *const kTextLabelColor = @"textLabel.color";
     [self setupView];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    // Cautional refresh in case leaving topic or invited users
-    [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-}
-
 - (void)setupView {
     self.tableView.backgroundColor = [Constants backgroundColor];
     [self setupNavBar];

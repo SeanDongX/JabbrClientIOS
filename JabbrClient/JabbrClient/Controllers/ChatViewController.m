@@ -52,6 +52,8 @@
 @property(nonatomic, strong) JSQMessagesBubbleImage *incomingBubbleImageView;
 @property(nonatomic, strong) JSQMessagesBubbleImage *outgoingBubbleImageView;
 
+@property(nonatomic, strong) CLATaskWebViewController *taskViewController;
+
 @end
 
 @implementation ChatViewController
@@ -161,7 +163,8 @@
     [self.rightMenuButton setWidth:30];
     [self.rightMenuButton setImage:[Constants topicSettingIcon]];
     self.rightMenuButton.target = self;
-    self.rightMenuButton.action = @selector(showChatInfoView);
+    self.rightMenuButton.action = @selector(showTaskView);
+    //self.rightMenuButton.action = @selector(showChatInfoView);
 }
 
 #pragma mark -
@@ -742,20 +745,24 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark View Controller Event Handlers
 
 - (void)showChatInfoView {
-    //    CLATopicInfoViewController *topicInfoView =
-    //    [[CLATopicInfoViewController alloc] initWithRoom:self.roomViewModel];
-    //    [self.navigationController pushViewController:topicInfoView animated:YES];
-    //
-    
-    CLATaskWebViewController *taskView = [[CLATaskWebViewController alloc] init];
-    taskView.roomName = self.room.name;
-    [self.navigationController pushViewController:taskView animated:YES];
+    CLATopicInfoViewController *topicInfoView =
+    [[CLATopicInfoViewController alloc] initWithRoom:self.roomViewModel];
+    [self.navigationController pushViewController:topicInfoView animated:YES];
 }
 
 - (void)showCreateTeamView {
     SlidingViewController *slidingViewController =
     (SlidingViewController *)self.slidingViewController;
     [slidingViewController switchToCreateTeamView];
+}
+
+- (void)showTaskView {
+    if (self.taskViewController == nil) {
+        self.taskViewController = [[CLATaskWebViewController alloc] init];
+    }
+    
+    self.taskViewController.roomName = self.room.name;
+    [self.navigationController pushViewController:self.taskViewController animated:YES];
 }
 
 #pragma mark -

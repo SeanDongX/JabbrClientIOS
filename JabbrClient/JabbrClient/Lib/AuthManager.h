@@ -18,10 +18,12 @@
 
 - (NSString *)getCachedAuthToken;
 - (NSString *)getUsername;
+- (NSString *)getTeamName;
 - (NSData *)getCachedDeviceToken;
 
 - (void)cacheAuthToken:(NSString *)authToken;
 - (void)cacheUsername:(NSString *)username;
+- (void)cacheTeamName:(NSString *)teamName;
 - (void)cacheDeviceToken:(NSData *)deviceToken;
 - (void)cacheTaskServiceAuthInfo:(NSDictionary *)data;
 - (NSString *)getTaskAuthFrameUrl;

@@ -29,6 +29,7 @@
 
 // Custom Controls
 #import "BOZPongRefreshControl.h"
+#import "CLATaskWebViewController.h"
 
 @interface CLAHomeMemberViewController ()
 
@@ -89,6 +90,8 @@
 - (void)updateTeam:(NSNotification *)notification {
     CLATeamViewModel *teamViewModel =
     [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
+    
+    [[AuthManager sharedInstance] cacheTeamName: teamViewModel.team.name];
     
     if (teamViewModel != nil) {
         [self updateTeamMembers:teamViewModel.users];

@@ -21,7 +21,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupNavBar];
     [self initWebView];
+}
+
+- (void)setupNavBar {
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)initWebView {
@@ -59,8 +65,8 @@
 }
 
 - (NSURLRequest *)getBoardRequest {
-    //TODO: team name
-    NSArray *array = @[kTaskServiceRootUrl, @"redirect/b/", @"awesome", @"/", self.roomName];
+    NSString *teamName = [[AuthManager sharedInstance] getTeamName];
+    NSArray *array = @[kTaskServiceRootUrl, @"redirect/b/", teamName, @"/", self.roomName];
     //Task board needs lower case url for board name
     return [NSURLRequest requestWithURL:[NSURL URLWithString:[array componentsJoinedByString:@""].lowercaseString]];
 }

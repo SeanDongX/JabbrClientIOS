@@ -63,8 +63,16 @@
     [self cacheObject:username forKey:kUsername];
 }
 
+- (void)cacheTeamName:(NSString *)teamName {
+    [self cacheObject:teamName forKey:kTeamName];
+}
+
 - (NSString *)getUsername {
     return (NSString *)[self getCachedObjectForKey:kUsername];
+}
+
+- (NSString *)getTeamName {
+    return (NSString *)[self getCachedObjectForKey:kTeamName];
 }
 
 - (NSData *)getCachedDeviceToken {

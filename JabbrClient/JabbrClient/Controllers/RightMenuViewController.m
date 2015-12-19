@@ -13,6 +13,8 @@
 #import "DocumentThread+Category.h"
 #import "Constants.h"
 #import "SlidingViewController.h"
+#import "CLATaskWebViewController.h"
+#import "ChatViewController.h"
 
 static NSString *const kDoc = @"doc";
 
@@ -31,39 +33,44 @@ static NSString *const kDoc = @"doc";
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.view endEditing:YES];
+    [self.tableView reloadData];
 }
 
-#pragma mark - Properties
-
-- (NSArray *)documentThreads {
-    return [DemoData sharedDemoData].documentThreads;
-}
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-    
-    return self.documentThreads.count;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     static NSString *CellIdentifier = @"MenuCell";
     UITableViewCell *cell =
     [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    DocumentThread *documentThread = self.documentThreads[indexPath.row];
-    
-    cell.textLabel.text = [documentThread getDisplayTitle];
-    
     cell.textLabel.textColor = [UIColor whiteColor];
     [cell setBackgroundColor:[UIColor clearColor]];
     
     UIView *backgroundView = [UIView new];
     backgroundView.backgroundColor = [Constants mainThemeColor];
     cell.selectedBackgroundView = backgroundView;
+    
+    switch (indexPath.item) {
+        case 0:
+            cell.textLabel.text = NSLocalizedString(@"Tasks", nil);
+            cell.imageView.image = [Constants taskIconImage];
+            break;
+            
+        case 1:
+            cell.textLabel.text = NSLocalizedString(@"Topic Settings", nil);
+            cell.imageView.image = [Constants infoIconImage];
+            break;
+            
+        default:
+            break;
+    }
     
     return cell;
 }
@@ -76,19 +83,22 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UINavigationController *navController =
     [((SlidingViewController *)self.slidingViewController)
      setTopNavigationControllerWithKeyIdentifier:
-     kDocumentNavigationController];
+     kChatNavigationController];
     
-    DocumentViewController *documentViewController =
-    [navController.viewControllers objectAtIndex:0];
+    ChatViewController *chatViewController = (ChatViewController *)[navController.viewControllers objectAtIndex:0];
     
-    if (documentViewController != nil) {
-        [documentViewController
-         loadDocumentThread:self.documentThreads[indexPath.row]];
+    if (chatViewController != nil) {
+        [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+        
+        if (indexPath.item == 0) {
+            [chatViewController showTaskView];
+        }
+        else {
+            [chatViewController showInfoView];
+        }
+        
+        [self.slidingViewController resetTopViewAnimated:YES];
     }
-    
-    [navController.view
-     addGestureRecognizer:self.slidingViewController.panGesture];
-    [self.slidingViewController resetTopViewAnimated:YES];
 }
 
 @end

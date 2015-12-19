@@ -50,8 +50,6 @@ NSString *const kForgotPasswordPath = @"account/requestresetpassword/";
 
 NSTimeInterval const kMessageClientReconnectInterval = 5.0;
 
-BOOL const kFSDocumentEnabled = NO;
-
 NSString *const kMainStoryBoard = @"Main";
 
 NSString *const kHomeNavigationController = @"HomeNavigationController";
@@ -189,8 +187,15 @@ NSString *const kMimeTypeJpeg = @"image/jpeg";
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
-+ (UIImage *)topicSettingIcon {
-    FAKIonIcons *iccon = [FAKIonIcons iosSettingsIconWithSize:30];
++ (UIImage *)optionsIconImage {
+    FAKIonIcons *iccon = [FAKIonIcons iosMoreOutlineIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName
+                  value:[UIColor whiteColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
+}
+
++ (UIImage *)taskIconImage {
+    FAKFontAwesome *iccon = [FAKFontAwesome tasksIconWithSize:25];
     [iccon addAttribute:NSForegroundColorAttributeName
                   value:[UIColor whiteColor]];
     return [iccon imageWithSize:CGSizeMake(30, 30)];

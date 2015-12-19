@@ -25,8 +25,6 @@ FOUNDATION_EXPORT NSString *const kAzureNotificationHubConnectionString;
 
 FOUNDATION_EXPORT NSTimeInterval const kMessageClientReconnectInterval;
 
-FOUNDATION_EXPORT BOOL const kFSDocumentEnabled;
-
 FOUNDATION_EXPORT NSString *const kMainStoryBoard;
 
 FOUNDATION_EXPORT NSString *const kHomeNavigationController;
@@ -36,6 +34,7 @@ FOUNDATION_EXPORT NSString *const kHomeMemberViewController;
 FOUNDATION_EXPORT NSString *const kChatNavigationController;
 FOUNDATION_EXPORT NSString *const kSignInNavigationController;
 FOUNDATION_EXPORT NSString *const kSignUpController;
+FOUNDATION_EXPORT NSString *const kTaskNavigationController;
 FOUNDATION_EXPORT NSString *const kProfileNavigationController;
 FOUNDATION_EXPORT NSString *const kDocumentNavigationController;
 
@@ -122,7 +121,8 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIImage *)closeIconImage;
 + (UIImage *)addIconImage;
 + (UIImage *)signOutImage;
-+ (UIImage *)topicSettingIcon;
++ (UIImage *)optionsIconImage;
++ (UIImage *)taskIconImage;
 + (UIImage *)unreadIcon;
 + (UIImage *)documentIconLarge;
 

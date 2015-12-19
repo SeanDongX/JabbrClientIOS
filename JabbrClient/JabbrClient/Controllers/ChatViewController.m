@@ -158,13 +158,14 @@
     [self.leftMenuButton setTitle:@""];
     [self.leftMenuButton setWidth:30];
     [self.leftMenuButton setImage:[Constants menuIconImage]];
+    self.leftMenuButton.target = self;
+    self.leftMenuButton.action = @selector(showLeftMenu);
     
     [self.rightMenuButton setTitle:@""];
     [self.rightMenuButton setWidth:30];
-    [self.rightMenuButton setImage:[Constants topicSettingIcon]];
+    [self.rightMenuButton setImage:[Constants optionsIconImage]];
     self.rightMenuButton.target = self;
-    self.rightMenuButton.action = @selector(showTaskView);
-    //self.rightMenuButton.action = @selector(showChatInfoView);
+    self.rightMenuButton.action = @selector(showRightMenu);
 }
 
 #pragma mark -
@@ -258,8 +259,12 @@
 #pragma mark -
 #pragma mark - Navigation
 
-- (IBAction)leftMenuButtonTapped:(id)sender {
+- (void)showLeftMenu {
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
+}
+
+- (void)showRightMenu {
+    [self.slidingViewController anchorTopViewToLeftAnimated:YES];
 }
 
 #pragma mark -
@@ -744,7 +749,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark -
 #pragma mark View Controller Event Handlers
 
-- (void)showChatInfoView {
+- (void)showInfoView {
     CLATopicInfoViewController *topicInfoView =
     [[CLATopicInfoViewController alloc] initWithRoom:self.roomViewModel];
     [self.navigationController pushViewController:topicInfoView animated:YES];

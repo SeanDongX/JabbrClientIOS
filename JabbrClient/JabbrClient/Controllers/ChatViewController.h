@@ -23,4 +23,6 @@
 - (void)didReceiveMessage:(id<JSQMessageData>)message inRoom:(NSString *)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 
+- (void)showTaskView;
+- (void)showInfoView;
 @end

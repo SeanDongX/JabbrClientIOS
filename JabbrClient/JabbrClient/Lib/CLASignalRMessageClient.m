@@ -175,8 +175,8 @@ static bool isFirstAccess = YES;
 #pragma mark SRConnection Delegate
 
 - (void)SRConnectionDidOpen:(SRConnection *)connection {
-    [self.hub invoke:@"Join" withArgs:@[]];
-    self.connected = TRUE;
+    [self invokeHubMethod:@"Join" withArgs:@[] completionHandler:nil];
+    self.connected = YES;
     
     [self invokeGetTeam];
     [self.delegate didOpenConnection];
@@ -193,6 +193,7 @@ static bool isFirstAccess = YES;
 }
 
 - (void)SRConnectionDidClose:(id<SRConnectionInterface>)connection {
+    self.connected = NO;
 }
 
 - (void)SRConnection:(id<SRConnectionInterface>)connection
@@ -205,6 +206,8 @@ static bool isFirstAccess = YES;
     [self.delegate
      didConnectionChnageState:[self translateConnectionState:oldState]
      newState:[self translateConnectionState:newState]];
+    
+    NSLog(@"Connection state changed from %@ to %@", @(oldState), @(newState));
 }
 
 - (void)SRConnectionDidSlow:(id<SRConnectionInterface>)connection {
@@ -234,7 +237,7 @@ static bool isFirstAccess = YES;
 }
 
 - (void)loadRoom:(NSString *)room {
-    [self.hub invoke:@"LoadRooms" withArgs:@[ @[ room ] ]];
+    [self invokeHubMethod:@"LoadRooms" withArgs:@[@[ room ]] completionHandler:nil];
 }
 
 - (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room {
@@ -243,11 +246,11 @@ static bool isFirstAccess = YES;
     
     [messageData setObject:message.text forKey:@"content"];
     [messageData setObject:room forKey:@"room"];
-    [self.hub invoke:@"Send" withArgs:@[ messageData ]];
+    [self invokeHubMethod:@"Send" withArgs:@[ messageData ] completionHandler:nil];
 }
 
 - (void)sendTypingFromUser:(NSString *)user inRoom:(NSString *)room {
-    [self.hub invoke:@"Typing" withArgs:@[ room ]];
+    [self invokeHubMethod:@"Typing" withArgs:@[ room ] completionHandler:nil];
 }
 
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room {
@@ -256,23 +259,23 @@ static bool isFirstAccess = YES;
         return;
     }
     
-    [self.hub invoke:@"GetPreviousMessages"
-            withArgs:@[ messageId ]
-   completionHandler:^(id response, NSError *error) {
-       NSMutableArray *earlierMessageArray = [NSMutableArray array];
-       
-       if (response != nil) {
-           NSArray *messages = response;
-           if (messages != nil && messages.count > 0) {
-               for (NSDictionary *messageDictionary in messages) {
-                   [earlierMessageArray
-                    addObject:[self getMessageFromRawData:messageDictionary]];
-               }
-           }
-       }
-       
-       [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];
-   }];
+    [self invokeHubMethod:@"GetPreviousMessages"
+                 withArgs:@[ messageId ]
+        completionHandler:^(id response, NSError *error) {
+            NSMutableArray *earlierMessageArray = [NSMutableArray array];
+            
+            if (response != nil) {
+                NSArray *messages = response;
+                if (messages != nil && messages.count > 0) {
+                    for (NSDictionary *messageDictionary in messages) {
+                        [earlierMessageArray
+                         addObject:[self getMessageFromRawData:messageDictionary]];
+                    }
+                }
+            }
+            
+            [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];
+        }];
 }
 
 #pragma mark -
@@ -467,15 +470,15 @@ static bool isFirstAccess = YES;
     [messageData setObject:commandText forKey:@"content"];
     [messageData setObject:room forKey:@"room"];
     
-    [self.hub invoke:@"Send"
-            withArgs:@[ messageData ]
-   completionHandler:^(id response, NSError *error) {
-       if (error != nil) {
-           [self errorReceviced:[NSString stringWithFormat: @"Send error for message %@", messageData]];
-           [self reconnect];
-           // TODO:check if there is internet, stop reconnect after a few tries
-       }
-   }];
+    [self invokeHubMethod:@"Send"
+                 withArgs:@[ messageData ]
+        completionHandler:^(id response, NSError *error) {
+            if (error != nil) {
+                [self errorReceviced:[NSString stringWithFormat: @"Send error for message %@", messageData]];
+                [self reconnect];
+                // TODO:check if there is internet, stop reconnect after a few tries
+            }
+        }];
 }
 
 - (void)createRoomWithType: (RoomType)roomType name:(NSString *)roomName
@@ -506,11 +509,11 @@ static bool isFirstAccess = YES;
     [messageData setObject:commandText forKey:@"content"];
     [messageData setObject:@"lobby" forKey:@"room"];
     
-    [self.hub invoke:@"Send"
-            withArgs:@[ messageData ]
-   completionHandler:^(id data, NSError *error) {
-       completion(error);
-   }];
+    [self invokeHubMethod:@"Send"
+                 withArgs:@[ messageData ]
+        completionHandler:^(id data, NSError *error) {
+            completion(error);
+        }];
 }
 
 - (void)inviteUser:(NSString *)username inRoom:(NSString *)room {
@@ -532,25 +535,62 @@ static bool isFirstAccess = YES;
 }
 
 - (void)updateActivity {
-    [self.hub invoke:@"updateActivity" withArgs:@[]];
+    [self invokeHubMethod:@"updateActivity" withArgs:@[] completionHandler:nil];
 }
 
 - (void)invokeGetTeam {
     //Fixme: load team keys when log in and use in args
-    [self.hub invoke:@"GetTeams"
-            withArgs:@[@0]
-   completionHandler:^(id response, NSError *error) {
-       if (error != nil) {
-           [self errorReceviced:@"Loading error"];
-           [self reconnect];
-           // TODO:check if there is internet, stop reconnect after a few tries
-       } else {
-           if (response != nil) {
-               NSArray *rooms = response;
-               [self loadTeamData:response];
-           }
-       }
-   }];
+    [self invokeHubMethod:@"GetTeams"
+                 withArgs:@[@0]
+        completionHandler:^(id response, NSError *error) {
+            if (error != nil) {
+                [self errorReceviced:@"Loading error"];
+                [self reconnect];
+                // TODO:check if there is internet, stop reconnect after a few tries
+            } else {
+                if (response != nil) {
+                    NSArray *rooms = response;
+                    [self loadTeamData:response];
+                }
+            }
+        }];
+}
+
+
+#pragma Private Methods
+
+- (void)invokeHubMethod:(NSString *)method
+               withArgs:(NSArray *)args
+      completionHandler:(void (^)(id response, NSError *error))block {
+    
+    NSInteger retries = 0;
+    NSInteger maxTries = 3;
+    
+    while (true) {
+        @try {
+            if (self.connected) {
+                [self.hub invoke:method withArgs:args completionHandler:block];
+            } else {
+                NSLog(@"Error, connection is not on");
+                block(nil, [[NSError alloc] initWithDomain: @"Collara Connection Error" code: 100 userInfo: nil]);
+            }
+            
+            return;
+        }
+        @catch (NSException *e) {
+            retries++;
+            
+            NSLog(@"Invoke %@ failed for the %d time", method);
+            
+            if (retries >= maxTries) {
+                return;
+            }
+            
+            NSLog(@"Will retry");
+        }
+    }
+    
+    
 }
 
 @end

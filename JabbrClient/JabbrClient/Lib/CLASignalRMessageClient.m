@@ -467,7 +467,15 @@ static bool isFirstAccess = YES;
     [messageData setObject:commandText forKey:@"content"];
     [messageData setObject:room forKey:@"room"];
     
-    [self.hub invoke:@"Send" withArgs:@[ messageData ]];
+    [self.hub invoke:@"Send"
+            withArgs:@[ messageData ]
+   completionHandler:^(id response, NSError *error) {
+       if (error != nil) {
+           [self errorReceviced:[NSString stringWithFormat: @"Send error for message %@", messageData]];
+           [self reconnect];
+           // TODO:check if there is internet, stop reconnect after a few tries
+       }
+   }];
 }
 
 - (void)createRoomWithType: (RoomType)roomType name:(NSString *)roomName

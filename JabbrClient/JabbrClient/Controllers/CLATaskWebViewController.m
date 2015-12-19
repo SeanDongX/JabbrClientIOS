@@ -25,6 +25,16 @@
     [self initWebView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.authorized != YES) {
+        [self loadAuthFrame];
+    } else {
+        [self loadBoard];
+    }
+}
+
 - (void)setupNavBar {
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -38,12 +48,6 @@
     
     self.webView.delegate = self;
     self.webView.scrollView.bounces = NO;
-    
-    if (self.authorized != YES) {
-        [self loadAuthFrame];
-    } else {
-        [self loadBoard];
-    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -51,12 +55,14 @@
         self.authorized = YES;
         [self loadBoard];
     }
-    
     //[self logLocalStorage];
 }
 
 - (void)loadBoard {
-    [self.webView loadRequest:[self getBoardRequest]];
+    NSURL *boardUrl = [self getBoardUrl];
+    if (![self.webView.request.URL.absoluteString isEqualToString: boardUrl.absoluteString]) {
+        [self.webView loadRequest:[NSURLRequest requestWithURL: boardUrl]];
+    }
 }
 
 - (void)loadAuthFrame {
@@ -64,11 +70,12 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:authUrl]];
 }
 
-- (NSURLRequest *)getBoardRequest {
+- (NSURL *)getBoardUrl {
     NSString *teamName = [[AuthManager sharedInstance] getTeamName];
     NSArray *array = @[kTaskServiceRootUrl, @"redirect/b/", teamName, @"/", self.roomName];
     //Task board needs lower case url for board name
-    return [NSURLRequest requestWithURL:[NSURL URLWithString:[array componentsJoinedByString:@""].lowercaseString]];
+    
+    return [NSURL URLWithString:[array componentsJoinedByString:@""].lowercaseString];
 }
 
 - (void)logLocalStorage {

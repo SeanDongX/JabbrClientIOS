@@ -572,7 +572,10 @@ static bool isFirstAccess = YES;
                 [self.hub invoke:method withArgs:args completionHandler:block];
             } else {
                 NSLog(@"Error, connection is not on");
-                block(nil, [[NSError alloc] initWithDomain: @"Collara Connection Error" code: 100 userInfo: nil]);
+                
+                if (block != nil) {
+                    block(nil, [[NSError alloc] initWithDomain: @"Collara Connection Error" code: 100 userInfo: nil]);
+                }
             }
             
             return;

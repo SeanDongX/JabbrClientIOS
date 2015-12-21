@@ -16,7 +16,7 @@
 @interface CLATeamViewModel : NSObject
 
 @property(nonatomic, strong) CLATeam *team;
-@property(nonatomic, strong) NSMutableDictionary *rooms;
+@property(nonatomic, strong) NSMutableDictionary<NSString *, CLARoom *> *rooms;
 @property(nonatomic, strong) NSArray<CLAUser *> *users;
 
 - (NSArray<CLARoom *> *)getJoinedRooms;

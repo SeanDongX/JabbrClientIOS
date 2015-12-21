@@ -98,8 +98,11 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 
 - (void)initDataSource {
     self.dataSource = [[CLATopicDataSource alloc] init];
+    
     self.dataSource.slidingViewController = (SlidingViewController *)self.slidingViewController;
     self.dataSource.tableCellIdentifierName = kLeftMenuViewCellIdentifierName;
+    
+    self.dataSource.rowTextColor = [UIColor whiteColor];
     
     self.tableView.dataSource = self.dataSource;
     self.tableView.delegate = self.dataSource;

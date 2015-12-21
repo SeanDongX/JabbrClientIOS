@@ -21,6 +21,10 @@
 
 @property (nonatomic, strong) NSString *tableCellIdentifierName;
 
+@property (nonatomic, strong) UIColor *sectionHeaderBackgronndColor;
+@property (nonatomic, strong) UIColor *sectionHeaderTextColor;
+@property (nonatomic, strong) UIColor *rowTextColor;
+
 - (NSIndexPath *)getSelectedRoomIndexPath;
 
 - (void)updateRooms:(NSArray<CLARoom *> *)rooms;

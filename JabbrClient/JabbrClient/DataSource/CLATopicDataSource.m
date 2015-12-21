@@ -30,6 +30,9 @@
         self.rooms = [NSArray array];
         self.roomDictionary = [NSMutableDictionary dictionary];
         self.filteredRoomDictionary = [NSMutableDictionary dictionary];
+        self.sectionHeaderBackgronndColor = [Constants backgroundColor];
+        self.sectionHeaderTextColor = [Constants mainThemeContrastColor];
+        self.rowTextColor = [Constants mainThemeContrastColor];
     }
     
     return self;
@@ -145,7 +148,7 @@ viewForHeaderInSection:(NSInteger)section {
                       initWithFrame:CGRectMake(15, 10, frame.size.width - 15 - 60, 30)];
     
     title.text = [self getSectionHeaderString:section];
-    title.textColor = [UIColor whiteColor];
+    title.textColor = self.sectionHeaderTextColor;
     
     UIButton *addButton = [[UIButton alloc]
                            initWithFrame:CGRectMake(frame.size.width - 60, 10, 30, 30)];
@@ -160,7 +163,7 @@ viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc]
                           initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     
-    [headerView setBackgroundColor:[Constants warningColor]];
+    [headerView setBackgroundColor:self.sectionHeaderBackgronndColor];
     
     [headerView addSubview:title];
     [headerView addSubview:addButton];
@@ -182,7 +185,7 @@ viewForHeaderInSection:(NSInteger)section {
     UITableViewCell *cell =
     [tableView dequeueReusableCellWithIdentifier:self.tableCellIdentifierName];
     cell.textLabel.text = [room getHandle];
-    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textColor = self.rowTextColor;
     [cell setBackgroundColor:[UIColor clearColor]];
     UIView *backgroundView = [UIView new];
     backgroundView.backgroundColor = [Constants highlightColor];

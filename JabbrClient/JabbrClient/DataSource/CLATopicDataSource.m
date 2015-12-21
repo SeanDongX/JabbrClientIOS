@@ -335,4 +335,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.slidingViewController resetTopViewAnimated:YES];
 }
 
+- (void)showCreateTopicView: (id)sender {
+    [self.eventDeleage showCreateTopicView:sender];
+}
 @end

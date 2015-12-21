@@ -582,7 +582,7 @@ static bool isFirstAccess = YES;
         @catch (NSException *e) {
             retries++;
             
-            NSLog(@"Invoke %@ failed for the %d time", method);
+            NSLog(@"Invoke %@ failed for the %ld time", method, retries);
             
             if (retries >= maxTries) {
                 return;

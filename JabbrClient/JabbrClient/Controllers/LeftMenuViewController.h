@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CLARoom.h"
+#import "CLATopicDataSourceEventDelegate.h"
 
-@interface LeftMenuViewController : UIViewController <UIScrollViewDelegate, UISearchBarDelegate>
+@interface LeftMenuViewController : UIViewController <UIScrollViewDelegate, UISearchBarDelegate, CLATopicDataSourceEventDelegate>
 
 @property(weak, nonatomic) IBOutlet UITableView *tableView;
 

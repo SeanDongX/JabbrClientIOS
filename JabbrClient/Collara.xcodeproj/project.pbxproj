@@ -165,6 +165,7 @@
 		14B6FB511ACB399400E5B5A5 /* DocumentThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DocumentThread.m; path = JabbrClient/DataModel/DocumentThread.m; sourceTree = SOURCE_ROOT; };
 		14B6FB531ACB4CF500E5B5A5 /* DocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentViewController.h; sourceTree = "<group>"; };
 		14B6FB541ACB4CF500E5B5A5 /* DocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentViewController.m; sourceTree = "<group>"; };
+		14B9BC471C28BB29006DCA0D /* CLATopicDataSourceEventDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATopicDataSourceEventDelegate.h; path = DataSource/CLATopicDataSourceEventDelegate.h; sourceTree = "<group>"; };
 		14BA99091AD317BC00776556 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		14BA990A1AD317BC00776556 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		14BA990C1AD33D1000776556 /* CLAMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMessage.h; path = JabbrClient/DataModel/CLAMessage.h; sourceTree = SOURCE_ROOT; };
@@ -454,6 +455,7 @@
 			children = (
 				14E4C7081C271B7800FC35F9 /* CLATopicDataSource.h */,
 				14E4C7091C271B7800FC35F9 /* CLATopicDataSource.m */,
+				14B9BC471C28BB29006DCA0D /* CLATopicDataSourceEventDelegate.h */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";

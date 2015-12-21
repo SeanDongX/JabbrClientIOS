@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "XLPagerTabStripViewController.h"
+#import "CLATopicDataSourceEventDelegate.h"
 
-@interface CLAHomeTopicViewController : UIViewController <XLPagerTabStripChildItem, UISearchBarDelegate>
+@interface CLAHomeTopicViewController : UIViewController <XLPagerTabStripChildItem, UISearchBarDelegate, CLATopicDataSourceEventDelegate>
 
 @end

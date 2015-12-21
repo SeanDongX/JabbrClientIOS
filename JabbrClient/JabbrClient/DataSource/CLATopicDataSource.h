@@ -11,8 +11,11 @@
 #import "CLARoom.h"
 #import "SlidingViewController.h"
 #import "BOZPongRefreshControl.h"
+#import "CLATopicDataSourceEventDelegate.h"
 
 @interface CLATopicDataSource : NSObject <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, weak) id<CLATopicDataSourceEventDelegate> eventDeleage;
 
 @property (nonatomic) BOOL isFiltered;
 @property (nonatomic, strong) CLARoom *selectedRoom;

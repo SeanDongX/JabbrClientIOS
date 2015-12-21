@@ -82,6 +82,8 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     self.dataSource.slidingViewController = (SlidingViewController *)self.slidingViewController;
     self.dataSource.tableCellIdentifierName = kHomeTopicViewCellIdentifierName;
     
+    self.dataSource.eventDeleage = self;
+    
     self.topicTableView.dataSource = self.dataSource;
     self.topicTableView.delegate = self.dataSource;
     
@@ -177,17 +179,36 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 #pragma mark -
 #pragma mark - Event Handlers
 
-- (void)showCreateTopicView {
+- (void)showCreateTopicView:(id)sender {
+    
     UIStoryboard *storyBoard =
     [UIStoryboard storyboardWithName:kMainStoryBoard bundle:nil];
     
     CLACreateRoomViewController *createRoomViewController = [storyBoard
                                                              instantiateViewControllerWithIdentifier:kCreateRoomViewController];
+    UIButton *senderButton = sender;
+    if (senderButton != nil) {
+        switch (senderButton.tag) {
+            case 0:
+                createRoomViewController.roomType = RoomTypePulbic;
+                break;
+                
+            case 1:
+                createRoomViewController.roomType = RoomTypePrivate;
+                break;
+                
+            case 2:
+                createRoomViewController.roomType = RoomTypeDirect;
+                break;
+            default:
+                break;
+        }
+    }
+    
     [self presentViewController:createRoomViewController
                        animated:YES
                      completion:nil];
 }
-
 #pragma mark -
 #pragma Search Bar Delegate Methods
 

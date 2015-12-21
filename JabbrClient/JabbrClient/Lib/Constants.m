@@ -176,7 +176,7 @@ NSString *const kMimeTypeJpeg = @"image/jpeg";
 + (UIImage *)addIconImage {
     FAKIonIcons *iccon = [FAKIonIcons iosPlusOutlineIconWithSize:30];
     [iccon addAttribute:NSForegroundColorAttributeName
-                  value:[UIColor whiteColor]];
+                  value:[Constants mainThemeContrastColor]];
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 

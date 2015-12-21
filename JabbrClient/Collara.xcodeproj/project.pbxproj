@@ -924,7 +924,7 @@
 					"$(PROJECT_DIR)/JabbrClient/External",
 				);
 				INFOPLIST_FILE = JabbrClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Collara;
 				PROVISIONING_PROFILE = "";
@@ -946,7 +946,7 @@
 					"$(PROJECT_DIR)/JabbrClient/External",
 				);
 				INFOPLIST_FILE = JabbrClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Collara;
 				PROVISIONING_PROFILE = "";

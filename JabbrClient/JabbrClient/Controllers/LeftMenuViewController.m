@@ -11,11 +11,9 @@
 // Util
 #import "Constants.h"
 #import "CLAUtility.h"
-#import "DateTools.h"
 
 // Data Model
 #import "CLATeamViewModel.h"
-#import "CLARoom.h"
 
 // Menu
 #import "UIViewController+ECSlidingViewController.h"
@@ -26,14 +24,13 @@
 
 // Message Client
 #import "CLASignalRMessageClient.h"
-
-// View Controller
-//#import "ChatViewController.h"
 #import "CLACreateRoomViewController.h"
 
 // Custom Controls
 #import "BOZPongRefreshControl.h"
 #import "CLATopicDataSource.h"
+
+NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 
 @interface LeftMenuViewController ()
 
@@ -95,17 +92,19 @@
                            withRefreshTarget:self
                             andRefreshAction:@selector(refreshTriggered)];
     self.pongRefreshControl.backgroundColor = [Constants highlightColor];
+    
+    self.dataSource.pongRefreshControl = self.pongRefreshControl;
 }
 
 - (void)initDataSource {
     self.dataSource = [[CLATopicDataSource alloc] init];
     self.dataSource.slidingViewController = self.slidingViewController;
+    self.dataSource.tableCellIdentifierName = kLeftMenuViewCellIdentifierName;
     
     self.tableView.dataSource = self.dataSource;
     self.tableView.delegate = self.dataSource;
     
     self.searchBar.delegate = self;
-    
 }
 
 - (void)setupMenu {
@@ -222,15 +221,6 @@
     [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
     // team loading finished will be notified through kEventTeamUpdated
     // notification which calls self.updateTeam method
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.pongRefreshControl scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
-                  willDecelerate:(BOOL)decelerate {
-    [self.pongRefreshControl scrollViewDidEndDragging];
 }
 
 - (void)didFinishRefresh {

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CLARoom.h"
 
-@interface LeftMenuViewController : UIViewController <UISearchBarDelegate>
+@interface LeftMenuViewController : UIViewController <UIScrollViewDelegate, UISearchBarDelegate>
 
 @property(weak, nonatomic) IBOutlet UITableView *tableView;
 

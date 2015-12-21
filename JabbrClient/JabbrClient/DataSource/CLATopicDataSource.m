@@ -45,24 +45,25 @@
     return [self getIndexPath:self.selectedRoom];
 }
 
-- (void)updateRooms:(NSArray<CLARoom> *)rooms {
+- (void)updateRooms:(NSArray<CLARoom *> *)rooms {
+    NSArray<CLARoom *> *localRooms = rooms.copy;
     [self.roomDictionary removeAllObjects];
     
     NSPredicate *publicRoomRredicate =
     [NSPredicate predicateWithFormat:@"(isPrivate == %@)", @NO];
     NSArray *publicRooms =
-    [rooms filteredArrayUsingPredicate:publicRoomRredicate];
+    [localRooms filteredArrayUsingPredicate:publicRoomRredicate];
     
     NSPredicate *privateRoomRredicate = [NSPredicate
                                          predicateWithFormat:@"(isPrivate == %@) AND (isDirectRoom == %@)", @YES,
                                          @NO];
     NSArray *privateRooms =
-    [rooms filteredArrayUsingPredicate:privateRoomRredicate];
+    [localRooms filteredArrayUsingPredicate:privateRoomRredicate];
     
     NSPredicate *directRoomRredicate =
     [NSPredicate predicateWithFormat:@"(isDirectRoom == %@)", @YES];
     NSArray *directRooms =
-    [rooms filteredArrayUsingPredicate:directRoomRredicate];
+    [localRooms filteredArrayUsingPredicate:directRoomRredicate];
     
     [self.roomDictionary
      setObject:publicRooms == nil ?[NSArray array] : publicRooms
@@ -76,7 +77,7 @@
     
     [self resetFilter];
     
-    self.rooms = rooms;
+    self.rooms = localRooms;
 }
 
 - (void)setRoom:(NSString *)roomName withUnread:(NSInteger)count {
@@ -179,7 +180,7 @@ viewForHeaderInSection:(NSInteger)section {
     room.unread > 99 ? @"99+" :[@(room.unread)stringValue];
     
     UITableViewCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
+    [tableView dequeueReusableCellWithIdentifier:self.tableCellIdentifierName];
     cell.textLabel.text = [room getHandle];
     cell.textLabel.textColor = [UIColor whiteColor];
     [cell setBackgroundColor:[UIColor clearColor]];
@@ -212,6 +213,18 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         self.selectedRoom = room;
         [self openRoom: room];
     }
+}
+
+#pragma mark -
+#pragma mark - Pull To Resfresh
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.pongRefreshControl scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                  willDecelerate:(BOOL)decelerate {
+    [self.pongRefreshControl scrollViewDidEndDragging];
 }
 
 #pragma -

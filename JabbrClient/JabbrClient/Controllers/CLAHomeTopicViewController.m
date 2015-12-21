@@ -104,9 +104,10 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 - (void)updateTeam:(NSNotification *)notification {
     CLATeamViewModel *teamViewModel =
     [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
+    
     if (teamViewModel != nil) {
         
-        NSMutableArray *roomArray = [[teamViewModel getJoinedRooms] mutableCopy];
+        NSMutableArray *roomArray = [[teamViewModel.rooms allValues] mutableCopy];
         NSSortDescriptor *sortDescriptor =
         [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         [roomArray sortUsingDescriptors:@[ sortDescriptor ]];

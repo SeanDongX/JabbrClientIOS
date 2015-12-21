@@ -58,6 +58,7 @@
 		14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */; };
 		14D905211B1BB98400B6DF63 /* CLAHomeMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */; };
 		14D905241B1BC36200B6DF63 /* CLAHomeMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905231B1BC36200B6DF63 /* CLAHomeMemberViewController.m */; };
+		14E4C70A1C271B7800FC35F9 /* CLATopicDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E4C7091C271B7800FC35F9 /* CLATopicDataSource.m */; };
 		14E637331B472DC6000A802C /* CLAHomeNotificationViiewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E637321B472DC6000A802C /* CLAHomeNotificationViiewController.m */; };
 		14E637371B472EFA000A802C /* AppModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14E637351B472EFA000A802C /* AppModel.xcdatamodeld */; };
 		14F5B5CC1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F5B5CB1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m */; };
@@ -182,6 +183,8 @@
 		14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeMasterViewController.m; sourceTree = "<group>"; };
 		14D905221B1BC36200B6DF63 /* CLAHomeMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeMemberViewController.h; sourceTree = "<group>"; };
 		14D905231B1BC36200B6DF63 /* CLAHomeMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeMemberViewController.m; sourceTree = "<group>"; };
+		14E4C7081C271B7800FC35F9 /* CLATopicDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATopicDataSource.h; path = DataSource/CLATopicDataSource.h; sourceTree = "<group>"; };
+		14E4C7091C271B7800FC35F9 /* CLATopicDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLATopicDataSource.m; path = DataSource/CLATopicDataSource.m; sourceTree = "<group>"; };
 		14E637311B472DC6000A802C /* CLAHomeNotificationViiewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeNotificationViiewController.h; sourceTree = "<group>"; };
 		14E637321B472DC6000A802C /* CLAHomeNotificationViiewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeNotificationViiewController.m; sourceTree = "<group>"; };
 		14E637361B472EFA000A802C /* AppModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppModel.xcdatamodel; sourceTree = "<group>"; };
@@ -361,6 +364,7 @@
 				14F8677C1B020C5D00CF751F /* CustomControl */,
 				149F994A1AC4D0FD00525EA7 /* StoryBoards */,
 				149F99311AC4D07000525EA7 /* Menus */,
+				14E4C7071C271AFA00FC35F9 /* DataSource */,
 				14B515A01ABF14C90000CC4F /* Controllers */,
 				14B515811ABF138A0000CC4F /* Images.xcassets */,
 				14B515831ABF138A0000CC4F /* LaunchScreen.xib */,
@@ -443,6 +447,15 @@
 				1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */,
 			);
 			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		14E4C7071C271AFA00FC35F9 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				14E4C7081C271B7800FC35F9 /* CLATopicDataSource.h */,
+				14E4C7091C271B7800FC35F9 /* CLATopicDataSource.m */,
+			);
+			name = DataSource;
 			sourceTree = "<group>";
 		};
 		14E637341B472ECC000A802C /* CoreData */ = {
@@ -754,6 +767,7 @@
 				146C9BB01AFC199500885F96 /* CLAWebApiClient.m in Sources */,
 				149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */,
 				142BC9621B2CF25300E995D0 /* DemoData.m in Sources */,
+				14E4C70A1C271B7800FC35F9 /* CLATopicDataSource.m in Sources */,
 				14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */,
 				146C9BAD1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m in Sources */,
 				14F8677F1B020D2A00CF751F /* CLARoundFrameButton.m in Sources */,

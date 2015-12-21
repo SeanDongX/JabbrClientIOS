@@ -38,8 +38,8 @@
 
 @property(nonatomic) BOOL isFiltered;
 
-@property(strong, nonatomic) NSArray<CLAUser> *users;
-@property(strong, nonatomic) NSArray<CLAUser> *filteredUsers;
+@property(strong, nonatomic) NSArray<CLAUser *> *users;
+@property(strong, nonatomic) NSArray<CLAUser *> *filteredUsers;
 
 @property(nonatomic, strong) BOZPongRefreshControl *pongRefreshControl;
 @property(nonatomic) BOOL isRefreshing;

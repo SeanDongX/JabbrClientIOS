@@ -219,8 +219,8 @@
             objectForKey:roomName];
 }
 
-- (NSMutableArray<CLAMessage> *)getCurrentRoomMessages {
-    NSMutableArray<CLAMessage> *messages = [self getMessagesForRoom:self.room.name];
+- (NSMutableArray<CLAMessage *> *)getCurrentRoomMessages {
+    NSMutableArray<CLAMessage *> *messages = [self getMessagesForRoom:self.room.name];
     if (messages == nil)
     {
         return nil;
@@ -241,7 +241,7 @@
     return messages;
 }
 
-- (NSMutableArray<CLAMessage> *)getMessagesForRoom:(NSString *)roomName {
+- (NSMutableArray<CLAMessage *> *)getMessagesForRoom:(NSString *)roomName {
     return [self getRoom:roomName].messages;
 }
 
@@ -311,7 +311,7 @@
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (CLAMessage *)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray<CLAMessage> *messages = [self getCurrentRoomMessages];
+    NSArray<CLAMessage *> *messages = [self getCurrentRoomMessages];
     if (messages == nil || messages.count < indexPath.item + 1) {
         return nil;
     }
@@ -473,7 +473,7 @@ heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
      *  iOS7-style sender name labels
      */
     
-    NSArray<CLAMessage> *roomMessages = [self getCurrentRoomMessages];
+    NSArray<CLAMessage *> *roomMessages = [self getCurrentRoomMessages];
     
     if (indexPath.item >= roomMessages.count) {
         return 0.0f;
@@ -507,7 +507,7 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView
 didTapLoadEarlierMessagesButton:(UIButton *)sender {
-    NSMutableArray<CLAMessage> *roomMessages = [self getCurrentRoomMessages];
+    NSMutableArray<CLAMessage *> *roomMessages = [self getCurrentRoomMessages];
     
     if (roomMessages != nil && roomMessages.count > 0) {
         CLAMessage *earliestMessage = [roomMessages objectAtIndex:0];
@@ -590,13 +590,13 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     self.roomViewModel.users = users;
 }
 
-- (void)didLoadEarlierMessages:(NSArray<CLAMessage> *)earlierMessages
+- (void)didLoadEarlierMessages:(NSArray<CLAMessage *> *)earlierMessages
                         inRoom:(NSString *)room {
     NSInteger earlierMessageCount = earlierMessages.count;
     
     self.showLoadEarlierMessagesHeader =
     earlierMessageCount >= kLoadEarlierMessageCount;
-    NSArray<CLAMessage> *currentMessages = [self getMessagesForRoom:room];
+    NSArray<CLAMessage *> *currentMessages = [self getMessagesForRoom:room];
     
     if (room == nil || earlierMessages == nil || earlierMessageCount == 0) {
         [self hideHud];
@@ -848,7 +848,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSDate *)getMessageDisplayDateAt:(NSIndexPath *)indexPath {
-    NSArray<CLAMessage> *roomeMessages = [self getCurrentRoomMessages];
+    NSArray<CLAMessage *> *roomeMessages = [self getCurrentRoomMessages];
     
     if (indexPath.item >= roomeMessages.count)
     {

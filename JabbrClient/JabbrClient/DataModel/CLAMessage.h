@@ -8,13 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-// Util
-#import "ObjectiveCGenerics.h"
-
-// JSQ
 #import "JSQMessageData.h"
 
-GENERICSABLE(CLAMessage)
 
 /**
  *  The `CLAMessage` class is a concrete class for message model objects that
@@ -27,7 +22,7 @@ GENERICSABLE(CLAMessage)
  * also contains a media attachment,
  *  otherwise it contains the message text.
  */
-@interface CLAMessage : NSObject <JSQMessageData, NSCoding, NSCopying, CLAMessage>
+@interface CLAMessage : NSObject <JSQMessageData, NSCoding, NSCopying>
 
 @property(copy, nonatomic) NSString *oId;
 

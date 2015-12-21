@@ -25,8 +25,8 @@
 
 @property(nonatomic) BOOL isFiltered;
 
-@property (strong, nonatomic) NSMutableArray<CLARoom> *tableItems;
-@property (strong, nonatomic) NSMutableArray<CLARoom> *filteredtableItems;
+@property (strong, nonatomic) NSMutableArray<CLARoom *> *tableItems;
+@property (strong, nonatomic) NSMutableArray<CLARoom *> *filteredtableItems;
 
 @end
 
@@ -113,7 +113,7 @@
 }
 
 - (void)setupData {
-    NSArray<CLARoom> *notJoinedRooms = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] getNotJoinedRooms];
+    NSArray<CLARoom *> *notJoinedRooms = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] getNotJoinedRooms];
     
     self.tableItems = [NSMutableArray array];
     self.filteredtableItems = [NSMutableArray array];

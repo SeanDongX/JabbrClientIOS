@@ -13,7 +13,7 @@
 
 - (CLATeamViewModel *)get:(NSString *)name;
 - (CLATeamViewModel *)getDefaultTeam;
-- (NSArray<CLATeamViewModel> *)getTeams;
+- (NSArray<CLATeamViewModel *> *)getTeams;
 - (void)addOrUpdateTeam:(CLATeamViewModel *)team;
 - (void)deleteData;
 

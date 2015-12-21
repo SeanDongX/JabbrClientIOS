@@ -117,7 +117,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     [self didFinishRefresh];
 }
 
-- (void)updateRooms:(NSArray<CLARoom> *)rooms {
+- (void)updateRooms:(NSArray<CLARoom *> *)rooms {
     [self.dataSource updateRooms:rooms];
     [self.topicTableView reloadData];
 }

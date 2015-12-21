@@ -67,10 +67,10 @@ NSString *const kTextLabelColor = @"textLabel.color";
     XLFormSectionDescriptor *section;
     XLFormRowDescriptor *row;
     
-    NSArray<CLAUser> *allUsers =
+    NSArray<CLAUser *> *allUsers =
     [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam]
     .users;
-    NSMutableArray<CLAUser> *notMembers = [NSMutableArray array];
+    NSMutableArray<CLAUser *> *notMembers = [NSMutableArray array];
     [notMembers addObjectsFromArray:allUsers];
     
     section = [XLFormSectionDescriptor

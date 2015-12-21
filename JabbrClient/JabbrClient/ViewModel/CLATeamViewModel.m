@@ -11,7 +11,7 @@
 
 @implementation CLATeamViewModel
 
-- (NSArray<CLARoom> *)getJoinedRooms {
+- (NSArray<CLARoom *> *)getJoinedRooms {
     NSMutableArray *roomArray = [NSMutableArray array];
     for (CLARoom *room in [self.rooms allValues]) {
         if (room.closed == false && room.users != nil && room.users.count > 0) {
@@ -27,7 +27,7 @@
     return roomArray;
 }
 
-- (NSArray<CLARoom> *)getNotJoinedRooms {
+- (NSArray<CLARoom *> *)getNotJoinedRooms {
     NSMutableArray *roomArray = [NSMutableArray array];
     for (CLARoom *room in [self.rooms allValues]) {
         if (room.closed == true || room.users == nil || room.users.count == 0 || room.isDirectRoom != NO) {
@@ -84,7 +84,7 @@
                     room.users = @[];
                 }
                 
-                NSMutableArray<CLAUser> *copyUsers = [room.users mutableCopy];
+                NSMutableArray<CLAUser *> *copyUsers = [room.users mutableCopy];
                 [copyUsers addObject:newUser];
                 room.users = copyUsers;
             }
@@ -113,7 +113,7 @@
         }
     }
     
-    NSMutableArray<CLAUser> *userArray = [NSMutableArray array];
+    NSMutableArray<CLAUser *> *userArray = [NSMutableArray array];
     NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"Users"];
     if (userArrayFromDictionary != nil && userArrayFromDictionary.count > 0) {
         

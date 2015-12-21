@@ -10,7 +10,7 @@
 @interface CLAInMemoryDataRepository ()
 
 @property(nonatomic, strong)
-NSMutableArray<CLATeamViewModel> *teamViewModelArray;
+NSMutableArray<CLATeamViewModel *> *teamViewModelArray;
 
 @end
 
@@ -36,7 +36,7 @@ NSMutableArray<CLATeamViewModel> *teamViewModelArray;
     return self.teamViewModelArray.count > 0 ? self.teamViewModelArray[0] : nil;
 }
 
-- (NSArray<CLATeamViewModel> *)getTeams {
+- (NSArray<CLATeamViewModel *> *)getTeams {
     return self.teamViewModelArray;
 }
 

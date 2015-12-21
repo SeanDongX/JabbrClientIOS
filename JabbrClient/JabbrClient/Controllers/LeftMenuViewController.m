@@ -251,7 +251,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     [self.tableView reloadData];
 }
 
-- (void)updateRooms:(NSArray<CLARoom> *)rooms {
+- (void)updateRooms:(NSArray<CLARoom *> *)rooms {
     [self.dataSource updateRooms:rooms];
     [self.tableView reloadData];
 }

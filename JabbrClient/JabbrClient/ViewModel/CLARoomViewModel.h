@@ -13,6 +13,6 @@
 @interface CLARoomViewModel : NSObject
 
 @property(nonatomic, strong) CLARoom *room;
-@property(nonatomic, strong) NSArray<CLAUser> *users;
+@property(nonatomic, strong) NSArray<CLAUser *> *users;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ObjectiveCGenerics.h"
 
 typedef enum {
     CLAUserStatusActive,
@@ -15,9 +14,7 @@ typedef enum {
     CLAUserStatusOffline
 } CLAUserStatus;
 
-GENERICSABLE(CLAUser)
-
-@interface CLAUser : NSObject <CLAUser>
+@interface CLAUser : NSObject
 
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *realName;

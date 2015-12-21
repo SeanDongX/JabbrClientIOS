@@ -211,7 +211,7 @@
 - (void)filterContentForSearchText:(NSString *)searchText {
     NSPredicate *resultPredicate =
     [NSPredicate predicateWithFormat:@"displayName contains[c] %@", searchText];
-    self.filteredtableItems = [self.tableItems filteredArrayUsingPredicate:resultPredicate];
+    self.filteredtableItems = [[self.tableItems filteredArrayUsingPredicate:resultPredicate] mutableCopy];
 }
 
 #pragma mark -
@@ -260,7 +260,7 @@ heightForHeaderInSection:(NSInteger)section {
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UINavigationController *navController = nil;
+    
     CLARoom *selectedRoom = self.filteredtableItems[indexPath.row];
     
     if (self.roomType == RoomTypeDirect) {

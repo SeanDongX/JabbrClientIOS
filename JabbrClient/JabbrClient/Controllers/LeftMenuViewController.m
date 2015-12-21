@@ -98,7 +98,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 
 - (void)initDataSource {
     self.dataSource = [[CLATopicDataSource alloc] init];
-    self.dataSource.slidingViewController = self.slidingViewController;
+    self.dataSource.slidingViewController = (SlidingViewController *)self.slidingViewController;
     self.dataSource.tableCellIdentifierName = kLeftMenuViewCellIdentifierName;
     
     self.tableView.dataSource = self.dataSource;
@@ -179,7 +179,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
     if (teamViewModel != nil) {
         
-        NSMutableArray *roomArray = [teamViewModel getJoinedRooms];
+        NSMutableArray *roomArray = [[teamViewModel getJoinedRooms] mutableCopy];
         NSSortDescriptor *sortDescriptor =
         [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         [roomArray sortUsingDescriptors:@[ sortDescriptor ]];
@@ -208,7 +208,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
         [self.dataSource openRoom:room];
     }
     
-    self.dataSource = room;
+    self.dataSource.selectedRoom = room;
     [self highSelectedRoom];
 }
 

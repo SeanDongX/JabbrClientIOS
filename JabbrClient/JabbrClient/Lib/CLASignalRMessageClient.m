@@ -549,7 +549,6 @@ static bool isFirstAccess = YES;
                 // TODO:check if there is internet, stop reconnect after a few tries
             } else {
                 if (response != nil) {
-                    NSArray *rooms = response;
                     [self loadTeamData:response];
                 }
             }

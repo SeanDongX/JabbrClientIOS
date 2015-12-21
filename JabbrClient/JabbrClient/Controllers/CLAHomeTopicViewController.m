@@ -79,7 +79,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
 - (void)initDataSource {
     self.dataSource = [[CLATopicDataSource alloc] init];
-    self.dataSource.slidingViewController = self.slidingViewController;
+    self.dataSource.slidingViewController = (SlidingViewController *)self.slidingViewController;
     self.dataSource.tableCellIdentifierName = kHomeTopicViewCellIdentifierName;
     
     self.topicTableView.dataSource = self.dataSource;
@@ -106,7 +106,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
     if (teamViewModel != nil) {
         
-        NSMutableArray *roomArray = [teamViewModel getJoinedRooms];
+        NSMutableArray *roomArray = [[teamViewModel getJoinedRooms] mutableCopy];
         NSSortDescriptor *sortDescriptor =
         [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         [roomArray sortUsingDescriptors:@[ sortDescriptor ]];

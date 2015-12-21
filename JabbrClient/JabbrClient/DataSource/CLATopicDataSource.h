@@ -27,5 +27,5 @@
 - (void)openRoom: (CLARoom *)room;
 - (void)resetFilter;
 - (void)filterContentForSearchText:(NSString *)searchText;
-- (void)highlightCurrentSelection;
+
 @end

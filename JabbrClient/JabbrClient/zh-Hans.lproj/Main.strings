@@ -65,9 +65,6 @@
 /* Class = "UILabel"; text = "You are almost there"; ObjectID = "Ynb-a5-2Xd"; */
 "Ynb-a5-2Xd.text" = "马上就到了哦";
 
-/* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "ZxX-xc-zh0"; */
-"ZxX-xc-zh0.title" = "菜单";
-
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "bGl-aJ-Ek7"; */
 "bGl-aJ-Ek7.placeholder" = "密码";
 
@@ -107,9 +104,6 @@
 /* Class = "UISegmentedControl"; qZ5-mw-GTl.segmentTitles[1] = "Members"; ObjectID = "qZ5-mw-GTl"; */
 "qZ5-mw-GTl.segmentTitles[1]" = "成员";
 
-/* Class = "UILabel"; text = "Name"; ObjectID = "qeo-G0-hFE"; */
-"qeo-G0-hFE.text" = "名称";
-
 /* Class = "UILabel"; text = "User"; ObjectID = "r2a-nj-fdg"; */
 "r2a-nj-fdg.text" = "用户";
 
@@ -119,17 +113,11 @@
 /* Class = "UILabel"; text = "Create a new topic"; ObjectID = "urC-OO-6Jd"; */
 "urC-OO-6Jd.text" = "新建话题";
 
-/* Class = "UIButton"; normalTitle = "Sign out"; ObjectID = "vR8-jy-CjL"; */
-"vR8-jy-CjL.normalTitle" = "退出";
-
 /* Class = "UIButton"; normalTitle = "Forgot Password"; ObjectID = "vgh-Ic-yXL"; */
 "vgh-Ic-yXL.normalTitle" = "忘记密码啦";
 
 /* Class = "UILabel"; text = "Or join a team with inviatation code"; ObjectID = "xNi-xF-Kk5"; */
 "xNi-xF-Kk5.text" = "也可以使用团队邀请码的哦";
-
-/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "z5r-zy-Ycm"; */
-"z5r-zy-Ycm.title" = "设置";
 
 /* Class = "UIBarButtonItem"; title = "Chat"; ObjectID = "zun-6c-983"; */
 "zun-6c-983.title" = "消息";

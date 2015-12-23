@@ -100,6 +100,8 @@ FOUNDATION_EXPORT NSString *const kFileUploadRoom;
 FOUNDATION_EXPORT NSString *const kFileUploadFileName;
 FOUNDATION_EXPORT NSString *const kMimeTypeJpeg;
 
+FOUNDATION_EXPORT NSString *const kXLFormTextLabelColor;
+
 typedef NS_ENUM (NSInteger, RoomType) {
     RoomTypePulbic,
     RoomTypePrivate,

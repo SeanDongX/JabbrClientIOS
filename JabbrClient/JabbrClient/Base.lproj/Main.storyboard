@@ -327,84 +327,31 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="Svk-Fp-nUK" kind="relationship" relationship="rootViewController" id="jRr-Rp-gRa"/>
+                        <segue destination="tnk-5Y-RlG" kind="relationship" relationship="rootViewController" id="DV7-sE-hD7"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NnS-lf-zyx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-169" y="1624"/>
         </scene>
-        <!--Profile Controller-->
-        <scene sceneID="qre-Wu-foa">
+        <!--Profile View Controller-->
+        <scene sceneID="iMt-xA-YfL">
             <objects>
-                <viewController id="Svk-Fp-nUK" userLabel="Profile Controller" customClass="ProfileViewController" sceneMemberID="viewController">
+                <viewController id="tnk-5Y-RlG" customClass="CLAProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="vnb-LW-PJV"/>
-                        <viewControllerLayoutGuide type="bottom" id="JOb-Ui-zfC"/>
+                        <viewControllerLayoutGuide type="top" id="Hy8-Zd-VdZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="QpI-dS-tmU"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ubj-IO-JHL">
+                    <view key="view" contentMode="scaleToFill" id="7EC-lG-fmH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hQj-jR-e2C" userLabel="ProfileImageView">
-                                <rect key="frame" x="110" y="100" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="am5-8f-CPz"/>
-                                    <constraint firstAttribute="width" constant="100" id="fsi-DT-bIz"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeo-G0-hFE" userLabel="NameLabel">
-                                <rect key="frame" x="60" y="222" width="200" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="5o3-EB-HP0"/>
-                                    <constraint firstAttribute="height" constant="21" id="kfU-Yi-R4y"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vR8-jy-CjL">
-                                <rect key="frame" x="60" y="442" width="200" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="4ml-lN-qf7"/>
-                                    <constraint firstAttribute="height" constant="40" id="SIU-VJ-gIQ"/>
-                                </constraints>
-                                <state key="normal" title="Sign out">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="signOutClicked:" destination="Svk-Fp-nUK" eventType="touchUpInside" id="6mp-OK-vjg"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="qeo-G0-hFE" secondAttribute="centerX" id="9Kn-Vi-17V"/>
-                            <constraint firstItem="JOb-Ui-zfC" firstAttribute="top" secondItem="vR8-jy-CjL" secondAttribute="bottom" constant="86" id="BYI-ZY-8fD"/>
-                            <constraint firstAttribute="centerX" secondItem="vR8-jy-CjL" secondAttribute="centerX" id="GMC-vV-uS3"/>
-                            <constraint firstAttribute="centerX" secondItem="hQj-jR-e2C" secondAttribute="centerX" id="fSF-NU-EMu"/>
-                            <constraint firstItem="qeo-G0-hFE" firstAttribute="top" secondItem="hQj-jR-e2C" secondAttribute="bottom" constant="22" id="vmH-jC-cxK"/>
-                            <constraint firstItem="hQj-jR-e2C" firstAttribute="top" secondItem="vnb-LW-PJV" secondAttribute="bottom" constant="36" id="y4C-qq-9UI"/>
-                        </constraints>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Settings" id="z5r-zy-Ycm">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="ZxX-xc-zh0" userLabel="Menu">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="leftMenuClicked:" destination="Svk-Fp-nUK" id="A66-nR-Fzl"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="menuItem" destination="ZxX-xc-zh0" id="7PI-ec-EPP"/>
-                        <outlet property="nameLabel" destination="qeo-G0-hFE" id="sT7-4V-bPX"/>
-                        <outlet property="profileImageView" destination="hQj-jR-e2C" id="HyV-GL-ttn"/>
-                        <outlet property="signOutButton" destination="vR8-jy-CjL" id="NG7-Bg-Aby"/>
-                    </connections>
+                    <navigationItem key="navigationItem" id="ase-Yg-2gb"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0Kl-ZC-aun" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cbe-px-4GV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="256" y="1617"/>
+            <point key="canvasLocation" x="256" y="1624"/>
         </scene>
         <!--Signin Controller-->
         <scene sceneID="DKb-nf-Jku">

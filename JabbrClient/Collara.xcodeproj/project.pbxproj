@@ -49,7 +49,7 @@
 		14B6FB4C1ACB352300E5B5A5 /* RightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB4B1ACB352300E5B5A5 /* RightMenuViewController.m */; };
 		14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB511ACB399400E5B5A5 /* DocumentThread.m */; };
 		14B6FB551ACB4CF500E5B5A5 /* DocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B6FB541ACB4CF500E5B5A5 /* DocumentViewController.m */; };
-		14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990A1AD317BC00776556 /* ProfileViewController.m */; };
+		14B9BC4C1C28BFDE006DCA0D /* CLAProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B9BC4B1C28BFDE006DCA0D /* CLAProfileViewController.m */; };
 		14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BA990D1AD33D1000776556 /* CLAMessage.m */; };
 		14BD950D1B473FC2001051E5 /* _CLANotificationMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BD950C1B473FC2001051E5 /* _CLANotificationMessage.m */; };
 		14BD95101B473FD0001051E5 /* CLANotificationMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BD950F1B473FD0001051E5 /* CLANotificationMessage.m */; };
@@ -166,8 +166,8 @@
 		14B6FB531ACB4CF500E5B5A5 /* DocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentViewController.h; sourceTree = "<group>"; };
 		14B6FB541ACB4CF500E5B5A5 /* DocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentViewController.m; sourceTree = "<group>"; };
 		14B9BC471C28BB29006DCA0D /* CLATopicDataSourceEventDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATopicDataSourceEventDelegate.h; path = DataSource/CLATopicDataSourceEventDelegate.h; sourceTree = "<group>"; };
-		14BA99091AD317BC00776556 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
-		14BA990A1AD317BC00776556 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		14B9BC4A1C28BFDE006DCA0D /* CLAProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAProfileViewController.h; sourceTree = "<group>"; };
+		14B9BC4B1C28BFDE006DCA0D /* CLAProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAProfileViewController.m; sourceTree = "<group>"; };
 		14BA990C1AD33D1000776556 /* CLAMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMessage.h; path = JabbrClient/DataModel/CLAMessage.h; sourceTree = SOURCE_ROOT; };
 		14BA990D1AD33D1000776556 /* CLAMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMessage.m; path = JabbrClient/DataModel/CLAMessage.m; sourceTree = SOURCE_ROOT; };
 		14BD950B1B473FC2001051E5 /* _CLANotificationMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CLANotificationMessage.h; sourceTree = "<group>"; };
@@ -411,8 +411,6 @@
 				14B6FB541ACB4CF500E5B5A5 /* DocumentViewController.m */,
 				142046441AD1F866006143D5 /* SignInViewController.h */,
 				142046451AD1F866006143D5 /* SignInViewController.m */,
-				14BA99091AD317BC00776556 /* ProfileViewController.h */,
-				14BA990A1AD317BC00776556 /* ProfileViewController.m */,
 				149718541ADABFE400785D11 /* CLAPadBaseViewController.h */,
 				149718551ADABFE400785D11 /* CLAPadBaseViewController.m */,
 				146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */,
@@ -435,6 +433,8 @@
 				14076F051B4DD05E00240794 /* CLANotificationContentViewController.m */,
 				1433D8D61C24AD7900DE4F33 /* CLATaskWebViewController.h */,
 				1433D8D71C24AD7900DE4F33 /* CLATaskWebViewController.m */,
+				14B9BC4A1C28BFDE006DCA0D /* CLAProfileViewController.h */,
+				14B9BC4B1C28BFDE006DCA0D /* CLAProfileViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -739,7 +739,7 @@
 				14E637331B472DC6000A802C /* CLAHomeNotificationViiewController.m in Sources */,
 				1419E8E91B1E271C0057CAC5 /* CLAInMemoryDataRepository.m in Sources */,
 				14076F061B4DD05E00240794 /* CLANotificationContentViewController.m in Sources */,
-				14BA990B1AD317BC00776556 /* ProfileViewController.m in Sources */,
+				14B9BC4C1C28BFDE006DCA0D /* CLAProfileViewController.m in Sources */,
 				14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */,
 				144D9EEC1AF035D6005EBAD2 /* CLARoom.m in Sources */,
 				1463CB0D1AF9691300BC2513 /* CLACreateRoomViewController.m in Sources */,

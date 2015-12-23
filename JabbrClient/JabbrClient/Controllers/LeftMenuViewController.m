@@ -29,6 +29,7 @@
 // Custom Controls
 #import "BOZPongRefreshControl.h"
 #import "CLATopicDataSource.h"
+#import "CLAProfileViewController.h"
 
 NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 
@@ -297,8 +298,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 }
 
 - (IBAction)homeBUttonClicked:(id)sender {
-    UINavigationController *navController = [(
-                                              (SlidingViewController *)self.slidingViewController)
+    UINavigationController *navController = [((SlidingViewController *)self.slidingViewController)
                                              setTopNavigationControllerWithKeyIdentifier:kHomeNavigationController];
     
     [navController.view
@@ -307,12 +307,15 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 }
 
 - (IBAction)settingsButtonClicked:(id)sender {
-    UINavigationController *navController = [(
-                                              (SlidingViewController *)self.slidingViewController)
-                                             setTopNavigationControllerWithKeyIdentifier:kProfileNavigationController];
     
-    [navController.view
-     addGestureRecognizer:self.slidingViewController.panGesture];
+    UINavigationController *navController = [((SlidingViewController *)self.slidingViewController)
+                                             setTopNavigationControllerWithKeyIdentifier:@"ProfileNavigationController"];
+    
+    if (navController.viewControllers == nil) {
+        CLAProfileViewController *profileView = [[CLAProfileViewController alloc] init];
+        navController.viewControllers = @[ profileView ];
+    }
+    
     [self.slidingViewController resetTopViewAnimated:YES];
 }
 

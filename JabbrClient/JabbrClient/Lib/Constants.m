@@ -124,6 +124,8 @@ NSString *const kFileUploadRoom = @"room";
 NSString *const kFileUploadFileName = @"filename";
 NSString *const kMimeTypeJpeg = @"image/jpeg";
 
+NSString *const kXLFormTextLabelColor = @"textLabel.color";
+
 + (UIImage *)menuIconImage {
     FAKIonIcons *iccon = [FAKIonIcons naviconIconWithSize:30];
     [iccon addAttribute:NSForegroundColorAttributeName

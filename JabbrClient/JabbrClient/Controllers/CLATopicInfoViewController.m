@@ -13,12 +13,12 @@
 #import "Constants.h"
 #import "CLANotificationManager.h"
 
+#import "XLForm.h"
+
 NSString *const kTopicName = @"TopicName";
 NSString *const kLeaveTopicButton = @"LeaveTopicButton";
 NSString *const kSendInviteButton = @"SendInviteButton";
 NSString *const kInvitePrefix = @"Invite-";
-
-NSString *const kTextLabelColor = @"textLabel.color";
 
 @interface CLATopicInfoViewController ()
 
@@ -88,7 +88,7 @@ NSString *const kTextLabelColor = @"textLabel.color";
            formRowDescriptorWithTag:kLeaveTopicButton
            rowType:XLFormRowDescriptorTypeButton
            title:NSLocalizedString(@"Leave", nil)];
-    [row.cellConfig setObject:[Constants warningColor] forKey:kTextLabelColor];
+    [row.cellConfig setObject:[Constants warningColor] forKey:kXLFormTextLabelColor];
     row.action.formSelector = @selector(leavelTopic:);
     [section addFormRow:row];
     
@@ -134,7 +134,7 @@ NSString *const kTextLabelColor = @"textLabel.color";
                rowType:XLFormRowDescriptorTypeButton
                title:NSLocalizedString(@"Send Invite", nil)];
         [row.cellConfig setObject:[Constants highlightColor]
-                           forKey:kTextLabelColor];
+                           forKey:kXLFormTextLabelColor];
         row.action.formSelector = @selector(sendInvite:);
         [section addFormRow:row];
     }

@@ -30,6 +30,7 @@
 #import "BOZPongRefreshControl.h"
 #import "CLATopicDataSource.h"
 #import "CLAProfileViewController.h"
+#import "UserDataManager.h"
 
 NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 
@@ -222,7 +223,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [CLAUtility setUserDefault:[NSDate date] forKey:kLastRefreshTime];
+    [UserDataManager cacheLastRefrershTime];
     self.isRefreshing = TRUE;
     [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
     // team loading finished will be notified through kEventTeamUpdated
@@ -235,7 +236,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
         return;
     }
     
-    NSDate *lastRefreshTime = [CLAUtility getUserDefault:kLastRefreshTime];
+    NSDate *lastRefreshTime = (NSDate *)[UserDataManager getCachedObjectForKey:kLastRefreshTime];
     NSTimeInterval remainTime = 0;
     
     if (![lastRefreshTime isEqual:[NSNull null]]) {

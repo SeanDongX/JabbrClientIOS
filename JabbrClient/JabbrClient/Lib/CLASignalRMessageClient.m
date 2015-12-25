@@ -119,14 +119,14 @@ static bool isFirstAccess = YES;
 - (void)makeConnection {
     
     NSString *server = kServerBaseUrl;
-    NSString *authToken = [[UserDataManager sharedInstance] getCachedAuthToken];
-    NSNumber *teamKey = [CLAUtility getUserDefault:kTeamKey];
+    NSString *authToken = [UserDataManager getCachedAuthToken];
+    NSNumber *teamKey = [UserDataManager getTeam].key;
     
     if (authToken == nil) {
         // TODO: throw expcetion
     }
     
-    self.username = [[UserDataManager sharedInstance] getUsername];
+    self.username = [UserDataManager getUsername];
     
     if (teamKey != nil && teamKey.intValue > 0) {
         self.connection =
@@ -303,15 +303,11 @@ static bool isFirstAccess = YES;
         
         CLATeam *team = myTeamViewModel.team;
         
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSNumber *teamKey = [defaults objectForKey:kTeamKey];
+        NSNumber *teamKey = [UserDataManager getTeam].key;
         
         if (team != nil && team.key != nil &&
             team.key.intValue != teamKey.intValue) {
-            
-            [defaults setObject:team.key forKey:kTeamKey];
-            [defaults synchronize];
-            
+            [UserDataManager cacheTeam:team];
             [self reconnect];
         }
     }
@@ -421,7 +417,7 @@ static bool isFirstAccess = YES;
         [rooms setObject:room forKey:room.name];
         // join current user to room
         CLAUser *currentUser =
-        [team findUser:[[UserDataManager sharedInstance] getUsername]];
+        [team findUser:[UserDataManager getUsername]];
         [team joinUser:currentUser toRoom:room.name];
     }
     

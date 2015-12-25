@@ -12,11 +12,7 @@
 @interface CLAUtility : NSObject
 
 + (BOOL)isValidEmail:(NSString *)email;
-+ (BOOL)isString:(NSString *)firstString
-caseInsensitiveEqualTo:(NSString *)secondString;
-
-+ (id)getUserDefault:(NSString *)key;
-+ (void)setUserDefault:(id)value forKey:(NSString *)key;
++ (BOOL)isString:(NSString *)firstString caseInsensitiveEqualTo:(NSString *)secondString;
 
 + (NSString *)getUrlString:(UIImage *)image;
 + (NSDictionary *)getImagePostData:(UIImage *)image imageName:(NSString *)imageName fromRoom:(NSString *)roomName;

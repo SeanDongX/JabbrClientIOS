@@ -14,7 +14,6 @@
 #import "Constants.h"
 #import "DateTools.h"
 #import "MBProgressHUD.h"
-#import "CLAUtility.h"
 #import "CLANotificationManager.h"
 #import "CLADisplayMessageFactory.h"
 #import "CLAMediaManager.h"
@@ -33,6 +32,7 @@
 #import "CLACreateTeamViewController.h"
 #import "CLATopicInfoViewController.h"
 #import "CLATaskWebViewController.h"
+#import "CLAUtility.h"
 
 
 @interface ChatViewController ()
@@ -195,7 +195,7 @@
 
 
 - (void)switchToRoom:(CLARoom *)room {
-    [CLAUtility setUserDefault:room.name forKey:kSelectedRoomName];
+    [UserDataManager cacheObject:room.name forKey:kSelectedRoomName];
     [self showHud];
     self.title = self.room.displayName;
     [self initialzeCurrentThread];
@@ -209,7 +209,7 @@
     CLATeamViewModel *teamViewModel =
     [self.messageClient.dataRepository getDefaultTeam];
     CLAUser *currentUser =
-    [teamViewModel findUser:[[UserDataManager sharedInstance] getUsername]];
+    [teamViewModel findUser:[UserDataManager getUsername]];
     [teamViewModel joinUser:currentUser toRoom:self.room.name];
     [self sendTeamUpdatedEventNotification];
 }

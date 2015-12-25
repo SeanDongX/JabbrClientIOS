@@ -52,10 +52,11 @@ FOUNDATION_EXPORT NSString *const kDocPrefix;
 
 FOUNDATION_EXPORT NSString *const kUsername;
 FOUNDATION_EXPORT NSString *const kAuthToken;
+FOUNDATION_EXPORT NSString *const kTeam;
 FOUNDATION_EXPORT NSString *const kTeamName;
+FOUNDATION_EXPORT NSString *const kTeamKey;
 
 FOUNDATION_EXPORT NSString *const kLastAuthDate;
-FOUNDATION_EXPORT NSString *const kTeamKey;
 FOUNDATION_EXPORT NSString *const kDeviceToken;
 FOUNDATION_EXPORT NSString *const kInviteCode;
 

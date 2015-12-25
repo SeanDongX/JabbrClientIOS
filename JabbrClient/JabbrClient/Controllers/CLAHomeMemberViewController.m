@@ -15,7 +15,7 @@
 #import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"
-#import "CLAUtility.h"
+
 // Data Model
 #import "CLAUser.h"
 #import "CLATeamViewModel.h"
@@ -91,7 +91,7 @@
     CLATeamViewModel *teamViewModel =
     [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
     
-    [[UserDataManager sharedInstance] cacheTeamName: teamViewModel.team.name];
+    [UserDataManager cacheTeam:teamViewModel.team];
     
     if (teamViewModel != nil) {
         [self updateTeamMembers:teamViewModel.users];
@@ -111,7 +111,7 @@
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [CLAUtility setUserDefault:[NSDate date] forKey:kLastRefreshTime];
+    [UserDataManager cacheLastRefrershTime];
     self.isRefreshing = TRUE;
     [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
     // team loading finished will be notified through kEventTeamUpdated
@@ -133,7 +133,7 @@
         return;
     }
     
-    NSDate *lastRefreshTime = [CLAUtility getUserDefault:kLastRefreshTime];
+    NSDate *lastRefreshTime = (NSDate *)[UserDataManager getCachedObjectForKey:kLastRefreshTime];
     NSTimeInterval remainTime = 0;
     
     if (![lastRefreshTime isEqual:[NSNull null]]) {
@@ -309,7 +309,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)shareInvite {
     
-    NSString *inviteCode = [CLAUtility getUserDefault:kInviteCode];
+    NSString *inviteCode = [UserDataManager getCachedObjectForKey:kInviteCode];
     if (inviteCode != nil) {
         [self showInvite:inviteCode];
         return;
@@ -318,7 +318,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     [[CLAWebApiClient sharedInstance]
-     getInviteCodeForTeam:[CLAUtility getUserDefault:kTeamKey]
+     getInviteCodeForTeam:[UserDataManager getTeam].key
      completion:^(NSString *invitationCode, NSString *errorMessage) {
          [MBProgressHUD hideHUDForView:self.view animated:YES];
          
@@ -333,7 +333,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
              return;
          }
          
-         [CLAUtility setUserDefault:invitationCode forKey:kInviteCode];
+         [UserDataManager cacheObject:invitationCode forKey:kInviteCode];
          [self showInvite:invitationCode];
      }];
 }
@@ -345,7 +345,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString *teamName = teamViewModel.team.name;
     
-    NSString *username = [CLAUtility getUserDefault:kUsername];
+    NSString *username = [UserDataManager getUsername];
     NSString *userFullName = username;
     
     CLAUser *user =

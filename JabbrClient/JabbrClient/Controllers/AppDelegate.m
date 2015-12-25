@@ -116,7 +116,7 @@ fetchCompletionHandler:
 
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [[UserDataManager sharedInstance] cacheDeviceToken:deviceToken];
+    [UserDataManager cacheDeviceToken:deviceToken];
     [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
 }
 
@@ -135,7 +135,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 - (void)clearUnreadNotificationOnServer {
     [[CLAWebApiClient sharedInstance]
      setBadge:@0
-     forTeam:[CLAUtility getUserDefault:kTeamKey]];
+     forTeam:[UserDataManager getTeam].key];
 }
 
 @end

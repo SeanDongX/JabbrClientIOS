@@ -16,7 +16,6 @@
 #import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"
-#import "CLAUtility.h"
 
 // Data Model
 #import "CLAUser.h"
@@ -61,7 +60,7 @@
 
 - (void)loadNotifications {
     [[CLAWebApiClient sharedInstance]
-     getNotificationsFor:[CLAUtility getUserDefault:kTeamKey]
+     getNotificationsFor:[UserDataManager getTeam].key
      completion:^(NSArray *result, NSString *errorMessage) {
          
          [MagicalRecord
@@ -123,7 +122,7 @@
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [CLAUtility setUserDefault:[NSDate date] forKey:kLastRefreshTime];
+    [UserDataManager cacheLastRefrershTime];
     self.isRefreshing = TRUE;
     [self loadNotifications];
 }
@@ -143,7 +142,7 @@
         return;
     }
     
-    NSDate *lastRefreshTime = [CLAUtility getUserDefault:kLastRefreshTime];
+    NSDate *lastRefreshTime = [UserDataManager getLastRefrershTime];
     NSTimeInterval remainTime = 0;
     
     if (![lastRefreshTime isEqual:[NSNull null]]) {

@@ -10,7 +10,6 @@
 
 // Util
 #import "Constants.h"
-#import "CLAUtility.h"
 
 // Data Model
 #import "CLARoom.h"
@@ -31,6 +30,7 @@
 // Custom Controls
 #import "BOZPongRefreshControl.h"
 #import "CLATopicDataSource.h"
+#import "UserDataManager.h"
 
 NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
@@ -141,7 +141,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [CLAUtility setUserDefault:[NSDate date] forKey:kLastRefreshTime];
+    [UserDataManager cacheLastRefrershTime];
     self.isRefreshing = TRUE;
     [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
     // team loading finished will be notified through kEventTeamUpdated
@@ -155,7 +155,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
         return;
     }
     
-    NSDate *lastRefreshTime = [CLAUtility getUserDefault:kLastRefreshTime];
+    NSDate *lastRefreshTime = [UserDataManager getLastRefrershTime];
     NSTimeInterval remainTime = 0;
     
     if (![lastRefreshTime isEqual:[NSNull null]]) {

@@ -199,7 +199,7 @@ replacementString:(NSString *)string {
 #pragma mark Private Methods
 
 - (void)signOut {
-    [[UserDataManager sharedInstance] signOut];
+    [UserDataManager signOut];
     [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
     [self switchToSignInView];

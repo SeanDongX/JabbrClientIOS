@@ -110,8 +110,8 @@ static bool isFirstAccess = YES;
                                  message = NSLocalizedString(
                                                              @"We are terribly sorry, but some error happened.", nil);
                              } else {
-                                 [[UserDataManager sharedInstance] cacheAuthToken:token];
-                                 [[UserDataManager sharedInstance]
+                                 [UserDataManager cacheAuthToken:token];
+                                 [UserDataManager
                                   cacheUsername:userRegistrationModel.username];
                                  [self cacheTaskServiceToken];
                              }
@@ -145,8 +145,8 @@ static bool isFirstAccess = YES;
                                  message = NSLocalizedString(
                                                              @"We are terribly sorry, but we can not sign you in now.", nil);
                              } else {
-                                 [[UserDataManager sharedInstance] cacheAuthToken:token];
-                                 [[UserDataManager sharedInstance] cacheUsername:username];
+                                 [UserDataManager cacheAuthToken:token];
+                                 [UserDataManager cacheUsername:username];
                                  [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
                                  [self cacheTaskServiceToken];
                                  
@@ -364,7 +364,7 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
 #pragma mark Private Methods
 
 - (NSString *)getToken {
-    return [[UserDataManager sharedInstance] getCachedAuthToken];
+    return [UserDataManager getCachedAuthToken];
 }
 
 - (NSString *)getResponseErrorMessage:(NSError *)error {
@@ -404,7 +404,7 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
                      parameters:nil
                         success:^(AFHTTPRequestOperation *operation,
                                   NSDictionary *responseObject) {
-                            [[UserDataManager sharedInstance] cacheTaskServiceAuthInfo:responseObject];
+                            [UserDataManager cacheTaskServiceAuthInfo:responseObject];
                         }
                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                             NSLog(@"Request task token failed: %@",

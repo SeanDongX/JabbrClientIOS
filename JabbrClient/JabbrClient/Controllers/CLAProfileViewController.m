@@ -66,7 +66,7 @@
 }
 
 - (void)signout {
-    [[UserDataManager sharedInstance] signOut];
+    [UserDataManager signOut];
     [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
     [[CLASignalRMessageClient sharedInstance].dataRepository deleteData];
@@ -100,7 +100,7 @@
     [XLFormRowDescriptor formRowDescriptorWithTag:@"Username"
                                           rowType:XLFormRowDescriptorTypeInfo
                                             title:NSLocalizedString(@"Username", nil)];
-    username.value = [[UserDataManager sharedInstance] getUsername];
+    username.value = [UserDataManager getUsername];
     [section addFormRow:username];
     
     XLFormRowDescriptor *email =
@@ -132,7 +132,7 @@
             [options addObject: [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.name displayText:teamViewModel.team.name]];
         }
         
-        if ([teamViewModel.team.name isEqualToString:[[UserDataManager sharedInstance] getTeamName]]) {
+        if ([teamViewModel.team.name isEqualToString:[UserDataManager getTeam].name]) {
             row.value = [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.name displayText:teamViewModel.team.name];
         }
         

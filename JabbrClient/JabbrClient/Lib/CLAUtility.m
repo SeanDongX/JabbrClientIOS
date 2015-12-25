@@ -32,17 +32,6 @@ caseInsensitiveEqualTo:(NSString *)secondString {
     [firstString caseInsensitiveCompare:secondString] == NSOrderedSame;
 }
 
-+ (id)getUserDefault:(NSString *)key {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [defaults objectForKey:key];
-}
-
-+ (void)setUserDefault:(id)value forKey:(NSString *)key {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:value forKey:key];
-    [defaults synchronize];
-}
-
 + (NSString *)getUrlString:(UIImage *)image {
     return [NSString stringWithFormat:@"data:%@;base64,%@",
             kMimeTypeJpeg,
@@ -53,9 +42,10 @@ caseInsensitiveEqualTo:(NSString *)secondString {
     NSDictionary *dictionary = @{ kFileUploadFile : [CLAUtility getUrlString:image],
                                   kFileUploadFileName : imageName,
                                   kFileUploadType : kMimeTypeJpeg,
-                                  kTeamKey : [CLAUtility getUserDefault:kTeamKey],
+                                  kTeamKey : [UserDataManager getTeam].key,
                                   kFileUploadRoom: roomName};
     
     return dictionary;
 }
+
 @end

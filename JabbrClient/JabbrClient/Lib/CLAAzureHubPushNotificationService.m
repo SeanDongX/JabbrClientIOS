@@ -81,7 +81,7 @@ static bool isFirstAccess = YES;
 #pragma mark CLAApiCleint Methods
 
 - (void)registerDevice {
-    NSData *deviceToken = [[UserDataManager sharedInstance] getCachedDeviceToken];
+    NSData *deviceToken = [UserDataManager getCachedDeviceToken];
     
     if (deviceToken == nil) {
         NSLog(@"Device token not found in user defaults");
@@ -89,7 +89,7 @@ static bool isFirstAccess = YES;
     }
     
     NSMutableSet *tagSet = [NSMutableSet set];
-    NSString *username = [[UserDataManager sharedInstance] getUsername];
+    NSString *username = [UserDataManager getUsername];
     if (username != nil) {
         [tagSet addObject:[CLAUser getHandle:username]];
     }
@@ -106,7 +106,7 @@ static bool isFirstAccess = YES;
 }
 
 - (void)unregisterDevice {
-    NSData *deviceToken = [[UserDataManager sharedInstance] getCachedDeviceToken];
+    NSData *deviceToken = [UserDataManager getCachedDeviceToken];
     
     if (deviceToken == nil) {
         NSLog(@"Device token not found in user defaults");

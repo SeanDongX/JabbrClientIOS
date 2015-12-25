@@ -66,13 +66,12 @@
 }
 
 - (void)loadAuthFrame {
-    NSURL *authUrl = [NSURL URLWithString:[[UserDataManager sharedInstance] getTaskAuthFrameUrl]];
+    NSURL *authUrl = [NSURL URLWithString:[UserDataManager getTaskAuthFrameUrl]];
     [self.webView loadRequest:[NSURLRequest requestWithURL:authUrl]];
 }
 
 - (NSURL *)getBoardUrl {
-    NSString *teamName = [[UserDataManager sharedInstance] getTeamName];
-    NSArray *array = @[kTaskServiceRootUrl, @"redirect/b/", teamName, @"/", self.roomName];
+    NSArray *array = @[kTaskServiceRootUrl, @"redirect/b/", [UserDataManager getTeam].name, @"/", self.roomName];
     //Task board needs lower case url for board name
     
     return [NSURL URLWithString:[array componentsJoinedByString:@""].lowercaseString];

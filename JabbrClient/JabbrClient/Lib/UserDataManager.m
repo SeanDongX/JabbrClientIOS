@@ -13,32 +13,18 @@
 
 // Services
 #import "CLAAzureHubPushNotificationService.h"
+#import "CLATeam.h"
 
 @implementation UserDataManager
-
-+ (UserDataManager *)sharedInstance {
-    static UserDataManager *_sharedManager = nil;
-    static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{
-        _sharedManager = [[self alloc] init];
-    });
-    
-    return _sharedManager;
-}
-
-- (instancetype)init {
-    self = [super init];
-    return self;
-}
 
 #pragma -
 #pragma Public Methods
 
-- (BOOL)isAuthenticated {
-    return [self getCachedAuthToken] != nil;
++ (BOOL)isAuthenticated {
+    return [UserDataManager getCachedAuthToken] != nil;
 }
 
-- (NSString *)getCachedAuthToken {
++ (NSString *)getCachedAuthToken {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDate *authDate = [defaults objectForKey:kLastAuthDate];
@@ -59,61 +45,76 @@
     return [defaults objectForKey:kAuthToken];
 }
 
-- (void)cacheUsername:(NSString *)username {
-    [self cacheObject:username forKey:kUsername];
++ (void)cacheUsername:(NSString *)username {
+    [UserDataManager cacheObject:username forKey:kUsername];
 }
 
-- (void)cacheTeamName:(NSString *)teamName {
-    [self cacheObject:teamName forKey:kTeamName];
++ (void)cacheTeam:(CLATeam *)team {
+    NSDictionary *teamDictionary = @{ kTeamName: team.name, kTeamKey : team.key };
+    [UserDataManager cacheObject:teamDictionary forKey:kTeam];
 }
 
-- (NSString *)getUsername {
-    return (NSString *)[self getCachedObjectForKey:kUsername];
++ (NSString *)getUsername {
+    return (NSString *)[UserDataManager getCachedObjectForKey:kUsername];
 }
 
-- (NSString *)getTeamName {
-    return (NSString *)[self getCachedObjectForKey:kTeamName];
++ (CLATeam *)getTeam {
+    NSDictionary *teamDictionary = (NSDictionary *)[UserDataManager getCachedObjectForKey:kTeam];
+    CLATeam *team = [[CLATeam alloc] init];
+    team.key = [teamDictionary objectForKey:kTeamKey];
+    team.name = [teamDictionary objectForKey:kTeamName];
+    return team;
 }
 
-- (NSData *)getCachedDeviceToken {
-    return (NSData *)[self getCachedObjectForKey:kDeviceToken];
++ (NSData *)getCachedDeviceToken {
+    return (NSData *)[UserDataManager getCachedObjectForKey:kDeviceToken];
 }
 
-- (void)cacheAuthToken:(NSString *)authToken {
+
++ (NSDate *)getLastRefrershTime {
+    return [UserDataManager getLastRefrershTime];
+}
+
++ (void)cacheAuthToken:(NSString *)authToken {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:authToken forKey:kAuthToken];
     [defaults setObject:[NSDate date] forKey:kLastAuthDate];
     [defaults synchronize];
 }
 
-- (void)cacheDeviceToken:(NSData *)deviceToken {
++ (void)cacheDeviceToken:(NSData *)deviceToken {
+    [UserDataManager cacheObject:deviceToken forKey:kDeviceToken];
+}
+
++ (void)cacheLastRefreshTime {
+    [UserDataManager cacheObject: [NSDate date] forKey:kLastRefreshTime];
+}
+
++ (void)signOut {
+    [UserDataManager clearCookie];
+    [UserDataManager clearCache];
+}
+
++ (void)cacheTaskServiceAuthInfo:(NSDictionary *)data {
+    [UserDataManager cacheObject:[data objectForKey:kTaskUsername] forKey:kTaskUsername];
+    [UserDataManager cacheObject:[data objectForKey:kTaskUserId] forKey:kTaskUserId];
+    [UserDataManager cacheObject:[data objectForKey:kTaskAuthToken] forKey:kTaskAuthToken];
+    [UserDataManager cacheObject:[data objectForKey:kTaskAuthExpire] forKey:kTaskAuthExpire];
+}
+
++ (NSString *)getTaskAuthFrameUrl {
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:deviceToken forKey:kDeviceToken];
-    [defaults synchronize];
-}
-
-- (void)signOut {
-    [self clearCookie];
-    [self clearCache];
-}
-
-- (void)cacheTaskServiceAuthInfo:(NSDictionary *)data {
-    [self cacheObject:[data objectForKey:kTaskUsername] forKey:kTaskUsername];
-    [self cacheObject:[data objectForKey:kTaskUserId] forKey:kTaskUserId];
-    [self cacheObject:[data objectForKey:kTaskAuthToken] forKey:kTaskAuthToken];
-    [self cacheObject:[data objectForKey:kTaskAuthExpire] forKey:kTaskAuthExpire];
-}
-
-- (NSString *)getTaskAuthFrameUrl {
+    
     NSArray *array = @[
                        kTaskServiceRootUrl,
                        kTaskAuthPagePath,
                        @"?userId=",
-                       [self getCachedObjectForKey:kTaskUserId],
+                       [defaults objectForKey:kTaskUserId],
                        @"&token=",
-                       [self getCachedObjectForKey:kTaskAuthToken],
+                       [defaults objectForKey:kTaskAuthToken],
                        @"&expires=",
-                       [self getCachedObjectForKey:kTaskAuthExpire],
+                       [defaults objectForKey:kTaskAuthExpire],
                        ];
     return [[array componentsJoinedByString:@""] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
@@ -121,29 +122,30 @@
 #pragma mark -
 #pragma Private Methods
 
-- (void)clearCache {
++ (void)clearCache {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:kUsername];
-    [defaults removeObjectForKey:kAuthToken];
-    [defaults removeObjectForKey:kLastAuthDate];
-    [defaults removeObjectForKey:kTeamKey];
-    [defaults removeObjectForKey:kInviteCode];
+    NSDictionary * dict = [defaults dictionaryRepresentation];
+    for (NSString *key in dict) {
+        // Device Token should be not cleared
+        if (![key isEqualToString:kDeviceToken]) {
+            [defaults removeObjectForKey:key];
+        }
+    }
     [defaults synchronize];
-    // Device Token should be not cleared
 }
 
-- (void)cacheObject:(NSObject *)object forKey:(NSString *)key {
++ (void)cacheObject:(NSObject *)object forKey:(NSString *)key {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:object forKey:key];
     [defaults synchronize];
 }
 
-- (NSObject *)getCachedObjectForKey:(NSString *)key {
++ (id)getCachedObjectForKey:(NSString *)key {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults objectForKey:key];
 }
 
-- (void)clearCookie {
++ (void)clearCookie {
     NSHTTPCookieStorage *cookieStorage =
     [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (NSHTTPCookie *each in cookieStorage.cookies) {

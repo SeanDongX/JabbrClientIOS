@@ -77,9 +77,11 @@ NSString *const kDocPrefix = @">";
 
 NSString *const kUsername = @"Username";
 NSString *const kAuthToken = @"AuthToken";
+NSString *const kTeam = @"Team";
 NSString *const kTeamName = @"TeamName";
-NSString *const kLastAuthDate = @"LastAuthDate";
 NSString *const kTeamKey = @"TeamKey";
+
+NSString *const kLastAuthDate = @"LastAuthDate";
 NSString *const kDeviceToken = @"DeviceToken";
 NSString *const kInviteCode = @"InviteCode";
 

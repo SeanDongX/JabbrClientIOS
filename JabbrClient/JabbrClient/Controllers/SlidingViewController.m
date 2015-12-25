@@ -33,7 +33,7 @@
     
     self.underRightViewControllerStoryboardId = kRightMenuViewController;
     
-    if ([[UserDataManager sharedInstance] isAuthenticated]) {
+    if ([UserDataManager isAuthenticated]) {
         self.topViewControllerStoryboardId = kChatNavigationController;
     } else {
         self.topViewControllerStoryboardId = kSignInNavigationController;
@@ -144,7 +144,7 @@
 }
 
 - (void)setFirstView {
-    NSString *token = [[UserDataManager sharedInstance] getCachedAuthToken];
+    NSString *token = [UserDataManager getCachedAuthToken];
     if (token == nil || token.length == 0) {
         [self switchToSignInView];
     } else {

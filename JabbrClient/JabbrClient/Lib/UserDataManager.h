@@ -28,7 +28,7 @@
 + (void)cacheUsername:(NSString *)username;
 + (void)cacheTeam:(CLATeam *)team;
 + (void)cacheDeviceToken:(NSData *)deviceToken;
-+ (void)cacheLastRefrershTime;
++ (void)cacheLastRefreshTime;
 + (void)cacheTaskServiceAuthInfo:(NSDictionary *)data;
 + (NSString *)getTaskAuthFrameUrl;
 

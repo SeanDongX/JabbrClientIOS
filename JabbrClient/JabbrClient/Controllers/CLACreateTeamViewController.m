@@ -11,7 +11,7 @@
 // Util
 #import "Constants.h"
 #import "CLANotificationManager.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 #import "Masonry.h"
 #import "MBProgressHUD.h"
 
@@ -199,7 +199,7 @@ replacementString:(NSString *)string {
 #pragma mark Private Methods
 
 - (void)signOut {
-    [[AuthManager sharedInstance] signOut];
+    [[UserDataManager sharedInstance] signOut];
     [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
     [self switchToSignInView];

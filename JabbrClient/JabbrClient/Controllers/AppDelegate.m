@@ -13,7 +13,7 @@
 
 #import "Constants.h"
 #import "CLAUtility.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 #import "CLAWebApiClient.h"
 #import "CLAAzureHubPushNotificationService.h"
 #import "CLANotificationManager.h"
@@ -116,7 +116,7 @@ fetchCompletionHandler:
 
 - (void)application:(UIApplication *)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [[AuthManager sharedInstance] cacheDeviceToken:deviceToken];
+    [[UserDataManager sharedInstance] cacheDeviceToken:deviceToken];
     [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
 }
 

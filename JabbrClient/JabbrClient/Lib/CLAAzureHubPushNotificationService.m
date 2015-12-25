@@ -10,7 +10,7 @@
 
 // Util
 #import "Constants.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 
 // Data Model
 #import "CLAUser.h"
@@ -81,7 +81,7 @@ static bool isFirstAccess = YES;
 #pragma mark CLAApiCleint Methods
 
 - (void)registerDevice {
-    NSData *deviceToken = [[AuthManager sharedInstance] getCachedDeviceToken];
+    NSData *deviceToken = [[UserDataManager sharedInstance] getCachedDeviceToken];
     
     if (deviceToken == nil) {
         NSLog(@"Device token not found in user defaults");
@@ -89,7 +89,7 @@ static bool isFirstAccess = YES;
     }
     
     NSMutableSet *tagSet = [NSMutableSet set];
-    NSString *username = [[AuthManager sharedInstance] getUsername];
+    NSString *username = [[UserDataManager sharedInstance] getUsername];
     if (username != nil) {
         [tagSet addObject:[CLAUser getHandle:username]];
     }
@@ -106,7 +106,7 @@ static bool isFirstAccess = YES;
 }
 
 - (void)unregisterDevice {
-    NSData *deviceToken = [[AuthManager sharedInstance] getCachedDeviceToken];
+    NSData *deviceToken = [[UserDataManager sharedInstance] getCachedDeviceToken];
     
     if (deviceToken == nil) {
         NSLog(@"Device token not found in user defaults");

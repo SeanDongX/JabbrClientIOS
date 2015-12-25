@@ -12,7 +12,7 @@
 #import <MagicalRecord/MagicalRecord.h>
 #import "Constants.h"
 #import "CLAWebApiClient.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 #import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"

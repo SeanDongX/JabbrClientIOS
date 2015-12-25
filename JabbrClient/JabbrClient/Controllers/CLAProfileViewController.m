@@ -9,7 +9,7 @@
 #import "CLAProfileViewController.h"
 #import "Constants.h"
 #import "XLForm.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
@@ -66,7 +66,7 @@
 }
 
 - (void)signout {
-    [[AuthManager sharedInstance] signOut];
+    [[UserDataManager sharedInstance] signOut];
     [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
     [[CLASignalRMessageClient sharedInstance].dataRepository deleteData];
@@ -100,7 +100,7 @@
     [XLFormRowDescriptor formRowDescriptorWithTag:@"Username"
                                           rowType:XLFormRowDescriptorTypeInfo
                                             title:NSLocalizedString(@"Username", nil)];
-    username.value = [[AuthManager sharedInstance] getUsername];
+    username.value = [[UserDataManager sharedInstance] getUsername];
     [section addFormRow:username];
     
     XLFormRowDescriptor *email =
@@ -132,7 +132,7 @@
             [options addObject: [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.name displayText:teamViewModel.team.name]];
         }
         
-        if ([teamViewModel.team.name isEqualToString:[[AuthManager sharedInstance] getTeamName]]) {
+        if ([teamViewModel.team.name isEqualToString:[[UserDataManager sharedInstance] getTeamName]]) {
             row.value = [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.name displayText:teamViewModel.team.name];
         }
         

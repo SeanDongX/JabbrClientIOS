@@ -8,7 +8,7 @@
 
 #import "CLATaskWebViewController.h"
 #import "Constants.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 
 @interface CLATaskWebViewController ()
 
@@ -66,12 +66,12 @@
 }
 
 - (void)loadAuthFrame {
-    NSURL *authUrl = [NSURL URLWithString:[[AuthManager sharedInstance] getTaskAuthFrameUrl]];
+    NSURL *authUrl = [NSURL URLWithString:[[UserDataManager sharedInstance] getTaskAuthFrameUrl]];
     [self.webView loadRequest:[NSURLRequest requestWithURL:authUrl]];
 }
 
 - (NSURL *)getBoardUrl {
-    NSString *teamName = [[AuthManager sharedInstance] getTeamName];
+    NSString *teamName = [[UserDataManager sharedInstance] getTeamName];
     NSArray *array = @[kTaskServiceRootUrl, @"redirect/b/", teamName, @"/", self.roomName];
     //Task board needs lower case url for board name
     

@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AuthManager : NSObject
+@interface UserDataManager : NSObject
 
-+ (AuthManager *)sharedInstance;
++ (UserDataManager *)sharedInstance;
 
 - (BOOL)isAuthenticated;
 

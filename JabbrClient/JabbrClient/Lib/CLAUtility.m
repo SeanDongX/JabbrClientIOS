@@ -10,7 +10,7 @@
 
 
 #import "Constants.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 
 @implementation CLAUtility
 

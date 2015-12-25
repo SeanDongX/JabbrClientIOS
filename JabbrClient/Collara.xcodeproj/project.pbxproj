@@ -12,7 +12,7 @@
 		1413226B1B3A17ED008659BD /* CLATopicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1413226A1B3A17ED008659BD /* CLATopicInfoViewController.m */; };
 		14190E0B1C176630000861F2 /* CLAMediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 14190E0A1C176630000861F2 /* CLAMediaManager.m */; };
 		1419E8E91B1E271C0057CAC5 /* CLAInMemoryDataRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */; };
-		142046431AD1EC91006143D5 /* AuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* AuthManager.m */; };
+		142046431AD1EC91006143D5 /* UserDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* UserDataManager.m */; };
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
 		142150881B035E1500D18214 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1421508A1B035E1500D18214 /* Localizable.strings */; };
@@ -90,8 +90,8 @@
 		1419E8E41B1E26ED0057CAC5 /* CLADataRepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLADataRepositoryProtocol.h; path = Repository/CLADataRepositoryProtocol.h; sourceTree = "<group>"; };
 		1419E8E71B1E271C0057CAC5 /* CLAInMemoryDataRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAInMemoryDataRepository.h; path = Repository/CLAInMemoryDataRepository.h; sourceTree = "<group>"; };
 		1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAInMemoryDataRepository.m; path = Repository/CLAInMemoryDataRepository.m; sourceTree = "<group>"; };
-		142046411AD1EC91006143D5 /* AuthManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthManager.h; path = Lib/AuthManager.h; sourceTree = "<group>"; };
-		142046421AD1EC91006143D5 /* AuthManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthManager.m; path = Lib/AuthManager.m; sourceTree = "<group>"; };
+		142046411AD1EC91006143D5 /* UserDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDataManager.h; path = Lib/UserDataManager.h; sourceTree = "<group>"; };
+		142046421AD1EC91006143D5 /* UserDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDataManager.m; path = Lib/UserDataManager.m; sourceTree = "<group>"; };
 		142046441AD1F866006143D5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		142046451AD1F866006143D5 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		142046471AD203FD006143D5 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Lib/Constants.h; sourceTree = "<group>"; };
@@ -227,7 +227,6 @@
 		1419E8E31B1E26CB0057CAC5 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				1419E8E41B1E26ED0057CAC5 /* CLADataRepositoryProtocol.h */,
 				1419E8E71B1E271C0057CAC5 /* CLAInMemoryDataRepository.h */,
 				1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */,
 			);
@@ -237,28 +236,36 @@
 		142046401AD1EC58006143D5 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				142046411AD1EC91006143D5 /* AuthManager.h */,
-				142046421AD1EC91006143D5 /* AuthManager.m */,
+				142046411AD1EC91006143D5 /* UserDataManager.h */,
+				142046421AD1EC91006143D5 /* UserDataManager.m */,
 				142046471AD203FD006143D5 /* Constants.h */,
 				142046481AD203FD006143D5 /* Constants.m */,
-				1404B5311AF10ED400363178 /* CLAMessageClient.h */,
 				1404B5341AF118BB00363178 /* CLASignalRMessageClient.h */,
 				1404B5351AF118BB00363178 /* CLASignalRMessageClient.m */,
 				1463CB081AF95D0A00BC2513 /* CLANotificationManager.h */,
 				1463CB091AF95D0A00BC2513 /* CLANotificationManager.m */,
 				147114DD1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json */,
-				146C9BA81AFC172C00885F96 /* CLAApiClient.h */,
 				146C9BAE1AFC199500885F96 /* CLAWebApiClient.h */,
 				146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */,
 				142FFA691AFD4B3C0076DB6E /* CLAUtility.h */,
 				142FFA6A1AFD4B3C0076DB6E /* CLAUtility.m */,
-				14F5B5C71B2CD710005FDCC3 /* CLAPushNotificationService.h */,
 				14F5B5CA1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.h */,
 				14F5B5CB1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m */,
 				14190E091C176630000861F2 /* CLAMediaManager.h */,
 				14190E0A1C176630000861F2 /* CLAMediaManager.m */,
 			);
 			name = Lib;
+			sourceTree = "<group>";
+		};
+		145067D71C2D8992007EE873 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				1404B5311AF10ED400363178 /* CLAMessageClient.h */,
+				146C9BA81AFC172C00885F96 /* CLAApiClient.h */,
+				14F5B5C71B2CD710005FDCC3 /* CLAPushNotificationService.h */,
+				1419E8E41B1E26ED0057CAC5 /* CLADataRepositoryProtocol.h */,
+			);
+			name = Protocol;
 			sourceTree = "<group>";
 		};
 		14679E931AC8832900316C9C /* DataModel */ = {
@@ -356,6 +363,7 @@
 		14B515701ABF138A0000CC4F /* JabbrClient */ = {
 			isa = PBXGroup;
 			children = (
+				145067D71C2D8992007EE873 /* Protocol */,
 				142046401AD1EC58006143D5 /* Lib */,
 				14E637341B472ECC000A802C /* CoreData */,
 				14679E931AC8832900316C9C /* DataModel */,
@@ -743,7 +751,7 @@
 				14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */,
 				144D9EEC1AF035D6005EBAD2 /* CLARoom.m in Sources */,
 				1463CB0D1AF9691300BC2513 /* CLACreateRoomViewController.m in Sources */,
-				142046431AD1EC91006143D5 /* AuthManager.m in Sources */,
+				142046431AD1EC91006143D5 /* UserDataManager.m in Sources */,
 				14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */,
 				14BD95101B473FD0001051E5 /* CLANotificationMessage.m in Sources */,
 				14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */,

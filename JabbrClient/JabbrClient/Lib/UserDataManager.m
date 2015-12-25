@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Colla. All rights reserved.
 //
 
-#import "AuthManager.h"
+#import "UserDataManager.h"
 
 // Util
 #import "Constants.h"
@@ -14,10 +14,10 @@
 // Services
 #import "CLAAzureHubPushNotificationService.h"
 
-@implementation AuthManager
+@implementation UserDataManager
 
-+ (AuthManager *)sharedInstance {
-    static AuthManager *_sharedManager = nil;
++ (UserDataManager *)sharedInstance {
+    static UserDataManager *_sharedManager = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
         _sharedManager = [[self alloc] init];

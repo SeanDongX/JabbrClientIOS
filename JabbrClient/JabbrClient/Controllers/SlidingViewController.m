@@ -10,7 +10,7 @@
 
 // Util
 #import "Constants.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 
 // App
 #import "AppDelegate.h"
@@ -33,7 +33,7 @@
     
     self.underRightViewControllerStoryboardId = kRightMenuViewController;
     
-    if ([[AuthManager sharedInstance] isAuthenticated]) {
+    if ([[UserDataManager sharedInstance] isAuthenticated]) {
         self.topViewControllerStoryboardId = kChatNavigationController;
     } else {
         self.topViewControllerStoryboardId = kSignInNavigationController;
@@ -144,7 +144,7 @@
 }
 
 - (void)setFirstView {
-    NSString *token = [[AuthManager sharedInstance] getCachedAuthToken];
+    NSString *token = [[UserDataManager sharedInstance] getCachedAuthToken];
     if (token == nil || token.length == 0) {
         [self switchToSignInView];
     } else {

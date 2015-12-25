@@ -10,7 +10,7 @@
 
 // Utils
 #import "Constants.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 #import "CLANotificationManager.h"
 #import "MBProgressHUD.h"
 

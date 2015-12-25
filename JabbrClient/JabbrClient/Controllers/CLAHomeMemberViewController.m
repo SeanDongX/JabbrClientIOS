@@ -11,7 +11,7 @@
 // Util
 #import "Constants.h"
 #import "CLAWebApiClient.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 #import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"
@@ -91,7 +91,7 @@
     CLATeamViewModel *teamViewModel =
     [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
     
-    [[AuthManager sharedInstance] cacheTeamName: teamViewModel.team.name];
+    [[UserDataManager sharedInstance] cacheTeamName: teamViewModel.team.name];
     
     if (teamViewModel != nil) {
         [self updateTeamMembers:teamViewModel.users];

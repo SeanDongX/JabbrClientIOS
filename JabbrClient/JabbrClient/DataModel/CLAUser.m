@@ -10,7 +10,7 @@
 
 // Util
 #import "Constants.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 #import "CLAUtility.h"
 
 @implementation CLAUser
@@ -18,7 +18,7 @@
 - (BOOL)isCurrentUser {
     return
     [self.name
-     caseInsensitiveCompare:[[AuthManager sharedInstance] getUsername]] ==
+     caseInsensitiveCompare:[[UserDataManager sharedInstance] getUsername]] ==
     NSOrderedSame;
 }
 

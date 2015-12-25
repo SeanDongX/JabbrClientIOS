@@ -9,7 +9,7 @@
 #import "ChatViewController.h"
 
 // Util
-#import "AuthManager.h"
+#import "UserDataManager.h"
 #import "ObjectThread.h"
 #import "Constants.h"
 #import "DateTools.h"
@@ -209,7 +209,7 @@
     CLATeamViewModel *teamViewModel =
     [self.messageClient.dataRepository getDefaultTeam];
     CLAUser *currentUser =
-    [teamViewModel findUser:[[AuthManager sharedInstance] getUsername]];
+    [teamViewModel findUser:[[UserDataManager sharedInstance] getUsername]];
     [teamViewModel joinUser:currentUser toRoom:self.room.name];
     [self sendTeamUpdatedEventNotification];
 }

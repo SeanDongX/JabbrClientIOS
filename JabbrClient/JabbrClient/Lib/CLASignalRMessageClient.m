@@ -11,7 +11,7 @@
 // Util
 #import "Constants.h"
 #import "CLAUtility.h"
-#import "AuthManager.h"
+#import "UserDataManager.h"
 #import "CLAMessageFactory.h"
 
 // Data Model
@@ -119,14 +119,14 @@ static bool isFirstAccess = YES;
 - (void)makeConnection {
     
     NSString *server = kServerBaseUrl;
-    NSString *authToken = [[AuthManager sharedInstance] getCachedAuthToken];
+    NSString *authToken = [[UserDataManager sharedInstance] getCachedAuthToken];
     NSNumber *teamKey = [CLAUtility getUserDefault:kTeamKey];
     
     if (authToken == nil) {
         // TODO: throw expcetion
     }
     
-    self.username = [[AuthManager sharedInstance] getUsername];
+    self.username = [[UserDataManager sharedInstance] getUsername];
     
     if (teamKey != nil && teamKey.intValue > 0) {
         self.connection =
@@ -421,7 +421,7 @@ static bool isFirstAccess = YES;
         [rooms setObject:room forKey:room.name];
         // join current user to room
         CLAUser *currentUser =
-        [team findUser:[[AuthManager sharedInstance] getUsername]];
+        [team findUser:[[UserDataManager sharedInstance] getUsername]];
         [team joinUser:currentUser toRoom:room.name];
     }
     

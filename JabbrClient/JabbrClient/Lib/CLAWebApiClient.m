@@ -11,7 +11,7 @@
 #import "AFNetworking.h"
 
 // Util
-#import "AuthManager.h"
+#import "UserDataManager.h"
 #import "Constants.h"
 #import "CLAAzureHubPushNotificationService.h"
 #import "CLAUtility.h"
@@ -110,8 +110,8 @@ static bool isFirstAccess = YES;
                                  message = NSLocalizedString(
                                                              @"We are terribly sorry, but some error happened.", nil);
                              } else {
-                                 [[AuthManager sharedInstance] cacheAuthToken:token];
-                                 [[AuthManager sharedInstance]
+                                 [[UserDataManager sharedInstance] cacheAuthToken:token];
+                                 [[UserDataManager sharedInstance]
                                   cacheUsername:userRegistrationModel.username];
                                  [self cacheTaskServiceToken];
                              }
@@ -145,8 +145,8 @@ static bool isFirstAccess = YES;
                                  message = NSLocalizedString(
                                                              @"We are terribly sorry, but we can not sign you in now.", nil);
                              } else {
-                                 [[AuthManager sharedInstance] cacheAuthToken:token];
-                                 [[AuthManager sharedInstance] cacheUsername:username];
+                                 [[UserDataManager sharedInstance] cacheAuthToken:token];
+                                 [[UserDataManager sharedInstance] cacheUsername:username];
                                  [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
                                  [self cacheTaskServiceToken];
                                  
@@ -364,7 +364,7 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
 #pragma mark Private Methods
 
 - (NSString *)getToken {
-    return [[AuthManager sharedInstance] getCachedAuthToken];
+    return [[UserDataManager sharedInstance] getCachedAuthToken];
 }
 
 - (NSString *)getResponseErrorMessage:(NSError *)error {
@@ -404,7 +404,7 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
                      parameters:nil
                         success:^(AFHTTPRequestOperation *operation,
                                   NSDictionary *responseObject) {
-                            [[AuthManager sharedInstance] cacheTaskServiceAuthInfo:responseObject];
+                            [[UserDataManager sharedInstance] cacheTaskServiceAuthInfo:responseObject];
                         }
                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                             NSLog(@"Request task token failed: %@",

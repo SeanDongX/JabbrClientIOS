@@ -298,18 +298,9 @@ static bool isFirstAccess = YES;
         [self.dataRepository addOrUpdateTeam:teamViewModel];
     }
     
-    CLATeamViewModel *myTeamViewModel = [self.dataRepository getDefaultTeam];
-    if (myTeamViewModel != nil) {
-        
-        CLATeam *team = myTeamViewModel.team;
-        
-        NSNumber *teamKey = [UserDataManager getTeam].key;
-        
-        if (team != nil && team.key != nil &&
-            team.key.intValue != teamKey.intValue) {
-            [UserDataManager cacheTeam:team];
-            [self reconnect];
-        }
+    CLATeamViewModel *myTeamViewModel = [self.dataRepository getCurrentOrDefaultTeam];
+    if (myTeamViewModel.team.key != nil && myTeamViewModel.team.key.intValue > 0) {
+        [UserDataManager cacheTeam:myTeamViewModel.team];
     }
     
     [self.delegate didReceiveTeams:[self.dataRepository getTeams]];
@@ -407,7 +398,7 @@ static bool isFirstAccess = YES;
     CLARoom *room = [[CLARoom alloc] init];
     [room getFromDictionary:roomInfoDictionary];
     
-    CLATeamViewModel *team = [self.dataRepository getDefaultTeam];
+    CLATeamViewModel *team = [self.dataRepository getCurrentOrDefaultTeam];
     NSMutableDictionary *rooms = team.rooms;
     
     BOOL isNewRoom = NO;
@@ -433,7 +424,7 @@ static bool isFirstAccess = YES;
     CLARoom *room = [[CLARoom alloc] init];
     [room getFromDictionary:roomInfoDictionary];
     
-    CLATeamViewModel *team = [self.dataRepository getDefaultTeam];
+    CLATeamViewModel *team = [self.dataRepository getCurrentOrDefaultTeam];
     
     // update room does not carry information below room level
     CLARoom *existingRoom = [team.rooms objectForKey:room.name];

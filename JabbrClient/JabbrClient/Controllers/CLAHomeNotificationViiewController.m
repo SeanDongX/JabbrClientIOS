@@ -122,7 +122,7 @@
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [UserDataManager cacheLastRefrershTime];
+    [UserDataManager cacheLastRefreshTime];
     self.isRefreshing = TRUE;
     [self loadNotifications];
 }

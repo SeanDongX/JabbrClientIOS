@@ -7,6 +7,7 @@
 //
 
 #import "CLAInMemoryDataRepository.h"
+#import "UserDataManager.h"
 @interface CLAInMemoryDataRepository ()
 
 @property(nonatomic, strong)
@@ -32,8 +33,22 @@ NSMutableArray<CLATeamViewModel *> *teamViewModelArray;
     return nil;
 }
 
-- (CLATeamViewModel *)getDefaultTeam {
-    return self.teamViewModelArray.count > 0 ? self.teamViewModelArray[0] : nil;
+- (CLATeamViewModel *)getCurrentOrDefaultTeam {
+    if (self.teamViewModelArray != nil && self.teamViewModelArray.count > 0 ) {
+        CLATeam *currentTeam = [UserDataManager getTeam];
+        
+        if (currentTeam.key != nil && currentTeam.key.intValue > 0) {
+            for (CLATeamViewModel *teamViewModel in self.teamViewModelArray) {
+                if (teamViewModel.team.key == currentTeam.key) {
+                    return teamViewModel;
+                }
+            }
+        }
+        
+        return self.teamViewModelArray[0];
+    }
+    
+    return nil;
 }
 
 - (NSArray<CLATeamViewModel *> *)getTeams {

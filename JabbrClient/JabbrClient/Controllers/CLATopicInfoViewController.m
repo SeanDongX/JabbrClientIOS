@@ -68,7 +68,7 @@ NSString *const kInvitePrefix = @"Invite-";
     XLFormRowDescriptor *row;
     
     NSArray<CLAUser *> *allUsers =
-    [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam]
+    [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam]
     .users;
     NSMutableArray<CLAUser *> *notMembers = [NSMutableArray array];
     [notMembers addObjectsFromArray:allUsers];

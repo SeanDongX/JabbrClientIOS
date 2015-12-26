@@ -12,9 +12,4 @@
 
 @interface CLAInMemoryDataRepository : NSObject <CLADataRepositoryProtocol>
 
-- (CLATeamViewModel *)get:(NSString *)name;
-- (CLATeamViewModel *)getDefaultTeam;
-- (NSArray<CLATeamViewModel *> *)getTeams;
-- (void)addOrUpdateTeam:(CLATeamViewModel *)team;
-
 @end

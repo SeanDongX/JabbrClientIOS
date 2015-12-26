@@ -105,7 +105,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
 - (void)updateTeam:(NSNotification *)notification {
     CLATeamViewModel *teamViewModel =
-    [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
+    [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
     
     if (teamViewModel != nil) {
         
@@ -117,6 +117,8 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     }
     
     [self.topicTableView reloadData];
+    self.welcomeLabel.text =
+    [NSString stringWithFormat: NSLocalizedString(@"Welcome to %@ team", nil), [UserDataManager getTeam].name];
     [self didFinishRefresh];
 }
 
@@ -141,7 +143,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [UserDataManager cacheLastRefrershTime];
+    [UserDataManager cacheLastRefreshTime];
     self.isRefreshing = TRUE;
     [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
     // team loading finished will be notified through kEventTeamUpdated

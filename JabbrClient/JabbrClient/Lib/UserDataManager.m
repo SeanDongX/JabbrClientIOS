@@ -72,7 +72,7 @@
 
 
 + (NSDate *)getLastRefrershTime {
-    return [UserDataManager getLastRefrershTime];
+    return (NSDate *)[UserDataManager getCachedObjectForKey:kLastRefreshTime];
 }
 
 + (void)cacheAuthToken:(NSString *)authToken {

@@ -183,7 +183,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 
 - (void)updateTeam:(NSNotification *)notification {
     CLATeamViewModel *teamViewModel =
-    [[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam];
+    [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
     if (teamViewModel != nil) {
         
         NSMutableArray *roomArray = [[teamViewModel getJoinedRooms] mutableCopy];
@@ -223,7 +223,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [UserDataManager cacheLastRefrershTime];
+    [UserDataManager cacheLastRefreshTime];
     self.isRefreshing = TRUE;
     [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
     // team loading finished will be notified through kEventTeamUpdated

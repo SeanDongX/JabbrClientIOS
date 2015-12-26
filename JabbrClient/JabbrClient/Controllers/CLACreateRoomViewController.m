@@ -113,7 +113,7 @@
 }
 
 - (void)setupData {
-    NSArray<CLARoom *> *notJoinedRooms = [[[CLASignalRMessageClient sharedInstance].dataRepository getDefaultTeam] getNotJoinedRooms];
+    NSArray<CLARoom *> *notJoinedRooms = [[[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam] getNotJoinedRooms];
     
     self.tableItems = [NSMutableArray array];
     self.filteredtableItems = [NSMutableArray array];

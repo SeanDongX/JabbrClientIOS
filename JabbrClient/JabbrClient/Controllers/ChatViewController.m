@@ -207,7 +207,7 @@
 
 - (void)joinUserToRoomModel {
     CLATeamViewModel *teamViewModel =
-    [self.messageClient.dataRepository getDefaultTeam];
+    [self.messageClient.dataRepository getCurrentOrDefaultTeam];
     CLAUser *currentUser =
     [teamViewModel findUser:[UserDataManager getUsername]];
     [teamViewModel joinUser:currentUser toRoom:self.room.name];
@@ -215,7 +215,7 @@
 }
 
 - (CLARoom *)getRoom:(NSString *)roomName {
-    return [[self.messageClient.dataRepository getDefaultTeam].rooms
+    return [[self.messageClient.dataRepository getCurrentOrDefaultTeam].rooms
             objectForKey:roomName];
 }
 
@@ -689,7 +689,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 - (void)initialzeCurrentThread {
     self.roomViewModel = [[CLARoomViewModel alloc] init];
     
-    CLARoom *room = [[self.messageClient.dataRepository getDefaultTeam].rooms
+    CLARoom *room = [[self.messageClient.dataRepository getCurrentOrDefaultTeam].rooms
                      objectForKey:self.room.name];
     
     self.roomViewModel.room = room;

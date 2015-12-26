@@ -19,7 +19,7 @@
 
 @interface CLAProfileViewController ()
 
-@property (nonatomic) BOOL rowValueSetProgramatically;
+@property (nonatomic, strong) NSArray<CLATeamViewModel *> *teamViewModels;
 
 @end
 
@@ -33,6 +33,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.backItem.hidesBackButton = YES;
+    self.teamViewModels = [[CLASignalRMessageClient sharedInstance].dataRepository getTeams];
     self.form = [self getForm];
 }
 
@@ -118,7 +119,6 @@
     XLFormSectionDescriptor *section = [XLFormSectionDescriptor
                                         formSectionWithTitle:NSLocalizedString(@"Team", nil)];
     
-    NSArray<CLATeamViewModel *> *teams = [[CLASignalRMessageClient sharedInstance].dataRepository getTeams];
     
     XLFormRowDescriptor *row =
     [XLFormRowDescriptor formRowDescriptorWithTag:@"TeamSelector"
@@ -127,38 +127,42 @@
     
     NSMutableArray *options = [NSMutableArray array];
     
-    for(CLATeamViewModel *teamViewModel in teams) {
+    for(CLATeamViewModel *teamViewModel in self.teamViewModels) {
         if (teamViewModel.team.name != nil) {
-            [options addObject: [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.name displayText:teamViewModel.team.name]];
+            [options addObject: [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.key displayText:teamViewModel.team.name]];
         }
         
-        if ([teamViewModel.team.name isEqualToString:[UserDataManager getTeam].name]) {
-            row.value = [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.name displayText:teamViewModel.team.name];
+        if (teamViewModel.team.key.integerValue > 0
+            && teamViewModel.team.key.integerValue == [UserDataManager getTeam].key.integerValue) {
+            row.value = [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.key displayText:teamViewModel.team.name];
         }
         
     }
     
     row.selectorOptions = options;
-    [section addFormRow:row];
+    [section addFormRow: row];
+    
+    typeof(self) __weak weakself = self;
+    row.onChangeBlock = ^(id oldValue, id newValue, XLFormRowDescriptor* __unused rowDescriptor) {
+        [weakself switchTeam:newValue withOldValue:oldValue];
+    };
+    
     return section;
 }
 
-- (void)selectTeam:(XLFormRowDescriptor *)sender withValue:(id)newValue {
-    
-    if (self.rowValueSetProgramatically != NO) {
+- (void)switchTeam:(XLFormOptionsObject *)newValue withOldValue:(XLFormOptionsObject *)oldValue {
+    if ([newValue.formValue integerValue] == [oldValue.formValue integerValue]) {
         return;
     }
     
-    if (![newValue  isEqual: @1]) {
-        self.rowValueSetProgramatically = YES;
-        sender.value = @1;
-    }
-    else {
-        for(XLFormRowDescriptor *row in sender.sectionDescriptor.formRows) {
-            if (row.tag != sender.tag) {
-                row.value = @0;
+    if ([newValue.formValue integerValue] > 0) {
+        for (CLATeamViewModel *teamViewModel in self.teamViewModels) {
+            if (teamViewModel.team.key.integerValue == [newValue.formValue integerValue]) {
+                [UserDataManager cacheTeam:teamViewModel.team];
+                [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
             }
         }
     }
 }
+
 @end

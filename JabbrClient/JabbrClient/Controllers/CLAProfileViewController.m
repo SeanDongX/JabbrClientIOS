@@ -108,8 +108,8 @@
     [XLFormRowDescriptor formRowDescriptorWithTag:@"Email"
                                           rowType:XLFormRowDescriptorTypeInfo
                                             title:NSLocalizedString(@"Email", nil)];
-    //TODO: get email
-    email.value = @"abc@gmail.com";
+    CLAUser *user = [UserDataManager getUser];
+    email.value = user.email;
     [section addFormRow:email];
     
     return section;

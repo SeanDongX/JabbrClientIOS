@@ -15,6 +15,7 @@
 #import "CLAAzureHubPushNotificationService.h"
 #import "CLATeam.h"
 #import <MagicalRecord/MagicalRecord.h>
+#import "CLAUser.h"
 
 @implementation UserDataManager
 
@@ -55,6 +56,15 @@
     [UserDataManager cacheObject:teamDictionary forKey:kTeam];
 }
 
++ (void)cacheUser:(CLAUser *)user {
+    NSDictionary *userDictionary = @{ kUsername: user.name,
+                                      kRealName: user.realName,
+                                      kInitials : user.initials,
+                                      kEmail: user.email};
+    
+    [UserDataManager cacheObject:userDictionary forKey:kUser];
+}
+
 + (NSString *)getUsername {
     return (NSString *)[UserDataManager getCachedObjectForKey:kUsername];
 }
@@ -65,6 +75,16 @@
     team.key = [teamDictionary objectForKey:kTeamKey];
     team.name = [teamDictionary objectForKey:kTeamName];
     return team;
+}
+
++ (CLAUser *)getUser {
+    NSDictionary *userDictionary = (NSDictionary *)[UserDataManager getCachedObjectForKey:kUser];
+    CLAUser *user = [[CLAUser alloc] init];
+    user.name = [userDictionary objectForKey:kUsername];
+    user.realName = [userDictionary objectForKey:kRealName];
+    user.initials = [userDictionary objectForKey:kInitials];
+    user.email = [userDictionary objectForKey:kEmail];
+    return user;
 }
 
 + (NSData *)getCachedDeviceToken {

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CLATeam.h"
+#import "CLAUser.h"
 
 @interface UserDataManager : NSObject
 
@@ -21,12 +22,14 @@
 + (NSString *)getCachedAuthToken;
 + (NSString *)getUsername;
 + (CLATeam *)getTeam;
++ (CLAUser *)getUser;
 + (NSData *)getCachedDeviceToken;
 + (NSDate *)getLastRefrershTime;
 
 + (void)cacheAuthToken:(NSString *)authToken;
 + (void)cacheUsername:(NSString *)username;
 + (void)cacheTeam:(CLATeam *)team;
++ (void)cacheUser:(CLAUser *)user;
 + (void)cacheDeviceToken:(NSData *)deviceToken;
 + (void)cacheLastRefreshTime;
 + (void)cacheTaskServiceAuthInfo:(NSDictionary *)data;

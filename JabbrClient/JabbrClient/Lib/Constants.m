@@ -76,6 +76,12 @@ NSString *const kRoomPrefix = @"#";
 NSString *const kDocPrefix = @">";
 
 NSString *const kUsername = @"Username";
+
+NSString *const kUser = @"User";
+NSString *const kRealName = @"RealName";
+NSString *const kInitials = @"Initials";
+NSString *const kEmail = @"Email";
+
 NSString *const kAuthToken = @"AuthToken";
 NSString *const kTeam = @"Team";
 NSString *const kTeamName = @"TeamName";

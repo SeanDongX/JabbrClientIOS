@@ -111,8 +111,7 @@ static bool isFirstAccess = YES;
                                                              @"We are terribly sorry, but some error happened.", nil);
                              } else {
                                  [UserDataManager cacheAuthToken:token];
-                                 [UserDataManager
-                                  cacheUsername:userRegistrationModel.username];
+                                 [UserDataManager cacheUsername:userRegistrationModel.username];
                                  [self cacheTaskServiceToken];
                              }
                              

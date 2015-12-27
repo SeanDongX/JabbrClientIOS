@@ -303,6 +303,13 @@ static bool isFirstAccess = YES;
         [UserDataManager cacheTeam:myTeamViewModel.team];
     }
     
+    for(CLAUser *user in myTeamViewModel.users) {
+        if (user.name !=nil && [user.name isEqualToString: [UserDataManager getUsername]]) {
+            [UserDataManager cacheUser:user];
+            break;
+        }
+    }
+    
     [self.delegate didReceiveTeams:[self.dataRepository getTeams]];
 }
 

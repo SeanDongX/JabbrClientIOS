@@ -51,6 +51,11 @@ FOUNDATION_EXPORT NSString *const kRoomPrefix;
 FOUNDATION_EXPORT NSString *const kDocPrefix;
 
 FOUNDATION_EXPORT NSString *const kUsername;
+FOUNDATION_EXPORT NSString *const kUser;
+FOUNDATION_EXPORT NSString *const kRealName;
+FOUNDATION_EXPORT NSString *const kInitials;
+FOUNDATION_EXPORT NSString *const kEmail;
+
 FOUNDATION_EXPORT NSString *const kAuthToken;
 FOUNDATION_EXPORT NSString *const kTeam;
 FOUNDATION_EXPORT NSString *const kTeamName;

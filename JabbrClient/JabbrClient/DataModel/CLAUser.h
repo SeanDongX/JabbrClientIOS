@@ -18,6 +18,9 @@ typedef enum {
 
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *realName;
+@property(nonatomic, strong) NSString *initials;
+@property(nonatomic, strong) NSString *email;
+
 @property(nonatomic) CLAUserStatus status;
 
 - (BOOL)isCurrentUser;

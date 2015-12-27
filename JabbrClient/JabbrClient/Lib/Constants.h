@@ -74,6 +74,8 @@ FOUNDATION_EXPORT NSString *const kEventTeamUpdated;
 FOUNDATION_EXPORT NSString *const kEventNoTeam;
 FOUNDATION_EXPORT NSString *const kEventReceiveUnread;
 
+FOUNDATION_EXPORT NSString *const kNotificationKey;
+
 FOUNDATION_EXPORT int const kTeamNameMaxLength;
 
 FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;

@@ -14,8 +14,8 @@
 
 #ifdef DEBUG
 
-//NSString *const kServerBaseUrl = @"http://192.168.1.56:16207/";
-NSString *const kServerBaseUrl = @"http://test.collara.co/";
+NSString *const kServerBaseUrl = @"http://192.168.0.43:16207/";
+//NSString *const kServerBaseUrl = @"http://test.collara.co/";
 NSString *const kTaskServiceRootUrl = @"http://task.collara.co/";
 
 NSString *const kAuzreNotificationHubName = @"collarapush";
@@ -98,6 +98,8 @@ NSString *const kSelectedRoomName = @"SelectedRoomNameKey";
 NSString *const kEventTeamUpdated = @"EventTeamUpdatedKey";
 NSString *const kEventNoTeam = @"EventNoTeamKey";
 NSString *const kEventReceiveUnread = @"EventReceiveUnreadKey";
+
+NSString *const kNotificationKey = @"notificationKey";
 
 int const kTeamNameMaxLength = 50;
 

@@ -60,18 +60,31 @@
 
 - (void)loadNotifications {
     [[CLAWebApiClient sharedInstance]
-     getNotificationsFor:[UserDataManager getTeam].key
+     getNotificationsFor:[UserDataManager getTeam].key.stringValue
      completion:^(NSArray *result, NSString *errorMessage) {
+         if (errorMessage != nil) {
+             [CLANotificationManager
+              showText:NSLocalizedString(@"We are terribly "
+                                         @"sorry, but some "
+                                         @"error happened.",
+                                         nil)
+              forViewController:self
+              withType:CLANotificationTypeError];
+             
+             [self finishRefresh];
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
+             
+             return;
+         }
          
          [MagicalRecord
           saveWithBlock:^(NSManagedObjectContext *localContext) {
               for (NSDictionary *dataDictionary in result) {
-                  NSNumber *notificationKey =
-                  [dataDictionary objectForKey:@"notificationKey"];
+                  NSNumber *notificationKey = [dataDictionary objectForKey:kNotificationKey];
                   
                   CLANotificationMessage *existingNotification =
                   [CLANotificationMessage
-                   MR_findFirstByAttribute:@"notificationKey"
+                   MR_findFirstByAttribute:kNotificationKey
                    withValue:notificationKey
                    inContext:localContext];
                   
@@ -91,17 +104,6 @@
               [self finishRefresh];
               [MBProgressHUD hideHUDForView:self.view animated:YES];
           }];
-         
-         if (errorMessage != nil) {
-             [CLANotificationManager
-              showText:NSLocalizedString(@"We are terribly "
-                                         @"sorry, but some "
-                                         @"error happened.",
-                                         nil)
-              forViewController:self
-              withType:CLANotificationTypeError];
-             return;
-         }
      }];
 }
 
@@ -205,7 +207,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
      objectAtIndex:indexPath.row];
     
     UIView *backgroundView = [UIView new];
-    backgroundView.backgroundColor = [Constants highlightColor];
+    backgroundView.backgroundColor = [UIColor whiteColor];
     cell.selectedBackgroundView = backgroundView;
     
     [cell setNeedsUpdateConstraints];

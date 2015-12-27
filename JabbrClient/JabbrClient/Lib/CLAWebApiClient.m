@@ -256,14 +256,14 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
 
 #pragma mark -
 #pragma mark Notification
-- (void)getNotificationsFor:(NSString *)team
+- (void)getNotificationsFor:(NSString *)teamKey
                  completion:(void (^)(NSArray *result,
                                       NSString *errorMessage))completion {
     NSArray *array = @[
                        kServerBaseUrl,
                        kApiPath,
                        @"accounts/notification/?teamkey=",
-                       team,
+                       teamKey,
                        @"&token=",
                        [self getToken]
                        ];

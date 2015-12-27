@@ -15,9 +15,10 @@
     self.message = [dataDictionary objectForKey:@"message"];
     self.read = [dataDictionary objectForKey:@"read"];
     
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
-    self.when = [dateFormat dateFromString:[dataDictionary objectForKey:@"when"]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+    self.when = [dateFormatter dateFromString:[dataDictionary objectForKey:@"when"]];
 }
 
 - (void)updateExisting:(NSDictionary *)dataDictionary {

@@ -14,8 +14,8 @@
 
 #ifdef DEBUG
 
-NSString *const kServerBaseUrl = @"http://192.168.0.43:16207/";
-//NSString *const kServerBaseUrl = @"http://test.collara.co/";
+//NSString *const kServerBaseUrl = @"http://192.168.0.43:16207/";
+NSString *const kServerBaseUrl = @"http://test.collara.co/";
 NSString *const kTaskServiceRootUrl = @"http://task.collara.co/";
 
 NSString *const kAuzreNotificationHubName = @"collarapush";
@@ -228,9 +228,9 @@ NSString *const kXLFormTextLabelColor = @"textLabel.color";
 }
 
 + (UIColor *)mainThemeColor {
-    return [UIColor colorWithRed:(26 / 255.0)
-                           green:(179 / 255.0)
-                            blue:(148 / 255.0)
+    return [UIColor colorWithRed:(27 / 255.0)
+                           green:(188 / 255.0)
+                            blue:(155 / 255.0)
                            alpha:1];
 }
 
@@ -242,9 +242,9 @@ NSString *const kXLFormTextLabelColor = @"textLabel.color";
 }
 
 + (UIColor *)highlightColor {
-    return [UIColor colorWithRed:(52 / 255.0)
-                           green:(152 / 255.0)
-                            blue:(219 / 255.0)
+    return [UIColor colorWithRed:(102 / 255.0)
+                           green:(196 / 255.0)
+                            blue:(232 / 255.0)
                            alpha:1];
 }
 
@@ -269,4 +269,10 @@ NSString *const kXLFormTextLabelColor = @"textLabel.color";
                            alpha:1];
 }
 
++ (UIColor *)incomingMessageBubbleBackgroundColor {
+    return [UIColor colorWithRed:(223 / 255.0)
+                           green:(246 / 255.0)
+                            blue:(247 / 255.0)
+                           alpha:1];
+}
 @end

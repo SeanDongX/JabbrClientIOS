@@ -174,7 +174,6 @@
 #pragma mark - Initial Setup
 
 - (void)configJSQMessage {
-    
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
     self.showLoadEarlierMessagesHeader = YES;
     
@@ -187,7 +186,7 @@
      [UIColor jsq_messageBubbleLightGrayColor]];
     self.incomingBubbleImageView =
     [bubbleImageFactory incomingMessagesBubbleImageWithColor:
-     [UIColor jsq_messageBubbleBlueColor]];
+     [Constants incomingMessageBubbleBackgroundColor]];
 }
 
 #pragma mark -
@@ -437,7 +436,7 @@ attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
         if ([msg.senderId isEqualToString:self.senderId]) {
             cell.textView.textColor = [UIColor blackColor];
         } else {
-            cell.textView.textColor = [UIColor whiteColor];
+            cell.textView.textColor = [UIColor blackColor];
         }
         
         cell.textView.linkTextAttributes = @{

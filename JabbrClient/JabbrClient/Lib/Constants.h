@@ -142,4 +142,5 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIColor *)mainThemeContrastColor;
 + (UIColor *)warningColor;
 + (UIColor *)backgroundColor;
++ (UIColor *)incomingMessageBubbleBackgroundColor;
 @end

@@ -122,7 +122,7 @@
     
     XLFormRowDescriptor *row =
     [XLFormRowDescriptor formRowDescriptorWithTag:@"TeamSelector"
-                                          rowType:XLFormRowDescriptorTypeSelectorActionSheet
+                                          rowType:XLFormRowDescriptorTypeSelectorPush
                                             title:NSLocalizedString(@"Switch Team", nil)];
     
     NSMutableArray *options = [NSMutableArray array];

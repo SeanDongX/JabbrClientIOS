@@ -54,7 +54,7 @@ static NSString *const kDoc = @"doc";
     [cell setBackgroundColor:[UIColor clearColor]];
     
     UIView *backgroundView = [UIView new];
-    backgroundView.backgroundColor = [Constants mainThemeColor];
+    backgroundView.backgroundColor = [Constants highlightColor];
     cell.selectedBackgroundView = backgroundView;
     
     switch (indexPath.item) {

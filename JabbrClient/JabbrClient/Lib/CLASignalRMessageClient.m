@@ -198,6 +198,7 @@ static bool isFirstAccess = YES;
 
 - (void)SRConnection:(id<SRConnectionInterface>)connection
      didReceiveError:(NSError *)error {
+    NSLog(@"Error %@", error.description);
 }
 
 - (void)SRConnection:(id<SRConnectionInterface>)connection

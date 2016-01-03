@@ -376,7 +376,7 @@ static bool isFirstAccess = YES;
     
     NSString *room = [roomInfoDictionary objectForKey:@"Name"];
     
-    NSArray *usersArray = [roomInfoDictionary objectForKey:@"Users"];
+    NSArray *usersArray = [roomInfoDictionary objectForKey:@"AllUsersInRoom"];
     NSMutableArray *users = [NSMutableArray array];
     
     for (NSDictionary *userDictionary in usersArray) {

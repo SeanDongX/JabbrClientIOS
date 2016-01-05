@@ -92,7 +92,7 @@
 }
 
 
-+ (NSDate *)getLastRefrershTime {
++ (NSDate *)getLastRefreshTime {
     return (NSDate *)[UserDataManager getCachedObjectForKey:kLastRefreshTime];
 }
 

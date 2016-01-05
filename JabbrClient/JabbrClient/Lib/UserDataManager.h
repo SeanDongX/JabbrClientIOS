@@ -24,7 +24,7 @@
 + (CLATeam *)getTeam;
 + (CLAUser *)getUser;
 + (NSData *)getCachedDeviceToken;
-+ (NSDate *)getLastRefrershTime;
++ (NSDate *)getLastRefreshTime;
 
 + (void)cacheAuthToken:(NSString *)authToken;
 + (void)cacheUsername:(NSString *)username;

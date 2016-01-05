@@ -6,7 +6,7 @@
   Copyright (c) 2015 Collara. All rights reserved.
 */
 
-"Welcome to join team %@" = "Welcome to join team %@";
+"Welcome to team %@" = "Welcome to team %@";
 "My Topics (%@)" = "My Topics (%@)";
 "All Topics (%@)" = "All Topics (%@)";
 "Topic" = "Topic";

@@ -118,7 +118,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     
     [self.topicTableView reloadData];
     self.welcomeLabel.text =
-    [NSString stringWithFormat: NSLocalizedString(@"Welcome to %@ team", nil), [UserDataManager getTeam].name];
+    [NSString stringWithFormat: NSLocalizedString(@"Welcome to team %@", nil), [UserDataManager getTeam].name];
     [self didFinishRefresh];
 }
 
@@ -157,7 +157,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
         return;
     }
     
-    NSDate *lastRefreshTime = [UserDataManager getLastRefrershTime];
+    NSDate *lastRefreshTime = [UserDataManager getLastRefreshTime];
     NSTimeInterval remainTime = 0;
     
     if (![lastRefreshTime isEqual:[NSNull null]]) {

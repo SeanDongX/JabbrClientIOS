@@ -144,7 +144,7 @@
         return;
     }
     
-    NSDate *lastRefreshTime = [UserDataManager getLastRefrershTime];
+    NSDate *lastRefreshTime = [UserDataManager getLastRefreshTime];
     NSTimeInterval remainTime = 0;
     
     if (![lastRefreshTime isEqual:[NSNull null]]) {

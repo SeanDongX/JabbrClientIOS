@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "UserDataManager.h"
 #import "CLANotificationManager.h"
-#import "MBProgressHUD.h"
 
 // Services
 #import "CLAWebApiClient.h"
@@ -95,7 +94,10 @@
         return;
     }
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [CLANotificationManager showText:NSLocalizedString(@"Signing in...", nil)
+                   forViewController:self
+                            withType:CLANotificationTypeMessage];
+    
     __weak __typeof(&*self) weakSelf = self;
     
     [[CLAWebApiClient sharedInstance]
@@ -104,7 +106,7 @@
      completionHandler:^(NSString *errorMessage) {
          __strong __typeof(&*weakSelf) strongSelf = weakSelf;
          
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         [CLANotificationManager dismiss];
          [strongSelf processSignInResult:errorMessage];
      }];
 }

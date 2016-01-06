@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "CLANotificationManager.h"
 #import "CLAUtility.h"
-#import "MBProgressHUD.h"
 
 // Control
 #import "CLARoundFrameButton.h"
@@ -51,7 +50,9 @@
 #pragma mark Event Handlers
 
 - (IBAction)signUpClicked:(id)sender {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [CLANotificationManager showText:NSLocalizedString(@"Trying to create account...", nil)
+                   forViewController:self
+                            withType:CLANotificationTypeMessage];
     
     CLAUserRegistrationViewModel *accountModel =
     [[CLAUserRegistrationViewModel alloc] init];
@@ -79,10 +80,10 @@
                                          withType:CLANotificationTypeError];
              }
              
-             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+             [CLANotificationManager dismiss];
          }];
     } else {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [CLANotificationManager dismiss];
     }
 }
 
@@ -139,11 +140,9 @@
     }
     
     if (![accountModel.password isEqual:accountModel.confirmPassword]) {
-        [CLANotificationManager
-         showText:NSLocalizedString(
-                                    @"Oops, the passwords do not match.", nil)
-         forViewController:self
-         withType:CLANotificationTypeWarning];
+        [CLANotificationManager showText:NSLocalizedString(@"Oops, the passwords do not match.", nil)
+                       forViewController:self
+                                withType:CLANotificationTypeWarning];
         return NO;
     }
     

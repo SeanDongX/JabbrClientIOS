@@ -10,7 +10,6 @@ target 'Collara' do
   pod 'JSQMessagesViewController'
   pod 'ECSlidingViewController', :git => 'https://github.com/ECSlidingViewController/ECSlidingViewController.git'
   pod 'SignalR-ObjC', :git => 'https://github.com/wonderxboy/SignalR-ObjC.git', :commit => 'eae1110'
-  pod 'MBProgressHUD'
   pod 'XLPagerTabStrip', :git => 'https://github.com/xmartlabs/XLPagerTabStrip.git'
   pod 'BOZPongRefreshControl'
   pod 'Masonry'

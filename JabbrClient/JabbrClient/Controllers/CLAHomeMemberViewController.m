@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "CLAWebApiClient.h"
 #import "UserDataManager.h"
-#import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"
 
@@ -313,12 +312,11 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         return;
     }
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [CLANotificationManager dismiss];
     
     [[CLAWebApiClient sharedInstance]
      getInviteCodeForTeam:[UserDataManager getTeam].key
      completion:^(NSString *invitationCode, NSString *errorMessage) {
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
          
          if (errorMessage != nil) {
              [CLANotificationManager

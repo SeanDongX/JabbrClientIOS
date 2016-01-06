@@ -9,7 +9,6 @@
 #import "CLACreateRoomViewController.h"
 #import "Constants.h"
 #import "CLANotificationManager.h"
-#import "MBProgressHUD.h"
 #import "Masonry.h"
 
 @interface CLACreateRoomViewController ()
@@ -152,7 +151,9 @@
 }
 
 - (IBAction)goButtonClicked:(id)sender {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [CLANotificationManager showText:NSLocalizedString(@"Loading...", nil)
+                   forViewController:self
+                            withType:CLANotificationTypeMessage];
     [self invokeCreateTopic: self.topicNameTextField.text withRoomType:self.roomType];
 }
 
@@ -179,18 +180,13 @@
                                                  forViewController:strongSelf
                                                           withType:CLANotificationTypeError];
                               } else {
-                                  [CLANotificationManager
-                                   showText:NSLocalizedString(@"Oh, something went "
-                                                              @"wrong. Let's try "
-                                                              @"it again.",
-                                                              nil)
-                                   forViewController:strongSelf
-                                   withType:CLANotificationTypeError];
+                                  [CLANotificationManager showText:NSLocalizedString(@"Oh, something went wrong. Let's try it again.", nil)
+                                                 forViewController:strongSelf
+                                                          withType:CLANotificationTypeError];
                               }
                           }
                           
-                          [MBProgressHUD hideAllHUDsForView:strongSelf.view animated:YES];
-                          
+                          [CLANotificationManager dismiss];
                       }];
 }
 

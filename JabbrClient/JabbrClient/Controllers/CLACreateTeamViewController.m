@@ -13,7 +13,6 @@
 #import "CLANotificationManager.h"
 #import "UserDataManager.h"
 #import "Masonry.h"
-#import "MBProgressHUD.h"
 
 // Menu
 #import "UIViewController+ECSlidingViewController.h"
@@ -111,8 +110,6 @@
          forViewController:self
          withType:CLANotificationTypeError];
     } else {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        
         CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
         __weak __typeof(&*self) weakSelf = self;
         
@@ -120,7 +117,7 @@
             completionHandler:^(NSString *errorMessage) {
                 __strong __typeof(&*weakSelf) strongSelf = weakSelf;
                 
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                [CLANotificationManager dismiss];
                 
                 if (errorMessage == nil) {
                     [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
@@ -140,15 +137,13 @@
     
     if (inviteCode == nil || inviteCode.length == 0) {
         
-        [CLANotificationManager
-         showText:
-         NSLocalizedString(
-                           @"Oh, an empty invitation code. That will not work.",
-                           nil)
-         forViewController:self
-         withType:CLANotificationTypeWarning];
+        [CLANotificationManager showText: NSLocalizedString(@"Oh, an empty invitation code. That will not work.", nil)
+                       forViewController:self
+                                withType:CLANotificationTypeWarning];
     } else {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [CLANotificationManager showText: NSLocalizedString(@"Loading...", nil)
+                       forViewController:self
+                                withType:CLANotificationTypeWarning];
         
         CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
         __weak __typeof(&*self) weakSelf = self;
@@ -157,7 +152,7 @@
           completionHandler:^(NSString *errorMessage) {
               __strong __typeof(&*weakSelf) strongSelf = weakSelf;
               
-              [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+              [CLANotificationManager dismiss];
               
               if (errorMessage == nil) {
                   [[CLASignalRMessageClient sharedInstance] invokeGetTeam];

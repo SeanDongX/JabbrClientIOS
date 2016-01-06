@@ -10,7 +10,6 @@
 
 // Util
 #import "Constants.h"
-#import "MBProgressHUD.h"
 #import "CLASignalRMessageClient.h"
 // Menu
 #import "UIViewController+ECSlidingViewController.h"
@@ -20,6 +19,7 @@
 #import "CLAHomeTopicViewController.h"
 #import "CLAHomeMemberViewController.h"
 #import "CLAHomeNotificationViiewController.h"
+#import "CLANotificationManager.h"
 
 @interface CLAHomeMasterViewController ()
 
@@ -53,7 +53,10 @@
     self.scrollView.contentOffset =
     CGPointMake(self.scrollView.contentOffset.x, 0);
     if (![CLASignalRMessageClient sharedInstance].teamLoaded) {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        [CLANotificationManager showText:NSLocalizedString(@"Loading...", nil)
+                       forViewController:self
+                                withType:CLANotificationTypeMessage];
     }
 }
 
@@ -103,11 +106,11 @@
 #pragma mark View Controller Event Handlers
 
 - (void)updateTeam {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [CLANotificationManager dismiss];
 }
 
 - (void)showCreateTeamView {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [CLANotificationManager dismiss];
     
     SlidingViewController *slidingViewController =
     (SlidingViewController *)self.slidingViewController;

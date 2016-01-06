@@ -13,7 +13,6 @@
 #import "Constants.h"
 #import "CLAWebApiClient.h"
 #import "UserDataManager.h"
-#import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
 #import "CLASignalRMessageClient.h"
 
@@ -72,7 +71,7 @@
               withType:CLANotificationTypeError];
              
              [self finishRefresh];
-             [MBProgressHUD hideHUDForView:self.view animated:YES];
+             [CLANotificationManager dismiss];
              
              return;
          }
@@ -102,7 +101,7 @@
           completion:^(BOOL success, NSError *error) {
               [self.tableView reloadData];
               [self finishRefresh];
-              [MBProgressHUD hideHUDForView:self.view animated:YES];
+              [CLANotificationManager dismiss];
           }];
      }];
 }

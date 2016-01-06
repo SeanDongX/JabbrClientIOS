@@ -10,5 +10,6 @@
 
 @interface CLATaskWebViewController : UIViewController <UIWebViewDelegate>
 
-@property (nonatomic, strong) NSString *roomName;
+- (void)switchRoom:(NSString *)roomName;
+
 @end

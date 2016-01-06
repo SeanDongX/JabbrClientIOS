@@ -791,7 +791,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
         self.taskViewController = [[CLATaskWebViewController alloc] init];
     }
     
-    self.taskViewController.roomName = self.room.name;
+    [self.taskViewController switchRoom:self.room.name];
     [self.navigationController pushViewController:self.taskViewController animated:YES];
 }
 
@@ -799,7 +799,6 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark Action Sheet Delegate Methods
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"%ld", buttonIndex);
     if (buttonIndex == 0) {
         [CLAMediaManager presentPhotoCamera:self canEdit:YES];
     } else if (buttonIndex == 1) {
@@ -886,8 +885,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
         
         CLAMessage *previsousMessage = [roomeMessages objectAtIndex:indexPath.item - 1];
         if (currentMessage.date != nil && previsousMessage.date != nil &&
-            [currentMessage.date secondsFrom:previsousMessage.date] >=
-            kMessageDisplayTimeGap) {
+            [currentMessage.date secondsFrom:previsousMessage.date] >= kMessageDisplayTimeGap) {
             
             return currentMessage.date;
         }

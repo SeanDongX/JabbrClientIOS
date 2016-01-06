@@ -9,9 +9,11 @@
 #import "CLATaskWebViewController.h"
 #import "Constants.h"
 #import "UserDataManager.h"
+#import "CLANotificationManager.h"
 
 @interface CLATaskWebViewController ()
 
+@property (nonatomic, strong) NSString *roomName;
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic) BOOL authorized;
 
@@ -21,12 +23,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupNavBar];
+    [self setupView];
     [self initWebView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [CLANotificationManager showText: NSLocalizedString(@"Loading...", nil)
+                   forViewController:self
+                            withType:CLANotificationTypeMessage];
+    
     
     if (self.authorized != YES) {
         [self loadAuthFrame];
@@ -35,15 +42,22 @@
     }
 }
 
-- (void)setupNavBar {
+- (void)switchRoom:(NSString *)roomName {
+    self.roomName = roomName;
+}
+
+- (void)setupView {
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.view.backgroundColor = [Constants mainThemeContrastColor];
 }
 
 - (void)initWebView {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     self.webView = [[UIWebView alloc] initWithFrame:
                     CGRectMake(0, 0, screenRect.size.width, screenRect.size.height)];
+    self.webView.backgroundColor = [Constants mainThemeContrastColor];
+    
     [self.view addSubview:self.webView];
     
     self.webView.delegate = self;
@@ -77,8 +91,4 @@
     return [NSURL URLWithString:[array componentsJoinedByString:@""].lowercaseString];
 }
 
-- (void)logLocalStorage {
-    NSString *result = [self.webView stringByEvaluatingJavaScriptFromString:@"localStorage.getItem('Meteor.loginToken')"];
-    NSLog(@"------- %@ -------", result);
-}
 @end

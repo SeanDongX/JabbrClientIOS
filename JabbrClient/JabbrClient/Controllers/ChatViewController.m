@@ -13,7 +13,6 @@
 #import "ObjectThread.h"
 #import "Constants.h"
 #import "DateTools.h"
-#import "MBProgressHUD.h"
 #import "CLANotificationManager.h"
 #import "CLADisplayMessageFactory.h"
 #import "CLAMediaManager.h"
@@ -40,6 +39,8 @@
 @property(nonatomic, strong) CLARoom *room;
 
 @property(strong, nonatomic) CLARoomViewModel *roomViewModel;
+
+@property(nonatomic, strong) NSMutableDictionary <NSString*, NSDate*> *roomLastUpdateDictionary;
 
 @property(weak, nonatomic) IBOutlet UIBarButtonItem *leftMenuButton;
 
@@ -72,11 +73,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.displayMessageFactory = [[CLADisplayMessageFactory alloc] init];
+    [self initData];
     [self initMenu];
     [self configJSQMessage];
     
     [self setupOutgoingTypingEventHandler];
+}
+
+- (void)initData {
+    self.displayMessageFactory = [[CLADisplayMessageFactory alloc] init];
+    self.roomLastUpdateDictionary = [NSMutableDictionary dictionary];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -195,13 +201,31 @@
 
 - (void)switchToRoom:(CLARoom *)room {
     [UserDataManager cacheObject:room.name forKey:kSelectedRoomName];
-    [self showHud];
     self.title = self.room.displayName;
     [self initialzeCurrentThread];
     
     [self joinUserToRoomModel];
-    [self.messageClient loadRoom:room.name];
+    
+    if ([self shouldTriggerLoadRoom] != NO) {
+        [self showHud];
+        [self.messageClient loadRoom:room.name];
+        [self setRoomLoadTime];
+    }
+    
     [self.collectionView reloadData];
+}
+
+- (void)setRoomLoadTime {
+    [self.roomLastUpdateDictionary setObject:[NSDate date] forKey:self.room.name];
+}
+
+- (Boolean)shouldTriggerLoadRoom {
+    NSDate *lastUpdateTime = [self.roomLastUpdateDictionary objectForKey:self.room.name];
+    if (!lastUpdateTime || [lastUpdateTime secondsFrom:[NSDate date]] < -1 * minRoomRefreshInterval) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 - (void)joinUserToRoomModel {
@@ -873,11 +897,14 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showHud {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [CLANotificationManager
+     showText:NSLocalizedString(@"Loading...",nil)
+     forViewController:self
+     withType:CLANotificationTypeMessage];
 }
 
 - (void)hideHud {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [CLANotificationManager dismiss];
 }
 
 - (BOOL)isCUrrentRoom:(NSString *)room {

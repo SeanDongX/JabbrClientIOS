@@ -83,6 +83,8 @@ FOUNDATION_EXPORT NSString *const kNotificationKey;
 
 FOUNDATION_EXPORT int const kTeamNameMaxLength;
 
+FOUNDATION_EXPORT double const minRoomRefreshInterval;
+
 FOUNDATION_EXPORT int const kMessageLoadAnimateTimeThreshold;
 
 FOUNDATION_EXPORT float const kStatusBarHeight;

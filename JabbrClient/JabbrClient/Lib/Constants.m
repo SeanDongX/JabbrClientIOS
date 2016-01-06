@@ -109,6 +109,8 @@ NSString *const kNotificationKey = @"notificationKey";
 
 int const kTeamNameMaxLength = 50;
 
+double const minRoomRefreshInterval = 90;
+
 int const kMessageLoadAnimateTimeThreshold = 60;
 
 float const kStatusBarHeight = 64.0;
@@ -125,7 +127,7 @@ NSString *const kNotificationAppUrl = @"appUrl";
 int const kLoadEarlierMessageCount = 50;
 
 NSString *const kLastRefreshTime = @"LastRefreshTimeKey";
-NSTimeInterval const minRefreshLoadTime = 3;
+NSTimeInterval const minRefreshLoadTime = 2;
 
 NSString *const kFileUploadPath = @"upload-file";
 NSString *const kFileUploadFile = @"file";

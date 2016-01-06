@@ -108,9 +108,9 @@ fetchCompletionHandler:
         [application registerForRemoteNotifications];
     } else {
         [application
-         registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                             UIRemoteNotificationTypeSound |
-                                             UIRemoteNotificationTypeAlert)];
+         registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                             UIUserNotificationTypeSound |
+                                             UIUserNotificationTypeAlert)];
     }
 }
 

@@ -16,7 +16,7 @@ target 'Collara' do
   pod 'Masonry'
   pod 'TPKeyboardAvoiding', :git => 'https://github.com/wonderxboy/TPKeyboardAvoiding.git'
   pod 'XLForm'
-  pod 'TSMessages', :git => 'https://github.com/KrauseFx/TSMessages.git'
+  pod 'TSMessages', :git => 'https://github.com/wonderxboy/TSMessages.git'
   pod 'MagicalRecord'
   pod 'SDWebImage'
   pod 'JTSImageViewController'

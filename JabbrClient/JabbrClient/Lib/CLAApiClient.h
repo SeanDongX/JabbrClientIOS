@@ -46,6 +46,16 @@ completionHandler:(void (^)(NSString *errorMessage))completion;
 - (void)setBadge:(NSNumber *)count
          forTeam:(NSNumber *)teamKey;
 
+- (void)getNotificationStateFor:(NSString *)roomName
+                           team:(NSString *)team
+              completionHandler:(void (^)(NSString *errorMessage))completion;
+
+- (void)setNotificationStateFor:(NSString *)roomName
+                           team:(NSString *)team
+                    snoozeUntil:(NSDate *)date
+              completionHandler:(void (^)(NSString *errorMessage))completion;
+
+
 - (void)uploadImage:(UIImage *)image
           imageName:(NSString *)imageName
            fromRoom:(NSString *)roomName

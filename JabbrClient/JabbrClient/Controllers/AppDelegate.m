@@ -24,6 +24,7 @@
 
 // Menu
 #import "LeftMenuViewController.h"
+#import "netfox-Swift.h"
 
 @interface AppDelegate ()
 
@@ -40,6 +41,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self registerNotification];
     [CLANotificationManager configure];
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"AppModel"];
+    
+#if DEBUG
+    [[NFX sharedInstance] start];
+#endif
     
     return YES;
 }

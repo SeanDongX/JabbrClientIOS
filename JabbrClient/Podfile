@@ -19,6 +19,8 @@ target 'Collara' do
   pod 'MagicalRecord'
   pod 'SDWebImage'
   pod 'JTSImageViewController'
+  use_frameworks!
+  pod 'netfox'
 end
 
 target 'CollaraTests' do

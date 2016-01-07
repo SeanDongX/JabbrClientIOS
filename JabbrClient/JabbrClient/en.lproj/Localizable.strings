@@ -47,7 +47,7 @@
 "Create Pirvate Topic" = "Create Private Topic";
 "Send Direct Message" = "Send Direct Message";
 
-"Upload failed" = "Upload failed";
+"Oops, upload failed" = "Oops, upload failed";
 "Tasks" = "Tasks";
 
 "Sign Out" = "Sign Out";
@@ -60,4 +60,5 @@
 "Loading..." = "Loading...";
 "Signing in..." = "Signing in...";
 "Trying to create account..." = "Trying to create account...";
+"Uploading photo..." = "Uploading photo...";
 

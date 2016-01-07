@@ -314,6 +314,7 @@
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:@"Take Photo", @"Choose From Library", nil];
     
+    [self.view endEditing:YES];
     [actionSheet showInView:self.view];
 }
 
@@ -815,26 +816,25 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     
     UIImage *image = nil;
     image = info[UIImagePickerControllerEditedImage];
-    [picker dismissViewControllerAnimated: YES completion: nil];
-    [self showHud];
+    [picker dismissViewControllerAnimated: YES completion: ^{
+        [self showHud: NSLocalizedString(@"Uploading photo...", nil)];
+    }];
     
     __weak __typeof(&*self) weakSelf = self;
     [[CLAWebApiClient sharedInstance] uploadImage:image
                                         imageName:imageName
                                          fromRoom:self.room.name
                                           success:^(id responseObject) {
-                                              [weakSelf hideHud];
+                                              [self hideHud];
                                               [weakSelf scrollToBottomAnimated:YES];
+                                              
                                           } failure:^(NSError *error) {
-                                              [weakSelf hideHud];
-                                              [CLANotificationManager
-                                               showText:
-                                               NSLocalizedString(
-                                                                 @"Upload failed",
-                                                                 nil)
-                                               forViewController:weakSelf
-                                               withType:CLANotificationTypeError];
+                                              [CLANotificationManager showText:NSLocalizedString(@"Oops, upload failed", nil)
+                                                             forViewController:weakSelf
+                                                                      withType:CLANotificationTypeError];
                                           }];
+    
+    
 }
 
 #pragma mark -
@@ -897,6 +897,13 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 - (void)showHud {
     [CLANotificationManager
      showText:NSLocalizedString(@"Loading...",nil)
+     forViewController:self
+     withType:CLANotificationTypeMessage];
+}
+
+- (void)showHud:(NSString *)text {
+    [CLANotificationManager
+     showText:text
      forViewController:self
      withType:CLANotificationTypeMessage];
 }

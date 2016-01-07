@@ -132,11 +132,11 @@
                        kTaskServiceRootUrl,
                        kTaskAuthPagePath,
                        @"?userId=",
-                       [defaults objectForKey:kTaskUserId],
+                       [defaults objectForKey:kTaskUserId] ?[defaults objectForKey:kTaskUserId] : @"",
                        @"&token=",
-                       [defaults objectForKey:kTaskAuthToken],
+                       [defaults objectForKey:kTaskAuthToken] ?[defaults objectForKey:kTaskAuthToken] : @"",
                        @"&expires=",
-                       [defaults objectForKey:kTaskAuthExpire],
+                       [defaults objectForKey:kTaskAuthExpire] ?[defaults objectForKey:kTaskAuthExpire] : @"",
                        ];
     return [[array componentsJoinedByString:@""] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }

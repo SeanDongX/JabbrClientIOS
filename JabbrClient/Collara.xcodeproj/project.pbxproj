@@ -33,6 +33,8 @@
 		146C9BB01AFC199500885F96 /* CLAWebApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */; };
 		146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */; };
 		147114DE1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json in Resources */ = {isa = PBXBuildFile; fileRef = 147114DD1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json */; };
+		1472E66E1C56F336005D5724 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1472E66D1C56F336005D5724 /* ionicons.ttf */; };
+		1472E6701C56F469005D5724 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1472E66F1C56F469005D5724 /* FontAwesome.otf */; };
 		14805B781B298C9C007ACBE2 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */; };
 		14938DEA1AD4645E00BCC852 /* DocumentThread+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */; };
 		149718561ADABFE400785D11 /* CLAPadBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149718551ADABFE400785D11 /* CLAPadBaseViewController.m */; };
@@ -64,7 +66,7 @@
 		14E637371B472EFA000A802C /* AppModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14E637351B472EFA000A802C /* AppModel.xcdatamodeld */; };
 		14F5B5CC1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F5B5CB1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m */; };
 		14F8677F1B020D2A00CF751F /* CLARoundFrameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F8677E1B020D2A00CF751F /* CLARoundFrameButton.m */; };
-		EE809097EABCDD6117E3CED2 /* libPods-Collara.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE68A76A0440538A1CFB906 /* libPods-Collara.a */; };
+		4162FD3679C8EB9B0FFC034F /* Pods_Collara.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F26AF79E9C5EC38B7588B525 /* Pods_Collara.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +138,8 @@
 		146D83D71AF17B1E00855C59 /* CLASignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLASignUpViewController.h; sourceTree = "<group>"; };
 		146D83D81AF17B1E00855C59 /* CLASignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLASignUpViewController.m; sourceTree = "<group>"; };
 		147114DD1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = CustomTSMessageNotificationDesign.json; path = Lib/CustomTSMessageNotificationDesign.json; sourceTree = "<group>"; };
+		1472E66D1C56F336005D5724 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ionicons.ttf; path = ../Pods/FontAwesomeKit/FontAwesomeKit/ionicons.ttf; sourceTree = "<group>"; };
+		1472E66F1C56F469005D5724 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.otf; path = ../Pods/FontAwesomeKit/FontAwesomeKit/FontAwesome.otf; sourceTree = "<group>"; };
 		14805B771B298C9C007ACBE2 /* WindowsAzureMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMessaging.framework; path = JabbrClient/External/WindowsAzureMessaging.framework; sourceTree = "<group>"; };
 		14938DE81AD4645E00BCC852 /* DocumentThread+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DocumentThread+Category.h"; path = "JabbrClient/DataModel/DocumentThread+Category.h"; sourceTree = SOURCE_ROOT; };
 		14938DE91AD4645E00BCC852 /* DocumentThread+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DocumentThread+Category.m"; path = "JabbrClient/DataModel/DocumentThread+Category.m"; sourceTree = SOURCE_ROOT; };
@@ -203,7 +207,7 @@
 		89602FA4A33435EA32E1D254 /* Pods-CollaraApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollaraApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollaraApp/Pods-CollaraApp.debug.xcconfig"; sourceTree = "<group>"; };
 		B411F46C7557CDA2DFE00735 /* libPods-CollaraApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CollaraApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88ADD9EB62F1CEB51E0F387 /* Pods-CollaraApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollaraApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollaraApp/Pods-CollaraApp.release.xcconfig"; sourceTree = "<group>"; };
-		DFE68A76A0440538A1CFB906 /* libPods-Collara.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Collara.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F26AF79E9C5EC38B7588B525 /* Pods_Collara.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Collara.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9A307DB9FAE998089EC8968 /* Pods-Collara.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Collara.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Collara/Pods-Collara.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -212,8 +216,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE809097EABCDD6117E3CED2 /* libPods-Collara.a in Frameworks */,
 				14805B781B298C9C007ACBE2 /* WindowsAzureMessaging.framework in Frameworks */,
+				4162FD3679C8EB9B0FFC034F /* Pods_Collara.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +264,14 @@
 			name = Lib;
 			sourceTree = "<group>";
 		};
+		1440D42F1C640A0F00A01C65 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				14B515831ABF138A0000CC4F /* LaunchScreen.xib */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 		145067D71C2D8992007EE873 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +311,15 @@
 			);
 			name = DataModel;
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		1472E6711C56F47C005D5724 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1472E66D1C56F336005D5724 /* ionicons.ttf */,
+				1472E66F1C56F469005D5724 /* FontAwesome.otf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		14805B741B29864C007ACBE2 /* External */ = {
@@ -381,7 +402,8 @@
 				14E4C7071C271AFA00FC35F9 /* DataSource */,
 				14B515A01ABF14C90000CC4F /* Controllers */,
 				14B515811ABF138A0000CC4F /* Images.xcassets */,
-				14B515831ABF138A0000CC4F /* LaunchScreen.xib */,
+				1440D42F1C640A0F00A01C65 /* UI */,
+				1472E6711C56F47C005D5724 /* Resources */,
 				14B515711ABF138A0000CC4F /* Supporting Files */,
 			);
 			path = JabbrClient;
@@ -531,7 +553,7 @@
 			children = (
 				1090D86306F7E103B79E7158 /* libPods-JabbrClient.a */,
 				B411F46C7557CDA2DFE00735 /* libPods-CollaraApp.a */,
-				DFE68A76A0440538A1CFB906 /* libPods-Collara.a */,
+				F26AF79E9C5EC38B7588B525 /* Pods_Collara.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -630,6 +652,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1472E6701C56F469005D5724 /* FontAwesome.otf in Resources */,
+				1472E66E1C56F336005D5724 /* ionicons.ttf in Resources */,
 				14B515801ABF138A0000CC4F /* Main.storyboard in Resources */,
 				147114DE1B4328C6000A0406 /* CustomTSMessageNotificationDesign.json in Resources */,
 				142150881B035E1500D18214 /* Localizable.strings in Resources */,

@@ -264,7 +264,7 @@ viewForHeaderInSection:(NSInteger)section {
         //TODO:add user color
         UIImage *userImage = [JSQMessagesAvatarImageFactory
                               avatarImageWithUserInitials:user.initials
-                              backgroundColor:[Constants mainThemeContrastColor]
+                              backgroundColor: [user getColor]
                               textColor:[UIColor whiteColor]
                               font:[UIFont systemFontOfSize:13.0f]
                               diameter:userImageSize].avatarImage;

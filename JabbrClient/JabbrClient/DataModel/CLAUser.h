@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 typedef enum {
     CLAUserStatusActive,
@@ -19,12 +20,14 @@ typedef enum {
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *realName;
 @property(nonatomic, strong) NSString *initials;
+@property(nonatomic, strong) NSString *color;
 @property(nonatomic, strong) NSString *email;
 
 @property(nonatomic) CLAUserStatus status;
 
 - (BOOL)isCurrentUser;
 - (NSString *)getHandle;
+- (UIColor *)getColor;
 
 + (NSString *)getHandle:(NSString *)username;
 + (CLAUser *)getFromData:(NSDictionary *)userDictionary;

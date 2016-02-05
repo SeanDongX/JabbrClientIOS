@@ -59,6 +59,7 @@
 		14BD95131B474131001051E5 /* CLANotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BD95121B474131001051E5 /* CLANotification.m */; };
 		14BE49C61B039D5C005C04E9 /* CLAHomeTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BE49C51B039D5C005C04E9 /* CLAHomeTopicViewController.m */; };
 		14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */; };
+		14CA04AB1C642A7100E3E9BC /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CA04AA1C642A7100E3E9BC /* UIColor+HexString.m */; };
 		14D905211B1BB98400B6DF63 /* CLAHomeMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */; };
 		14D905241B1BC36200B6DF63 /* CLAHomeMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905231B1BC36200B6DF63 /* CLAHomeMemberViewController.m */; };
 		14E4C70A1C271B7800FC35F9 /* CLATopicDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E4C7091C271B7800FC35F9 /* CLATopicDataSource.m */; };
@@ -187,6 +188,8 @@
 		14BE49C51B039D5C005C04E9 /* CLAHomeTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeTopicViewController.m; sourceTree = "<group>"; };
 		14BEBC3D1AF2E67100F2470C /* CLATeamViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATeamViewModel.h; path = ViewModel/CLATeamViewModel.h; sourceTree = "<group>"; };
 		14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLATeamViewModel.m; path = ViewModel/CLATeamViewModel.m; sourceTree = "<group>"; };
+		14CA04A91C642A7100E3E9BC /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+HexString.h"; path = "Lib/UIColor+HexString.h"; sourceTree = "<group>"; };
+		14CA04AA1C642A7100E3E9BC /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+HexString.m"; path = "Lib/UIColor+HexString.m"; sourceTree = "<group>"; };
 		14D9051F1B1BB98400B6DF63 /* CLAHomeMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeMasterViewController.h; sourceTree = "<group>"; };
 		14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeMasterViewController.m; sourceTree = "<group>"; };
 		14D905221B1BC36200B6DF63 /* CLAHomeMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeMemberViewController.h; sourceTree = "<group>"; };
@@ -260,6 +263,8 @@
 				14F5B5CB1B2CD796005FDCC3 /* CLAAzureHubPushNotificationService.m */,
 				14190E091C176630000861F2 /* CLAMediaManager.h */,
 				14190E0A1C176630000861F2 /* CLAMediaManager.m */,
+				14CA04A91C642A7100E3E9BC /* UIColor+HexString.h */,
+				14CA04AA1C642A7100E3E9BC /* UIColor+HexString.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -796,6 +801,7 @@
 				14D905211B1BB98400B6DF63 /* CLAHomeMasterViewController.m in Sources */,
 				14B515741ABF138A0000CC4F /* main.m in Sources */,
 				14BD950D1B473FC2001051E5 /* _CLANotificationMessage.m in Sources */,
+				14CA04AB1C642A7100E3E9BC /* UIColor+HexString.m in Sources */,
 				142046491AD203FD006143D5 /* Constants.m in Sources */,
 				144D9EE91AF03528005EBAD2 /* CLATeam.m in Sources */,
 				146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */,

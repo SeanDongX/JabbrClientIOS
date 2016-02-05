@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "UserDataManager.h"
 #import "CLAUtility.h"
+#import "UIColor+HexString.h"
 
 @implementation CLAUser
 
@@ -24,6 +25,14 @@
 
 - (NSString *)getHandle {
     return [CLAUser getHandle:self.name];
+}
+
+- (UIColor *)getColor {
+    if (self.color && self.color.length == 7) {
+        return [UIColor colorWithHexString: self.color];
+    }
+    
+    return [Constants mainThemeColor];
 }
 
 + (NSString *)getHandle:(NSString *)username {
@@ -45,6 +54,7 @@
     user.name = [userDictionary objectForKey:@"Name"];
     user.realName = [userDictionary objectForKey:@"RealName"];
     user.initials = [userDictionary objectForKey:@"Initials"];
+    user.color = [userDictionary objectForKey:@"Color"];
     user.email = [userDictionary objectForKey:@"Email"];
     user.status = [self getStatus:[userDictionary objectForKey:@"Status"]];
     return user;

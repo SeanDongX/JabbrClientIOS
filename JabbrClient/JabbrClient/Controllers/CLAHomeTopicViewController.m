@@ -81,7 +81,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     self.dataSource = [[CLATopicDataSource alloc] init];
     self.dataSource.slidingViewController = (SlidingViewController *)self.slidingViewController;
     self.dataSource.tableCellIdentifierName = kHomeTopicViewCellIdentifierName;
-    
+    self.dataSource.advancedMode = YES;
     self.dataSource.eventDeleage = self;
     
     self.topicTableView.dataSource = self.dataSource;

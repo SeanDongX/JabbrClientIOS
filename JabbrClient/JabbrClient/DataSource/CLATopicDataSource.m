@@ -11,6 +11,8 @@
 #import "Constants.h"
 #import "CLARoom.h"
 #import "ChatViewController.h"
+#import "Masonry.h"
+#import "JSQMessagesAvatarImageFactory.h"
 
 @interface CLATopicDataSource ()
 
@@ -178,12 +180,24 @@ viewForHeaderInSection:(NSInteger)section {
         return nil;
     }
     
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.tableCellIdentifierName];
+    return [self getCell:cell withRoom:room];
+}
+
+- (UITableViewCell *)getCell:(UITableViewCell *)cell withRoom:(CLARoom *)room {
+    if (self.advancedMode == NO) {
+        return [self getSimpleCell:cell withRoom:room];
+    }
+    else {
+        return [self getAdvancedCell:cell withRoom:room];
+    }
+}
+
+- (UITableViewCell *)getSimpleCell:(UITableViewCell *)cell withRoom:(CLARoom *)room {
     BOOL unreadHidden = room.unread <= 0;
     NSString *counterText =
     room.unread > 99 ? @"99+" :[@(room.unread)stringValue];
     
-    UITableViewCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:self.tableCellIdentifierName];
     cell.textLabel.text = [room getHandle];
     cell.textLabel.textColor = self.rowTextColor;
     [cell setBackgroundColor:[UIColor clearColor]];
@@ -198,6 +212,80 @@ viewForHeaderInSection:(NSInteger)section {
     
     UILabel *unreadLabel = (UILabel *)[cell.contentView viewWithTag:2];
     unreadLabel.text = counterText;
+    
+    return cell;
+}
+
+- (UITableViewCell *)getAdvancedCell:(UITableViewCell *)cell withRoom:(CLARoom *)room {
+    //    BOOL unreadHidden = room.unread <= 0;
+    //    NSString *counterText =
+    //    room.unread > 99 ? @"99+" :[@(room.unread)stringValue];
+    //
+    //    cell.textLabel.text = [room getHandle];
+    //    cell.textLabel.textColor = self.rowTextColor;
+    [cell setBackgroundColor:[UIColor clearColor]];
+    UIView *backgroundView = [UIView new];
+    backgroundView.backgroundColor = [Constants highlightColor];
+    cell.selectedBackgroundView = backgroundView;
+    
+    UILabel *topicLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    topicLabel.text = room.displayName;
+    topicLabel.textColor = self.rowTextColor;
+    
+    [cell.contentView addSubview:topicLabel];
+    
+    [topicLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cell.mas_left).with.offset(10);
+        make.centerY.equalTo(cell.contentView.mas_centerY);
+        make.width.equalTo(cell.contentView.mas_width).with.multipliedBy(0.5).with.offset(10);
+        make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
+    }];
+    
+    UIView *memberListView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)];
+    [cell.contentView addSubview:memberListView];
+    
+    [memberListView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(cell.mas_right).with.offset(10);
+        make.centerY.equalTo(cell.contentView.mas_centerY);
+        make.width.equalTo(cell.contentView.mas_width).with.multipliedBy(0.5).with.offset(10);
+        make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
+    }];
+    
+    NSInteger maxListedUser = 4;
+    NSInteger userCount = 0;
+    NSInteger userImageSize = 30;
+    
+    for (CLAUser *user in room.users) {
+        userCount++;
+        if (userCount > maxListedUser) {
+            break;
+        }
+        
+        //TODO:add user color
+        UIImage *userImage = [JSQMessagesAvatarImageFactory
+                              avatarImageWithUserInitials:user.initials
+                              backgroundColor:[Constants mainThemeContrastColor]
+                              textColor:[UIColor whiteColor]
+                              font:[UIFont systemFontOfSize:13.0f]
+                              diameter:userImageSize].avatarImage;
+        UIImageView *userImageView = [[UIImageView alloc] initWithImage:userImage];
+        
+        [memberListView addSubview:userImageView];
+        [userImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(memberListView.mas_left).with.offset((userImageSize + 5) * (userCount - 1));
+            make.centerY.equalTo(memberListView.mas_centerY);
+            make.width.equalTo(@30);
+            make.height.equalTo(@30);
+        }];
+    }
+    //    UIView *unreadView = [cell.contentView viewWithTag:1];
+    //    unreadView.hidden = unreadHidden;
+    //    unreadView.backgroundColor = [Constants warningColor];
+    //    unreadView.layer.cornerRadius = 8;
+    //    unreadView.layer.masksToBounds = YES;
+    //
+    //    UILabel *unreadLabel = (UILabel *)[cell.contentView viewWithTag:2];
+    //    unreadLabel.text = counterText;
     
     return cell;
 }

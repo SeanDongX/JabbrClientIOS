@@ -220,9 +220,7 @@ viewForHeaderInSection:(NSInteger)section {
     //    BOOL unreadHidden = room.unread <= 0;
     //    NSString *counterText =
     //    room.unread > 99 ? @"99+" :[@(room.unread)stringValue];
-    //
-    //    cell.textLabel.text = [room getHandle];
-    //    cell.textLabel.textColor = self.rowTextColor;
+    
     [cell setBackgroundColor:[UIColor clearColor]];
     UIView *backgroundView = [UIView new];
     backgroundView.backgroundColor = [Constants highlightColor];
@@ -245,13 +243,13 @@ viewForHeaderInSection:(NSInteger)section {
     [cell.contentView addSubview:memberListView];
     
     [memberListView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(cell.mas_right).with.offset(10);
+        make.right.equalTo(cell.mas_right).with.offset(-10);
         make.centerY.equalTo(cell.contentView.mas_centerY);
         make.width.equalTo(cell.contentView.mas_width).with.multipliedBy(0.5).with.offset(10);
         make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
     }];
     
-    NSInteger maxListedUser = 4;
+    NSInteger maxListedUser = 5;
     NSInteger userCount = 0;
     NSInteger userImageSize = 30;
     
@@ -261,7 +259,6 @@ viewForHeaderInSection:(NSInteger)section {
             break;
         }
         
-        //TODO:add user color
         UIImage *userImage = [JSQMessagesAvatarImageFactory
                               avatarImageWithUserInitials:user.initials
                               backgroundColor: [user getColor]
@@ -278,14 +275,6 @@ viewForHeaderInSection:(NSInteger)section {
             make.height.equalTo(@30);
         }];
     }
-    //    UIView *unreadView = [cell.contentView viewWithTag:1];
-    //    unreadView.hidden = unreadHidden;
-    //    unreadView.backgroundColor = [Constants warningColor];
-    //    unreadView.layer.cornerRadius = 8;
-    //    unreadView.layer.masksToBounds = YES;
-    //
-    //    UILabel *unreadLabel = (UILabel *)[cell.contentView viewWithTag:2];
-    //    unreadLabel.text = counterText;
     
     return cell;
 }
@@ -424,6 +413,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showCreateTopicView: (id)sender {
-    [self.eventDeleage showCreateTopicView:sender];
+    [self.eventDelegate showCreateTopicView:sender];
 }
 @end

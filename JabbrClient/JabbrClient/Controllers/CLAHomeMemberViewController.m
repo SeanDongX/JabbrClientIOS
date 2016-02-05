@@ -30,6 +30,8 @@
 #import "BOZPongRefreshControl.h"
 #import "CLATaskWebViewController.h"
 
+#import "Masonry.h"
+
 @interface CLAHomeMemberViewController ()
 
 @property(weak, nonatomic) IBOutlet UITableView *teamMemberTableView;
@@ -179,17 +181,45 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell *cell =
     [tableView dequeueReusableCellWithIdentifier:@"TeamMemberCell"];
-    CLAUser *user = [self getUserAtRow:indexPath.row];
-    cell.textLabel.text = [user getHandle];
     
-    cell.textLabel.textColor = [Constants mainThemeContrastColor];
     [cell setBackgroundColor:[UIColor clearColor]];
-    
     UIView *backgroundView = [UIView new];
     backgroundView.backgroundColor = [Constants highlightColor];
     cell.selectedBackgroundView = backgroundView;
+    
+    CLAUser *user = [self getUserAtRow:indexPath.row];
+    
+    
+    UIImage *userImage = [JSQMessagesAvatarImageFactory
+                          avatarImageWithUserInitials:user.initials
+                          backgroundColor: [user getColor]
+                          textColor:[UIColor whiteColor]
+                          font:[UIFont systemFontOfSize:13.0f]
+                          diameter:30].avatarImage;
+    UIImageView *userImageView = [[UIImageView alloc] initWithImage:userImage];
+    
+    [cell.contentView addSubview:userImageView];
+    [userImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cell.contentView.mas_left).with.offset(10);
+        make.centerY.equalTo(cell.contentView.mas_centerY);
+        make.width.equalTo(@30);
+        make.height.equalTo(@30);
+    }];
+    
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    nameLabel.text = [user getHandle];
+    nameLabel.textColor = [Constants mainThemeContrastColor];
+    
+    [cell.contentView addSubview:nameLabel];
+    [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cell.contentView.mas_left).with.offset(50);
+        make.centerY.equalTo(cell.contentView.mas_centerY);
+        make.right.equalTo(cell.contentView.mas_right).with.offset(10);
+        make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
+    }];
     
     return cell;
 }

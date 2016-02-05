@@ -106,7 +106,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     
     self.dataSource.rowTextColor = [UIColor whiteColor];
     
-    self.dataSource.eventDeleage = self;
+    self.dataSource.eventDelegate = self;
     
     self.tableView.dataSource = self.dataSource;
     self.tableView.delegate = self.dataSource;

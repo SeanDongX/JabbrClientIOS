@@ -15,7 +15,7 @@
 
 @interface CLATopicDataSource : NSObject <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, weak) id<CLATopicDataSourceEventDelegate> eventDeleage;
+@property (nonatomic, weak) id<CLATopicDataSourceEventDelegate> eventDelegate;
 
 @property (nonatomic) BOOL isFiltered;
 @property (nonatomic, strong) CLARoom *selectedRoom;

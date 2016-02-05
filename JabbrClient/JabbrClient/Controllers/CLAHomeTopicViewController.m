@@ -82,7 +82,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     self.dataSource.slidingViewController = (SlidingViewController *)self.slidingViewController;
     self.dataSource.tableCellIdentifierName = kHomeTopicViewCellIdentifierName;
     self.dataSource.advancedMode = YES;
-    self.dataSource.eventDeleage = self;
+    self.dataSource.eventDelegate = self;
     
     self.topicTableView.dataSource = self.dataSource;
     self.topicTableView.delegate = self.dataSource;

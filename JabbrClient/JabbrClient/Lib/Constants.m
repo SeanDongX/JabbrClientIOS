@@ -15,7 +15,7 @@
 #ifdef DEBUG
 
 //NSString *const kServerBaseUrl = @"http://192.168.0.43:16207/";
-NSString *const kServerBaseUrl = @"http://test.collara.co/";
+NSString *const kServerBaseUrl = @"http://beta.collara.co/";
 NSString *const kTaskServiceRootUrl = @"http://task.collara.co/";
 
 NSString *const kAuzreNotificationHubName = @"collarapush";

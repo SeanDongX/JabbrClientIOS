@@ -62,3 +62,6 @@
 "Trying to create account..." = "Trying to create account...";
 "Uploading photo..." = "Uploading photo...";
 
+"Public Topics (%@)" = "Public Topics (%@)";
+"Private Topics (%@)" = "Private Topics (%@)";
+"Direct Messages (%@)" = "Direct Messages (%@)";

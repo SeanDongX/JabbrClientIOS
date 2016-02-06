@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 
 // Util
-#import <MagicalRecord/MagicalRecord.h>
 
 #import "Constants.h"
 #import "CLAUtility.h"
@@ -40,7 +39,6 @@
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self registerNotification];
     [CLANotificationManager configure];
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"AppModel"];
     
 #if DEBUG
     [[NFX sharedInstance] start];
@@ -95,7 +93,6 @@ fetchCompletionHandler:
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    [MagicalRecord cleanUp];
 }
 
 - (void)registerNotification {

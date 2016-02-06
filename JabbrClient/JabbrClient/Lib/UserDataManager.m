@@ -14,7 +14,6 @@
 // Services
 #import "CLAAzureHubPushNotificationService.h"
 #import "CLATeam.h"
-#import <MagicalRecord/MagicalRecord.h>
 #import "CLAUser.h"
 
 @implementation UserDataManager
@@ -114,7 +113,6 @@
 + (void)signOut {
     [UserDataManager clearCookie];
     [UserDataManager clearCache];
-    [UserDataManager clearObjectStore];
 }
 
 + (void)cacheTaskServiceAuthInfo:(NSDictionary *)data {
@@ -154,16 +152,6 @@
         }
     }
     [defaults synchronize];
-}
-
-+ (void)clearObjectStore {
-    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        NSArray *allEntities = [NSManagedObjectModel MR_defaultManagedObjectModel].entities;
-        
-        [allEntities enumerateObjectsUsingBlock:^(NSEntityDescription *entityDescription, NSUInteger idx, BOOL *stop) {
-            [NSClassFromString([entityDescription managedObjectClassName]) MR_truncateAllInContext:localContext];
-        }];
-    }];
 }
 
 + (void)cacheObject:(NSObject *)object forKey:(NSString *)key {

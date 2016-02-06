@@ -549,7 +549,6 @@
 				A3B140121ACC4F90D6E73EAF /* Copy Pods Resources */,
 				14F4B0E61AD4930200AE5C9A /* ShellScript */,
 				14BE49C31B039368005C04E9 /* ShellScript */,
-				14E637381B47308D000A802C /* ShellScript */,
 				74581CEDAE148AA55FE2F413 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -661,19 +660,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./MergeStoryboardString.py JabbrClient";
-		};
-		14E637381B47308D000A802C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "pwd\nls JabbrClient\nmogenerator -m JabbrClient/CoreData/AppModel.xcdatamodeld/AppModel.xcdatamodel --human-dir JabbrClient/CoreData/Model/  --machine-dir JabbrClient/CoreData/Model/Generated/ --template-var arc=true";
 		};
 		14F4B0E61AD4930200AE5C9A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

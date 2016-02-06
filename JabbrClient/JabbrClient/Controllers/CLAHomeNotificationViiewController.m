@@ -9,7 +9,6 @@
 #import "CLAHomeNotificationViiewController.h"
 
 // Util
-#import <MagicalRecord/MagicalRecord.h>
 #import "Constants.h"
 #import "CLAWebApiClient.h"
 #import "UserDataManager.h"

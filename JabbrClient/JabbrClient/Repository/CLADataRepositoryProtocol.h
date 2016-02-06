@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CLATeamViewModel.h"
+#import "CLANotificationMessage.h"
 
 @protocol CLADataRepositoryProtocol <NSObject>
 
@@ -18,5 +19,14 @@
 - (void)deleteData;
 
 - (CLAUser *)getUserByName: (NSString *)name;
+
+- (CLANotificationMessage *)updateNotification: (NSNumber *)notificationKey read:(BOOL)read;
+- (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey;
+- (void)addOrUpdateNotificationsWithData: (NSArray *)dictionaryArray
+                              completion:(void (^)(void))completionBlock;
+
+- (void)addOrUpdateNotifications: (NSArray <CLANotificationMessage*> *)notifications
+                      completion:(void (^)(void))completionBlock;
+
 
 @end

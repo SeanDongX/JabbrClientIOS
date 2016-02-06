@@ -45,7 +45,7 @@
     
     self.message.text = self.notification.message;
     
-    self.unreadImageView.hidden = [self.notification.read isEqualToNumber:@1];
+    self.unreadImageView.hidden = self.notification.read;
     
     CLAUser *user = [self.repository getUserByName:self.notification.fromUserName];
     if (user) {

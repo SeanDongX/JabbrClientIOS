@@ -32,17 +32,20 @@
 // Custom Controls
 #import "BOZPongRefreshControl.h"
 #import "CLANotifictionTableViewCell.h"
+#import "CLARealmRepository.h"
 
 @interface CLAHomeNotificationViiewController ()
 
 @property(nonatomic, strong) BOZPongRefreshControl *pongRefreshControl;
 @property(nonatomic) BOOL isRefreshing;
+@property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
 
 @end
 
 @implementation CLAHomeNotificationViiewController
 
 - (void)viewDidLoad {
+    self.repository = [[CLARealmRepository alloc] init];
     [self addTalbeView];
 }
 
@@ -76,31 +79,13 @@
              return;
          }
          
-         [MagicalRecord
-          saveWithBlock:^(NSManagedObjectContext *localContext) {
-              for (NSDictionary *dataDictionary in result) {
-                  NSNumber *notificationKey = [dataDictionary objectForKey:kNotificationKey];
-                  
-                  CLANotificationMessage *existingNotification =
-                  [CLANotificationMessage
-                   MR_findFirstByAttribute:kNotificationKey
-                   withValue:notificationKey
-                   inContext:localContext];
-                  
-                  if (existingNotification != nil) {
-                      [existingNotification updateExisting:dataDictionary];
-                  } else {
-                      CLANotificationMessage *notification =
-                      [CLANotificationMessage
-                       MR_createEntityInContext:localContext];
-                      [notification parseData:dataDictionary];
-                  }
-              }
-              
-          }
-          completion:^(BOOL success, NSError *error) {
-              [self.tableView reloadData];
-              [self finishRefresh];
+         __weak __typeof(&*self) weakSelf = self;
+         
+         [self.repository
+          addOrUpdateNotificationsWithData:result
+          completion:^(void) {
+              [weakSelf.tableView reloadData];
+              [weakSelf finishRefresh];
               [CLANotificationManager dismiss];
           }];
      }];
@@ -181,7 +166,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-    return [CLANotificationMessage MR_findAll].count;
+    return [CLANotificationMessage allObjects].count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -201,9 +186,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
                 reuseIdentifier:cellIdentifier];
     }
     
-    cell.notification =
-    [[CLANotificationMessage MR_findAllSortedBy:@"when" ascending:NO]
-     objectAtIndex:indexPath.row];
+    cell.notification = [[[CLANotificationMessage allObjects]
+                          sortedResultsUsingProperty:@"when" ascending:NO]
+                         objectAtIndex:indexPath.row];
     
     UIView *backgroundView = [UIView new];
     backgroundView.backgroundColor = [UIColor whiteColor];
@@ -226,7 +211,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showNotificationContent:
-     [[CLANotificationMessage MR_findAllSortedBy:@"when" ascending:NO]
+     [[[CLANotificationMessage allObjects]
+       sortedResultsUsingProperty:@"when" ascending:NO]
       objectAtIndex:indexPath.row]];
 }
 
@@ -241,14 +227,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [[CLAWebApiClient sharedInstance]
      setRead:notification
      completion:^(NSArray *result, NSString *errorMessage) {
-         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-             CLANotificationMessage *existingNotification = [CLANotificationMessage
-                                                             MR_findFirstByAttribute:@"notificationKey"
-                                                             withValue:notification.notificationKey
-                                                             inContext:localContext];
-             existingNotification.read = @1;
-         } completion:^(BOOL success, NSError *error){
-         }];
+         [self.repository updateNotification:notification.notificationKey read:YES];
      }];
     
     UIStoryboard *storyBoard =

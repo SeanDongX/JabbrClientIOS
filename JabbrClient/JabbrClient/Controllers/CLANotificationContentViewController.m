@@ -12,6 +12,10 @@
 #import "Constants.h"
 #import "DateTools.h"
 #import <JSQMessagesViewController/JSQMessages.h>
+#import "CLAUser.h"
+#import "UIColor+HexString.h"
+#import "CLADataRepositoryProtocol.h"
+#import "CLARealmRepository.h"
 
 @interface CLANotificationContentViewController ()
 
@@ -22,12 +26,15 @@
 @property(weak, nonatomic) IBOutlet UILabel *when;
 @property(weak, nonatomic) IBOutlet UILabel *message;
 
+@property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
+
 @end
 
 @implementation CLANotificationContentViewController
 
 - (void)viewDidLoad {
     [self setupNavBar];
+    self.repository = [[CLARealmRepository alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -44,16 +51,18 @@
     self.message.numberOfLines = 0;
     [self.message sizeToFit];
     
-    JSQMessagesAvatarImage *jSQMessagesAvatarImage =
-    [JSQMessagesAvatarImageFactory
-     avatarImageWithUserInitials:[[self.notification.fromUserName
-                                   substringToIndex:1] capitalizedString]
-     backgroundColor:[Constants mainThemeContrastColor]
-     textColor:[UIColor whiteColor]
-     font:[UIFont systemFontOfSize:18.0f]
-     diameter:60.0f];
-    
-    self.userImageView.image = jSQMessagesAvatarImage.avatarImage;
+    CLAUser *user = [self.repository getUserByName:self.notification.fromUserName];
+    if (user) {
+        JSQMessagesAvatarImage *jSQMessagesAvatarImage =
+        [JSQMessagesAvatarImageFactory
+         avatarImageWithUserInitials:user.initials
+         backgroundColor:[UIColor colorWithHexString:user.color]
+         textColor:[UIColor whiteColor]
+         font:[UIFont systemFontOfSize:18.0f]
+         diameter:60.0f];
+        
+        self.userImageView.image = jSQMessagesAvatarImage.avatarImage;
+    }
 }
 
 - (void)setupNavBar {

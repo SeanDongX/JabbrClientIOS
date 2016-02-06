@@ -12,6 +12,9 @@
 #import "DateTools.h"
 #import "Masonry.h"
 #import <JSQMessagesViewController/JSQMessages.h>
+#import "CLAUser.h"
+#import "UIColor+HexString.h"
+#import "CLARealmRepository.h"
 
 @interface CLANotifictionTableViewCell ()
 
@@ -19,15 +22,20 @@
 @property(strong, nonatomic) UILabel *message;
 @property(strong, nonatomic) UIImageView *avatarImageView;
 @property(strong, nonatomic) UIImageView *unreadImageView;
+
+@property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
+
 @end
 
 @implementation CLANotifictionTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
 }
 
 - (void)setNotification:(CLANotificationMessage *)notification {
+    //TODO: send user as param to avoid creating reposiotry all the time
+    self.repository = [[CLARealmRepository alloc] init];
+    
     _notification = notification;
     self.title.text =
     [NSString stringWithFormat:@"%@%@ %@%@  %@", kUserPrefix,
@@ -39,19 +47,19 @@
     
     self.unreadImageView.hidden = [self.notification.read isEqualToNumber:@1];
     
-    JSQMessagesAvatarImage *jSQMessagesAvatarImage =
-    [JSQMessagesAvatarImageFactory
-     avatarImageWithUserInitials:[[self.notification.fromUserName
-                                   substringToIndex:1] capitalizedString]
-     backgroundColor:[Constants mainThemeContrastColor]
-     textColor:[UIColor whiteColor]
-     font:[UIFont systemFontOfSize:13.0f]
-     diameter:30.0f];
-    
-    self.avatarImageView =
-    [[UIImageView alloc] initWithImage:jSQMessagesAvatarImage.avatarImage];
-    
-    [self.contentView addSubview:self.avatarImageView];
+    CLAUser *user = [self.repository getUserByName:self.notification.fromUserName];
+    if (user) {
+        JSQMessagesAvatarImage *jSQMessagesAvatarImage =
+        [JSQMessagesAvatarImageFactory
+         avatarImageWithUserInitials:user.initials
+         backgroundColor:[UIColor colorWithHexString:user.color]
+         textColor:[UIColor whiteColor]
+         font:[UIFont systemFontOfSize:13.0f]
+         diameter:30.0f];
+        
+        self.avatarImageView = [[UIImageView alloc] initWithImage:jSQMessagesAvatarImage.avatarImage];
+        [self.contentView addSubview:self.avatarImageView];
+    }
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style

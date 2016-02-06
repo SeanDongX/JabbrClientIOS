@@ -122,6 +122,12 @@
         }
     }
     
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    NSLog(@"Realm path %@", realm.path);
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObjectsFromArray:userArray];
+    [realm commitWriteTransaction];
+    
     CLATeamViewModel *teamViewModel = [[CLATeamViewModel alloc] init];
     teamViewModel.team = team;
     teamViewModel.rooms = roomArray;

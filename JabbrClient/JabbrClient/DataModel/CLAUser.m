@@ -16,6 +16,10 @@
 
 @implementation CLAUser
 
++ (NSString *)primaryKey {
+    return @"name";
+}
+
 - (BOOL)isCurrentUser {
     return
     [self.name
@@ -27,7 +31,7 @@
     return [CLAUser getHandle:self.name];
 }
 
-- (UIColor *)getColor {
+- (UIColor *)getUIColor {
     if (self.color && self.color.length == 7) {
         return [UIColor colorWithHexString: self.color];
     }

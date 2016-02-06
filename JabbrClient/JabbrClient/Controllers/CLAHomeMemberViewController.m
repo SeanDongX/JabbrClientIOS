@@ -195,7 +195,7 @@
     
     UIImage *userImage = [JSQMessagesAvatarImageFactory
                           avatarImageWithUserInitials:user.initials
-                          backgroundColor: [user getColor]
+                          backgroundColor: [user getUIColor]
                           textColor:[UIColor whiteColor]
                           font:[UIFont systemFontOfSize:13.0f]
                           diameter:30].avatarImage;

@@ -31,6 +31,11 @@
         }
     }
     
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObjectsFromArray:usersArray];
+    [realm commitWriteTransaction];
+    
     self.users = usersArray;
     self.messages = [NSMutableArray array];
 }

@@ -17,4 +17,6 @@
 - (void)addOrUpdateTeam:(CLATeamViewModel *)team;
 - (void)deleteData;
 
+- (CLAUser *)getUserByName: (NSString *)name;
+
 @end

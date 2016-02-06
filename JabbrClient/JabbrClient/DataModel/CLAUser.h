@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Realm/Realm.h>
 
 typedef enum {
     CLAUserStatusActive,
@@ -15,7 +16,7 @@ typedef enum {
     CLAUserStatusOffline
 } CLAUserStatus;
 
-@interface CLAUser : NSObject
+@interface CLAUser : RLMObject
 
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *realName;
@@ -27,9 +28,13 @@ typedef enum {
 
 - (BOOL)isCurrentUser;
 - (NSString *)getHandle;
-- (UIColor *)getColor;
+- (UIColor *)getUIColor;
 
 + (NSString *)getHandle:(NSString *)username;
 + (CLAUser *)getFromData:(NSDictionary *)userDictionary;
 
 @end
+
+// This protocol enables typed collections. i.e.:
+// RLMArray<CLAUserR>
+RLM_ARRAY_TYPE(CLAUserR)

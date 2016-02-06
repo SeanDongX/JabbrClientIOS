@@ -59,6 +59,7 @@
 		14BD95131B474131001051E5 /* CLANotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BD95121B474131001051E5 /* CLANotification.m */; };
 		14BE49C61B039D5C005C04E9 /* CLAHomeTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BE49C51B039D5C005C04E9 /* CLAHomeTopicViewController.m */; };
 		14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */; };
+		14C37A7B1C656E930048E759 /* CLARealmRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C37A7A1C656E930048E759 /* CLARealmRepository.m */; };
 		14CA04AB1C642A7100E3E9BC /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CA04AA1C642A7100E3E9BC /* UIColor+HexString.m */; };
 		14D905211B1BB98400B6DF63 /* CLAHomeMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905201B1BB98400B6DF63 /* CLAHomeMasterViewController.m */; };
 		14D905241B1BC36200B6DF63 /* CLAHomeMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D905231B1BC36200B6DF63 /* CLAHomeMemberViewController.m */; };
@@ -188,6 +189,8 @@
 		14BE49C51B039D5C005C04E9 /* CLAHomeTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeTopicViewController.m; sourceTree = "<group>"; };
 		14BEBC3D1AF2E67100F2470C /* CLATeamViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATeamViewModel.h; path = ViewModel/CLATeamViewModel.h; sourceTree = "<group>"; };
 		14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLATeamViewModel.m; path = ViewModel/CLATeamViewModel.m; sourceTree = "<group>"; };
+		14C37A791C656E930048E759 /* CLARealmRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARealmRepository.h; path = Repository/CLARealmRepository.h; sourceTree = "<group>"; };
+		14C37A7A1C656E930048E759 /* CLARealmRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARealmRepository.m; path = Repository/CLARealmRepository.m; sourceTree = "<group>"; };
 		14CA04A91C642A7100E3E9BC /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+HexString.h"; path = "Lib/UIColor+HexString.h"; sourceTree = "<group>"; };
 		14CA04AA1C642A7100E3E9BC /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+HexString.m"; path = "Lib/UIColor+HexString.m"; sourceTree = "<group>"; };
 		14D9051F1B1BB98400B6DF63 /* CLAHomeMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeMasterViewController.h; sourceTree = "<group>"; };
@@ -239,6 +242,8 @@
 			children = (
 				1419E8E71B1E271C0057CAC5 /* CLAInMemoryDataRepository.h */,
 				1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */,
+				14C37A791C656E930048E759 /* CLARealmRepository.h */,
+				14C37A7A1C656E930048E759 /* CLARealmRepository.m */,
 			);
 			name = Repository;
 			sourceTree = "<group>";
@@ -788,6 +793,7 @@
 				142046431AD1EC91006143D5 /* UserDataManager.m in Sources */,
 				14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */,
 				14BD95101B473FD0001051E5 /* CLANotificationMessage.m in Sources */,
+				14C37A7B1C656E930048E759 /* CLARealmRepository.m in Sources */,
 				14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */,
 				14D905241B1BC36200B6DF63 /* CLAHomeMemberViewController.m in Sources */,
 				149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */,

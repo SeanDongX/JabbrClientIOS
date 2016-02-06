@@ -21,6 +21,7 @@ target 'Collara' do
   pod 'JTSImageViewController'
   use_frameworks!
   pod 'netfox'
+  pod 'Realm'
 end
 
 target 'CollaraTests' do

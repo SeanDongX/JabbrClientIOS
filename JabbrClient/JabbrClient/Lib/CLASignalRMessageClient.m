@@ -383,6 +383,11 @@ static bool isFirstAccess = YES;
         [users addObject:[CLAUser getFromData:userDictionary]];
     }
     
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObjectsFromArray:users];
+    [realm commitWriteTransaction];
+    
     [self.delegate didLoadUsers:users inRoom:room];
     
     NSArray *recentMessageArray =

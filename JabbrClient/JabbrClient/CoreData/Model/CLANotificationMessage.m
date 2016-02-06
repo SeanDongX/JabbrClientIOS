@@ -12,7 +12,11 @@
     self.notificationKey = [dataDictionary objectForKey:@"notificationKey"];
     self.fromUserName = [dataDictionary objectForKey:@"fromUserName"];
     self.roomName = [dataDictionary objectForKey:@"roomName"];
-    self.message = [dataDictionary objectForKey:@"message"];
+    
+    if ([dataDictionary objectForKey:@"message"] != [NSNull null]) {
+        self.message = [dataDictionary objectForKey:@"message"];
+    }
+    
     self.read = [dataDictionary objectForKey:@"read"];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

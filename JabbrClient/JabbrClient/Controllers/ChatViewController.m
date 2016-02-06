@@ -32,6 +32,8 @@
 #import "CLATopicInfoViewController.h"
 #import "CLATaskWebViewController.h"
 #import "CLAUtility.h"
+#import "UIColor+HexString.h"
+#import "CLARealmRepository.h"
 
 
 @interface ChatViewController ()
@@ -54,6 +56,8 @@
 @property(nonatomic, strong) JSQMessagesBubbleImage *outgoingBubbleImageView;
 
 @property(nonatomic, strong) CLATaskWebViewController *taskViewController;
+
+@property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
 
 @end
 
@@ -83,6 +87,7 @@
 - (void)initData {
     self.displayMessageFactory = [[CLADisplayMessageFactory alloc] init];
     self.roomLastUpdateDictionary = [NSMutableDictionary dictionary];
+    self.repository = [[CLARealmRepository alloc] init];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -370,12 +375,24 @@ collectionView
     
     CLAMessage *message =
     [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
-    return [JSQMessagesAvatarImageFactory
-            avatarImageWithUserInitials:message.senderDisplayName
-            backgroundColor:[Constants mainThemeContrastColor]
-            textColor:[UIColor whiteColor]
-            font:[UIFont systemFontOfSize:13.0f]
-            diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+    CLAUser *user= [self.repository getUserByName: message.senderId];
+    
+    if (user) {
+        return [JSQMessagesAvatarImageFactory
+                avatarImageWithUserInitials:user.initials
+                backgroundColor:[UIColor colorWithHexString:user.color]
+                textColor:[UIColor whiteColor]
+                font:[UIFont systemFontOfSize:13.0f]
+                diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+    }
+    else {
+        return [JSQMessagesAvatarImageFactory
+                avatarImageWithUserInitials:message.senderDisplayName
+                backgroundColor:[Constants mainThemeContrastColor]
+                textColor:[UIColor whiteColor]
+                font:[UIFont systemFontOfSize:13.0f]
+                diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+    }
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView

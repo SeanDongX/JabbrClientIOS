@@ -217,42 +217,53 @@ viewForHeaderInSection:(NSInteger)section {
 }
 
 - (UITableViewCell *)getAdvancedCell:(UITableViewCell *)cell withRoom:(CLARoom *)room {
-    //    BOOL unreadHidden = room.unread <= 0;
-    //    NSString *counterText =
-    //    room.unread > 99 ? @"99+" :[@(room.unread)stringValue];
+    NSInteger labelViewTag = 1;
+    NSInteger memberViewTag = 2;
     
-    [cell setBackgroundColor:[UIColor clearColor]];
-    UIView *backgroundView = [UIView new];
-    backgroundView.backgroundColor = [Constants highlightColor];
-    cell.selectedBackgroundView = backgroundView;
-    
-    UILabel *topicLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    topicLabel.text = room.displayName;
-    topicLabel.textColor = self.rowTextColor;
-    
-    [cell.contentView addSubview:topicLabel];
-    
-    [topicLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(cell.mas_left).with.offset(10);
-        make.centerY.equalTo(cell.contentView.mas_centerY);
-        make.width.equalTo(cell.contentView.mas_width).with.multipliedBy(0.5).with.offset(10);
-        make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
-    }];
-    
-    UIView *memberListView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)];
-    [cell.contentView addSubview:memberListView];
-    
-    [memberListView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(cell.mas_right).with.offset(-10);
-        make.centerY.equalTo(cell.contentView.mas_centerY);
-        make.width.equalTo(cell.contentView.mas_width).with.multipliedBy(0.5).with.offset(10);
-        make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
-    }];
-    
-    NSInteger maxListedUser = 5;
+    NSInteger maxListedUser = 4;
     NSInteger userCount = 0;
     NSInteger userImageSize = 30;
     
+    UILabel *topicLabel =  (UILabel *)[cell viewWithTag:labelViewTag];
+    if (!topicLabel) {
+        [cell setBackgroundColor:[UIColor clearColor]];
+        UIView *backgroundView = [UIView new];
+        backgroundView.backgroundColor = [Constants highlightColor];
+        cell.selectedBackgroundView = backgroundView;
+        
+        topicLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+        topicLabel.tag = labelViewTag;
+        topicLabel.adjustsFontSizeToFitWidth = NO;
+        topicLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        topicLabel.textColor = self.rowTextColor;
+        topicLabel.preferredMaxLayoutWidth = 300.0f;
+        
+        [cell.contentView addSubview:topicLabel];
+        [topicLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell.mas_left).with.offset(10);
+            make.centerY.equalTo(cell.contentView.mas_centerY);
+            make.width.equalTo(cell.contentView.mas_width).with.multipliedBy(0.6).with.offset(-10);
+            make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
+        }];
+        
+    }
+    
+    topicLabel.text =  room.displayName;
+    UIView *memberListView =  (UIView *)[cell viewWithTag:memberViewTag];
+    if (!memberListView) {
+        memberListView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)];
+        memberListView.tag = memberViewTag;
+        [cell.contentView addSubview:memberListView];
+        
+        [memberListView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(cell.mas_right).with.offset(-10);
+            make.centerY.equalTo(cell.contentView.mas_centerY);
+            make.width.equalTo(cell.contentView.mas_width).with.multipliedBy(0.4).with.offset(-10);
+            make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
+        }];
+    }
+    
+    [memberListView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
     for (CLAUser *user in room.users) {
         userCount++;
         if (userCount > maxListedUser) {
@@ -265,6 +276,7 @@ viewForHeaderInSection:(NSInteger)section {
                               textColor:[UIColor whiteColor]
                               font:[UIFont systemFontOfSize:13.0f]
                               diameter:userImageSize].avatarImage;
+        
         UIImageView *userImageView = [[UIImageView alloc] initWithImage:userImage];
         
         [memberListView addSubview:userImageView];

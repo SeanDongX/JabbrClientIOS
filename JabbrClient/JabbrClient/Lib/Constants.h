@@ -11,6 +11,8 @@
 
 @interface Constants : NSObject
 
+#define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568) ? NO : YES)
+
 FOUNDATION_EXPORT NSString *const kServerBaseUrl;
 FOUNDATION_EXPORT NSString *const kApiPath;
 
@@ -134,7 +136,6 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIImage *)addIconImage;
 + (UIImage *)signOutImage;
 + (UIImage *)optionsIconImage;
-+ (UIImage *)moreIconImageThemeContrast;
 + (UIImage *)taskIconImage;
 + (UIImage *)unreadIcon;
 + (UIImage *)documentIconLarge;

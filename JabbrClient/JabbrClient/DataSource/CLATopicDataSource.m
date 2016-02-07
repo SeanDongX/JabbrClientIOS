@@ -221,7 +221,10 @@ viewForHeaderInSection:(NSInteger)section {
     NSInteger memberViewTag = 2;
     
     NSInteger maxListedUser = 4;
-    NSInteger userCount = 0;
+    if (IS_IPHONE5) {
+        maxListedUser = 3;
+    }
+    
     NSInteger userImageSize = 30;
     
     UILabel *topicLabel =  (UILabel *)[cell viewWithTag:labelViewTag];
@@ -264,6 +267,7 @@ viewForHeaderInSection:(NSInteger)section {
     }
     
     [memberListView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
+    NSInteger userCount = 0;
     for (CLAUser *user in room.users) {
         userCount++;
         if (userCount > maxListedUser) {
@@ -281,7 +285,7 @@ viewForHeaderInSection:(NSInteger)section {
         
         [memberListView addSubview:userImageView];
         [userImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(memberListView.mas_left).with.offset((userImageSize + 5) * (userCount - 1));
+            make.right.equalTo(memberListView.mas_right).with.offset(-1 * (userImageSize + 5) * (userCount - 1));
             make.centerY.equalTo(memberListView.mas_centerY);
             make.width.equalTo(@30);
             make.height.equalTo(@30);

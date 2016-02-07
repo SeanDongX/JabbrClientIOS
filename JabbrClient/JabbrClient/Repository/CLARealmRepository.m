@@ -11,14 +11,32 @@
 
 @implementation CLARealmRepository
 
+- (CLATeamViewModel *)get:(NSString *)name {
+    return nil;
+}
+
+- (CLATeamViewModel *)getCurrentOrDefaultTeam {
+    return nil;
+}
+
+- (NSArray<CLATeamViewModel *> *)getTeams {
+    return nil;
+}
+
+- (void)addOrUpdateTeam:(CLATeamViewModel *)team {
+}
+
+- (void)deleteData {
+}
+
 - (CLAUser *)getUserByName: (NSString *)name {
     RLMResults<CLAUser *>  *users = [CLAUser objectsWhere:@"name = %@", name];
-    return users[0];
+    return users.firstObject;
 }
 
 - (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey {
     RLMResults<CLANotificationMessage *>  *notification = [CLANotificationMessage objectsWhere:@"notificationKey = %@", notificationKey];
-    return notification[0];
+    return notification.firstObject;
 }
 
 - (void)updateNotification: (NSNumber *)notificationKey read:(BOOL)read {

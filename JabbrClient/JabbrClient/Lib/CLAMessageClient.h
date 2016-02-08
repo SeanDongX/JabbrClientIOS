@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <JSQMessagesViewController/JSQMessages.h>
-#import "CLAMessage.h"
+#import "CLAMessageViewModel.h"
 #import "Constants.h"
 
 // Data
@@ -53,7 +53,7 @@ typedef enum {
 - (CLAConnectionState)getConnectionState;
 
 - (void)loadRoom:(NSString *)room;
-- (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room;
+- (void)sendMessage:(CLAMessageViewModel *)message inRoom:(NSString *)room;
 - (void)sendTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room;
 
@@ -88,8 +88,8 @@ typedef enum {
 - (void)didReceiveTeams:(NSArray *)teams;
 - (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update;
 - (void)didReceiveUpdateRoom:(CLARoom *)room;
-- (void)didReceiveMessage:(CLAMessage *)message inRoom:(NSString *)room;
-- (void)didLoadEarlierMessages:(NSArray<CLAMessage *> *)earlierMessages
+- (void)didReceiveMessage:(CLAMessageViewModel *)message inRoom:(NSString *)room;
+- (void)didLoadEarlierMessages:(NSArray<CLAMessageViewModel *> *)earlierMessages
                         inRoom:(NSString *)room;
 - (void)didLoadUsers:(NSArray<CLAUser *> *)users inRoom:(NSString *)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
@@ -112,7 +112,7 @@ typedef enum {
  *
  * @see SINMessageClient, SINMessage
  */
-- (void)messageSent:(CLAMessage *)message recipientId:(NSString *)recipientId;
+- (void)messageSent:(CLAMessageViewModel *)message recipientId:(NSString *)recipientId;
 
 /**
  * Tells the delegate that the message client failed to send a message.
@@ -126,7 +126,7 @@ typedef enum {
  *
  * @param message The message that could not be delivered.
  **/
-- (void)messageFailed:(CLAMessage *)message
+- (void)messageFailed:(CLAMessageViewModel *)message
                  info:(id<CLAMessageFailureInfo>)messageFailureInfo;
 
 /**
@@ -156,7 +156,7 @@ typedef enum {
  * @see SINPushPair
  *
  **/
-- (void)message:(CLAMessage *)message
+- (void)message:(CLAMessageViewModel *)message
 shouldSendPushNotifications:(NSArray *)pushPairs;
 
 @end

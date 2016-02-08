@@ -241,7 +241,7 @@ static bool isFirstAccess = YES;
     [self invokeHubMethod:@"LoadRooms" withArgs:@[@[ room ]] completionHandler:nil];
 }
 
-- (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room {
+- (void)sendMessage:(CLAMessageViewModel *)message inRoom:(NSString *)room {
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
     [messageData setObject:message.oId forKey:@"id"];
     
@@ -345,7 +345,7 @@ static bool isFirstAccess = YES;
     }
 }
 
-- (CLAMessage *)getMessageFromRawData:(NSDictionary *)messageDictionary {
+- (CLAMessageViewModel *)getMessageFromRawData:(NSDictionary *)messageDictionary {
     return [self.messageFactory create:messageDictionary];
 }
 

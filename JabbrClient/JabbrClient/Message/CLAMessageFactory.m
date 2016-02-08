@@ -13,7 +13,7 @@
 #pragma mark -
 #pragma mark - Public Methods
 
-- (CLAMessage *)create:(NSDictionary *)messageDictionary {
+- (CLAMessageViewModel *)create:(NSDictionary *)messageDictionary {
     NSString *userName = @"?";
     NSString *userInitials = @"?";
     
@@ -41,7 +41,7 @@
     NSString *oId = [messageDictionary objectForKey:@"Id"];
     NSString *text = [messageDictionary objectForKey:@"Content"];
     
-    return [[CLAMessage alloc]
+    return [[CLAMessageViewModel alloc]
             initWithOId:oId
             SenderId:userName
             senderDisplayName:userInitials

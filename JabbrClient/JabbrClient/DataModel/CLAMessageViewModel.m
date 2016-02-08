@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Colla. All rights reserved.
 //
 
-#import "CLAMessage.h"
+#import "CLAMessageViewModel.h"
 
-@interface CLAMessage ()
+@interface CLAMessageViewModel ()
 
 - (instancetype)initWithOId:(NSString *)oId
                    SenderId:(NSString *)senderId
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation CLAMessage
+@implementation CLAMessageViewModel
 
 #pragma mark - Initialization
 
@@ -26,11 +26,11 @@
                       SenderId:(NSString *)senderId
                    displayName:(NSString *)displayName
                           text:(NSString *)text {
-    return [[CLAMessage alloc] initWithOId:oId
-                                  SenderId:senderId
-                         senderDisplayName:displayName
-                                      date:[NSDate date]
-                                      text:text];
+    return [[CLAMessageViewModel alloc] initWithOId:oId
+                                           SenderId:senderId
+                                  senderDisplayName:displayName
+                                               date:[NSDate date]
+                                               text:text];
 }
 
 - (instancetype)initWithOId:(NSString *)oId
@@ -55,11 +55,11 @@
                       SenderId:(NSString *)senderId
                    displayName:(NSString *)displayName
                          media:(id<JSQMessageMediaData>)media {
-    return [[CLAMessage alloc] initWithOId:oId
-                                  SenderId:senderId
-                         senderDisplayName:displayName
-                                      date:[NSDate date]
-                                     media:media];
+    return [[CLAMessageViewModel alloc] initWithOId:oId
+                                           SenderId:senderId
+                                  senderDisplayName:displayName
+                                               date:[NSDate date]
+                                              media:media];
 }
 
 - (instancetype)initWithOId:(NSString *)oId
@@ -151,7 +151,7 @@
         return NO;
     }
     
-    CLAMessage *aMessage = (CLAMessage *)object;
+    CLAMessageViewModel *aMessage = (CLAMessageViewModel *)object;
     
     if (self.isMediaMessage != aMessage.isMediaMessage) {
         return NO;

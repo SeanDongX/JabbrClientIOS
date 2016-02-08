@@ -134,7 +134,7 @@
 }
 
 
-- (void)didReceiveMessage:(CLAMessage *)message inRoom:(NSString *)room {
+- (void)didReceiveMessage:(CLAMessageViewModel *)message inRoom:(NSString *)room {
     [self addMessage:message toRoom:room];
     //[self sendLocalNotificationFor:message inRoom:room];
     
@@ -247,8 +247,8 @@
             objectForKey:roomName];
 }
 
-- (NSMutableArray<CLAMessage *> *)getCurrentRoomMessages {
-    NSMutableArray<CLAMessage *> *messages = [self getMessagesForRoom:self.room.name];
+- (NSMutableArray<CLAMessageViewModel *> *)getCurrentRoomMessages {
+    NSMutableArray<CLAMessageViewModel *> *messages = [self getMessagesForRoom:self.room.name];
     if (messages == nil)
     {
         return nil;
@@ -258,10 +258,10 @@
     
     for (NSInteger i = 0; i< messages.count; i++)  {
         
-        CLAMessage *message = [self.displayMessageFactory create:[messages objectAtIndex:i]
-                                               completionHandler:^() {
-                                                   [weakSelf.collectionView reloadData];
-                                               }];
+        CLAMessageViewModel *message = [self.displayMessageFactory create:[messages objectAtIndex:i]
+                                                        completionHandler:^() {
+                                                            [weakSelf.collectionView reloadData];
+                                                        }];
         
         [messages setObject:message atIndexedSubscript:i];
     }
@@ -269,11 +269,11 @@
     return messages;
 }
 
-- (NSMutableArray<CLAMessage *> *)getMessagesForRoom:(NSString *)roomName {
+- (NSMutableArray<CLAMessageViewModel *> *)getMessagesForRoom:(NSString *)roomName {
     return [self getRoom:roomName].messages;
 }
 
-- (void)addMessage:(CLAMessage *)message toRoom:(NSString *)roomName {
+- (void)addMessage:(CLAMessageViewModel *)message toRoom:(NSString *)roomName {
     if (!message) {
         return;
     }
@@ -305,10 +305,10 @@
                   senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date {
-    CLAMessage *message = [CLAMessage messageWithOId:[[NSUUID UUID] UUIDString]
-                                            SenderId:senderId
-                                         displayName:senderDisplayName
-                                                text:text];
+    CLAMessageViewModel *message = [CLAMessageViewModel messageWithOId:[[NSUUID UUID] UUIDString]
+                                                              SenderId:senderId
+                                                           displayName:senderDisplayName
+                                                                  text:text];
     [self sendMessage:message];
 }
 
@@ -339,8 +339,8 @@
 #pragma mark -
 #pragma mark - JSQMessages CollectionView DataSource
 
-- (CLAMessage *)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray<CLAMessage *> *messages = [self getCurrentRoomMessages];
+- (CLAMessageViewModel *)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray<CLAMessageViewModel *> *messages = [self getCurrentRoomMessages];
     if (messages == nil || messages.count < indexPath.item + 1) {
         return nil;
     }
@@ -360,7 +360,7 @@ collectionView
      *  Otherwise, return your previously created bubble image data objects.
      */
     
-    CLAMessage *message =
+    CLAMessageViewModel *message =
     [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
@@ -373,7 +373,7 @@ collectionView
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
                     avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    CLAMessage *message =
+    CLAMessageViewModel *message =
     [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     CLAUser *user= [self.repository getUserByName: message.senderId];
     
@@ -409,7 +409,7 @@ attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView
 attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
-    CLAMessage *message =
+    CLAMessageViewModel *message =
     [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     
     /**
@@ -420,7 +420,7 @@ attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     if (indexPath.item - 1 > 0) {
-        CLAMessage *previousMessage =
+        CLAMessageViewModel *previousMessage =
         [[self getCurrentRoomMessages] objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId] isEqualToString:message.senderId]) {
             return nil;
@@ -470,7 +470,7 @@ attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
      *`self.collectionView.collectionViewLayout` from `viewDidLoad`
      */
     
-    CLAMessage *msg =
+    CLAMessageViewModel *msg =
     [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     
     if (!msg.isMediaMessage) {
@@ -514,19 +514,19 @@ heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath {
      *  iOS7-style sender name labels
      */
     
-    NSArray<CLAMessage *> *roomMessages = [self getCurrentRoomMessages];
+    NSArray<CLAMessageViewModel *> *roomMessages = [self getCurrentRoomMessages];
     
     if (indexPath.item >= roomMessages.count) {
         return 0.0f;
     }
     
-    CLAMessage *currentMessage = [roomMessages objectAtIndex:indexPath.item];
+    CLAMessageViewModel *currentMessage = [roomMessages objectAtIndex:indexPath.item];
     if ([[currentMessage senderId] isEqualToString:self.senderId]) {
         return 0.0f;
     }
     
     if (indexPath.item - 1 > 0) {
-        CLAMessage *previousMessage = [roomMessages objectAtIndex:indexPath.item - 1];
+        CLAMessageViewModel *previousMessage = [roomMessages objectAtIndex:indexPath.item - 1];
         if ([[previousMessage senderId]
              isEqualToString:[currentMessage senderId]]) {
             return 0.0f;
@@ -548,10 +548,10 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView
 didTapLoadEarlierMessagesButton:(UIButton *)sender {
-    NSMutableArray<CLAMessage *> *roomMessages = [self getCurrentRoomMessages];
+    NSMutableArray<CLAMessageViewModel *> *roomMessages = [self getCurrentRoomMessages];
     
     if (roomMessages != nil && roomMessages.count > 0) {
-        CLAMessage *earliestMessage = [roomMessages objectAtIndex:0];
+        CLAMessageViewModel *earliestMessage = [roomMessages objectAtIndex:0];
         if (earliestMessage != nil) {
             self.showLoadEarlierMessagesHeader = false;
             [self.messageClient getPreviousMessages:earliestMessage.oId
@@ -568,7 +568,7 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender {
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
 didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
-    CLAMessage *message = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
+    CLAMessageViewModel *message = [[self getCurrentRoomMessages] objectAtIndex:indexPath.item];
     
     if (message != nil) {
         [CLAMediaManager openMediaMessage:message from:self];
@@ -631,13 +631,13 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     self.roomViewModel.users = users;
 }
 
-- (void)didLoadEarlierMessages:(NSArray<CLAMessage *> *)earlierMessages
+- (void)didLoadEarlierMessages:(NSArray<CLAMessageViewModel *> *)earlierMessages
                         inRoom:(NSString *)room {
     NSInteger earlierMessageCount = earlierMessages.count;
     
     self.showLoadEarlierMessagesHeader =
     earlierMessageCount >= kLoadEarlierMessageCount;
-    NSArray<CLAMessage *> *currentMessages = [self getMessagesForRoom:room];
+    NSArray<CLAMessageViewModel *> *currentMessages = [self getMessagesForRoom:room];
     
     if (room == nil || earlierMessages == nil || earlierMessageCount == 0) {
         [self hideHud];
@@ -660,10 +660,10 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     if (earlierMessages != nil && earlierMessages.count > 0 &&
         currentMessages != nil && currentMessages.count > 0) {
         
-        CLAMessage *firstEarlierMessage = [earlierMessages objectAtIndex:0];
+        CLAMessageViewModel *firstEarlierMessage = [earlierMessages objectAtIndex:0];
         
         for (int i = 0; i < currentMessages.count; i++) {
-            CLAMessage *message = [currentMessages objectAtIndex:i];
+            CLAMessageViewModel *message = [currentMessages objectAtIndex:i];
             if ([message.oId isEqualToString:firstEarlierMessage.oId]) {
                 [self hideHud];
                 return;
@@ -708,7 +708,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
     
     NSMutableArray *currentMessages = [self getCurrentRoomMessages];
     
-    for (CLAMessage *message in currentMessages) {
+    for (CLAMessageViewModel *message in currentMessages) {
         if ([CLAUtility isString:message.oId
           caseInsensitiveEqualTo:tempMessageId]) {
             message.oId = serverMessageId;
@@ -719,7 +719,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark -
 #pragma mark Private Methods
-- (void)sendMessage:(CLAMessage *)message {
+- (void)sendMessage:(CLAMessageViewModel *)message {
     
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     [[self getCurrentRoomMessages] addObject:message];
@@ -887,20 +887,20 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSDate *)getMessageDisplayDateAt:(NSIndexPath *)indexPath {
-    NSArray<CLAMessage *> *roomeMessages = [self getCurrentRoomMessages];
+    NSArray<CLAMessageViewModel *> *roomeMessages = [self getCurrentRoomMessages];
     
     if (indexPath.item >= roomeMessages.count)
     {
         return nil;
     }
     
-    CLAMessage *currentMessage = [roomeMessages objectAtIndex:indexPath.item];
+    CLAMessageViewModel *currentMessage = [roomeMessages objectAtIndex:indexPath.item];
     
     if (indexPath.item == 0) {
         return currentMessage.date;
     } else {
         
-        CLAMessage *previsousMessage = [roomeMessages objectAtIndex:indexPath.item - 1];
+        CLAMessageViewModel *previsousMessage = [roomeMessages objectAtIndex:indexPath.item - 1];
         if (currentMessage.date != nil && previsousMessage.date != nil &&
             [currentMessage.date secondsFrom:previsousMessage.date] >= kMessageDisplayTimeGap) {
             

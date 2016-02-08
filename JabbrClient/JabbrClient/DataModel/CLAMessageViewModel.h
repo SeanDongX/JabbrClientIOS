@@ -22,7 +22,7 @@
  * also contains a media attachment,
  *  otherwise it contains the message text.
  */
-@interface CLAMessage : NSObject <JSQMessageData, NSCoding, NSCopying>
+@interface CLAMessageViewModel : NSObject <JSQMessageData, NSCoding, NSCopying>
 
 @property(copy, nonatomic) NSString *oId;
 

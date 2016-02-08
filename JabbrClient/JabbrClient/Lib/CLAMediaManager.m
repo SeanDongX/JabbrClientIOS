@@ -80,7 +80,7 @@
     return YES;
 }
 
-+ (void)openMediaMessage:(CLAMessage *)message from:(id)target {
++ (void)openMediaMessage:(CLAMessageViewModel *)message from:(id)target {
     MessageType messageType = [CLADisplayMessageFactory getMessageType:message.mediaUrl];
     
     if (messageType == MessageTypeImage && message.media != nil) {

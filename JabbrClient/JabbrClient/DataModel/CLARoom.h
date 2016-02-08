@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 // Data Models
-#import "CLAMessage.h"
+#import "CLAMessageViewModel.h"
 #import "CLAUser.h"
 
 @interface CLARoom : NSObject
@@ -22,7 +22,7 @@
 @property(nonatomic) NSInteger unread;
 @property(nonatomic, strong) NSArray<CLAUser *> *users;
 @property(nonatomic, strong) NSArray<CLAUser *> *owners;
-@property(nonatomic, strong) NSMutableArray<CLAMessage *> *messages;
+@property(nonatomic, strong) NSMutableArray<CLAMessageViewModel *> *messages;
 
 - (void)getFromDictionary:(NSDictionary *)dictionary;
 

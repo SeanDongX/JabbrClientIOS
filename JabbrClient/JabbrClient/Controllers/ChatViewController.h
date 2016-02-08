@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SignalR.h"
 #import <JSQMessagesViewController/JSQMessages.h>
-#import "CLAMessage.h"
+#import "CLAMessageViewModel.h"
 #import "CLAMessageClient.h"
 
 // Data Models

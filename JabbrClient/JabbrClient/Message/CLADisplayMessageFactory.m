@@ -13,14 +13,14 @@
 
 @implementation CLADisplayMessageFactory
 
-- (CLAMessage*)create:(CLAMessage *)message completionHandler:(void (^)())completion {
+- (CLAMessageViewModel*)create:(CLAMessageViewModel *)message completionHandler:(void (^)())completion {
     id<JSQMessageMediaData> mediaData = [self getMessageData:message.text
                                            completionHandler:completion];
     if (mediaData == nil) {
         return message;
     }
     
-    return [[CLAMessage alloc]
+    return [[CLAMessageViewModel alloc]
             initWithOId:message.oId
             SenderId:message.senderId
             senderDisplayName:message.senderDisplayName

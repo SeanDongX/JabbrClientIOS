@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CLAMessage.h"
+#import "CLAMessageViewModel.h"
 
 @interface CLAMessageFactory : NSObject
 
-- (CLAMessage*)create:(NSDictionary *)messageDictionary;
+- (CLAMessageViewModel*)create:(NSDictionary *)messageDictionary;
 
 @end

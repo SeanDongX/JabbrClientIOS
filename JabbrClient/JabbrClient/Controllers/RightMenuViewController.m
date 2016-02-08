@@ -9,7 +9,6 @@
 #import "RightMenuViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
 #import "DocumentViewController.h"
-#import "DemoData.h"
 #import "DocumentThread+Category.h"
 #import "Constants.h"
 #import "SlidingViewController.h"

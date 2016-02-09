@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Realm/Realm.h>
 
 // Data Models
 #import "CLAMessageViewModel.h"
 #import "CLAUser.h"
+#import "CLAMessage.h"
 
-@interface CLARoom : NSObject
+@interface CLARoom : RLMObject
 
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *displayName;
@@ -20,11 +22,15 @@
 @property(nonatomic) BOOL isDirectRoom;
 @property(nonatomic) BOOL closed;
 @property(nonatomic) NSInteger unread;
-@property(nonatomic, strong) NSArray<CLAUser *> *users;
-@property(nonatomic, strong) NSArray<CLAUser *> *owners;
-@property(nonatomic, strong) NSMutableArray<CLAMessageViewModel *> *messages;
+@property(nonatomic, strong)RLMArray<CLAUser *><CLAUser> *users;
+@property(nonatomic, strong)RLMArray<CLAUser *><CLAUser> *owners;
+@property(nonatomic, strong)RLMArray<CLAMessage *><CLAMessage> *chatMessages;
+
+////TODO: remove messages getter and setter
+//- (NSMutableArray <CLAMessageViewModel *> *)messages;
+//- (void)setMessages: (NSMutableArray <CLAMessageViewModel *> *)messages;
 
 - (void)getFromDictionary:(NSDictionary *)dictionary;
-
 - (NSString *)getHandle;
+
 @end

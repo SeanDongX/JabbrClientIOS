@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Realm/Realm.h>
 
-@interface CLATeam : NSObject
+@interface CLATeam : RLMObject
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSNumber *key;
 @end

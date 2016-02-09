@@ -10,8 +10,36 @@
 
 // Util
 #import "Constants.h"
+#import "CLAMessageViewModel.h"
+#import "CLAMessageFactory.h"
+
+@interface CLARoom ()
+
+@property(nonatomic, strong) NSMutableArray <CLAMessageViewModel *> *messages;
+
+@end
 
 @implementation CLARoom
+
+//- (NSMutableArray <CLAMessageViewModel *> *)messages {
+//    NSMutableArray <CLAMessageViewModel *> *messages = [[NSMutableArray alloc] init];
+//
+//    for (CLAMessage *message in self.messages) {
+//        CLAMessageViewModel *viewModel = [[CLAMessageViewModel alloc]
+//                                          initWithOId:message.key
+//                                          SenderId:message.fromUserName
+//                                          senderDisplayName:userInitials
+//                                          date:date
+//                                          text:text];
+//
+//        messages addObject: <#(nonnull CLAMessageViewModel *)#>
+//    }
+//
+//    return messages;
+//}
+//
+//- (void)setMessages: (NSMutableArray <CLAMessageViewModel *> *)messages {
+//}
 
 - (void)getFromDictionary:(NSDictionary *)dictionary {
     self.name = [dictionary objectForKey:@"Name"];
@@ -36,8 +64,10 @@
     [realm addOrUpdateObjectsFromArray:usersArray];
     [realm commitWriteTransaction];
     
-    self.users = usersArray;
-    self.messages = [NSMutableArray array];
+    //TODO: add messages and connections to room
+    //TODO: add room users
+    //self.users = usersArray;
+    //self.messages = [NSMutableArray array];
 }
 
 - (NSString *)getHandle {

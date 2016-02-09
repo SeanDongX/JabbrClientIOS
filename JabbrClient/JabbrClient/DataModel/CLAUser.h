@@ -35,6 +35,4 @@ typedef enum {
 
 @end
 
-// This protocol enables typed collections. i.e.:
-// RLMArray<CLAUserR>
-RLM_ARRAY_TYPE(CLAUserR)
+RLM_ARRAY_TYPE(CLAUser)

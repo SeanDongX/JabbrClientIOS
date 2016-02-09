@@ -21,7 +21,7 @@
 - (CLAUser *)getUserByName: (NSString *)name;
 
 
-- (CLANotificationMessage *)updateNotification: (NSNumber *)notificationKey read:(BOOL)read;
+- (void)updateNotification: (NSNumber *)notificationKey read:(BOOL)read;
 - (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey;
 - (void)addOrUpdateNotificationsWithData: (NSArray *)dictionaryArray
                               completion:(void (^)(void))completionBlock;

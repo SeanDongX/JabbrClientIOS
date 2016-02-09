@@ -10,7 +10,7 @@
 
 #import "Constants.h"
 #import "CLARoom.h"
-#import "ChatViewController.h"
+#import "CLAChatViewController.h"
 #import "Masonry.h"
 #import "JSQMessagesAvatarImageFactory.h"
 
@@ -399,13 +399,13 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     navController = [self.slidingViewController getNavigationControllerWithKeyIdentifier:kChatNavigationController];
     
-    ChatViewController *chatViewController =
+    CLAChatViewController *chatViewController =
     [navController.viewControllers objectAtIndex:0];
     
     [self.slidingViewController setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     if (chatViewController != nil) {
         [self setRoom:room.name withUnread:0];
-        [chatViewController setActiveRoom:room];
+        //[chatViewController setActiveRoom:room];
     }
     
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];

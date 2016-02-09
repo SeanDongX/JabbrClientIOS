@@ -18,7 +18,6 @@
 // View Controller
 #import "LeftMenuViewController.h"
 #import "RightMenuViewController.h"
-#import "ChatViewController.h"
 
 #import "CLASignalRMessageClient.h"
 

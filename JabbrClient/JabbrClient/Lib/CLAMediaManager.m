@@ -12,8 +12,8 @@
 #import "JTSImageInfo.h"
 #import "JTSImageViewController.h"
 #import "Constants.h"
-#import "CLADisplayMessageFactory.h"
 #import "JSQPhotoMediaItem.h"
+#import "CLADisplayMessageFactory.h"
 
 
 @implementation CLAMediaManager
@@ -80,20 +80,20 @@
     return YES;
 }
 
-+ (void)openMediaMessage:(CLAMessageViewModel *)message from:(id)target {
-    MessageType messageType = [CLADisplayMessageFactory getMessageType:message.mediaUrl];
++ (void)openMediaMessage:(CLAMessage *)message from:(id)target {
+    //MessageType messageType = [CLADisplayMessageFactory getMessageType:message.mediaUrl];
     
-    if (messageType == MessageTypeImage && message.media != nil) {
-        JSQPhotoMediaItem *photoItem = message.media;
-        if (photoItem != nil && photoItem.image != nil) {
-            [CLAMediaManager showImage: photoItem.image from:target];
-        }
-    }
-    else if (messageType == MessageTypeDocument) {
-        if (message.mediaUrl != nil) {
-            [CLAMediaManager openDocument:message.mediaUrl];
-        }
-    }
+    //    if (messageType == MessageTypeImage && message.media != nil) {
+    //        JSQPhotoMediaItem *photoItem = message.media;
+    //        if (photoItem != nil && photoItem.image != nil) {
+    //            [CLAMediaManager showImage: photoItem.image from:target];
+    //        }
+    //    }
+    //    else if (messageType == MessageTypeDocument) {
+    //        if (message.mediaUrl != nil) {
+    //            [CLAMediaManager openDocument:message.mediaUrl];
+    //        }
+    //    }
     
 }
 

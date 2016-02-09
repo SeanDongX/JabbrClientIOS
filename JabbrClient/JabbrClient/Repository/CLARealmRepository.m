@@ -34,6 +34,18 @@
     return users.firstObject;
 }
 
+- (NSArray <CLAMessage *> *)getRoomMessages: (NSString *)roomName {
+    RLMResults<CLAMessage *>  *messages = [CLAMessage objectsWhere:@"roomName = %@", roomName];
+    return [CLARealmRepository RLMResultsToNSArray:messages];
+}
+
+- (void)addOrgupdateMessage:(CLAMessage *)message {
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObject:message];
+    [realm commitWriteTransaction];
+}
+
 - (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey {
     RLMResults<CLANotificationMessage *>  *notification = [CLANotificationMessage objectsWhere:@"notificationKey = %@", notificationKey];
     return notification.firstObject;
@@ -75,4 +87,14 @@
     
     completionBlock();
 }
+
+
++ (NSArray *) RLMResultsToNSArray:(RLMResults *)results {
+    NSMutableArray *array = [NSMutableArray array];
+    for (RLMObject *object in results) {
+        [array addObject:object];
+    }
+    return array;
+}
+
 @end

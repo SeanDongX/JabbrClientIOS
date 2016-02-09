@@ -13,22 +13,6 @@
 
 @implementation CLADisplayMessageFactory
 
-- (CLAMessageViewModel*)create:(CLAMessageViewModel *)message completionHandler:(void (^)())completion {
-    id<JSQMessageMediaData> mediaData = [self getMessageData:message.text
-                                           completionHandler:completion];
-    if (mediaData == nil) {
-        return message;
-    }
-    
-    return [[CLAMessageViewModel alloc]
-            initWithOId:message.oId
-            SenderId:message.senderId
-            senderDisplayName:message.senderDisplayName
-            date:message.date
-            media:mediaData
-            text:message.text];
-}
-
 + (MessageType)getMessageType:(NSString *)text {
     NSPredicate *textTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"https?:\\/\\/.*\\.(?:png|jpg)"];
     

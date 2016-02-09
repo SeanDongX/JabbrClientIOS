@@ -10,7 +10,6 @@
 #import <Realm/Realm.h>
 
 // Data Models
-#import "CLAMessageViewModel.h"
 #import "CLAUser.h"
 #import "CLAMessage.h"
 

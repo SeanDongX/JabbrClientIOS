@@ -10,12 +10,8 @@
 
 // Util
 #import "Constants.h"
-#import "CLAMessageViewModel.h"
-#import "CLAMessageFactory.h"
 
 @interface CLARoom ()
-
-@property(nonatomic, strong) NSMutableArray <CLAMessageViewModel *> *messages;
 
 @end
 

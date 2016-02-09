@@ -20,6 +20,8 @@
 
 - (CLAUser *)getUserByName: (NSString *)name;
 
+- (NSArray <CLAMessage *> *)getRoomMessages: (NSString *)roomName;
+- (void)addOrgupdateMessage:(CLAMessage *)message;
 
 - (void)updateNotification: (NSNumber *)notificationKey read:(BOOL)read;
 - (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey;

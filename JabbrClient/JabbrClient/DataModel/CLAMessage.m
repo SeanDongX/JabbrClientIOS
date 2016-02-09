@@ -10,8 +10,11 @@
 
 @implementation CLAMessage
 
++ (NSString *)primaryKey {
+    return @"key";
+}
 
-+ (CLAMessage *)getFromData:(NSDictionary *)messageDictionary FormRoom:(NSString *)roomName {
++ (CLAMessage *)getFromData:(NSDictionary *)messageDictionary forRoom:(NSString *)roomName {
     CLAMessage *message = [[CLAMessage alloc] init];
     
     message.roomName = roomName;

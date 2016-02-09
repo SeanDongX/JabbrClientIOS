@@ -624,7 +624,7 @@
         <!--Chat-->
         <scene sceneID="WDy-qq-umt">
             <objects>
-                <viewController id="vtJ-5i-UDw" userLabel="Chat" customClass="ChatViewController" sceneMemberID="viewController">
+                <viewController id="vtJ-5i-UDw" userLabel="Chat" customClass="CLAChatViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7uS-nx-P72"/>
                         <viewControllerLayoutGuide type="bottom" id="hpH-vO-XbI"/>

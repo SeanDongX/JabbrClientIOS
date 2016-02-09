@@ -13,7 +13,7 @@
 #import "Constants.h"
 #import "SlidingViewController.h"
 #import "CLATaskWebViewController.h"
-#import "ChatViewController.h"
+#import "CLAChatViewController.h"
 
 static NSString *const kDoc = @"doc";
 
@@ -84,17 +84,17 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
      setTopNavigationControllerWithKeyIdentifier:
      kChatNavigationController];
     
-    ChatViewController *chatViewController = (ChatViewController *)[navController.viewControllers objectAtIndex:0];
+    CLAChatViewController *chatViewController = (CLAChatViewController *)[navController.viewControllers objectAtIndex:0];
     
     if (chatViewController != nil) {
         [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
         
-        if (indexPath.item == 0) {
-            [chatViewController showTaskView];
-        }
-        else {
-            [chatViewController showInfoView];
-        }
+        //        if (indexPath.item == 0) {
+        //            [chatViewController showTaskView];
+        //        }
+        //        else {
+        //            [chatViewController showInfoView];
+        //        }
         
         [self.slidingViewController resetTopViewAnimated:YES];
     }

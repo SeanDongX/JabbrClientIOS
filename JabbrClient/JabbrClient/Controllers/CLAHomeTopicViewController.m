@@ -21,7 +21,6 @@
 
 // View Controller
 #import "CLACreateRoomViewController.h"
-#import "ChatViewController.h"
 #import "CLACreateTeamViewController.h"
 
 // Message Client

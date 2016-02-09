@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "CLAUtility.h"
 #import "UserDataManager.h"
-#import "CLAMessageFactory.h"
 
 // Data Model
 #import "CLATeam.h"
@@ -21,14 +20,12 @@
 #import "CLATeamViewModel.h"
 
 // Repository
-#import "CLAInMemoryDataRepository.h"
+#import "CLARealmRepository.h"
 
 @interface CLASignalRMessageClient ()
 
 @property(nonatomic, strong) SRHubConnection *connection;
 @property(nonatomic, strong) SRHubProxy *hub;
-
-@property(nonatomic, strong) CLAMessageFactory *messageFactory;
 
 @end
 
@@ -81,9 +78,9 @@ static bool isFirstAccess = YES;
         [self doesNotRecognizeSelector:_cmd];
     }
     self = [super init];
-    self.dataRepository = [[CLAInMemoryDataRepository alloc] init];
+    self.dataRepository = [[CLARealmRepository alloc] init];
     [self setupActicityTimer];
-    self.messageFactory = [[CLAMessageFactory alloc] init];
+    //self.messageFactory = [[CLAMessageFactory alloc] init];
     return self;
 }
 
@@ -241,11 +238,11 @@ static bool isFirstAccess = YES;
     [self invokeHubMethod:@"LoadRooms" withArgs:@[@[ room ]] completionHandler:nil];
 }
 
-- (void)sendMessage:(CLAMessageViewModel *)message inRoom:(NSString *)room {
+- (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room {
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
-    [messageData setObject:message.oId forKey:@"id"];
+    [messageData setObject:message.key forKey:@"id"];
     
-    [messageData setObject:message.text forKey:@"content"];
+    [messageData setObject:message.content forKey:@"content"];
     [messageData setObject:room forKey:@"room"];
     [self invokeHubMethod:@"Send" withArgs:@[ messageData ] completionHandler:nil];
 }
@@ -263,14 +260,14 @@ static bool isFirstAccess = YES;
     [self invokeHubMethod:@"GetPreviousMessages"
                  withArgs:@[ messageId ]
         completionHandler:^(id response, NSError *error) {
-            NSMutableArray *earlierMessageArray = [NSMutableArray array];
+            NSMutableArray<CLAMessage *> *earlierMessageArray = [NSMutableArray array];
             
             if (response != nil) {
                 NSArray *messages = response;
                 if (messages != nil && messages.count > 0) {
                     for (NSDictionary *messageDictionary in messages) {
                         [earlierMessageArray
-                         addObject:[self getMessageFromRawData:messageDictionary]];
+                         addObject:[CLAMessage getFromData:messageDictionary]];
                     }
                 }
             }
@@ -322,9 +319,10 @@ static bool isFirstAccess = YES;
     NSString *room = (NSString *)data[1];
     
     NSDictionary *messageDictionary = (NSDictionary *)data[0];
-    [self.delegate
-     didReceiveMessage:[self getMessageFromRawData:messageDictionary]
-     inRoom:room];
+    CLAMessage *message = [CLAMessage getFromData:messageDictionary forRoom:room];
+    [self.dataRepository addOrgupdateMessage:message];
+    [self.delegate didReceiveMessage:message
+                              inRoom:room];
 }
 
 - (void)replaceMessage:(NSArray *)data {
@@ -345,9 +343,9 @@ static bool isFirstAccess = YES;
     }
 }
 
-- (CLAMessageViewModel *)getMessageFromRawData:(NSDictionary *)messageDictionary {
-    return [self.messageFactory create:messageDictionary];
-}
+//- (CLAMessageViewModel *)getMessageFromRawData:(NSDictionary *)messageDictionary {
+//    return [self.messageFactory create:messageDictionary];
+//}
 
 - (void)setTyping:(NSArray *)data {
     if (!data && data.count < 2) {
@@ -392,11 +390,11 @@ static bool isFirstAccess = YES;
     
     NSArray *recentMessageArray =
     [roomInfoDictionary objectForKey:@"RecentMessages"];
-    NSMutableArray *earlierMessageArray = [NSMutableArray array];
+    NSMutableArray<CLAMessage *> *earlierMessageArray = [NSMutableArray array];
     
     for (NSDictionary *messageDictionary in recentMessageArray) {
         [earlierMessageArray
-         addObject:[self getMessageFromRawData:messageDictionary]];
+         addObject:[CLAMessage getFromData:messageDictionary]];
     }
     
     [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];

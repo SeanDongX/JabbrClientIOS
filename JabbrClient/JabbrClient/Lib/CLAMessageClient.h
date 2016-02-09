@@ -8,13 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <JSQMessagesViewController/JSQMessages.h>
-#import "CLAMessageViewModel.h"
 #import "Constants.h"
 
 // Data
 #import "CLATeamViewModel.h"
 #import "CLADataRepositoryProtocol.h"
-#import "CLAInMemoryDataRepository.h"
 
 @protocol CLAMessageClient;
 @protocol CLAMessageClientDelegate;
@@ -53,7 +51,7 @@ typedef enum {
 - (CLAConnectionState)getConnectionState;
 
 - (void)loadRoom:(NSString *)room;
-- (void)sendMessage:(CLAMessageViewModel *)message inRoom:(NSString *)room;
+- (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room;
 - (void)sendTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room;
 
@@ -88,8 +86,8 @@ typedef enum {
 - (void)didReceiveTeams:(NSArray *)teams;
 - (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update;
 - (void)didReceiveUpdateRoom:(CLARoom *)room;
-- (void)didReceiveMessage:(CLAMessageViewModel *)message inRoom:(NSString *)room;
-- (void)didLoadEarlierMessages:(NSArray<CLAMessageViewModel *> *)earlierMessages
+- (void)didReceiveMessage:(CLAMessage *)message inRoom:(NSString *)room;
+- (void)didLoadEarlierMessages:(NSArray<CLAMessage *> *)earlierMessages
                         inRoom:(NSString *)room;
 - (void)didLoadUsers:(NSArray<CLAUser *> *)users inRoom:(NSString *)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
@@ -112,7 +110,7 @@ typedef enum {
  *
  * @see SINMessageClient, SINMessage
  */
-- (void)messageSent:(CLAMessageViewModel *)message recipientId:(NSString *)recipientId;
+- (void)messageSent:(CLAMessage *)message recipientId:(NSString *)recipientId;
 
 /**
  * Tells the delegate that the message client failed to send a message.
@@ -126,7 +124,7 @@ typedef enum {
  *
  * @param message The message that could not be delivered.
  **/
-- (void)messageFailed:(CLAMessageViewModel *)message
+- (void)messageFailed:(CLAMessage *)message
                  info:(id<CLAMessageFailureInfo>)messageFailureInfo;
 
 /**
@@ -156,7 +154,7 @@ typedef enum {
  * @see SINPushPair
  *
  **/
-- (void)message:(CLAMessageViewModel *)message
+- (void)message:(CLAMessage *)message
 shouldSendPushNotifications:(NSArray *)pushPairs;
 
 @end

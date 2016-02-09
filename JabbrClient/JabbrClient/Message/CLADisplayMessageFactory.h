@@ -7,12 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CLAMessageViewModel.h"
 #import "Constants.h"
 
 @interface CLADisplayMessageFactory : NSObject
 
 + (MessageType)getMessageType:(NSString *)text;
-- (CLAMessageViewModel*)create:(CLAMessageViewModel *)message completionHandler:(void (^)())completion;
 
 @end

@@ -26,6 +26,26 @@ forViewController:(UIViewController *)viewController
                                     type:(TSMessageNotificationType)type];
 }
 
++ (void)showText:(NSString *)text
+forViewController:(UIViewController *)viewController
+        withType:(CLANotificationType)type
+     autoDismiss:(BOOL) autoDismiss
+      atPosition:(NSInteger)pisition {
+    
+    [TSMessage setDefaultViewController:viewController];
+    [TSMessage showNotificationInViewController:viewController
+                                          title:text
+                                       subtitle:nil
+                                          image:nil
+                                           type:(TSMessageNotificationType)type
+                                       duration: autoDismiss == YES ? 0 : -1
+                                       callback:nil
+                                    buttonTitle:nil
+                                 buttonCallback:nil
+                                     atPosition:pisition
+                           canBeDismissedByUser:NO];
+}
+
 + (void)dismiss {
     [TSMessage dismissActiveNotification];
 }

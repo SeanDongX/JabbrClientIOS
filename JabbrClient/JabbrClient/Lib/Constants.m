@@ -15,7 +15,7 @@
 #ifdef DEBUG
 
 //NSString *const kServerBaseUrl = @"http://192.168.0.43:16207/";
-NSString *const kServerBaseUrl = @"http://beta.collara.co/";
+NSString *const kServerBaseUrl = @"http://www.collara.co/";
 NSString *const kTaskServiceRootUrl = @"http://task.collara.co/";
 
 NSString *const kAuzreNotificationHubName = @"collarapush";
@@ -233,13 +233,6 @@ NSString *const kXLFormTextLabelColor = @"textLabel.color";
     return [UIColor colorWithRed:(27 / 255.0)
                            green:(188 / 255.0)
                             blue:(155 / 255.0)
-                           alpha:1];
-}
-
-+ (UIColor *)tableHeaderColor {
-    return [UIColor colorWithRed:(41 / 255.0)
-                           green:(56 / 255.0)
-                            blue:(70 / 255.0)
                            alpha:1];
 }
 

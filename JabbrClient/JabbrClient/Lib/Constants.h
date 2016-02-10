@@ -141,7 +141,6 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIImage *)documentIconLarge;
 
 + (UIColor *)mainThemeColor;
-+ (UIColor *)tableHeaderColor;
 + (UIColor *)highlightColor;
 + (UIColor *)mainThemeContrastColor;
 + (UIColor *)warningColor;

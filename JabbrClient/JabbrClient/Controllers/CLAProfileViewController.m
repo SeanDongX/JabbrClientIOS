@@ -16,6 +16,7 @@
 #import "CLATeamViewModel.h"
 #import "CLASignalRMessageClient.h"
 #import "CLAAzureHubPushNotificationService.h"
+#import "CLARealmRepository.h"
 
 @interface CLAProfileViewController ()
 
@@ -71,7 +72,7 @@
     [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
     [[CLASignalRMessageClient sharedInstance].dataRepository deleteData];
-    // TODO:MessageClient clear data repository
+    [[[CLARealmRepository alloc] init] cleanup];
     [self switchToSignInView];
 }
 

@@ -28,5 +28,6 @@
 - (void)addOrUpdateNotifications: (NSArray <CLANotificationMessage*> *)notifications
                       completion:(void (^)(void))completionBlock;
 
+- (void)cleanup;
 
 @end

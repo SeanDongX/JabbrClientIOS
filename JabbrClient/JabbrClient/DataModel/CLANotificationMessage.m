@@ -22,8 +22,8 @@
         notification.message = [dataDictionary objectForKey:@"message"];
     }
     
-    notification.read = [dataDictionary objectForKey:@"read"];
-    
+    NSNumber *read = [dataDictionary objectForKey:@"read"];
+    notification.read = read.intValue == 1 ? YES : NO;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];

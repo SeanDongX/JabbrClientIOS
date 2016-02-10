@@ -31,7 +31,6 @@
     }
 }
 
-
 - (void)addOrUpdateNotificationsWithData: (NSArray *)dictionaryArray
                               completion:(void (^)(void))completionBlock {
     NSMutableArray <CLANotificationMessage *> *notifications = [NSMutableArray array];
@@ -57,4 +56,12 @@
     
     completionBlock();
 }
+
+- (void)cleanup {
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm transactionWithBlock:^{
+        [realm deleteAllObjects];
+    }];
+}
+
 @end

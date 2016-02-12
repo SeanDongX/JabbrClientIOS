@@ -39,11 +39,12 @@ NSMutableArray<CLATeamViewModel *> *teamViewModelArray;
         
         if (currentTeam.key != nil && currentTeam.key.intValue > 0) {
             for (CLATeamViewModel *teamViewModel in self.teamViewModelArray) {
-                if (teamViewModel.team.key == currentTeam.key) {
+                if (teamViewModel.team.key.intValue == currentTeam.key.intValue) {
                     return teamViewModel;
                 }
             }
         }
+        
         
         return self.teamViewModelArray[0];
     }

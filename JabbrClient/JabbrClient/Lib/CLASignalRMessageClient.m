@@ -539,7 +539,6 @@ static bool isFirstAccess = YES;
 }
 
 - (void)invokeGetTeam {
-    //Fixme: load team keys when log in and use in args
     [self invokeHubMethod:@"GetTeams"
                  withArgs:@[@0]
         completionHandler:^(id response, NSError *error) {

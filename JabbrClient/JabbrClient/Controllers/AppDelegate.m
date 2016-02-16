@@ -127,6 +127,13 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Failed to register device with error: %@", error.domain.description);
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    NSLog(@"Url recieved: %@", url);
+    NSDictionary *queryDictionary = [self parseQueryString:[url query]];
+    NSLog(@"Query dict: %@", queryDictionary);
+    return YES;
+}
+
 #pragma mark -
 #pragma mark Private Methods
 
@@ -138,6 +145,20 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     [[CLAWebApiClient sharedInstance]
      setBadge:@0
      forTeam:[UserDataManager getTeam].key];
+}
+
+- (NSDictionary *)parseQueryString:(NSString *)query {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    
+    for (NSString *pair in pairs) {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        NSString *key = [[elements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *val = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        [dict setObject:val forKey:key];
+    }
+    return dict;
 }
 
 @end

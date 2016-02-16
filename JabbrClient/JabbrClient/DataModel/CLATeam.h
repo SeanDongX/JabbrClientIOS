@@ -11,4 +11,8 @@
 @interface CLATeam : NSObject
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSNumber *key;
+
++ (CLATeam *)getFromData:(NSDictionary *)teamDictionary;
++ (NSArray <CLATeam *> *)getTeamsFromData:(NSArray *)teamDictionaryArray;
+
 @end

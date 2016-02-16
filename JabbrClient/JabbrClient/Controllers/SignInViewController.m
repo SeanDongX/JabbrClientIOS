@@ -24,6 +24,7 @@
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
 #import "CLASignUpViewController.h"
+#import "CLATeam.h"
 
 @interface SignInViewController ()
 
@@ -133,8 +134,8 @@
 - (void)processSignInResult:(NSString *)errorMessage {
     if (errorMessage == nil) {
         [[CLAAzureHubPushNotificationService sharedInstance] registerDevice];
-        [self cleanUpForm];
         [self switchToMainView];
+        [self cleanUpForm];
     } else {
         [CLANotificationManager showText:errorMessage
                        forViewController:self
@@ -143,8 +144,17 @@
 }
 
 - (void)switchToMainView {
-    [((SlidingViewController *)self.navigationController.slidingViewController)
-     switchToMainView];
+    [[CLAWebApiClient sharedInstance]
+     getTeams:^(NSArray<CLATeam *> *teams, NSString *errorMessage) {
+         if (teams != nil && teams.count > 0) {
+             [((SlidingViewController *)self.navigationController.slidingViewController)
+              switchToMainView];
+         }
+         else {
+             [((SlidingViewController *)self.navigationController.slidingViewController)
+              switchToCreateTeamView];
+         }
+     }];
 }
 
 #pragma mark -

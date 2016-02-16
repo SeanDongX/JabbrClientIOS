@@ -160,6 +160,26 @@ static bool isFirstAccess = YES;
                          }];
 }
 
+- (void)getTeams:(void (^)(NSArray<CLATeam *> *teams, NSString *errorMessage))completion {
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/team/?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager GET:requestUrl
+                     parameters:nil
+                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                            NSArray<CLATeam *> *teams = [CLATeam getTeamsFromData:responseObject];
+                            completion(teams, nil);
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            completion(nil, [self getResponseErrorMessage:error]);
+                        }];
+}
+
 - (void)createTeam:(NSString *)name
  completionHandler:(void (^)(NSString *errorMessage))completion {
     NSArray *array = @[

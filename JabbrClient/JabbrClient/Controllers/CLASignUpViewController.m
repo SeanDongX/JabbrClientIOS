@@ -71,9 +71,8 @@
              __strong __typeof(&*weakSelf) strongSelf = weakSelf;
              
              if (errorMessage == nil) {
-                 [strongSelf.slidingViewController switchToMainView];
+                 [strongSelf switchToMainView];
                  [strongSelf cleanUpForm];
-                 [strongSelf dismissViewControllerAnimated:YES completion:nil];
              } else {
                  [CLANotificationManager showText:errorMessage
                                 forViewController:strongSelf
@@ -159,4 +158,23 @@
     self.passwordTextField.text = @"";
     self.repeatPasswordTextField.text = @"";
 }
+
+- (void)switchToMainView {
+    [[CLAWebApiClient sharedInstance]
+     getTeams:^(NSArray<CLATeam *> *teams, NSString *errorMessage) {
+         if (teams != nil && teams.count > 0) {
+             [self dismissViewControllerAnimated: YES completion:^{
+                 [((SlidingViewController *)self.slidingViewController)
+                  switchToMainView];
+             }];
+         }
+         else {
+             [self dismissViewControllerAnimated: YES completion:^{
+                 [((SlidingViewController *)self.slidingViewController)
+                  switchToCreateTeamView];
+             }];
+         }
+     }];
+}
+
 @end

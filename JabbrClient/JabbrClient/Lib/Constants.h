@@ -82,6 +82,7 @@ FOUNDATION_EXPORT NSString *const kEventNoTeam;
 FOUNDATION_EXPORT NSString *const kEventReceiveUnread;
 
 FOUNDATION_EXPORT NSString *const kNotificationKey;
+FOUNDATION_EXPORT NSString *const kinvitationId;
 
 FOUNDATION_EXPORT int const kTeamNameMaxLength;
 

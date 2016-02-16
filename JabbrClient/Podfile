@@ -21,6 +21,7 @@ target 'Collara' do
   use_frameworks!
   pod 'netfox'
   pod 'Realm'
+  pod 'JLRoutes'
 end
 
 target 'CollaraTests' do

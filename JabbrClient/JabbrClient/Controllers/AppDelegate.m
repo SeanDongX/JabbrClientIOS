@@ -16,6 +16,7 @@
 #import "CLAWebApiClient.h"
 #import "CLAAzureHubPushNotificationService.h"
 #import "CLANotificationManager.h"
+#import <JLRoutes/JLRoutes.h>
 
 // Data Model
 #import "CLANotification.h"
@@ -24,6 +25,9 @@
 // Menu
 #import "LeftMenuViewController.h"
 #import "netfox-Swift.h"
+#import "CLASignalRMessageClient.h"
+#import "SlidingViewController.h"
+#import "UIViewController+ECSlidingViewController.h"
 
 @interface AppDelegate ()
 
@@ -39,7 +43,7 @@
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self registerNotification];
     [CLANotificationManager configure];
-    
+    [self registerRoutes];
 #if DEBUG
     [[NFX sharedInstance] start];
 #endif
@@ -128,10 +132,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    NSLog(@"Url recieved: %@", url);
-    NSDictionary *queryDictionary = [self parseQueryString:[url query]];
-    NSLog(@"Query dict: %@", queryDictionary);
-    return YES;
+    return [JLRoutes routeURL:url];
 }
 
 #pragma mark -
@@ -147,18 +148,45 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
      forTeam:[UserDataManager getTeam].key];
 }
 
-- (NSDictionary *)parseQueryString:(NSString *)query {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSArray *pairs = [query componentsSeparatedByString:@"&"];
-    
-    for (NSString *pair in pairs) {
-        NSArray *elements = [pair componentsSeparatedByString:@"="];
-        NSString *key = [[elements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *val = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+- (void)registerRoutes {
+    [JLRoutes addRoute:@"/account/login/" handler:^BOOL (NSDictionary *parameters) {
+        NSString *returnUrl = parameters[@"ReturnUrl"];
+        if ([returnUrl hasPrefix: @"/teams/join/?invitationid="]) {
+            NSString *invitationId = [returnUrl substringFromIndex:26];
+            if (invitationId) {
+                [UserDataManager cacheObject: invitationId forKey: kinvitationId];
+                if ([UserDataManager isAuthenticated] == NO) {
+                    UIWindow *window=[UIApplication sharedApplication].keyWindow;
+                    SlidingViewController *root = (SlidingViewController *)[window rootViewController];
+                    [root switchToSignInView];
+                } else {
+                    //TOOD: Show team view and join team
+                }
+                return YES;
+            }
+        }
         
-        [dict setObject:val forKey:key];
-    }
-    return dict;
+        return NO;
+    }];
+    
+    [JLRoutes addRoute:@"/teams/join/" handler:^BOOL (NSDictionary *parameters) {
+        NSString *invitationId = parameters[kinvitationId];
+        if (invitationId) {
+            CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
+            [apiClient joinTeam:invitationId
+              completionHandler:^(NSString *errorMessage) {
+                  if (errorMessage == nil) {
+                      //TOOD: Show team view and join team
+                  } else {
+                      
+                  }
+              }];
+            
+            return YES;
+        }
+        
+        return NO;
+    }];
 }
 
 @end

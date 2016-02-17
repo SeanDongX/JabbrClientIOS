@@ -26,10 +26,10 @@
 - (void)getTeams:(void (^)(NSArray<CLATeam *> *teams, NSString *errorMessage))completion;
 
 - (void)createTeam:(NSString *)name
- completionHandler:(void (^)(NSString *errorMessage))completion;
+ completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion;
 
 - (void)joinTeam:(NSString *)invitationCode
-completionHandler:(void (^)(NSString *errorMessage))completion;
+completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion;
 
 - (void)getInviteCodeForTeam:(NSNumber *)team
                   completion:(void (^)(NSString *invitationCode,

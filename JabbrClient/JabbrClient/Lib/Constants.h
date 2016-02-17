@@ -43,7 +43,9 @@ FOUNDATION_EXPORT NSString *const kDocumentNavigationController;
 FOUNDATION_EXPORT NSString *const kLeftMenuViewController;
 FOUNDATION_EXPORT NSString *const kRightMenuViewController;
 
+FOUNDATION_EXPORT NSString *const kCreateTeamNavigationController;
 FOUNDATION_EXPORT NSString *const kCreateTeamViewController;
+
 FOUNDATION_EXPORT NSString *const kCreateRoomViewController;
 
 FOUNDATION_EXPORT NSString *const kNotificationContentViewController;

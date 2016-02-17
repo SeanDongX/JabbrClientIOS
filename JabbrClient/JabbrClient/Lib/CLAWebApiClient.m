@@ -181,7 +181,7 @@ static bool isFirstAccess = YES;
 }
 
 - (void)createTeam:(NSString *)name
- completionHandler:(void (^)(NSString *errorMessage))completion {
+ completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion {
     NSArray *array = @[
                        kServerBaseUrl,
                        kApiPath,
@@ -195,15 +195,16 @@ static bool isFirstAccess = YES;
     [self.connectionManager POST:requestUrl
                       parameters:nil
                          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                             completion(nil);
+                             CLATeam *team = [CLATeam getFromData:responseObject];
+                             completion(team, nil);
                          }
                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                             completion([self getResponseErrorMessage:error]);
+                             completion(nil, [self getResponseErrorMessage:error]);
                          }];
 }
 
 - (void)joinTeam:(NSString *)invitationCode
-completionHandler:(void (^)(NSString *errorMessage))completion {
+completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion {
     NSArray *array = @[
                        kServerBaseUrl,
                        kApiPath,
@@ -217,10 +218,12 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
     [self.connectionManager POST:requestUrl
                       parameters:nil
                          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                             completion(nil);
+                             CLATeam *team = [CLATeam getFromData:responseObject];
+                             completion(team, nil);
                          }
                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                             completion([self getResponseErrorMessage:error]);
+                             
+                             completion(nil, [self getResponseErrorMessage:error]);
                          }];
 }
 

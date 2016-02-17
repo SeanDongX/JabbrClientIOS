@@ -801,7 +801,7 @@ didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
 - (void)showCreateTeamView {
     SlidingViewController *slidingViewController =
     (SlidingViewController *)self.slidingViewController;
-    [slidingViewController switchToCreateTeamView];
+    [slidingViewController switchToCreateTeamView:nil];
 }
 
 - (void)showTaskView {

@@ -21,6 +21,7 @@
 #import "ChatViewController.h"
 
 #import "CLASignalRMessageClient.h"
+#import "CLACreateTeamViewController.h"
 
 @interface SlidingViewController ()
 
@@ -113,15 +114,23 @@
     [self resetTopViewAnimated:TRUE];
 }
 
-- (void)switchToCreateTeamView {
-    [self setTopNavigationControllerWithKeyIdentifier:kCreateTeamViewController];
+- (void)switchToCreateTeamView:(NSString *)invitationId {
+    UINavigationController *navigationController = [self setTopNavigationControllerWithKeyIdentifier:kCreateTeamNavigationController];
+    
     [self resetTopViewAnimated:TRUE];
+    
+    if (invitationId) {
+        CLACreateTeamViewController * createTeamViewController = (CLACreateTeamViewController *)navigationController.viewControllers[0];
+        
+        if (createTeamViewController) {
+            [createTeamViewController redeemInvitation:invitationId];
+        }
+    }
 }
 
 - (void)switchToSignInView {
-    [self
-     setTopNavigationControllerWithKeyIdentifier:kSignInNavigationController];
-    [self resetTopViewAnimated:TRUE];
+    [self setTopNavigationControllerWithKeyIdentifier:kSignInNavigationController];
+    [self resetTopViewAnimated: TRUE];
 }
 
 - (void)switchToRoom:(CLARoom *)room {

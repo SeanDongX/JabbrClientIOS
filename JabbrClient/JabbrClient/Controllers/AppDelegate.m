@@ -28,6 +28,7 @@
 #import "CLASignalRMessageClient.h"
 #import "SlidingViewController.h"
 #import "UIViewController+ECSlidingViewController.h"
+#import "CLAInvitationHandler.h"
 
 @interface AppDelegate ()
 
@@ -154,14 +155,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
         if ([returnUrl hasPrefix: @"/teams/join/?invitationid="]) {
             NSString *invitationId = [returnUrl substringFromIndex:26];
             if (invitationId) {
-                [UserDataManager cacheObject: invitationId forKey: kinvitationId];
-                if ([UserDataManager isAuthenticated] == NO) {
-                    UIWindow *window=[UIApplication sharedApplication].keyWindow;
-                    SlidingViewController *root = (SlidingViewController *)[window rootViewController];
-                    [root switchToSignInView];
-                } else {
-                    //TOOD: Show team view and join team
-                }
+                [[[CLAInvitationHandler alloc] init] processInvitation:invitationId];
                 return YES;
             }
         }
@@ -172,16 +166,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     [JLRoutes addRoute:@"/teams/join/" handler:^BOOL (NSDictionary *parameters) {
         NSString *invitationId = parameters[kinvitationId];
         if (invitationId) {
-            CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
-            [apiClient joinTeam:invitationId
-              completionHandler:^(NSString *errorMessage) {
-                  if (errorMessage == nil) {
-                      //TOOD: Show team view and join team
-                  } else {
-                      
-                  }
-              }];
-            
+            [[[CLAInvitationHandler alloc] init] processInvitation:invitationId];
             return YES;
         }
         

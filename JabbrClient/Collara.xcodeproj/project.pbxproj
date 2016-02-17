@@ -42,6 +42,7 @@
 		149857A01C11083A001D0A18 /* CLADisplayMessageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498579F1C11083A001D0A18 /* CLADisplayMessageFactory.m */; };
 		149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */; };
 		14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A836021AD177E4001F33E4 /* SlidingViewController.m */; };
+		14B4365A1C74EFC0006D5EF0 /* CLAInvitationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B436591C74EFC0006D5EF0 /* CLAInvitationHandler.m */; };
 		14B515741ABF138A0000CC4F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B515731ABF138A0000CC4F /* main.m */; };
 		14B515801ABF138A0000CC4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14B5157E1ABF138A0000CC4F /* Main.storyboard */; };
 		14B515821ABF138A0000CC4F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14B515811ABF138A0000CC4F /* Images.xcassets */; };
@@ -153,6 +154,8 @@
 		149F99371AC4D0A200525EA7 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		14A836011AD177E4001F33E4 /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingViewController.h; sourceTree = "<group>"; };
 		14A836021AD177E4001F33E4 /* SlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidingViewController.m; sourceTree = "<group>"; };
+		14B436581C74EFC0006D5EF0 /* CLAInvitationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAInvitationHandler.h; path = Lib/CLAInvitationHandler.h; sourceTree = "<group>"; };
+		14B436591C74EFC0006D5EF0 /* CLAInvitationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAInvitationHandler.m; path = Lib/CLAInvitationHandler.m; sourceTree = "<group>"; };
 		14B5156E1ABF138A0000CC4F /* Collara.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Collara.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14B515721ABF138A0000CC4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14B515731ABF138A0000CC4F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -265,6 +268,8 @@
 				14190E0A1C176630000861F2 /* CLAMediaManager.m */,
 				14CA04A91C642A7100E3E9BC /* UIColor+HexString.h */,
 				14CA04AA1C642A7100E3E9BC /* UIColor+HexString.m */,
+				14B436581C74EFC0006D5EF0 /* CLAInvitationHandler.h */,
+				14B436591C74EFC0006D5EF0 /* CLAInvitationHandler.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -751,6 +756,7 @@
 				149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */,
 				14BA990E1AD33D1000776556 /* CLAMessage.m in Sources */,
 				14BE49C61B039D5C005C04E9 /* CLAHomeTopicViewController.m in Sources */,
+				14B4365A1C74EFC0006D5EF0 /* CLAInvitationHandler.m in Sources */,
 				144BBE121C3DDE5100AE0E49 /* CLANotificationState.m in Sources */,
 				142FFA6B1AFD4B3C0076DB6E /* CLAUtility.m in Sources */,
 				1498579D1C0FA9D2001D0A18 /* CLAMessageFactory.m in Sources */,

@@ -152,7 +152,7 @@
          }
          else {
              [((SlidingViewController *)self.navigationController.slidingViewController)
-              switchToCreateTeamView];
+              switchToCreateTeamView:nil];
          }
      }];
 }

@@ -114,7 +114,7 @@
     
     SlidingViewController *slidingViewController =
     (SlidingViewController *)self.slidingViewController;
-    [slidingViewController switchToCreateTeamView];
+    [slidingViewController switchToCreateTeamView:nil];
 }
 
 #pragma mark - XLPagerTabStripViewControllerDataSource

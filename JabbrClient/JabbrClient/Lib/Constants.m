@@ -14,8 +14,8 @@
 
 #ifdef DEBUG
 
-//NSString *const kServerBaseUrl = @"http://192.168.1.53:16207/";
-NSString *const kServerBaseUrl = @"http://beta.collara.co/";
+NSString *const kServerBaseUrl = @"http://192.168.0.20:16207/";
+//NSString *const kServerBaseUrl = @"http://beta.collara.co/";
 NSString *const kTaskServiceRootUrl = @"http://task.collara.co/";
 
 NSString *const kAuzreNotificationHubName = @"collarapush";
@@ -66,7 +66,9 @@ NSString *const kDocumentNavigationController = @"DocumentNavigationController";
 NSString *const kLeftMenuViewController = @"LeftMenuViewController";
 NSString *const kRightMenuViewController = @"RightMenuViewController";
 
+NSString *const kCreateTeamNavigationController = @"CreateTeamNavigationController";
 NSString *const kCreateTeamViewController = @"CreateTeamViewController";
+
 NSString *const kCreateRoomViewController = @"CreateRoomViewController";
 
 NSString *const kNotificationContentViewController = @"NotificationContentViewController";

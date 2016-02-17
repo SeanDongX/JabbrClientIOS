@@ -171,7 +171,7 @@
          else {
              [self dismissViewControllerAnimated: YES completion:^{
                  [((SlidingViewController *)self.slidingViewController)
-                  switchToCreateTeamView];
+                  switchToCreateTeamView:nil];
              }];
          }
      }];

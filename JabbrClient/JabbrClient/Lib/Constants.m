@@ -14,7 +14,7 @@
 
 #ifdef DEBUG
 
-NSString *const kServerBaseUrl = @"http://192.168.0.20:16207/";
+NSString *const kServerBaseUrl = @"http://192.168.1.56:16207/";
 //NSString *const kServerBaseUrl = @"http://beta.collara.co/";
 NSString *const kTaskServiceRootUrl = @"http://task.collara.co/";
 

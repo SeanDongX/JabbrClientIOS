@@ -20,7 +20,8 @@
     if ([UserDataManager isAuthenticated] == NO) {
         [root switchToSignInView];
     } else {
-        [root switchToCreateTeamView:invitationId];
+        [root switchToCreateTeamView:invitationId
+                sourceViewIdentifier:nil];
     }
 }
 

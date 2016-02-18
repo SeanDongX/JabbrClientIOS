@@ -8,9 +8,6 @@
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "6vg-UG-eAB"; */
 "6vg-UG-eAB.placeholder" = "邮箱";
 
-/* Class = "UILabel"; text = "Create your team to start"; ObjectID = "8GA-n0-fUR"; */
-"8GA-n0-fUR.text" = "创建你的团队";
-
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "9wN-Ke-SEM"; */
 "9wN-Ke-SEM.normalTitle" = "登录";
 
@@ -61,9 +58,6 @@
 
 /* Class = "UILabel"; text = "Or join an existing topic"; ObjectID = "W3W-9R-R8t"; */
 "W3W-9R-R8t.text" = "或加入已有话题";
-
-/* Class = "UILabel"; text = "You are almost there"; ObjectID = "Ynb-a5-2Xd"; */
-"Ynb-a5-2Xd.text" = "马上就到了哦";
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "bGl-aJ-Ek7"; */
 "bGl-aJ-Ek7.placeholder" = "密码";

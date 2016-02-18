@@ -114,15 +114,17 @@
     [self resetTopViewAnimated:TRUE];
 }
 
-- (void)switchToCreateTeamView:(NSString *)invitationId {
+- (void)switchToCreateTeamView:(NSString *)invitationId sourceViewIdentifier:(NSString*)sourceViewIdentifier {
     UINavigationController *navigationController = [self setTopNavigationControllerWithKeyIdentifier:kCreateTeamNavigationController];
     
     [self resetTopViewAnimated:TRUE];
     
-    if (invitationId) {
-        CLACreateTeamViewController * createTeamViewController = (CLACreateTeamViewController *)navigationController.viewControllers[0];
+    CLACreateTeamViewController * createTeamViewController = (CLACreateTeamViewController *)navigationController.viewControllers[0];
+    
+    if (createTeamViewController) {
+        createTeamViewController.sourceViewIdentifier = sourceViewIdentifier;
         
-        if (createTeamViewController) {
+        if (invitationId) {
             [createTeamViewController redeemInvitation:invitationId];
         }
     }

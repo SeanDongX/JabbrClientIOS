@@ -151,8 +151,8 @@
               switchToMainView];
          }
          else {
-             [((SlidingViewController *)self.navigationController.slidingViewController)
-              switchToCreateTeamView:nil];
+             [((SlidingViewController *)self.navigationController.slidingViewController) switchToCreateTeamView:nil
+                                                                                           sourceViewIdentifier:nil];
          }
      }];
 }

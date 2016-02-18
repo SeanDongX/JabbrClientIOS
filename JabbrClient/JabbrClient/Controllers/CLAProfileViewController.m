@@ -17,6 +17,7 @@
 #import "CLASignalRMessageClient.h"
 #import "CLAAzureHubPushNotificationService.h"
 #import "CLARealmRepository.h"
+#import "CLACreateTeamViewController.h"
 
 @interface CLAProfileViewController ()
 
@@ -148,6 +149,19 @@
         [weakself switchTeam:newValue withOldValue:oldValue];
     };
     
+    
+    XLFormRowDescriptor *createOrJoinTeamRow =
+    [XLFormRowDescriptor formRowDescriptorWithTag:@"CreateOrJoinTeam"
+                                          rowType:XLFormRowDescriptorTypeButton
+                                            title:NSLocalizedString(@"Create or join team", nil)];
+    [createOrJoinTeamRow.cellConfig setObject:@(NSTextAlignmentLeft) forKey:@"textLabel.textAlignment"];
+    
+    createOrJoinTeamRow.action.formBlock = ^(XLFormRowDescriptor *sender){
+        [((SlidingViewController *)self.slidingViewController) switchToCreateTeamView:nil
+                                                                 sourceViewIdentifier:kProfileNavigationController ];
+    };
+    
+    [section addFormRow: createOrJoinTeamRow];
     return section;
 }
 

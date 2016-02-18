@@ -19,7 +19,7 @@
 - (void)clearControllerCache;
 - (void)switchToMainView;
 - (void)switchToSignInView;
-- (void)switchToCreateTeamView:(NSString *)invitationId;
+- (void)switchToCreateTeamView:(NSString *)invitationId sourceViewIdentifier:(NSString*)sourceViewIdentifier;
 - (void)switchToRoom:(CLARoom *)room;
 
 @end

@@ -29,6 +29,8 @@
 @property(weak, nonatomic) IBOutlet UITextField *inviteCodeTextField;
 
 @property(weak, nonatomic) IBOutlet UIView *ScrollViewContentView;
+
+@property(strong, nonatomic) UIAlertView *alertView;
 @end
 
 @implementation CLACreateTeamViewController
@@ -75,13 +77,13 @@
     navItem.title = NSLocalizedString(@"Pick Your Team", nil);
     [navBar setItems:@[ navItem ]];
     
-    UIBarButtonItem *signOutButton =
-    [[UIBarButtonItem alloc] initWithImage:[Constants signOutImage]
+    UIBarButtonItem *closeButton =
+    [[UIBarButtonItem alloc] initWithImage:[Constants closeIconImage]
                                      style:UIBarButtonItemStyleDone
                                     target:self
-                                    action:@selector(signOut)];
-    signOutButton.tintColor = [UIColor whiteColor];
-    navItem.rightBarButtonItem = signOutButton;
+                                    action:@selector(close)];
+    closeButton.tintColor = [UIColor whiteColor];
+    navItem.rightBarButtonItem = closeButton;
     
     [self.view addSubview:navBar];
 }
@@ -172,7 +174,6 @@ replacementString:(NSString *)string {
         [textField.text stringByReplacingCharactersInRange:range
                                                 withString:@"-"];
         self.teamNameTextField.text = newString;
-        
         return NO;
     }
     
@@ -186,6 +187,7 @@ replacementString:(NSString *)string {
         [((SlidingViewController *)self.slidingViewController) switchToMainView];
     }
 }
+
 #pragma mark -
 #pragma mark Private Methods
 - (void)redeemInvitationIfNeeded {
@@ -198,20 +200,28 @@ replacementString:(NSString *)string {
 -(void)processTeamRequestResult:(CLATeam *)team withErrorMessage:(NSString *)errorMessage {
     [CLANotificationManager dismiss];
     [UserDataManager cacheTeam:team];
-    
+    [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
     if (errorMessage == nil) {
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"You are now a member of team %@", nil), team.name]
-                                                        message:nil
-                                                       delegate:self
-                                              cancelButtonTitle:nil
-                                              otherButtonTitles:NSLocalizedString(@"Jump In", nil), nil];
-        [alert show];
-        [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
+        self.alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"You are now a member of team %@", nil), team.name]
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:NSLocalizedString(@"Jump In", nil), nil];
+        [self.alertView show];
     } else {
         [CLANotificationManager showText:errorMessage
                        forViewController:self
                                 withType:CLANotificationTypeError];
+    }
+}
+
+- (void)close {
+    if (self.sourceViewIdentifier) {
+        [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:self.sourceViewIdentifier];
+    }
+    else {
+        [self signOut];
     }
 }
 

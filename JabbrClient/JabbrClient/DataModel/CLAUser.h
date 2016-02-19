@@ -32,6 +32,7 @@ typedef enum {
 
 + (NSString *)getHandle:(NSString *)username;
 + (CLAUser *)getFromData:(NSDictionary *)userDictionary;
++ (NSArray <CLAUser *> *)getFromDataArray:(NSArray *)dictionaryArray;
 
 @end
 

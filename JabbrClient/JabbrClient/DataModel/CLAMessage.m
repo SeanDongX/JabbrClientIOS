@@ -14,6 +14,20 @@
     return @"key";
 }
 
++ (NSArray <CLAMessage *> *)getFromDataArray:(NSArray *)dictionaryArray forRoom:(NSString *)roomName {
+    NSMutableArray <CLAMessage *> *messages = [NSMutableArray array];
+    if (dictionaryArray && dictionaryArray != [NSNull null] && dictionaryArray.count > 0) {
+        for (NSDictionary *dictionary in dictionaryArray) {
+            CLAMessage *message = [CLAMessage getFromData:dictionary forRoom:roomName];
+            if (message) {
+                [messages addObject:message];
+            }
+        }
+    }
+    
+    return messages;
+}
+
 + (CLAMessage *)getFromData:(NSDictionary *)messageDictionary forRoom:(NSString *)roomName {
     CLAMessage *message = [[CLAMessage alloc] init];
     

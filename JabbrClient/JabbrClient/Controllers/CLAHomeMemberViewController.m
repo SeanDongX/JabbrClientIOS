@@ -17,7 +17,6 @@
 
 // Data Model
 #import "CLAUser.h"
-#import "CLATeamViewModel.h"
 
 // Menu
 #import "UIViewController+ECSlidingViewController.h"
@@ -89,11 +88,11 @@
 }
 
 - (void)updateTeam:(NSNotification *)notification {
-    CLATeamViewModel *teamViewModel =
+    CLATeam *team =
     [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
     
-    if (teamViewModel != nil) {
-        [self updateTeamMembers:teamViewModel.users];
+    if (team != nil) {
+        [self updateTeamMembers:team.users];
     }
     
     [self didFinishRefresh];
@@ -365,11 +364,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showInvite:(NSString *)invitationCode {
-    // TODO: use user full name instead
-    CLATeamViewModel *teamViewModel =
-    [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
+    CLATeam *team = [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
     
-    NSString *teamName = teamViewModel.team.name;
+    NSString *teamName = team.name;
     
     NSString *username = [UserDataManager getUsername];
     NSString *userFullName = username;

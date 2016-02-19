@@ -12,7 +12,7 @@
 
 @interface CLAMessage : RLMObject
 
-@property(nonatomic, strong) NSString *key;
+@property(nonatomic, strong) NSNumber<RLMInt> *key;
 @property(nonatomic, strong) NSString *content;
 @property(nonatomic, strong) NSDate *when;
 @property(nonatomic, strong) NSString *fromUserName;
@@ -20,6 +20,7 @@
 
 @property(nonatomic, strong) CLAUser *fromUser;
 
++ (NSArray <CLAMessage *> *)getFromDataArray:(NSArray *)dictionaryArray forRoom:(NSString *)roomName;
 + (CLAMessage *)getFromData:(NSDictionary *)messageDictionary forRoom:(NSString *)roomName;
 
 @end

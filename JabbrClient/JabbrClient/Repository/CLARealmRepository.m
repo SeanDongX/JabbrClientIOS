@@ -8,25 +8,31 @@
 
 #import "CLARealmRepository.h"
 #import "CLANotificationMessage.h"
+#import "UserDataManager.h"
+#import "CLATeam.h"
 
 @implementation CLARealmRepository
 
-- (CLATeamViewModel *)get:(NSString *)name {
-    return nil;
+- (NSArray <CLATeam*> *)getTeams {
+    return [CLATeam allObjects];
 }
 
-- (CLATeamViewModel *)getCurrentOrDefaultTeam {
-    return nil;
-}
-
-- (NSArray<CLATeamViewModel *> *)getTeams {
-    return nil;
-}
-
-- (void)addOrUpdateTeam:(CLATeamViewModel *)team {
-}
-
-- (void)deleteData {
+- (CLATeam *)getCurrentOrDefaultTeam {
+    CLATeam *currentTeam = [UserDataManager getTeam];
+    
+    if (currentTeam != nil && currentTeam.key != nil && currentTeam.key.intValue > 0) {
+        RLMResults<CLATeam *>  *teams = [CLATeam objectsWhere:@"key = %@", currentTeam.key];
+        if (teams && teams.firstObject) {
+            return teams.firstObject;
+        }
+    }
+    
+    CLATeam *team = [CLATeam allObjects].firstObject;
+    if (team) {
+        [UserDataManager cacheTeam:team];
+    }
+    
+    return team;
 }
 
 - (CLAUser *)getUserByName: (NSString *)name {
@@ -34,9 +40,44 @@
     return users.firstObject;
 }
 
+- (CLARoom *)getRoom:(NSString *)name inTeam:(NSNumber *)teamKey {
+    CLATeam *team = [CLATeam objectsWhere:@"key = %d", teamKey].firstObject;
+    if (!team) {
+        return nil;
+    }
+    
+    return [team.rooms objectsWhere:@"name = %@", name].firstObject;
+}
+
 - (NSArray <CLAMessage *> *)getRoomMessages: (NSString *)roomName {
     RLMResults<CLAMessage *>  *messages = [CLAMessage objectsWhere:@"roomName = %@", roomName];
     return [CLARealmRepository RLMResultsToNSArray:messages];
+}
+
+- (void)deleteData {
+}
+
+- (void)setRoomUnread:(NSString *)roomName unread:(NSInteger)unread inTeam:(NSNumber *)teamKey {
+    CLARoom *room = [self getRoom:roomName inTeam:teamKey];
+    if (room) {
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        room.unread = unread;
+        [realm commitWriteTransaction];
+    }
+}
+
+- (void)joinUser:(NSString *)username toRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey {
+    CLAUser *user = [self getUserByName:username];
+    CLARoom *room = [self getRoom:roomName inTeam:teamKey];
+    
+    if (room && user) {
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        [room.users addObject:user];
+        [realm addOrUpdateObject:room];
+        [realm commitWriteTransaction];
+    }
 }
 
 - (void)addOrgupdateMessage:(CLAMessage *)message {
@@ -51,6 +92,87 @@
     return notification.firstObject;
 }
 
+
+- (void)addOrUpdateObjects: (NSArray *)objects
+                completion:(void (^)(void))completionBlock {
+    if (objects.count > 0) {
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm transactionWithBlock:^{
+            [realm addOrUpdateObjectsFromArray:objects];
+            completionBlock();
+        }];
+    }
+    
+    completionBlock();
+}
+
+- (void)addOrUpdateTeamsWithData:(NSArray *)dictionaryArray
+                      completion:(void (^)(void))completionBlock {
+    
+    NSArray<CLATeam*> *teams = [CLATeam getFromDataArray:dictionaryArray];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm transactionWithBlock:^{
+        for (CLATeam *team in teams) {
+            [realm addOrUpdateObjectsFromArray:team.users];
+            [realm addOrUpdateObjectsFromArray:team.rooms];
+            [realm addOrUpdateObject:team];
+        }
+        
+        completionBlock();
+    }];
+}
+
+
+- (void)addOrUpdateTeamWithData:(NSDictionary *)dictionary
+                     completion:(void (^)(void))completionBlock {
+    CLATeam *team = [CLATeam getFromData:dictionary];
+    if (team) {
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm transactionWithBlock:^{
+            [realm addOrUpdateObjectsFromArray:team.users];
+            [realm addOrUpdateObjectsFromArray:team.rooms];
+            [realm addOrUpdateObject: team];
+            completionBlock();
+        }];
+    }
+}
+
+- (void)addOrUpdateRoomsWithData:(NSArray *)dictionaryArray
+                      completion:(void (^)(void))completionBlock {
+    NSArray<CLARoom*> *rooms = [CLARoom getFromDataArray:dictionaryArray];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm transactionWithBlock:^{
+        for (CLARoom *room in rooms) {
+            [realm addOrUpdateObjectsFromArray:room.users];
+            [realm addOrUpdateObjectsFromArray:room.owners];
+            [realm addOrUpdateObjectsFromArray:room.messages];
+            [realm addOrUpdateObject:room];
+        }
+        
+        completionBlock();
+    }];
+}
+
+- (void)addOrUpdateUsersWithData: (NSArray *)dictionaryArray
+                      completion:(void (^)(void))completionBlock {
+    [self addOrUpdateObjects:[CLAUser getFromDataArray:dictionaryArray]
+                  completion:completionBlock];
+}
+
+- (void)addOrUpdateMessagesWithData:(NSArray *)dictionaryArray
+                           formRoom:(NSString *)roomName
+                         completion:(void (^)(void))completionBlock {
+    [self addOrUpdateObjects:[CLAMessage getFromDataArray:dictionaryArray forRoom:roomName]
+                  completion:completionBlock];
+}
+
+- (void)addOrUpdateNotificationsWithData: (NSArray *)dictionaryArray
+                              completion:(void (^)(void))completionBlock {
+    [self addOrUpdateObjects:[CLANotificationMessage getFromDataArray:dictionaryArray]
+                  completion:completionBlock];
+}
+
+
 - (void)updateNotification: (NSNumber *)notificationKey read:(BOOL)read {
     CLANotificationMessage *notification = [self getNotificationByKey:notificationKey];
     if (notification) {
@@ -60,34 +182,6 @@
         }];
     }
 }
-
-
-- (void)addOrUpdateNotificationsWithData: (NSArray *)dictionaryArray
-                              completion:(void (^)(void))completionBlock {
-    NSMutableArray <CLANotificationMessage *> *notifications = [NSMutableArray array];
-    for (NSDictionary *dictionary in dictionaryArray) {
-        CLANotificationMessage *notification = [CLANotificationMessage getFromData:dictionary];
-        if (notification) {
-            [notifications addObject:notification];
-        }
-    }
-    
-    [self addOrUpdateNotifications:notifications completion:completionBlock];
-}
-
-- (void)addOrUpdateNotifications: (NSArray <CLANotificationMessage*> *)notifications
-                      completion:(void (^)(void))completionBlock {
-    if (notifications.count > 0) {
-        RLMRealm *realm = [RLMRealm defaultRealm];
-        [realm transactionWithBlock:^{
-            [realm addOrUpdateObjectsFromArray:notifications];
-            completionBlock();
-        }];
-    }
-    
-    completionBlock();
-}
-
 
 + (NSArray *) RLMResultsToNSArray:(RLMResults *)results {
     NSMutableArray *array = [NSMutableArray array];

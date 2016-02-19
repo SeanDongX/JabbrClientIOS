@@ -20,6 +20,7 @@
 
 
 + (CLANotificationMessage *)getFromData:(NSDictionary *)dataDictionary;
++ (NSArray <CLANotificationMessage *> *)getFromDataArray:(NSArray *)dictionaryArray;
 - (void)updateExisting:(NSDictionary *)dataDictionary;
 
 @end

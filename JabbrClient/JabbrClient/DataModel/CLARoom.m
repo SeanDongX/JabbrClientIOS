@@ -17,53 +17,39 @@
 
 @implementation CLARoom
 
-//- (NSMutableArray <CLAMessageViewModel *> *)messages {
-//    NSMutableArray <CLAMessageViewModel *> *messages = [[NSMutableArray alloc] init];
-//
-//    for (CLAMessage *message in self.messages) {
-//        CLAMessageViewModel *viewModel = [[CLAMessageViewModel alloc]
-//                                          initWithOId:message.key
-//                                          SenderId:message.fromUserName
-//                                          senderDisplayName:userInitials
-//                                          date:date
-//                                          text:text];
-//
-//        messages addObject: <#(nonnull CLAMessageViewModel *)#>
-//    }
-//
-//    return messages;
-//}
-//
-//- (void)setMessages: (NSMutableArray <CLAMessageViewModel *> *)messages {
-//}
++ (NSString *)primaryKey {
+    return @"key";
+}
 
-- (void)getFromDictionary:(NSDictionary *)dictionary {
-    self.name = [dictionary objectForKey:@"Name"];
-    self.displayName = [dictionary objectForKey:@"DisplayName"];
-    self.isPrivate = [[dictionary objectForKey:@"Private"] boolValue];
-    self.isDirectRoom = [[dictionary objectForKey:@"IsDirectRoom"] boolValue];
-    self.closed = [[dictionary objectForKey:@"Closed"] boolValue];
-    
-    NSMutableArray *usersArray = [NSMutableArray array];
-    NSArray *usersDcitionaryArray = [dictionary objectForKey:@"AllUsersInRoom"];
-    
-    if (usersDcitionaryArray != nil &&
-        usersDcitionaryArray != (id)[NSNull null]) {
-        for (NSDictionary *userDictionary in usersDcitionaryArray) {
-            CLAUser *user = [CLAUser getFromData:userDictionary];
-            [usersArray addObject:user];
++ (NSArray <CLARoom *> *)getFromDataArray:(NSArray *)dictionaryArray {
+    NSMutableArray <CLARoom *> *rooms = [NSMutableArray array];
+    if (dictionaryArray && dictionaryArray != [NSNull null] && dictionaryArray.count > 0) {
+        for (NSDictionary *dictionary in dictionaryArray) {
+            CLARoom *room = [CLARoom getFromData:dictionary];
+            if (room) {
+                [rooms addObject:room];
+            }
         }
     }
+    return rooms;
+}
+
++ (CLARoom *)getFromData:(NSDictionary *)dictionary {
+    CLARoom *room = [[CLARoom alloc] init];
+    room.key = [dictionary objectForKey:@"Key"];
+    room.name = [dictionary objectForKey:@"Name"];
+    room.displayName = [dictionary objectForKey:@"DisplayName"];
+    room.isPrivate = [[dictionary objectForKey:@"Private"] boolValue];
+    room.isDirectRoom = [[dictionary objectForKey:@"IsDirectRoom"] boolValue];
+    room.closed = [[dictionary objectForKey:@"Closed"] boolValue];
     
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    [realm addOrUpdateObjectsFromArray:usersArray];
-    [realm commitWriteTransaction];
+    NSArray *usersDcitionaryArray = [dictionary objectForKey:@"AllUsersInRoom"];
+    [room.users addObjects: [CLAUser getFromDataArray:usersDcitionaryArray]];
     
-    //TODO: add messages and connections to room
-    //TODO: add room users
-    //self.users = usersArray;
-    //self.messages = [NSMutableArray array];
+    NSArray *recentMessageArray = [dictionary objectForKey:@"RecentMessages"];
+    [room.messages addObjects:[CLAMessage getFromDataArray:recentMessageArray forRoom:room.name]];
+    
+    return room;
 }
 
 - (NSString *)getHandle {

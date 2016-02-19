@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Realm/Realm.h>
 
 @interface CLAUtility : NSObject
 
@@ -16,5 +17,6 @@
 
 + (NSString *)getUrlString:(UIImage *)image;
 + (NSDictionary *)getImagePostData:(UIImage *)image imageName:(NSString *)imageName fromRoom:(NSString *)roomName;
++ (NSMutableArray *)getArrayFromRLMArray:(RLMArray *)rlmArray;
 
 @end

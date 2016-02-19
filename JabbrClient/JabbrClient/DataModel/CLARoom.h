@@ -15,6 +15,7 @@
 
 @interface CLARoom : RLMObject
 
+@property(nonatomic, strong) NSNumber<RLMInt> *key;
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *displayName;
 @property(nonatomic) BOOL isPrivate;
@@ -23,13 +24,16 @@
 @property(nonatomic) NSInteger unread;
 @property(nonatomic, strong)RLMArray<CLAUser *><CLAUser> *users;
 @property(nonatomic, strong)RLMArray<CLAUser *><CLAUser> *owners;
-@property(nonatomic, strong)RLMArray<CLAMessage *><CLAMessage> *chatMessages;
+@property(nonatomic, strong)RLMArray<CLAMessage *><CLAMessage> *messages;
 
 ////TODO: remove messages getter and setter
 //- (NSMutableArray <CLAMessageViewModel *> *)messages;
 //- (void)setMessages: (NSMutableArray <CLAMessageViewModel *> *)messages;
 
-- (void)getFromDictionary:(NSDictionary *)dictionary;
++ (NSArray <CLARoom *> *)getFromDataArray:(NSArray *)dictionary;
++ (CLARoom *)getFromData:(NSDictionary *)dictionary;
 - (NSString *)getHandle;
 
 @end
+
+RLM_ARRAY_TYPE(CLARoom)

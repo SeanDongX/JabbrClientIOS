@@ -17,7 +17,6 @@
 #import "CLATeam.h"
 #import "CLARoom.h"
 #import "CLAUser.h"
-#import "CLATeamViewModel.h"
 
 // Repository
 #import "CLARealmRepository.h"
@@ -30,7 +29,6 @@
 @end
 
 @implementation CLASignalRMessageClient
-@synthesize dataRepository;
 
 #pragma mark -
 #pragma mark Singleton
@@ -257,22 +255,24 @@ static bool isFirstAccess = YES;
         return;
     }
     
+    __weak __typeof(&*self) weakSelf = self;
+    
     [self invokeHubMethod:@"GetPreviousMessages"
                  withArgs:@[ messageId ]
         completionHandler:^(id response, NSError *error) {
-            NSMutableArray<CLAMessage *> *earlierMessageArray = [NSMutableArray array];
+            __strong __typeof(&*weakSelf) strongSelf = weakSelf;
             
             if (response != nil) {
                 NSArray *messages = response;
                 if (messages != nil && messages.count > 0) {
-                    for (NSDictionary *messageDictionary in messages) {
-                        [earlierMessageArray
-                         addObject:[CLAMessage getFromData:messageDictionary forRoom:room]];
-                    }
+                    [strongSelf.dataRepository addOrUpdateMessagesWithData:messages
+                                                                  formRoom:room
+                                                                completion:^{
+                                                                    __strong __typeof(&*weakSelf) strongSelfInner = weakSelf;
+                                                                    [strongSelfInner.delegate didLoadEarlierMessagesInRoom:room];
+                                                                }];
                 }
             }
-            
-            [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];
         }];
 }
 
@@ -286,29 +286,22 @@ static bool isFirstAccess = YES;
     self.teamLoaded = TRUE;
     
     if (data == nil || data.count == 0) {
-        [self.delegate didReceiveTeams:nil];
+        [self.delegate didReceiveTeams:0];
         return;
     }
     
-    for (NSDictionary *teamDictionary in data) {
-        CLATeamViewModel *teamViewModel =
-        [CLATeamViewModel getFromData:teamDictionary];
-        [self.dataRepository addOrUpdateTeam:teamViewModel];
-    }
+    __weak __typeof(&*self) weakSelf = self;
     
-    CLATeamViewModel *myTeamViewModel = [self.dataRepository getCurrentOrDefaultTeam];
-    if (myTeamViewModel.team.key != nil && myTeamViewModel.team.key.intValue > 0) {
-        [UserDataManager cacheTeam:myTeamViewModel.team];
-    }
-    
-    for(CLAUser *user in myTeamViewModel.users) {
-        if (user.name !=nil && [user.name isEqualToString: [UserDataManager getUsername]]) {
-            [UserDataManager cacheUser:user];
-            break;
-        }
-    }
-    
-    [self.delegate didReceiveTeams:[self.dataRepository getTeams]];
+    [self.dataRepository addOrUpdateTeamsWithData:data completion:^{
+        __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+        
+        //TOOD:optimize init default team, user
+        [strongSelf.dataRepository getCurrentOrDefaultTeam];
+        NSString *userName = [UserDataManager getUsername];
+        CLAUser *user = [strongSelf.dataRepository getUserByName:userName];
+        [UserDataManager cacheUser:user];
+        [strongSelf.delegate didReceiveTeams:data.count];
+    }];
 }
 
 - (void)incomingMessage:(NSArray *)data {
@@ -321,8 +314,7 @@ static bool isFirstAccess = YES;
     NSDictionary *messageDictionary = (NSDictionary *)data[0];
     CLAMessage *message = [CLAMessage getFromData:messageDictionary forRoom:room];
     [self.dataRepository addOrgupdateMessage:message];
-    [self.delegate didReceiveMessage:message
-                              inRoom:room];
+    [self.delegate didReceiveMessageInRoom:room];
 }
 
 - (void)replaceMessage:(NSArray *)data {
@@ -343,9 +335,6 @@ static bool isFirstAccess = YES;
     }
 }
 
-//- (CLAMessageViewModel *)getMessageFromRawData:(NSDictionary *)messageDictionary {
-//    return [self.messageFactory create:messageDictionary];
-//}
 
 - (void)setTyping:(NSArray *)data {
     if (!data && data.count < 2) {
@@ -367,37 +356,19 @@ static bool isFirstAccess = YES;
     }
     
     NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
+    NSString *room = [roomInfoDictionary objectForKey:@"Name"];
     
     if (roomInfoDictionary == nil || roomInfoDictionary == (id)[NSNull null]) {
         return;
     }
     
-    NSString *room = [roomInfoDictionary objectForKey:@"Name"];
-    
-    NSArray *usersArray = [roomInfoDictionary objectForKey:@"AllUsersInRoom"];
-    NSMutableArray *users = [NSMutableArray array];
-    
-    for (NSDictionary *userDictionary in usersArray) {
-        [users addObject:[CLAUser getFromData:userDictionary]];
-    }
-    
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    [realm addOrUpdateObjectsFromArray:users];
-    [realm commitWriteTransaction];
-    
-    [self.delegate didLoadUsers:users inRoom:room];
-    
-    NSArray *recentMessageArray =
-    [roomInfoDictionary objectForKey:@"RecentMessages"];
-    NSMutableArray<CLAMessage *> *earlierMessageArray = [NSMutableArray array];
-    
-    for (NSDictionary *messageDictionary in recentMessageArray) {
-        [earlierMessageArray
-         addObject:[CLAMessage getFromData:messageDictionary forRoom:room]];
-    }
-    
-    [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];
+    NSArray *roomDictionaryArray = [NSArray arrayWithObject:roomInfoDictionary];
+    __weak __typeof(&*self) weakSelf = self;
+    [self.dataRepository addOrUpdateRoomsWithData:roomDictionaryArray
+                                       completion:^{
+                                           __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+                                           [strongSelf.delegate didLoadEarlierMessagesInRoom:room];
+                                       }];
 }
 
 - (void)joinRoomReceived:(NSArray *)data {
@@ -405,25 +376,30 @@ static bool isFirstAccess = YES;
         return;
     }
     
+    //TODO:use realm
     NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
     CLARoom *room = [[CLARoom alloc] init];
-    [room getFromDictionary:roomInfoDictionary];
+    [CLARoom getFromData:roomInfoDictionary];
     
-    CLATeamViewModel *team = [self.dataRepository getCurrentOrDefaultTeam];
-    NSMutableDictionary *rooms = team.rooms;
+    CLATeam *team = [self.dataRepository getCurrentOrDefaultTeam];
+    CLARoom *existingRoom = [team.rooms objectsWhere:@"name = %@", room.name].firstObject;
     
-    BOOL isNewRoom = NO;
+    NSString *username = [UserDataManager getUsername];
+    __weak __typeof(&*self) weakSelf = self;
     
-    if ([rooms objectForKey:room.name] == nil) {
-        isNewRoom = YES;
-        [rooms setObject:room forKey:room.name];
-        // join current user to room
-        CLAUser *currentUser =
-        [team findUser:[UserDataManager getUsername]];
-        [team joinUser:currentUser toRoom:room.name];
+    if (!existingRoom) {
+        [team.rooms addObject:room];
+        NSArray *teamArray = [NSArray arrayWithObject:team];
+        [self.dataRepository addOrUpdateRoomsWithData: teamArray completion:^{
+            __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+            [strongSelf.dataRepository joinUser:username toRoom:room.name inTeam:team.key];
+            [strongSelf.delegate didReceiveJoinRoom:room.name andUpdateRoom:YES];
+            return;
+        }];
     }
     
-    [self.delegate didReceiveJoinRoom:room andUpdateRoom:isNewRoom];
+    [self.dataRepository joinUser:username toRoom:room.name inTeam:team.key];
+    [self.delegate didReceiveJoinRoom:room.name andUpdateRoom: NO];
 }
 
 - (void)updateRoomReceived:(NSArray *)data {
@@ -432,26 +408,21 @@ static bool isFirstAccess = YES;
     }
     
     NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
-    CLARoom *room = [[CLARoom alloc] init];
-    [room getFromDictionary:roomInfoDictionary];
+    CLARoom *room = [CLARoom getFromData:roomInfoDictionary];
+    NSArray *roomsArray = [NSArray arrayWithObject:roomInfoDictionary];
     
-    CLATeamViewModel *team = [self.dataRepository getCurrentOrDefaultTeam];
-    
-    // update room does not carry information below room level
-    CLARoom *existingRoom = [team.rooms objectForKey:room.name];
-    if (existingRoom != nil) {
-        existingRoom.isPrivate = room.isPrivate;
-        existingRoom.closed = room.closed;
-        [self.delegate didReceiveUpdateRoom:existingRoom];
-    } else {
-        [team.rooms setObject:room forKey:room.name];
-        [self.delegate didReceiveUpdateRoom:room];
-    }
+    __weak __typeof(&*self) weakSelf = self;
+    [self.dataRepository addOrUpdateRoomsWithData: roomsArray
+                                       completion: ^(void) {
+                                           __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+                                           [strongSelf.delegate didReceiveUpdateRoom:room.name];
+                                       }];
 }
 
 - (void)errorReceviced:(NSString *)errorMessage {
     // TODO: call delegeate to show error message on UI
 }
+
 #pragma mark -
 #pragma mark - Join, Leave, Invite and etc. Commands
 

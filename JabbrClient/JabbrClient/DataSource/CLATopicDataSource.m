@@ -13,6 +13,8 @@
 #import "CLAChatViewController.h"
 #import "Masonry.h"
 #import "JSQMessagesAvatarImageFactory.h"
+#import "CLARealmRepository.h"
+#import "UserDataManager.h"
 
 @interface CLATopicDataSource ()
 
@@ -20,6 +22,7 @@
 
 @property(nonatomic, strong) NSMutableDictionary *roomDictionary;
 @property(nonatomic, strong) NSMutableDictionary *filteredRoomDictionary;
+@property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
 
 @end
 
@@ -32,6 +35,8 @@
         self.rooms = [NSArray array];
         self.roomDictionary = [NSMutableDictionary dictionary];
         self.filteredRoomDictionary = [NSMutableDictionary dictionary];
+        self.repository = [[CLARealmRepository alloc] init];
+        
         self.sectionHeaderBackgronndColor = [Constants backgroundColor];
         self.sectionHeaderTextColor = [Constants mainThemeContrastColor];
         self.rowTextColor = [Constants mainThemeContrastColor];
@@ -83,15 +88,6 @@
     [self resetFilter];
     
     self.rooms = localRooms;
-}
-
-- (void)setRoom:(NSString *)roomName withUnread:(NSInteger)count {
-    for (CLARoom *room in self.rooms) {
-        if ([room.name isEqual:roomName]) {
-            room.unread = count;
-            return;
-        }
-    }
 }
 
 - (void)resetFilter {
@@ -291,7 +287,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     CLARoom *room = [self getRoom:indexPath];
     if (room != nil) {
         self.selectedRoom = room;
-        [self openRoom: room];
+        [self openRoom:room];
     }
 }
 
@@ -404,8 +400,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self.slidingViewController setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     if (chatViewController != nil) {
-        [self setRoom:room.name withUnread:0];
-        //[chatViewController setActiveRoom:room];
+        [self.repository setRoomUnread:room.name unread:0 inTeam:[UserDataManager getTeam].key];
     }
     
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];

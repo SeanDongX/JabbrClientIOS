@@ -53,6 +53,20 @@
     }
 }
 
++ (NSArray <CLAUser *> *)getFromDataArray:(NSArray *)dictionaryArray {
+    NSMutableArray <CLAUser *> *users = [NSMutableArray array];
+    if (dictionaryArray && dictionaryArray != [NSNull null] && dictionaryArray.count > 0) {
+        for (NSDictionary *dictionary in dictionaryArray) {
+            CLAUser *user = [CLAUser getFromData:dictionary];
+            if (user) {
+                [users addObject:user];
+            }
+        }
+    }
+    
+    return users;
+}
+
 + (CLAUser *)getFromData:(NSDictionary *)userDictionary {
     CLAUser *user = [[CLAUser alloc] init];
     user.name = [userDictionary objectForKey:@"Name"];

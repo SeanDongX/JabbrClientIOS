@@ -11,7 +11,6 @@
 		14076F061B4DD05E00240794 /* CLANotificationContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14076F051B4DD05E00240794 /* CLANotificationContentViewController.m */; };
 		1413226B1B3A17ED008659BD /* CLATopicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1413226A1B3A17ED008659BD /* CLATopicInfoViewController.m */; };
 		14190E0B1C176630000861F2 /* CLAMediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 14190E0A1C176630000861F2 /* CLAMediaManager.m */; };
-		1419E8E91B1E271C0057CAC5 /* CLAInMemoryDataRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */; };
 		142046431AD1EC91006143D5 /* UserDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046421AD1EC91006143D5 /* UserDataManager.m */; };
 		142046461AD1F866006143D5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046451AD1F866006143D5 /* SignInViewController.m */; };
 		142046491AD203FD006143D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 142046481AD203FD006143D5 /* Constants.m */; };
@@ -57,7 +56,6 @@
 		14B9BC4C1C28BFDE006DCA0D /* CLAProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B9BC4B1C28BFDE006DCA0D /* CLAProfileViewController.m */; };
 		14BD95131B474131001051E5 /* CLANotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BD95121B474131001051E5 /* CLANotification.m */; };
 		14BE49C61B039D5C005C04E9 /* CLAHomeTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BE49C51B039D5C005C04E9 /* CLAHomeTopicViewController.m */; };
-		14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */; };
 		14C37A7B1C656E930048E759 /* CLARealmRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C37A7A1C656E930048E759 /* CLARealmRepository.m */; };
 		14C37A7E1C66094F0048E759 /* CLANotificationMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C37A7D1C66094F0048E759 /* CLANotificationMessage.m */; };
 		14CA04AB1C642A7100E3E9BC /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CA04AA1C642A7100E3E9BC /* UIColor+HexString.m */; };
@@ -92,8 +90,6 @@
 		14190E091C176630000861F2 /* CLAMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMediaManager.h; path = Lib/CLAMediaManager.h; sourceTree = "<group>"; };
 		14190E0A1C176630000861F2 /* CLAMediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMediaManager.m; path = Lib/CLAMediaManager.m; sourceTree = "<group>"; };
 		1419E8E41B1E26ED0057CAC5 /* CLADataRepositoryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLADataRepositoryProtocol.h; path = Repository/CLADataRepositoryProtocol.h; sourceTree = "<group>"; };
-		1419E8E71B1E271C0057CAC5 /* CLAInMemoryDataRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAInMemoryDataRepository.h; path = Repository/CLAInMemoryDataRepository.h; sourceTree = "<group>"; };
-		1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAInMemoryDataRepository.m; path = Repository/CLAInMemoryDataRepository.m; sourceTree = "<group>"; };
 		142046411AD1EC91006143D5 /* UserDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDataManager.h; path = Lib/UserDataManager.h; sourceTree = "<group>"; };
 		142046421AD1EC91006143D5 /* UserDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDataManager.m; path = Lib/UserDataManager.m; sourceTree = "<group>"; };
 		142046441AD1F866006143D5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
@@ -184,8 +180,6 @@
 		14BD95121B474131001051E5 /* CLANotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLANotification.m; path = JabbrClient/DataModel/CLANotification.m; sourceTree = SOURCE_ROOT; };
 		14BE49C41B039D5C005C04E9 /* CLAHomeTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAHomeTopicViewController.h; sourceTree = "<group>"; };
 		14BE49C51B039D5C005C04E9 /* CLAHomeTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAHomeTopicViewController.m; sourceTree = "<group>"; };
-		14BEBC3D1AF2E67100F2470C /* CLATeamViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLATeamViewModel.h; path = ViewModel/CLATeamViewModel.h; sourceTree = "<group>"; };
-		14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLATeamViewModel.m; path = ViewModel/CLATeamViewModel.m; sourceTree = "<group>"; };
 		14C37A791C656E930048E759 /* CLARealmRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARealmRepository.h; path = Repository/CLARealmRepository.h; sourceTree = "<group>"; };
 		14C37A7A1C656E930048E759 /* CLARealmRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARealmRepository.m; path = Repository/CLARealmRepository.m; sourceTree = "<group>"; };
 		14C37A7C1C66094F0048E759 /* CLANotificationMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLANotificationMessage.h; path = JabbrClient/DataModel/CLANotificationMessage.h; sourceTree = SOURCE_ROOT; };
@@ -238,8 +232,6 @@
 		1419E8E31B1E26CB0057CAC5 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				1419E8E71B1E271C0057CAC5 /* CLAInMemoryDataRepository.h */,
-				1419E8E81B1E271C0057CAC5 /* CLAInMemoryDataRepository.m */,
 				14C37A791C656E930048E759 /* CLARealmRepository.h */,
 				14C37A7A1C656E930048E759 /* CLARealmRepository.m */,
 			);
@@ -484,8 +476,6 @@
 		14BEBC3C1AF2E63600F2470C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				14BEBC3D1AF2E67100F2470C /* CLATeamViewModel.h */,
-				14BEBC3E1AF2E67100F2470C /* CLATeamViewModel.m */,
 				1430E00A1AF6DFF300F2D974 /* CLARoomViewModel.h */,
 				1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */,
 			);
@@ -744,14 +734,12 @@
 				14240C0C1B4811A800012E5A /* CLANotifictionTableViewCell.m in Sources */,
 				14E637331B472DC6000A802C /* CLAHomeNotificationViiewController.m in Sources */,
 				1445C57D1C76A2E500ED586F /* MessageTextView.m in Sources */,
-				1419E8E91B1E271C0057CAC5 /* CLAInMemoryDataRepository.m in Sources */,
 				14076F061B4DD05E00240794 /* CLANotificationContentViewController.m in Sources */,
 				14B9BC4C1C28BFDE006DCA0D /* CLAProfileViewController.m in Sources */,
 				14B6FB521ACB399400E5B5A5 /* DocumentThread.m in Sources */,
 				144D9EEC1AF035D6005EBAD2 /* CLARoom.m in Sources */,
 				1463CB0D1AF9691300BC2513 /* CLACreateRoomViewController.m in Sources */,
 				142046431AD1EC91006143D5 /* UserDataManager.m in Sources */,
-				14BEBC3F1AF2E67100F2470C /* CLATeamViewModel.m in Sources */,
 				14C37A7B1C656E930048E759 /* CLARealmRepository.m in Sources */,
 				14A836031AD177E4001F33E4 /* SlidingViewController.m in Sources */,
 				14D905241B1BC36200B6DF63 /* CLAHomeMemberViewController.m in Sources */,

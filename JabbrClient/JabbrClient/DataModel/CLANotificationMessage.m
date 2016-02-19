@@ -12,6 +12,19 @@
     return @"notificationKey";
 }
 
++ (NSArray <CLANotificationMessage *> *)getFromDataArray:(NSArray *)dictionaryArray {
+    NSMutableArray <CLANotificationMessage *> *notifications = [NSMutableArray array];
+    if (dictionaryArray && dictionaryArray != [NSNull null] && dictionaryArray.count > 0) {
+        for (NSDictionary *dictionary in dictionaryArray) {
+            CLANotificationMessage *notification = [CLANotificationMessage getFromData:dictionary];
+            if (notification) {
+                [notifications addObject:notification];
+            }
+        }
+    }
+    return notifications;
+}
+
 + (CLANotificationMessage *)getFromData:(NSDictionary *)dataDictionary {
     CLANotificationMessage *notification = [[CLANotificationMessage alloc] init];
     notification.notificationKey = [dataDictionary objectForKey:@"notificationKey"];

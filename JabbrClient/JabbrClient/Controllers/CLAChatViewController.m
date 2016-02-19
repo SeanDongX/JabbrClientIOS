@@ -15,6 +15,7 @@
 #import "Message.h"
 #import "LoremIpsum.h"
 #import "MessageTableViewCell.h"
+#import "CLANotificationManager.h"
 
 @interface CLAChatViewController ()
 
@@ -42,6 +43,11 @@
 @end
 
 @implementation CLAChatViewController
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self connect];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -107,8 +113,6 @@
 
 - (void)initData {
     self.repository = [[CLARealmRepository alloc] init];
-    self.messageClient = [CLASignalRMessageClient sharedInstance];
-    self.messageClient.delegate = self;
 }
 
 - (void)initMenu {
@@ -127,10 +131,9 @@
 
 
 - (void)connect {
+    self.messageClient = [CLASignalRMessageClient sharedInstance];
+    self.messageClient.delegate = self;
     [self.messageClient connect];
-    //
-    //    self.senderId = self.messageClient.username;
-    //    self.senderDisplayName = self.messageClient.username;
 }
 
 #pragma mark -
@@ -169,7 +172,7 @@
     
 #if DEBUG_CUSTOM_TYPING_INDICATOR
     // Register a UIView subclass, conforming to SLKTypingIndicatorProtocol, to use a custom typing indicator view.
-    [self registerClassForTypingIndicatorView:[TypingIndicatorView class]];
+    //[self registerClassForTypingIndicatorView:[TypingIndicatorView class]];
 #endif
 }
 
@@ -788,37 +791,82 @@
 #pragma mark -
 #pragma mark - CLAMessageClientDelegate Methods
 
-
 - (void)didOpenConnection {
 }
 
 - (void)didConnectionChnageState:(CLAConnectionState)oldState
                         newState:(CLAConnectionState)newState {
+    if (newState == CLAConnected) {
+        //TODO: when offline, this path is being taken periodically
+        [self hideHud];
+    }
+    else {
+        [self showHud];
+    }
 }
 
-- (void)didReceiveTeams:(NSArray *)teams {
+- (void)didReceiveTeams:(NSInteger)count {
+    if (count <= 0) {
+        [self sendNoTeamEventNotification];
+        return;
+    }
+    
+    [self sendTeamUpdatedEventNotification];
 }
 
-- (void)didReceiveJoinRoom:(CLARoom *)room andUpdateRoom:(BOOL)update {
+- (void)didReceiveJoinRoom:(NSString *)room andUpdateRoom:(BOOL)update {
 }
 
-- (void)didReceiveUpdateRoom:(CLARoom *)room {
+- (void)didReceiveUpdateRoom:(NSString *)room {
 }
 
-- (void)didReceiveMessage:(CLAMessage *)message inRoom:(NSString *)room {
+- (void)didReceiveMessageInRoom:(NSString *)room {
 }
 
-- (void)didLoadEarlierMessages:(NSArray<CLAMessage *> *)earlierMessages
-                        inRoom:(NSString *)room {
+- (void)didLoadEarlierMessagesInRoom:(NSString *)room {
 }
 
-- (void)didLoadUsers:(NSArray<CLAUser *> *)users inRoom:(NSString *)room {
-}
-
+//- (void)didLoadUsers:(NSArray<CLAUser *> *)users inRoom:(NSString *)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
 }
 
 - (void)reaplceMessageId:(NSString *)tempMessageId
            withMessageId:(NSString *)serverMessageId {
+}
+
+
+#pragma mark -
+#pragma mark - Private Methods
+
+#pragma mark -
+#pragma mark - Notifications
+- (void)sendTeamUpdatedEventNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEventTeamUpdated
+                                                        object:nil
+                                                      userInfo:nil];
+}
+
+- (void)sendNoTeamEventNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEventNoTeam
+                                                        object:nil
+                                                      userInfo:nil];
+}
+
+- (void)showHud {
+    [CLANotificationManager
+     showText:NSLocalizedString(@"Loading...",nil)
+     forViewController:self
+     withType:CLANotificationTypeMessage];
+}
+
+- (void)showHud:(NSString *)text {
+    [CLANotificationManager
+     showText:text
+     forViewController:self
+     withType:CLANotificationTypeMessage];
+}
+
+- (void)hideHud {
+    [CLANotificationManager dismiss];
 }
 @end

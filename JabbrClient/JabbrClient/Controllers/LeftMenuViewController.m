@@ -12,9 +12,6 @@
 #import "Constants.h"
 #import "CLAUtility.h"
 
-// Data Model
-#import "CLATeamViewModel.h"
-
 // Menu
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
@@ -182,11 +179,11 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 }
 
 - (void)updateTeam:(NSNotification *)notification {
-    CLATeamViewModel *teamViewModel =
+    CLATeam *team =
     [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
-    if (teamViewModel != nil) {
+    if (team != nil) {
         
-        NSMutableArray *roomArray = [[teamViewModel getJoinedRooms] mutableCopy];
+        NSMutableArray *roomArray = [[team getJoinedRooms] mutableCopy];
         NSSortDescriptor *sortDescriptor =
         [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         [roomArray sortUsingDescriptors:@[ sortDescriptor ]];

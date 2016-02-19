@@ -17,7 +17,6 @@
 
 // Data Model
 #import "CLAUser.h"
-#import "CLATeamViewModel.h"
 #import "CLANotificationMessage.h"
 
 // Menu

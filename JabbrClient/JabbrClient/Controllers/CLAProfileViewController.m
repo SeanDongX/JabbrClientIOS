@@ -13,13 +13,12 @@
 
 #import "UIViewController+ECSlidingViewController.h"
 #import "SlidingViewController.h"
-#import "CLATeamViewModel.h"
 #import "CLASignalRMessageClient.h"
 #import "CLAAzureHubPushNotificationService.h"
 
 @interface CLAProfileViewController ()
 
-@property (nonatomic, strong) NSArray<CLATeamViewModel *> *teamViewModels;
+@property (nonatomic, strong) NSArray<CLATeam *> *teams;
 
 @end
 
@@ -33,7 +32,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.backItem.hidesBackButton = YES;
-    self.teamViewModels = [[CLASignalRMessageClient sharedInstance].dataRepository getTeams];
+    self.teams = [[CLASignalRMessageClient sharedInstance].dataRepository getTeams];
     self.form = [self getForm];
 }
 
@@ -127,14 +126,14 @@
     
     NSMutableArray *options = [NSMutableArray array];
     
-    for(CLATeamViewModel *teamViewModel in self.teamViewModels) {
-        if (teamViewModel.team.name != nil) {
-            [options addObject: [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.key displayText:teamViewModel.team.name]];
+    for(CLATeam *team in self.teams) {
+        if (team.name != nil) {
+            [options addObject: [XLFormOptionsObject formOptionsObjectWithValue:team.key displayText:team.name]];
         }
         
-        if (teamViewModel.team.key.integerValue > 0
-            && teamViewModel.team.key.integerValue == [UserDataManager getTeam].key.integerValue) {
-            row.value = [XLFormOptionsObject formOptionsObjectWithValue:teamViewModel.team.key displayText:teamViewModel.team.name];
+        if (team.key.integerValue > 0
+            && team.key.integerValue == [UserDataManager getTeam].key.integerValue) {
+            row.value = [XLFormOptionsObject formOptionsObjectWithValue:team.key displayText:team.name];
         }
         
     }
@@ -156,9 +155,9 @@
     }
     
     if ([newValue.formValue integerValue] > 0) {
-        for (CLATeamViewModel *teamViewModel in self.teamViewModels) {
-            if (teamViewModel.team.key.integerValue == [newValue.formValue integerValue]) {
-                [UserDataManager cacheTeam:teamViewModel.team];
+        for (CLATeam *team in self.teams) {
+            if (team.key.integerValue == [newValue.formValue integerValue]) {
+                [UserDataManager cacheTeam:team];
                 [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
             }
         }

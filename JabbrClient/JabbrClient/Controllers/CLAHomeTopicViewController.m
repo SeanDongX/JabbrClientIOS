@@ -13,7 +13,6 @@
 
 // Data Model
 #import "CLARoom.h"
-#import "CLATeamViewModel.h"
 
 // Menu
 #import "UIViewController+ECSlidingViewController.h"
@@ -32,6 +31,7 @@
 #import "UserDataManager.h"
 #import "CLAChatViewController.h"
 #import "slidingViewController.h"
+#import "CLAUtility.h"
 
 NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
@@ -105,12 +105,11 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 }
 
 - (void)updateTeam:(NSNotification *)notification {
-    CLATeamViewModel *teamViewModel =
+    CLATeam *team =
     [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
     
-    if (teamViewModel != nil) {
-        
-        NSMutableArray *roomArray = [[teamViewModel.rooms allValues] mutableCopy];
+    if (team != nil) {
+        NSMutableArray *roomArray = [CLAUtility getArrayFromRLMArray:team.rooms];
         NSSortDescriptor *sortDescriptor =
         [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         [roomArray sortUsingDescriptors:@[ sortDescriptor ]];

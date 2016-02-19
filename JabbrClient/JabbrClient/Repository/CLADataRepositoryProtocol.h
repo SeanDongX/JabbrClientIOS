@@ -7,29 +7,53 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CLATeamViewModel.h"
 #import "CLANotificationMessage.h"
+#import "CLATeam.h"
+#import "CLAUser.h"
+#import "CLAMessage.h"
 
 @protocol CLADataRepositoryProtocol <NSObject>
 
-//- (CLATeamViewModel *)get:(NSString *)name;
-- (CLATeamViewModel *)getCurrentOrDefaultTeam;
-- (NSArray<CLATeamViewModel *> *)getTeams;
-- (void)addOrUpdateTeam:(CLATeamViewModel *)team;
+
+- (NSArray <CLATeam*> *)getTeams;
+- (CLATeam *)getCurrentOrDefaultTeam;
+- (CLAUser *)getUserByName: (NSString *)name;
+- (NSArray <CLAMessage *> *)getRoomMessages: (NSString *)roomName;
+- (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey;
+
+- (void)setRoomUnread:(NSString *)roomName unread:(NSInteger)unread inTeam:(NSNumber *)teamKey;
+
+- (void)addOrgupdateMessage:(CLAMessage *)message;
+- (void)updateNotification: (NSNumber *)notificationKey read:(BOOL)read;
+
+- (void)joinUser:(NSString *)username toRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
+
 - (void)deleteData;
 
-- (CLAUser *)getUserByName: (NSString *)name;
+- (void)addOrUpdateObjects: (NSArray *)objects
+                completion:(void (^)(void))completionBlock;
 
-- (NSArray <CLAMessage *> *)getRoomMessages: (NSString *)roomName;
-- (void)addOrgupdateMessage:(CLAMessage *)message;
-
-- (void)updateNotification: (NSNumber *)notificationKey read:(BOOL)read;
-- (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey;
-- (void)addOrUpdateNotificationsWithData: (NSArray *)dictionaryArray
-                              completion:(void (^)(void))completionBlock;
-
-- (void)addOrUpdateNotifications: (NSArray <CLANotificationMessage*> *)notifications
+- (void)addOrUpdateTeamsWithData:(NSArray *)dictionaryArray
                       completion:(void (^)(void))completionBlock;
 
+- (void)addOrUpdateTeamWithData:(NSArray *)dictionaryArray
+                     completion:(void (^)(void))completionBlock;
+
+- (void)addOrUpdateRoomsWithData:(NSArray *)dictionaryArray
+                      completion:(void (^)(void))completionBlock;
+
+- (void)addOrUpdateUsersWithData:(NSArray *)dictionaryArray
+                      completion:(void (^)(void))completionBlock;
+
+
+- (void)addOrUpdateMessagesWithData:(NSArray *)dictionaryArray
+                           formRoom:(NSString *)roomName
+                         completion:(void (^)(void))completionBlock;
+
+- (void)addOrUpdateNotificationsWithData:(NSArray *)dictionaryArray
+                              completion:(void (^)(void))completionBlock;
+
+- (void)addOrUpdateNotifications:(NSArray <CLANotificationMessage*> *)notifications
+                      completion:(void (^)(void))completionBlock;
 
 @end

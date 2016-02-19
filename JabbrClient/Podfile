@@ -18,9 +18,11 @@ target 'Collara' do
   pod 'TSMessages', :git => 'https://github.com/wonderxboy/TSMessages.git'
   pod 'SDWebImage'
   pod 'JTSImageViewController'
+  pod 'Realm'
+  pod 'SlackTextViewController'
   use_frameworks!
   pod 'netfox'
-  pod 'Realm'
+  pod 'LoremIpsum'
 end
 
 target 'CollaraTests' do

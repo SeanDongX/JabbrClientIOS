@@ -30,6 +30,8 @@
 #import "BOZPongRefreshControl.h"
 #import "CLATopicDataSource.h"
 #import "UserDataManager.h"
+#import "CLAChatViewController.h"
+#import "slidingViewController.h"
 
 NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
@@ -181,7 +183,8 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 #pragma mark - Event Handlers
 
 - (void)showCreateTopicView:(id)sender {
-    
+    [self openRoom:nil];
+    return;
     UIStoryboard *storyBoard =
     [UIStoryboard storyboardWithName:kMainStoryBoard bundle:nil];
     
@@ -223,6 +226,22 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     }
     
     [self.topicTableView reloadData];
+}
+
+
+- (void)openRoom: (CLARoom *)room {
+    
+    UINavigationController *navController = nil;
+    
+    navController = [(SlidingViewController *)self.slidingViewController getNavigationControllerWithKeyIdentifier:kChatNavigationController];
+    
+    CLAChatViewController *chatViewController =
+    [navController.viewControllers objectAtIndex:0];
+    
+    [(SlidingViewController *)self.slidingViewController setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
+    
+    //[navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    [self.slidingViewController resetTopViewAnimated:YES];
 }
 
 @end

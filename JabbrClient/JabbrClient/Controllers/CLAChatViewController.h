@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CLAMessageClient.h"
+#import "SLKTextViewController.h"
 
-@interface CLAChatViewController : UIViewController <CLAMessageClientDelegate>
+@interface CLAChatViewController : SLKTextViewController <CLAMessageClientDelegate>
 
 @end

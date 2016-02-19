@@ -146,13 +146,15 @@
 - (void)switchToMainView {
     [[CLAWebApiClient sharedInstance]
      getTeams:^(NSArray<CLATeam *> *teams, NSString *errorMessage) {
-         if (teams != nil && teams.count > 0) {
+         NSString *invitationId = [UserDataManager getCachedObjectForKey:kinvitationId];
+         if (!invitationId && teams != nil && teams.count > 0) {
              [((SlidingViewController *)self.navigationController.slidingViewController)
               switchToMainView];
          }
          else {
-             [((SlidingViewController *)self.navigationController.slidingViewController) switchToCreateTeamView:nil
+             [((SlidingViewController *)self.navigationController.slidingViewController) switchToCreateTeamView:invitationId
                                                                                            sourceViewIdentifier:nil];
+             [UserDataManager cacheObject:nil forKey:kinvitationId];
          }
      }];
 }

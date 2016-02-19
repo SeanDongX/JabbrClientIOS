@@ -227,6 +227,29 @@ completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion {
                          }];
 }
 
+- (void)requestJoinTeam:(NSString *)teamName
+      completionHandler:(void (^)(NSString *errorMessage))completion {
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/team/requestjoin/",
+                       teamName,
+                       @"/?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl
+                      parameters:nil
+                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                             completion(nil);
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             
+                             completion([self getResponseErrorMessage:error]);
+                         }];
+}
+
 - (void)getInviteCodeForTeam:(NSNumber *)teamKey
                   completion:(void (^)(NSString *invitationCode,
                                        NSString *errorMessage))completion {

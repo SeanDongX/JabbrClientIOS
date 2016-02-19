@@ -663,118 +663,114 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iSt-kU-ZGX">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FTG-dq-sMs" userLabel="Content View">
                                 <rect key="frame" x="16" y="64" width="288" height="504"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f1E-VV-4sJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="800"/>
-                                        <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dg4-Nx-u52" userLabel="TeamName">
-                                                <rect key="frame" x="29" y="40" width="230" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="MHa-eW-SiG"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LlV-JF-2Lk" userLabel="GreateTeamButton" customClass="CLARoundFrameButton">
-                                                <rect key="frame" x="29" y="100" width="230" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="PCj-oT-chk"/>
-                                                </constraints>
-                                                <state key="normal" title="Create Team">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="createTeamClicked:" destination="fsr-xX-Ksp" eventType="touchUpInside" id="EWp-FC-FO6"/>
-                                                </connections>
-                                            </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ey-wr-FQy" userLabel="SeperatorView">
-                                                <rect key="frame" x="0.0" y="200" width="288" height="1"/>
-                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="1" id="8gQ-Bf-n5t"/>
-                                                </constraints>
-                                            </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or join a team with inviatation code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xNi-xF-Kk5" userLabel="Or join a team">
-                                                <rect key="frame" x="0.0" y="261" width="288" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="e9i-05-SRM"/>
-                                                    <constraint firstAttribute="height" constant="20" id="lhL-Un-cUu"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Invitation Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Moy-Rd-2Cn" userLabel="InviteCode">
-                                                <rect key="frame" x="29" y="301" width="230" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="07c-wH-Q7v"/>
-                                                    <constraint firstAttribute="height" constant="40" id="Pzc-Fu-LDf"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ie1-LK-m1i" userLabel="JoinTeamButton" customClass="CLARoundFrameButton">
-                                                <rect key="frame" x="29" y="361" width="230" height="40"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="KvM-57-4Wu"/>
-                                                </constraints>
-                                                <state key="normal" title="Join Team">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="joinTeamButtonClicked:" destination="fsr-xX-Ksp" eventType="touchUpInside" id="dPJ-NB-jTI"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create a new team" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eF-zW-ZlG" userLabel="Create a new team">
+                                        <rect key="frame" x="0.0" y="30" width="288" height="20"/>
                                         <constraints>
-                                            <constraint firstItem="Moy-Rd-2Cn" firstAttribute="width" secondItem="f1E-VV-4sJ" secondAttribute="width" multiplier="0.8" id="G60-T3-UNO"/>
-                                            <constraint firstItem="Ie1-LK-m1i" firstAttribute="width" secondItem="f1E-VV-4sJ" secondAttribute="width" multiplier="0.8" id="HsU-xf-80w"/>
-                                            <constraint firstAttribute="centerX" secondItem="Ie1-LK-m1i" secondAttribute="centerX" id="IMZ-9J-5BG"/>
-                                            <constraint firstAttribute="width" secondItem="xNi-xF-Kk5" secondAttribute="width" id="NWe-Bb-a0a"/>
-                                            <constraint firstAttribute="height" constant="800" id="Qfy-uS-3mS"/>
-                                            <constraint firstItem="Moy-Rd-2Cn" firstAttribute="top" secondItem="xNi-xF-Kk5" secondAttribute="bottom" constant="20" id="Sh7-PE-EVj"/>
-                                            <constraint firstAttribute="width" secondItem="dg4-Nx-u52" secondAttribute="width" multiplier="1.25" constant="1" id="UZN-Co-HIP"/>
-                                            <constraint firstAttribute="centerX" secondItem="Moy-Rd-2Cn" secondAttribute="centerX" id="ZEz-rK-q9c"/>
-                                            <constraint firstItem="xNi-xF-Kk5" firstAttribute="top" secondItem="7Ey-wr-FQy" secondAttribute="bottom" constant="60" id="b7h-qH-8y3"/>
-                                            <constraint firstAttribute="width" secondItem="7Ey-wr-FQy" secondAttribute="width" id="eLV-mO-Plc"/>
-                                            <constraint firstAttribute="width" secondItem="LlV-JF-2Lk" secondAttribute="width" multiplier="1.25" id="hJk-Ac-Uxo"/>
-                                            <constraint firstItem="Ie1-LK-m1i" firstAttribute="top" secondItem="Moy-Rd-2Cn" secondAttribute="bottom" constant="20" id="iK6-HW-kqT"/>
-                                            <constraint firstAttribute="centerX" secondItem="LlV-JF-2Lk" secondAttribute="centerX" id="pHH-8p-NSA"/>
-                                            <constraint firstAttribute="centerX" secondItem="7Ey-wr-FQy" secondAttribute="centerX" id="r2l-B8-UED"/>
-                                            <constraint firstItem="dg4-Nx-u52" firstAttribute="top" secondItem="f1E-VV-4sJ" secondAttribute="top" constant="40" id="rdR-pY-A5T"/>
-                                            <constraint firstAttribute="centerX" secondItem="xNi-xF-Kk5" secondAttribute="centerX" id="twg-Th-RLN"/>
-                                            <constraint firstAttribute="centerX" secondItem="dg4-Nx-u52" secondAttribute="centerX" id="vPk-2A-33w"/>
-                                            <constraint firstItem="7Ey-wr-FQy" firstAttribute="top" secondItem="LlV-JF-2Lk" secondAttribute="bottom" constant="60" id="wmw-fl-UzC"/>
-                                            <constraint firstItem="LlV-JF-2Lk" firstAttribute="top" secondItem="dg4-Nx-u52" secondAttribute="bottom" constant="20" id="xNe-li-IxK"/>
+                                            <constraint firstAttribute="height" constant="20" id="7PW-aM-GCM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dg4-Nx-u52" userLabel="TeamName">
+                                        <rect key="frame" x="29" y="80" width="230" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="MHa-eW-SiG"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LlV-JF-2Lk" userLabel="GreateTeamButton" customClass="CLARoundFrameButton">
+                                        <rect key="frame" x="29" y="150" width="230" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="PCj-oT-chk"/>
+                                        </constraints>
+                                        <state key="normal" title="Create Team">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="createTeamClicked:" destination="fsr-xX-Ksp" eventType="touchUpInside" id="EWp-FC-FO6"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ey-wr-FQy" userLabel="SeperatorView">
+                                        <rect key="frame" x="0.0" y="252" width="288" height="1"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="8gQ-Bf-n5t"/>
                                         </constraints>
                                     </view>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Moy-Rd-2Cn" userLabel="Team Name Request">
+                                        <rect key="frame" x="29" y="333" width="230" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Pzc-Fu-LDf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ie1-LK-m1i" userLabel="RequestJoinTeamButton" customClass="CLARoundFrameButton">
+                                        <rect key="frame" x="29" y="403" width="230" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="KvM-57-4Wu"/>
+                                        </constraints>
+                                        <state key="normal" title="Send Request">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="requestJoinTeamButtonClicked:" destination="fsr-xX-Ksp" eventType="touchUpInside" id="oEW-H4-YUU"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request to join a team" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xNi-xF-Kk5" userLabel="Join a team">
+                                        <rect key="frame" x="0.0" y="283" width="288" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="lhL-Un-cUu"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="f1E-VV-4sJ" secondAttribute="bottom" id="AbZ-dX-yMd"/>
-                                    <constraint firstItem="f1E-VV-4sJ" firstAttribute="top" secondItem="iSt-kU-ZGX" secondAttribute="top" id="POV-4C-huD"/>
-                                    <constraint firstItem="f1E-VV-4sJ" firstAttribute="leading" secondItem="iSt-kU-ZGX" secondAttribute="leading" id="XL7-SZ-Oe9"/>
-                                    <constraint firstAttribute="trailing" secondItem="f1E-VV-4sJ" secondAttribute="trailing" id="gYI-1D-bEP"/>
+                                    <constraint firstItem="2eF-zW-ZlG" firstAttribute="width" secondItem="FTG-dq-sMs" secondAttribute="width" id="0rR-6D-y0O"/>
+                                    <constraint firstItem="7Ey-wr-FQy" firstAttribute="centerY" secondItem="FTG-dq-sMs" secondAttribute="centerY" id="5rD-ej-0KA"/>
+                                    <constraint firstItem="Ie1-LK-m1i" firstAttribute="top" secondItem="Moy-Rd-2Cn" secondAttribute="bottom" constant="30" id="6Zc-re-oNS"/>
+                                    <constraint firstItem="dg4-Nx-u52" firstAttribute="top" secondItem="2eF-zW-ZlG" secondAttribute="bottom" constant="30" id="8GS-cA-qZc"/>
+                                    <constraint firstItem="LlV-JF-2Lk" firstAttribute="top" secondItem="dg4-Nx-u52" secondAttribute="bottom" constant="30" id="8XD-TK-sW6"/>
+                                    <constraint firstItem="LlV-JF-2Lk" firstAttribute="centerX" secondItem="FTG-dq-sMs" secondAttribute="centerX" id="9kW-sN-4yq"/>
+                                    <constraint firstItem="2eF-zW-ZlG" firstAttribute="top" secondItem="FTG-dq-sMs" secondAttribute="top" constant="30" id="AkN-4Q-CEG"/>
+                                    <constraint firstItem="7Ey-wr-FQy" firstAttribute="width" secondItem="FTG-dq-sMs" secondAttribute="width" id="BiP-48-i9J"/>
+                                    <constraint firstItem="2eF-zW-ZlG" firstAttribute="centerX" secondItem="FTG-dq-sMs" secondAttribute="centerX" id="EZ9-g8-fqU"/>
+                                    <constraint firstItem="xNi-xF-Kk5" firstAttribute="width" secondItem="FTG-dq-sMs" secondAttribute="width" id="Gzs-qH-gTB"/>
+                                    <constraint firstItem="xNi-xF-Kk5" firstAttribute="top" secondItem="7Ey-wr-FQy" secondAttribute="bottom" constant="30" id="Iaa-nJ-O9H"/>
+                                    <constraint firstItem="Moy-Rd-2Cn" firstAttribute="width" secondItem="FTG-dq-sMs" secondAttribute="width" multiplier="0.8" id="LW7-xV-q0v"/>
+                                    <constraint firstItem="dg4-Nx-u52" firstAttribute="width" secondItem="FTG-dq-sMs" secondAttribute="width" multiplier="0.8" id="McE-Kz-8hw"/>
+                                    <constraint firstItem="2eF-zW-ZlG" firstAttribute="leading" secondItem="FTG-dq-sMs" secondAttribute="leading" id="NSq-2g-AGp"/>
+                                    <constraint firstItem="7Ey-wr-FQy" firstAttribute="centerX" secondItem="FTG-dq-sMs" secondAttribute="centerX" id="Ore-M2-QIN"/>
+                                    <constraint firstItem="LlV-JF-2Lk" firstAttribute="width" secondItem="FTG-dq-sMs" secondAttribute="width" multiplier="0.8" id="QYJ-f9-cff"/>
+                                    <constraint firstItem="dg4-Nx-u52" firstAttribute="centerX" secondItem="FTG-dq-sMs" secondAttribute="centerX" id="VvY-Wh-0OY"/>
+                                    <constraint firstItem="Ie1-LK-m1i" firstAttribute="centerX" secondItem="FTG-dq-sMs" secondAttribute="centerX" id="lvE-sn-gQu"/>
+                                    <constraint firstItem="xNi-xF-Kk5" firstAttribute="centerX" secondItem="FTG-dq-sMs" secondAttribute="centerX" id="pXn-qu-wHW"/>
+                                    <constraint firstItem="Ie1-LK-m1i" firstAttribute="width" secondItem="FTG-dq-sMs" secondAttribute="width" multiplier="0.8" id="qP2-yM-wpX"/>
+                                    <constraint firstItem="Moy-Rd-2Cn" firstAttribute="top" secondItem="xNi-xF-Kk5" secondAttribute="bottom" constant="30" id="ukY-qn-HCa"/>
+                                    <constraint firstItem="Moy-Rd-2Cn" firstAttribute="centerX" secondItem="FTG-dq-sMs" secondAttribute="centerX" id="wnL-Eu-oQj"/>
                                 </constraints>
-                            </scrollView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="iSt-kU-ZGX" firstAttribute="leading" secondItem="V7x-oV-eE9" secondAttribute="leadingMargin" id="7j1-4o-Ubi"/>
-                            <constraint firstItem="iSt-kU-ZGX" firstAttribute="top" secondItem="qIF-pr-372" secondAttribute="bottom" id="COn-y6-3bO"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="iSt-kU-ZGX" secondAttribute="trailing" id="Ob8-vg-gdw"/>
-                            <constraint firstAttribute="width" secondItem="f1E-VV-4sJ" secondAttribute="width" constant="32" id="PAp-U7-Wim"/>
-                            <constraint firstItem="10z-Lq-qBA" firstAttribute="top" secondItem="iSt-kU-ZGX" secondAttribute="bottom" id="q1t-7R-OFR"/>
+                            <constraint firstItem="FTG-dq-sMs" firstAttribute="leading" secondItem="V7x-oV-eE9" secondAttribute="leadingMargin" id="2L4-Xt-WY5"/>
+                            <constraint firstItem="10z-Lq-qBA" firstAttribute="top" secondItem="FTG-dq-sMs" secondAttribute="bottom" id="30R-2e-nAg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FTG-dq-sMs" secondAttribute="trailing" id="Uck-Mg-00g"/>
+                            <constraint firstItem="FTG-dq-sMs" firstAttribute="top" secondItem="qIF-pr-372" secondAttribute="bottom" id="plp-Fs-Vw6"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="XGh-aa-V7H"/>
                     <connections>
-                        <outlet property="ScrollViewContentView" destination="f1E-VV-4sJ" id="Xpl-Va-9Q3"/>
-                        <outlet property="inviteCodeTextField" destination="Moy-Rd-2Cn" id="10E-82-d2m"/>
-                        <outlet property="teamNameTextField" destination="dg4-Nx-u52" id="psc-Xi-wVr"/>
+                        <outlet property="teamNameCreateTextField" destination="dg4-Nx-u52" id="POt-Xm-Ulg"/>
+                        <outlet property="teamNameJoinTextField" destination="Moy-Rd-2Cn" id="NOW-Up-vHX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tO0-Zd-PsA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -893,7 +889,7 @@
                                                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MGW-Ed-Rgk" id="RYK-Ct-PvS">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </tableViewCellContentView>
                                                             </tableViewCell>
@@ -1239,7 +1235,7 @@
                                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h6u-2u-R73" id="IqA-ny-a8H">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </tableViewCellContentView>
                                                     </tableViewCell>
@@ -1326,7 +1322,7 @@
                                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i7H-N7-pci" id="JOW-N1-cAd">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </tableViewCellContentView>
                                                     </tableViewCell>

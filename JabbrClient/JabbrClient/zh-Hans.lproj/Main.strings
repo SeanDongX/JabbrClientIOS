@@ -1,4 +1,7 @@
 
+/* Class = "UILabel"; text = "Create a new team"; ObjectID = "2eF-zW-ZlG"; */
+"2eF-zW-ZlG.text" = "创建新团队";
+
 /* Class = "UILabel"; text = "Topic"; ObjectID = "4Ud-ZO-HdC"; */
 "4Ud-ZO-HdC.text" = "话题";
 
@@ -23,8 +26,8 @@
 /* Class = "UILabel"; text = "Message"; ObjectID = "Ed4-3R-qkR"; */
 "Ed4-3R-qkR.text" = "消息";
 
-/* Class = "UIButton"; normalTitle = "Join Team"; ObjectID = "Ie1-LK-m1i"; */
-"Ie1-LK-m1i.normalTitle" = "加入团队";
+/* Class = "UIButton"; normalTitle = "Send Request"; ObjectID = "Ie1-LK-m1i"; */
+"Ie1-LK-m1i.normalTitle" = "发送请求";
 
 /* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "JVD-7L-Ab0"; */
 "JVD-7L-Ab0.normalTitle" = "注册";
@@ -32,8 +35,8 @@
 /* Class = "UIButton"; normalTitle = "Create Team"; ObjectID = "LlV-JF-2Lk"; */
 "LlV-JF-2Lk.normalTitle" = "创建团队";
 
-/* Class = "UITextField"; placeholder = "Invitation Code"; ObjectID = "Moy-Rd-2Cn"; */
-"Moy-Rd-2Cn.placeholder" = "邀请码";
+/* Class = "UITextField"; placeholder = "Team Name"; ObjectID = "Moy-Rd-2Cn"; */
+"Moy-Rd-2Cn.placeholder" = "团队名称";
 
 /* Class = "UITextField"; placeholder = "Username"; ObjectID = "N4x-KO-VIS"; */
 "N4x-KO-VIS.placeholder" = "用户名";
@@ -110,8 +113,8 @@
 /* Class = "UIButton"; normalTitle = "Forgot Password"; ObjectID = "vgh-Ic-yXL"; */
 "vgh-Ic-yXL.normalTitle" = "忘记密码啦";
 
-/* Class = "UILabel"; text = "Or join a team with inviatation code"; ObjectID = "xNi-xF-Kk5"; */
-"xNi-xF-Kk5.text" = "也可以使用团队邀请码的哦";
+/* Class = "UILabel"; text = "Request to join a team"; ObjectID = "xNi-xF-Kk5"; */
+"xNi-xF-Kk5.text" = "申请加入已有团队";
 
 /* Class = "UIBarButtonItem"; title = "Chat"; ObjectID = "zun-6c-983"; */
 "zun-6c-983.title" = "消息";

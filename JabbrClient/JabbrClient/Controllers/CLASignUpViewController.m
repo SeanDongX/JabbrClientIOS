@@ -18,6 +18,7 @@
 
 // API Client
 #import "CLAWebApiClient.h"
+#import "UserDataManager.h"
 
 @interface CLASignUpViewController ()
 
@@ -162,7 +163,8 @@
 - (void)switchToMainView {
     [[CLAWebApiClient sharedInstance]
      getTeams:^(NSArray<CLATeam *> *teams, NSString *errorMessage) {
-         if (teams != nil && teams.count > 0) {
+         NSString *invitationId = [UserDataManager getCachedObjectForKey:kinvitationId];
+         if (!invitationId && teams != nil && teams.count > 0) {
              [self dismissViewControllerAnimated: YES completion:^{
                  [((SlidingViewController *)self.slidingViewController)
                   switchToMainView];
@@ -171,9 +173,10 @@
          else {
              [self dismissViewControllerAnimated: YES completion:^{
                  [((SlidingViewController *)self.slidingViewController)
-                  switchToCreateTeamView:nil
+                  switchToCreateTeamView:invitationId
                   sourceViewIdentifier:nil];
              }];
+             [UserDataManager cacheObject:nil forKey:kinvitationId];
          }
      }];
 }

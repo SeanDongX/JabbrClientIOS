@@ -31,6 +31,9 @@
 - (void)joinTeam:(NSString *)invitationCode
 completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion;
 
+- (void)requestJoinTeam:(NSString *)teamName
+      completionHandler:(void (^)(NSString *errorMessage))completion;
+
 - (void)getInviteCodeForTeam:(NSNumber *)team
                   completion:(void (^)(NSString *invitationCode,
                                        NSString *errorMessage))completion;

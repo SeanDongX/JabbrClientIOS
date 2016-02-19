@@ -166,7 +166,7 @@
 }
 
 - (void)switchTeam:(XLFormOptionsObject *)newValue withOldValue:(XLFormOptionsObject *)oldValue {
-    if ([newValue.formValue integerValue] == [oldValue.formValue integerValue]) {
+    if (!newValue || [newValue isKindOfClass:[NSNull class]] || [newValue.formValue integerValue] == [oldValue.formValue integerValue]) {
         return;
     }
     

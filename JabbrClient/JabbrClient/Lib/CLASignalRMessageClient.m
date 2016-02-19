@@ -267,7 +267,7 @@ static bool isFirstAccess = YES;
                 if (messages != nil && messages.count > 0) {
                     for (NSDictionary *messageDictionary in messages) {
                         [earlierMessageArray
-                         addObject:[CLAMessage getFromData:messageDictionary]];
+                         addObject:[CLAMessage getFromData:messageDictionary forRoom:room]];
                     }
                 }
             }
@@ -394,7 +394,7 @@ static bool isFirstAccess = YES;
     
     for (NSDictionary *messageDictionary in recentMessageArray) {
         [earlierMessageArray
-         addObject:[CLAMessage getFromData:messageDictionary]];
+         addObject:[CLAMessage getFromData:messageDictionary forRoom:room]];
     }
     
     [self.delegate didLoadEarlierMessages:earlierMessageArray inRoom:room];

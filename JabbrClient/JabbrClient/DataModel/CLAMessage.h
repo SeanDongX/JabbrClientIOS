@@ -12,7 +12,7 @@
 
 @interface CLAMessage : RLMObject
 
-@property(nonatomic, strong) NSNumber<RLMInt> *key;
+@property(nonatomic, strong) NSString *key;
 @property(nonatomic, strong) NSString *content;
 @property(nonatomic, strong) NSDate *when;
 @property(nonatomic, strong) NSString *fromUserName;

@@ -18,6 +18,7 @@
 - (NSArray <CLATeam*> *)getTeams;
 - (CLATeam *)getCurrentOrDefaultTeam;
 - (CLAUser *)getUserByName: (NSString *)name;
+- (CLARoom *)getRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
 - (NSArray <CLAMessage *> *)getRoomMessages: (NSString *)roomName;
 - (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey;
 
@@ -29,6 +30,8 @@
 - (void)joinUser:(NSString *)username toRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
 
 - (void)deleteData;
+
+- (void)addRoom:(CLARoom *)room inTeam:(NSNumber *)teamKey;
 
 - (void)addOrUpdateObjects: (NSArray *)objects
                 completion:(void (^)(void))completionBlock;

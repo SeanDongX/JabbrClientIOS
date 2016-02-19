@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CLAMessage.h"
 
 static CGFloat kMessageTableViewCellMinimumHeight = 50.0;
 static CGFloat kMessageTableViewCellAvatarHeight = 30.0;
@@ -16,9 +17,10 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 
 @interface MessageTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) CLAMessage *message;
+@property (nonatomic, strong) UIImageView *thumbnailView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *bodyLabel;
-@property (nonatomic, strong) UIImageView *thumbnailView;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
 

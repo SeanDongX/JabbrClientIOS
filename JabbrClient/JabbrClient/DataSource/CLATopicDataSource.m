@@ -401,6 +401,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.slidingViewController setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     if (chatViewController != nil) {
         [self.repository setRoomUnread:room.name unread:0 inTeam:[UserDataManager getTeam].key];
+        [chatViewController setActiveRoom:room];
     }
     
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];

@@ -44,6 +44,7 @@
     
     if (userData && [userData objectForKey:@"Name"]) {
         message.fromUserName = [userData objectForKey:@"Name"];
+        message.fromUser = [CLAUser getFromData:userData];
     }
     
     message.key = [messageDictionary objectForKey:@"Id"];

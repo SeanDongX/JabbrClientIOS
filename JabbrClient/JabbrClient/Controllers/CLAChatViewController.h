@@ -12,4 +12,6 @@
 
 @interface CLAChatViewController : SLKTextViewController <CLAMessageClientDelegate>
 
+- (void)setActiveRoom:(CLARoom *)room;
+
 @end

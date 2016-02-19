@@ -12,10 +12,11 @@
 
 #import "UIViewController+ECSlidingViewController.h"
 #import "MessageTextView.h"
-#import "Message.h"
 #import "LoremIpsum.h"
 #import "MessageTableViewCell.h"
 #import "CLANotificationManager.h"
+#import "UserDataManager.h"
+#import "SlidingViewController.h"
 
 @interface CLAChatViewController ()
 
@@ -26,19 +27,19 @@
 @property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
 
 @property(nonatomic, strong) CLARoom *room;
-
-
+@property(nonatomic, strong) CLAUser *user;
+@property(nonatomic, strong) RLMArray<CLAUser *> *teamUsers;
 
 #pragma mark -
 #pragma mark - Slack View Controller components
 //TODO:remove
-@property (nonatomic, strong) NSMutableArray *messages;
-@property (nonatomic, strong) NSArray *users;
-@property (nonatomic, strong) NSArray *channels;
+//@property (nonatomic, strong) NSMutableArray *messages;
+//@property (nonatomic, strong) NSArray *users;
+//@property (nonatomic, strong) NSArray *channels;
 @property (nonatomic, strong) NSArray *emojis;
 @property (nonatomic, strong) NSArray *searchResult;
 @property (nonatomic, strong) UIWindow *pipWindow;
-@property (nonatomic, weak) Message *editingMessage;
+@property (nonatomic, weak) CLAMessage *editingMessage;
 
 @end
 
@@ -113,6 +114,8 @@
 
 - (void)initData {
     self.repository = [[CLARealmRepository alloc] init];
+    self.user = [UserDataManager getUser];
+    self.teamUsers = [self.repository getCurrentOrDefaultTeam].users;
 }
 
 - (void)initMenu {
@@ -178,23 +181,8 @@
 
 - (void)configureDataSource
 {
-    NSMutableArray *array = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < 100; i++) {
-        NSInteger words = (arc4random() % 40)+1;
-        
-        Message *message = [Message new];
-        message.username = [LoremIpsum name];
-        message.text = [LoremIpsum wordsWithNumber:words];
-        [array addObject:message];
-    }
-    
-    NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
-    
-    self.messages = [[NSMutableArray alloc] initWithArray:reversed];
-    
-    self.users = @[@"Allen", @"Anna", @"Alicia", @"Arnold", @"Armando", @"Antonio", @"Brad", @"Catalaya", @"Christoph", @"Emerson", @"Eric", @"Everyone", @"Steve"];
-    self.channels = @[@"General", @"Random", @"iOS", @"Bugs", @"Sports", @"Android", @"UI", @"SSB"];
+    //self.channels = @[@"General", @"Random", @"iOS", @"Bugs", @"Sports", @"Android", @"UI", @"SSB"];
     self.emojis = @[@"-1", @"m", @"man", @"machine", @"block-a", @"block-b", @"bowtie", @"boar", @"boat", @"book", @"bookmark", @"neckbeard", @"metal", @"fu", @"feelsgood"];
 }
 
@@ -306,9 +294,9 @@
 {
     MessageTableViewCell *cell = (MessageTableViewCell *)gesture.view;
     
-    self.editingMessage = self.messages[cell.indexPath.row];
+    self.editingMessage = self.room.messages[cell.indexPath.row];
     
-    [self editText:self.editingMessage.text];
+    [self editText:self.editingMessage.content];
     
     [self.tableView scrollToRowAtIndexPath:cell.indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
@@ -330,9 +318,9 @@
     NSInteger lastSectionIndex = [self.tableView numberOfSections]-1;
     NSInteger lastRowIndex = [self.tableView numberOfRowsInSection:lastSectionIndex]-1;
     
-    Message *lastMessage = [self.messages objectAtIndex:lastRowIndex];
+    CLAMessage *lastMessage = [self.room.messages objectAtIndex:lastRowIndex];
     
-    [self editText:lastMessage.text];
+    [self editText:lastMessage.content];
     
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:lastRowIndex inSection:lastSectionIndex] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
@@ -442,16 +430,16 @@
     // This little trick validates any pending auto-correction or auto-spelling just after hitting the 'Send' button
     [self.textView refreshFirstResponder];
     
-    Message *message = [Message new];
-    message.username = [LoremIpsum name];
-    message.text = [self.textView.text copy];
+    CLAMessage *message = [[CLAMessage alloc] init];
+    message.fromUserName = self.user.name;
+    message.content = [self.textView.text copy];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     UITableViewRowAnimation rowAnimation = self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
     UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
     
     [self.tableView beginUpdates];
-    [self.messages insertObject:message atIndex:0];
+    [self.messageClient sendMessage:message inRoom:self.room.name];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:rowAnimation];
     [self.tableView endUpdates];
     
@@ -501,7 +489,7 @@
 - (void)didCommitTextEditing:(id)sender
 {
     // Notifies the view controller when tapped on the right "Accept" button for commiting the edited text
-    self.editingMessage.text = [self.textView.text copy];
+    self.editingMessage.content = [self.textView.text copy];
     
     [self.tableView reloadData];
     
@@ -531,21 +519,29 @@
 
 - (void)didChangeAutoCompletionPrefix:(NSString *)prefix andWord:(NSString *)word
 {
-    NSArray *array = nil;
+    NSArray<NSString*> *array = [NSMutableArray array];
     
     self.searchResult = nil;
     
     if ([prefix isEqualToString:@"@"]) {
+        RLMResults<CLAUser *> *userResults = nil;
         if (word.length > 0) {
-            array = [self.users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self BEGINSWITH[c] %@", word]];
+            userResults = [self.teamUsers objectsWhere:@"name BEGINSWITH[c] %@", word];
         }
         else {
-            array = self.users;
+            userResults = [self.teamUsers objectsWhere:@"name.length > 0"];
         }
+        
+        NSMutableArray *userArray = [NSMutableArray array];
+        for (CLAUser *user in userResults) {
+            [userArray addObject:user.name];
+        }
+        
+        array = [userArray copy];
     }
-    else if ([prefix isEqualToString:@"#"] && word.length > 0) {
-        array = [self.channels filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self BEGINSWITH[c] %@", word]];
-    }
+    //    else if ([prefix isEqualToString:@"#"] && word.length > 0) {
+    //        array = [self.channels filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self BEGINSWITH[c] %@", word]];
+    //    }
     else if (([prefix isEqualToString:@":"] || [prefix isEqualToString:@"+:"]) && word.length > 1) {
         array = [self.emojis filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self BEGINSWITH[c] %@", word]];
     }
@@ -578,7 +574,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([tableView isEqual:self.tableView]) {
-        return self.messages.count;
+        return self.room.messages.count;
     }
     else {
         return self.searchResult.count;
@@ -604,10 +600,10 @@
         [cell addGestureRecognizer:longPress];
     }
     
-    Message *message = self.messages[indexPath.row];
+    CLAMessage *message = self.room.messages[indexPath.row];
     
-    cell.titleLabel.text = message.username;
-    cell.bodyLabel.text = message.text;
+    cell.titleLabel.text = message.fromUserName;
+    cell.bodyLabel.text = message.content;
     
     cell.indexPath = indexPath;
     cell.usedForMessage = YES;
@@ -642,7 +638,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([tableView isEqual:self.tableView]) {
-        Message *message = self.messages[indexPath.row];
+        CLAMessage *message = self.room.messages[indexPath.row];
         
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -656,10 +652,10 @@
         CGFloat width = CGRectGetWidth(tableView.frame)-kMessageTableViewCellAvatarHeight;
         width -= 25.0;
         
-        CGRect titleBounds = [message.username boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
-        CGRect bodyBounds = [message.text boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
+        CGRect titleBounds = [message.fromUserName boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
+        CGRect bodyBounds = [message.content boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:NULL];
         
-        if (message.text.length == 0) {
+        if (message.content.length == 0) {
             return 0.0;
         }
         
@@ -786,6 +782,7 @@
 - (void)setActiveRoom:(CLARoom *)room {
     self.room = room;
     [self.messageClient joinRoom:room.name];
+    [self switchToRoom:room];
 }
 
 #pragma mark -
@@ -815,15 +812,42 @@
 }
 
 - (void)didReceiveJoinRoom:(NSString *)room andUpdateRoom:(BOOL)update {
+    if (self.room == nil ||
+        (room != nil && [self.room.name isEqual:room])) {
+        return;
+    }
+    
+    //FixMe: add room to left menu
+    if (update != NO) {
+        [self sendTeamUpdatedEventNotification];
+    }
+    
+    SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
+    
+    // make sure room switch works both ways, ie, when chat view is active main
+    // view or not
+    CLARoom *newRoom = [self.repository getRoom: room inTeam:[UserDataManager getTeam].key];
+    if (slidingViewController != nil) {
+        [slidingViewController switchToRoom:newRoom];
+    } else {
+        [self switchToRoom:newRoom];
+    }
 }
 
 - (void)didReceiveUpdateRoom:(NSString *)room {
+    [self sendTeamUpdatedEventNotification];
 }
 
 - (void)didReceiveMessageInRoom:(NSString *)room {
+    if ([self.room.name isEqualToString: room]) {
+        [self.tableView reloadData];
+    }
 }
 
 - (void)didLoadEarlierMessagesInRoom:(NSString *)room {
+    if ([self.room.name isEqualToString: room]) {
+        [self.tableView reloadData];
+    }
 }
 
 //- (void)didLoadUsers:(NSArray<CLAUser *> *)users inRoom:(NSString *)room;
@@ -837,6 +861,15 @@
 
 #pragma mark -
 #pragma mark - Private Methods
+
+- (void)switchToRoom:(CLARoom *)room {
+    [UserDataManager cacheObject:room.name forKey:kSelectedRoomName];
+    self.title = self.room.displayName;
+    
+    [self.repository joinUser:self.user.name toRoom:self.room.name inTeam:[UserDataManager getTeam].key];
+    [self.messageClient loadRoom:room.name];
+    [self.tableView reloadData];
+}
 
 #pragma mark -
 #pragma mark - Notifications

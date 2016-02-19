@@ -48,9 +48,9 @@ caseInsensitiveEqualTo:(NSString *)secondString {
     return dictionary;
 }
 
-+ (NSMutableArray *)getArrayFromRLMArray:(RLMArray *)rlmArray {
++ (NSMutableArray *)getArrayFromRLMArray:(RLMResults *)rlmResult {
     NSMutableArray *array = [NSMutableArray array];
-    for (RLMObject *object in rlmArray) {
+    for (RLMObject *object in rlmResult) {
         [array addObject:object];
     }
     

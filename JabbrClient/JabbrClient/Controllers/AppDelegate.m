@@ -42,6 +42,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
 #if DEBUG
     [[NFX sharedInstance] start];
+    NSLog(@"%@", [RLMRealm defaultRealm].path);
 #endif
     
     return YES;

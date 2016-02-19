@@ -238,7 +238,7 @@ static bool isFirstAccess = YES;
 
 - (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room {
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
-    [messageData setObject:message.key forKey:@"id"];
+    [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
     
     [messageData setObject:message.content forKey:@"content"];
     [messageData setObject:room forKey:@"room"];
@@ -376,7 +376,6 @@ static bool isFirstAccess = YES;
         return;
     }
     
-    //TODO:use realm
     NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
     CLARoom *room = [[CLARoom alloc] init];
     [CLARoom getFromData:roomInfoDictionary];
@@ -385,17 +384,11 @@ static bool isFirstAccess = YES;
     CLARoom *existingRoom = [team.rooms objectsWhere:@"name = %@", room.name].firstObject;
     
     NSString *username = [UserDataManager getUsername];
-    __weak __typeof(&*self) weakSelf = self;
     
     if (!existingRoom) {
-        [team.rooms addObject:room];
-        NSArray *teamArray = [NSArray arrayWithObject:team];
-        [self.dataRepository addOrUpdateRoomsWithData: teamArray completion:^{
-            __strong __typeof(&*weakSelf) strongSelf = weakSelf;
-            [strongSelf.dataRepository joinUser:username toRoom:room.name inTeam:team.key];
-            [strongSelf.delegate didReceiveJoinRoom:room.name andUpdateRoom:YES];
-            return;
-        }];
+        [self.dataRepository addRoom:room inTeam:team.key];
+        [self.delegate didReceiveJoinRoom:room.name andUpdateRoom:YES];
+        return;
     }
     
     [self.dataRepository joinUser:username toRoom:room.name inTeam:team.key];

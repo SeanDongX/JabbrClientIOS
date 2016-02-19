@@ -10,11 +10,12 @@
 #import "CLANotificationMessage.h"
 #import "UserDataManager.h"
 #import "CLATeam.h"
+#import "CLAUtility.h"
 
 @implementation CLARealmRepository
 
 - (NSArray <CLATeam*> *)getTeams {
-    return [CLATeam allObjects];
+    return [CLAUtility getArrayFromRLMArray:[CLATeam allObjects]];
 }
 
 - (CLATeam *)getCurrentOrDefaultTeam {
@@ -40,6 +41,7 @@
     return users.firstObject;
 }
 
+
 - (CLARoom *)getRoom:(NSString *)name inTeam:(NSNumber *)teamKey {
     CLATeam *team = [CLATeam objectsWhere:@"key = %d", teamKey].firstObject;
     if (!team) {
@@ -55,6 +57,10 @@
 }
 
 - (void)deleteData {
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm deleteAllObjects];
+    [realm commitWriteTransaction];
 }
 
 - (void)setRoomUnread:(NSString *)roomName unread:(NSInteger)unread inTeam:(NSNumber *)teamKey {
@@ -76,6 +82,17 @@
         [realm beginWriteTransaction];
         [room.users addObject:user];
         [realm addOrUpdateObject:room];
+        [realm commitWriteTransaction];
+    }
+}
+
+- (void)addRoom:(CLARoom *)room inTeam:(NSNumber *)teamKey {
+    CLATeam *team = [CLATeam objectsWhere:@"key = %d", teamKey].firstObject;
+    if (team) {
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        [team.rooms addObject:room];
+        [realm addOrUpdateObject:team];
         [realm commitWriteTransaction];
     }
 }
@@ -114,7 +131,15 @@
     [realm transactionWithBlock:^{
         for (CLATeam *team in teams) {
             [realm addOrUpdateObjectsFromArray:team.users];
-            [realm addOrUpdateObjectsFromArray:team.rooms];
+            
+            for (CLARoom *room in team.rooms) {
+                for (CLAMessage *message in room.messages) {
+                    [realm addOrUpdateObject:message.fromUser];
+                    [realm addOrUpdateObject:message];
+                }
+                [realm addOrUpdateObject:room];
+            }
+            
             [realm addOrUpdateObject:team];
         }
         

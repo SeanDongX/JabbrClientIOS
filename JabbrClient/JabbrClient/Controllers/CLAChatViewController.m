@@ -104,7 +104,7 @@
     self.navigationController.navigationBar.topItem.title = self.room.displayName;
     
     if (self.messageClient == nil || self.messageClient.teamLoaded == FALSE) {
-        //[self showHud];
+        [self showHud];
     }
 }
 

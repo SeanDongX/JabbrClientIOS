@@ -45,7 +45,6 @@
     return self;
 }
 
-
 #pragma Public Methods
 - (CLARoom *)GetSelectedRoom {
     return self.selectedRoom;
@@ -309,6 +308,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 - (CLARoom *)getRoom:(NSIndexPath *)indexPath {
     NSString *key = [NSString stringWithFormat:@"%ld", (long)indexPath.section];
     NSArray *roomArray = [[self getCurrentRoomDictionary] objectForKey:key];
+    CLARoom  *room = [roomArray objectAtIndex:indexPath.row];
     return roomArray == nil ? nil :[roomArray objectAtIndex:indexPath.row];
 }
 
@@ -401,7 +401,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.slidingViewController setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     if (chatViewController != nil) {
         [self.repository setRoomUnread:room.name unread:0 inTeam:[UserDataManager getTeam].key];
-        [chatViewController setActiveRoom:room];
+        [chatViewController setActiveRoom:[self.repository getRoom:room.name inTeam:[UserDataManager getTeam].key]];
     }
     
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];

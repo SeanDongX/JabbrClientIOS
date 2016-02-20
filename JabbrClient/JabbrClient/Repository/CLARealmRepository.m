@@ -43,7 +43,7 @@
 
 
 - (CLARoom *)getRoom:(NSString *)name inTeam:(NSNumber *)teamKey {
-    CLATeam *team = [CLATeam objectsWhere:@"key = %d", teamKey].firstObject;
+    CLATeam *team = [CLATeam objectsWhere:@"key = %d", teamKey.intValue].firstObject;
     if (!team) {
         return nil;
     }

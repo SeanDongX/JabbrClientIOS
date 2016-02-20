@@ -7,7 +7,6 @@ target 'Collara' do
   pod 'FontAwesomeKit/FontAwesome'
   pod 'DateTools'
   pod 'NJKWebViewProgress'
-  pod 'JSQMessagesViewController'
   pod 'ECSlidingViewController', :git => 'https://github.com/ECSlidingViewController/ECSlidingViewController.git'
   pod 'SignalR-ObjC', :git => 'https://github.com/wonderxboy/SignalR-ObjC.git', :commit => 'eae1110'
   pod 'XLPagerTabStrip', :git => 'https://github.com/xmartlabs/XLPagerTabStrip.git', :branch => 'obj-c'
@@ -22,7 +21,6 @@ target 'Collara' do
   pod 'SlackTextViewController'
   use_frameworks!
   pod 'netfox'
-  pod 'LoremIpsum'
 end
 
 target 'CollaraTests' do

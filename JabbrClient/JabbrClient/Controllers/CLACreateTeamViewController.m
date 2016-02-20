@@ -20,14 +20,15 @@
 // Services
 #import "CLAWebApiClient.h"
 #import "CLAAzureHubPushNotificationService.h"
+#import "SlidingViewController.h"
 
 @interface CLACreateTeamViewController ()
 
-@property(weak, nonatomic) IBOutlet UITextField *teamNameTextField;
+@property(weak, nonatomic) IBOutlet UITextField *teamNameCreateTextField;
+@property(weak, nonatomic) IBOutlet UITextField *teamNameJoinTextField;
 
-@property(weak, nonatomic) IBOutlet UITextField *inviteCodeTextField;
+@property(strong, nonatomic) UIAlertView *alertView;
 
-@property(weak, nonatomic) IBOutlet UIView *ScrollViewContentView;
 @end
 
 @implementation CLACreateTeamViewController
@@ -36,17 +37,13 @@
     [super viewDidLoad];
     [self setupTextFields];
     [self setupNavBar];
-    self.teamNameTextField.delegate = self;
-    [self adjustScrollViewContentConstraint];
+    self.teamNameCreateTextField.delegate = self;
+    self.teamNameJoinTextField.delegate = self;
 }
 
-- (void)adjustScrollViewContentConstraint {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
-        [self.ScrollViewContentView
-         mas_makeConstraints:^(MASConstraintMaker *make) {
-             make.centerX.equalTo(self.view.mas_centerX);
-         }];
-    }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self redeemInvitationIfNeeded];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,17 +52,13 @@
 }
 
 - (void)setupTextFields {
-    self.teamNameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.inviteCodeTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.teamNameCreateTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.teamNameJoinTextField.autocorrectionType = UITextAutocorrectionTypeNo;
 }
 
 - (void)setupNavBar {
     
-    UINavigationBar *navBar = [[UINavigationBar alloc]
-                               initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds),
-                                                        kStatusBarHeight)];
-    navBar.barTintColor = [Constants mainThemeColor];
-    navBar.translucent = NO;
+    UINavigationBar *navBar = self.navigationController.navigationBar;
     navBar.titleTextAttributes =
     @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     
@@ -73,97 +66,78 @@
     navItem.title = NSLocalizedString(@"Pick Your Team", nil);
     [navBar setItems:@[ navItem ]];
     
-    UIBarButtonItem *signOutButton =
-    [[UIBarButtonItem alloc] initWithImage:[Constants signOutImage]
+    UIBarButtonItem *closeButton =
+    [[UIBarButtonItem alloc] initWithImage:[Constants closeIconImage]
                                      style:UIBarButtonItemStyleDone
                                     target:self
-                                    action:@selector(signOut)];
-    signOutButton.tintColor = [UIColor whiteColor];
-    navItem.rightBarButtonItem = signOutButton;
+                                    action:@selector(close)];
+    closeButton.tintColor = [UIColor whiteColor];
+    navItem.rightBarButtonItem = closeButton;
     
     [self.view addSubview:navBar];
+}
+
+#pragma mark -
+#pragma mark Public Methods
+
+- (void)redeemInvitation:(NSString *)invitationId  {
+    [UserDataManager cacheObject:nil forKey:kinvitationId];
+    
+    [CLANotificationManager showText: NSLocalizedString(@"Loading...", nil)
+                   forViewController:self
+                            withType:CLANotificationTypeMessage];
+    
+    CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
+    __weak __typeof(&*self) weakSelf = self;
+    
+    [apiClient joinTeam:invitationId
+      completionHandler:^(CLATeam *team, NSString *errorMessage) {
+	         __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+	         [strongSelf processTeamRequestResult:team withErrorMessage:errorMessage];
+      }];
 }
 
 #pragma mark -
 #pragma mark Event Handlers
 
 - (IBAction)createTeamClicked:(id)sender {
-    NSString *teamName = self.teamNameTextField.text;
-    
-    if (teamName == nil || teamName.length == 0) {
-        [CLANotificationManager
-         showText:NSLocalizedString(
-                                    @"Oh, an empty team name. That will not work.",
-                                    nil)
-         forViewController:self
-         withType:CLANotificationTypeError];
-    } else if (teamName.length > kTeamNameMaxLength) {
-        [CLANotificationManager
-         showText:[NSString
-                   stringWithFormat:NSLocalizedString(
-                                                      @"Sorry, but we will need "
-                                                      @"you to keep you team "
-                                                      @"name less than %d "
-                                                      @"characters.",
-                                                      nil),
-                   kTeamNameMaxLength]
-         forViewController:self
-         withType:CLANotificationTypeError];
-    } else {
+    NSString *teamName = self.teamNameCreateTextField.text;
+    if ([self isTeamnameValid: teamName] == YES) {
+        
         CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
         __weak __typeof(&*self) weakSelf = self;
         
         [apiClient createTeam:teamName
-            completionHandler:^(NSString *errorMessage) {
+            completionHandler:^(CLATeam *team, NSString *errorMessage) {
                 __strong __typeof(&*weakSelf) strongSelf = weakSelf;
-                
-                [CLANotificationManager dismiss];
-                
-                if (errorMessage == nil) {
-                    [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-                    [strongSelf switchToMainView];
-                } else {
-                    [CLANotificationManager showText:errorMessage
-                                   forViewController:strongSelf
-                                            withType:CLANotificationTypeError];
-                }
-                
+                [strongSelf processTeamRequestResult:team withErrorMessage:errorMessage];
             }];
     }
 }
 
-- (IBAction)joinTeamButtonClicked:(id)sender {
-    NSString *inviteCode = self.inviteCodeTextField.text;
-    
-    if (inviteCode == nil || inviteCode.length == 0) {
-        
-        [CLANotificationManager showText: NSLocalizedString(@"Oh, an empty invitation code. That will not work.", nil)
-                       forViewController:self
-                                withType:CLANotificationTypeWarning];
-    } else {
-        [CLANotificationManager showText: NSLocalizedString(@"Loading...", nil)
-                       forViewController:self
-                                withType:CLANotificationTypeWarning];
+- (IBAction)requestJoinTeamButtonClicked:(id)sender {
+    NSString *joinTeamName = self.teamNameJoinTextField.text;
+    if ([self isTeamnameValid: joinTeamName] == YES) {
         
         CLAWebApiClient *apiClient = [CLAWebApiClient sharedInstance];
         __weak __typeof(&*self) weakSelf = self;
         
-        [apiClient joinTeam:inviteCode
-          completionHandler:^(NSString *errorMessage) {
-              __strong __typeof(&*weakSelf) strongSelf = weakSelf;
-              
-              [CLANotificationManager dismiss];
-              
-              if (errorMessage == nil) {
-                  [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-                  [strongSelf dismissViewControllerAnimated:YES completion:nil];
-              } else {
-                  [CLANotificationManager showText:errorMessage
-                                 forViewController:strongSelf
-                                          withType:CLANotificationTypeError];
-              }
-              
-          }];
+        [apiClient requestJoinTeam:joinTeamName
+                 completionHandler:^(NSString *errorMessage) {
+                     __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+                     if (errorMessage) {
+                         [CLANotificationManager
+                          showText:errorMessage
+                          forViewController:strongSelf
+                          withType:CLANotificationTypeError];
+                     }
+                     else {
+                         [CLANotificationManager
+                          showText:NSLocalizedString(@"Your request has been sent. Please check your email for team administrator's approval", nil)
+                          forViewController:strongSelf
+                          withType:CLANotificationTypeMessage];
+                     }
+                 }];
     }
 }
 
@@ -182,8 +156,7 @@ replacementString:(NSString *)string {
         NSString *newString =
         [textField.text stringByReplacingCharactersInRange:range
                                                 withString:@"-"];
-        self.teamNameTextField.text = newString;
-        
+        textField.text = newString;
         return NO;
     }
     
@@ -191,7 +164,87 @@ replacementString:(NSString *)string {
 }
 
 #pragma mark -
+#pragma mark Alert View Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [((SlidingViewController *)self.slidingViewController) switchToMainView];
+    }
+}
+
+#pragma mark -
 #pragma mark Private Methods
+
+- (BOOL)isTeamnameValid:(NSString *)teamName {
+    BOOL returnValue = YES;
+    if (teamName == nil || teamName.length == 0) {
+        [CLANotificationManager
+         showText:NSLocalizedString(
+                                    @"Oh, an empty team name. That will not work.",
+                                    nil)
+         forViewController:self
+         withType:CLANotificationTypeError];
+        
+        returnValue = NO;
+    } else if (teamName.length > kTeamNameMaxLength) {
+        [CLANotificationManager
+         showText:[NSString
+                   stringWithFormat:NSLocalizedString(
+                                                      @"Sorry, but we will need "
+                                                      @"you to keep you team "
+                                                      @"name less than %d "
+                                                      @"characters.",
+                                                      nil),
+                   kTeamNameMaxLength]
+         forViewController:self
+         withType:CLANotificationTypeError];
+        
+        returnValue = NO;
+    }
+    
+    return returnValue;
+}
+
+- (void)redeemInvitationIfNeeded {
+    NSString *invitatationId = [UserDataManager getCachedObjectForKey:kinvitationId];
+    if (invitatationId) {
+        [self redeemInvitation:invitatationId];
+    }
+}
+
+-(void)processTeamRequestResult:(CLATeam *)team withErrorMessage:(NSString *)errorMessage {
+    if (errorMessage == nil) {
+        [UserDataManager cacheTeam:team];
+        [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
+        [UserDataManager cacheLastRefreshTime];
+        
+        [self showAlertWithMessage:[NSString stringWithFormat:NSLocalizedString(@"You are now a member of team %@", nil), team.name]
+                 confirmButtonText: NSLocalizedString(@"Jump In", nil)];
+        
+    } else {
+        [CLANotificationManager dismiss];
+        [CLANotificationManager showText:errorMessage
+                       forViewController:self
+                                withType:CLANotificationTypeError];
+    }
+}
+
+- (void)showAlertWithMessage:(NSString *)message confirmButtonText:(NSString *)buttontext {
+    self.alertView = [[UIAlertView alloc] initWithTitle:message
+                                                message:nil
+                                               delegate:self
+                                      cancelButtonTitle:nil
+                                      otherButtonTitles:buttontext, nil];
+    [self.alertView show];
+}
+
+- (void)close {
+    if (self.sourceViewIdentifier) {
+        [((SlidingViewController *)self.slidingViewController) setTopNavigationControllerWithKeyIdentifier:self.sourceViewIdentifier];
+    }
+    else {
+        [self signOut];
+    }
+}
 
 - (void)signOut {
     [UserDataManager signOut];
@@ -201,14 +254,10 @@ replacementString:(NSString *)string {
 }
 
 - (void)switchToSignInView {
-    SlidingViewController *slidingViewController =
-    (SlidingViewController *)self.slidingViewController;
-    [slidingViewController switchToSignInView];
+    [((SlidingViewController *)self.slidingViewController) switchToSignInView];
 }
 
 - (void)switchToMainView {
-    SlidingViewController *slidingViewController =
-    (SlidingViewController *)self.slidingViewController;
-    [slidingViewController switchToMainView];
+    [((SlidingViewController *)self.slidingViewController) switchToMainView];
 }
 @end

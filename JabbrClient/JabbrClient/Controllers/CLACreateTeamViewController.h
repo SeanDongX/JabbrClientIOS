@@ -14,8 +14,11 @@
 // View Controllers
 #import "SlidingViewController.h"
 
-@interface CLACreateTeamViewController : UIViewController <UITextFieldDelegate>
+@interface CLACreateTeamViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property(strong, nonatomic) SlidingViewController *slidingMenuViewController;
+@property(strong, nonatomic) NSString *sourceViewIdentifier;
+
+- (void)redeemInvitation:(NSString *)invitationId;
 
 @end

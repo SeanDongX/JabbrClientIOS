@@ -11,6 +11,8 @@
 
 @interface Constants : NSObject
 
+#define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568) ? NO : YES)
+
 FOUNDATION_EXPORT NSString *const kServerBaseUrl;
 FOUNDATION_EXPORT NSString *const kApiPath;
 
@@ -41,7 +43,9 @@ FOUNDATION_EXPORT NSString *const kDocumentNavigationController;
 FOUNDATION_EXPORT NSString *const kLeftMenuViewController;
 FOUNDATION_EXPORT NSString *const kRightMenuViewController;
 
+FOUNDATION_EXPORT NSString *const kCreateTeamNavigationController;
 FOUNDATION_EXPORT NSString *const kCreateTeamViewController;
+
 FOUNDATION_EXPORT NSString *const kCreateRoomViewController;
 
 FOUNDATION_EXPORT NSString *const kNotificationContentViewController;
@@ -80,6 +84,7 @@ FOUNDATION_EXPORT NSString *const kEventNoTeam;
 FOUNDATION_EXPORT NSString *const kEventReceiveUnread;
 
 FOUNDATION_EXPORT NSString *const kNotificationKey;
+FOUNDATION_EXPORT NSString *const kinvitationId;
 
 FOUNDATION_EXPORT int const kTeamNameMaxLength;
 
@@ -139,7 +144,6 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIImage *)documentIconLarge;
 
 + (UIColor *)mainThemeColor;
-+ (UIColor *)tableHeaderColor;
 + (UIColor *)highlightColor;
 + (UIColor *)mainThemeContrastColor;
 + (UIColor *)warningColor;

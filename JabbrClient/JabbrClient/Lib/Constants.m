@@ -14,8 +14,8 @@
 
 #ifdef DEBUG
 
-//NSString *const kServerBaseUrl = @"http://192.168.0.43:16207/";
-NSString *const kServerBaseUrl = @"http://beta.collara.co/";
+NSString *const kServerBaseUrl = @"http://192.168.1.56:16207/";
+//NSString *const kServerBaseUrl = @"http://beta.collara.co/";
 NSString *const kTaskServiceRootUrl = @"http://task.collara.co/";
 
 NSString *const kAuzreNotificationHubName = @"collarapush";
@@ -66,7 +66,9 @@ NSString *const kDocumentNavigationController = @"DocumentNavigationController";
 NSString *const kLeftMenuViewController = @"LeftMenuViewController";
 NSString *const kRightMenuViewController = @"RightMenuViewController";
 
+NSString *const kCreateTeamNavigationController = @"CreateTeamNavigationController";
 NSString *const kCreateTeamViewController = @"CreateTeamViewController";
+
 NSString *const kCreateRoomViewController = @"CreateRoomViewController";
 
 NSString *const kNotificationContentViewController = @"NotificationContentViewController";
@@ -106,6 +108,7 @@ NSString *const kEventNoTeam = @"EventNoTeamKey";
 NSString *const kEventReceiveUnread = @"EventReceiveUnreadKey";
 
 NSString *const kNotificationKey = @"notificationKey";
+NSString *const kinvitationId = @"invitationid";
 
 int const kTeamNameMaxLength = 50;
 
@@ -233,13 +236,6 @@ NSString *const kXLFormTextLabelColor = @"textLabel.color";
     return [UIColor colorWithRed:(27 / 255.0)
                            green:(188 / 255.0)
                             blue:(155 / 255.0)
-                           alpha:1];
-}
-
-+ (UIColor *)tableHeaderColor {
-    return [UIColor colorWithRed:(41 / 255.0)
-                           green:(56 / 255.0)
-                            blue:(70 / 255.0)
                            alpha:1];
 }
 

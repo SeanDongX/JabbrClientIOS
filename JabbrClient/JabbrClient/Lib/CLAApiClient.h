@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "CLAUserRegistrationViewModel.h"
 #import "CLANotificationMessage.h"
+#import "CLATeam.h"
 
 @protocol CLAApiClient;
 
@@ -22,11 +23,16 @@
           password:(NSString *)password
  completionHandler:(void (^)(NSString *errorMessage))completion;
 
+- (void)getTeams:(void (^)(NSArray<CLATeam *> *teams, NSString *errorMessage))completion;
+
 - (void)createTeam:(NSString *)name
- completionHandler:(void (^)(NSString *errorMessage))completion;
+ completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion;
 
 - (void)joinTeam:(NSString *)invitationCode
-completionHandler:(void (^)(NSString *errorMessage))completion;
+completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion;
+
+- (void)requestJoinTeam:(NSString *)teamName
+      completionHandler:(void (^)(NSString *errorMessage))completion;
 
 - (void)getInviteCodeForTeam:(NSNumber *)team
                   completion:(void (^)(NSString *invitationCode,

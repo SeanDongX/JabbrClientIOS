@@ -32,6 +32,7 @@
 #import "CLAChatViewController.h"
 #import "slidingViewController.h"
 #import "CLAUtility.h"
+#import "CLANotificationManager.h"
 
 NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
@@ -57,6 +58,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
 - (void)viewDidLoad {
     [self initDataSource];
+    [self showHud];
 }
 
 - (void)dealloc {
@@ -120,6 +122,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     self.welcomeLabel.text =
     [NSString stringWithFormat: NSLocalizedString(@"Welcome to team %@", nil), [UserDataManager getTeam].name];
     [self didFinishRefresh];
+    [self hideHud];
 }
 
 - (void)updateRooms:(NSArray<CLARoom *> *)rooms {
@@ -171,6 +174,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
                                    selector:@selector(finishRefresh)
                                    userInfo:nil
                                     repeats:NO];
+    
 }
 
 - (void)finishRefresh {
@@ -227,7 +231,6 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     [self.topicTableView reloadData];
 }
 
-
 - (void)openRoom: (CLARoom *)room {
     
     UINavigationController *navController = nil;
@@ -241,6 +244,19 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     
     //[navController.view addGestureRecognizer:self.slidingViewController.panGesture];
     [self.slidingViewController resetTopViewAnimated:YES];
+}
+
+- (void)showHud {
+    //TODO: investigation why notification won't show, if the text here (only in this controller) ends with "...",
+    [CLANotificationManager showText:NSLocalizedString(@"Loading", nil)
+                   forViewController:self.parentViewController
+                            withType:CLANotificationTypeMessage
+                         autoDismiss:NO
+                          atPosition:0];
+}
+
+- (void)hideHud {
+    [CLANotificationManager dismiss];
 }
 
 @end

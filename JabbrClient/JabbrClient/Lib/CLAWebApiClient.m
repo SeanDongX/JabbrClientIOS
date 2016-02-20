@@ -160,8 +160,28 @@ static bool isFirstAccess = YES;
                          }];
 }
 
+- (void)getTeams:(void (^)(NSArray<CLATeam *> *teams, NSString *errorMessage))completion {
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/team/?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager GET:requestUrl
+                     parameters:nil
+                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                            NSArray<CLATeam *> *teams = [CLATeam getFromDataArray:responseObject];
+                            completion(teams, nil);
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            completion(nil, [self getResponseErrorMessage:error]);
+                        }];
+}
+
 - (void)createTeam:(NSString *)name
- completionHandler:(void (^)(NSString *errorMessage))completion {
+ completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion {
     NSArray *array = @[
                        kServerBaseUrl,
                        kApiPath,
@@ -175,15 +195,16 @@ static bool isFirstAccess = YES;
     [self.connectionManager POST:requestUrl
                       parameters:nil
                          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                             completion(nil);
+                             CLATeam *team = [CLATeam getFromData:responseObject];
+                             completion(team, nil);
                          }
                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                             completion([self getResponseErrorMessage:error]);
+                             completion(nil, [self getResponseErrorMessage:error]);
                          }];
 }
 
 - (void)joinTeam:(NSString *)invitationCode
-completionHandler:(void (^)(NSString *errorMessage))completion {
+completionHandler:(void (^)(CLATeam *team, NSString *errorMessage))completion {
     NSArray *array = @[
                        kServerBaseUrl,
                        kApiPath,
@@ -197,9 +218,34 @@ completionHandler:(void (^)(NSString *errorMessage))completion {
     [self.connectionManager POST:requestUrl
                       parameters:nil
                          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                             CLATeam *team = [CLATeam getFromData:responseObject];
+                             completion(team, nil);
+                         }
+                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             
+                             completion(nil, [self getResponseErrorMessage:error]);
+                         }];
+}
+
+- (void)requestJoinTeam:(NSString *)teamName
+      completionHandler:(void (^)(NSString *errorMessage))completion {
+    NSArray *array = @[
+                       kServerBaseUrl,
+                       kApiPath,
+                       @"accounts/team/requestjoin/",
+                       teamName,
+                       @"/?token=",
+                       [self getToken]
+                       ];
+    NSString *requestUrl = [array componentsJoinedByString:@""];
+    
+    [self.connectionManager POST:requestUrl
+                      parameters:nil
+                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
                              completion(nil);
                          }
                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                             
                              completion([self getResponseErrorMessage:error]);
                          }];
 }

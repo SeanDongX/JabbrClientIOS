@@ -16,6 +16,7 @@
 #import "CLAWebApiClient.h"
 #import "CLAAzureHubPushNotificationService.h"
 #import "CLANotificationManager.h"
+#import <JLRoutes/JLRoutes.h>
 
 // Data Model
 #import "CLANotification.h"
@@ -24,6 +25,10 @@
 // Menu
 #import "LeftMenuViewController.h"
 #import "netfox-Swift.h"
+#import "CLASignalRMessageClient.h"
+#import "SlidingViewController.h"
+#import "UIViewController+ECSlidingViewController.h"
+#import "CLAInvitationHandler.h"
 
 @interface AppDelegate ()
 
@@ -39,7 +44,7 @@
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self registerNotification];
     [CLANotificationManager configure];
-    
+    [self registerRoutes];
 #if DEBUG
     [[NFX sharedInstance] start];
     NSLog(@"%@", [RLMRealm defaultRealm].path);
@@ -128,6 +133,10 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Failed to register device with error: %@", error.domain.description);
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [JLRoutes routeURL:url];
+}
+
 #pragma mark -
 #pragma mark Private Methods
 
@@ -139,6 +148,31 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     [[CLAWebApiClient sharedInstance]
      setBadge:@0
      forTeam:[UserDataManager getTeam].key];
+}
+
+- (void)registerRoutes {
+    [JLRoutes addRoute:@"/account/login/" handler:^BOOL (NSDictionary *parameters) {
+        NSString *returnUrl = parameters[@"ReturnUrl"];
+        if ([returnUrl hasPrefix: @"/teams/join/?invitationid="]) {
+            NSString *invitationId = [returnUrl substringFromIndex:26];
+            if (invitationId) {
+                [[[CLAInvitationHandler alloc] init] processInvitation:invitationId];
+                return YES;
+            }
+        }
+        
+        return NO;
+    }];
+    
+    [JLRoutes addRoute:@"/teams/join/" handler:^BOOL (NSDictionary *parameters) {
+        NSString *invitationId = parameters[kinvitationId];
+        if (invitationId) {
+            [[[CLAInvitationHandler alloc] init] processInvitation:invitationId];
+            return YES;
+        }
+        
+        return NO;
+    }];
 }
 
 @end

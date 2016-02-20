@@ -181,6 +181,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger userImageViewTag = 1;
+    NSInteger nameLabelTag = 2;
     
     UITableViewCell *cell =
     [tableView dequeueReusableCellWithIdentifier:@"TeamMemberCell"];
@@ -192,34 +194,42 @@
     
     CLAUser *user = [self getUserAtRow:indexPath.row];
     
-    
     UIImage *userImage = [JSQMessagesAvatarImageFactory
                           avatarImageWithUserInitials:user.initials
                           backgroundColor: [user getUIColor]
                           textColor:[UIColor whiteColor]
                           font:[UIFont systemFontOfSize:13.0f]
                           diameter:30].avatarImage;
-    UIImageView *userImageView = [[UIImageView alloc] initWithImage:userImage];
     
-    [cell.contentView addSubview:userImageView];
-    [userImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(cell.contentView.mas_left).with.offset(10);
-        make.centerY.equalTo(cell.contentView.mas_centerY);
-        make.width.equalTo(@30);
-        make.height.equalTo(@30);
-    }];
+    UIImageView *userImageView =  (UIImageView *)[cell viewWithTag:userImageViewTag];
+    if (!userImageView) {
+        userImageView = [[UIImageView alloc] initWithImage:userImage];
+        [cell.contentView addSubview:userImageView];
+        
+        [userImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell.contentView.mas_left).with.offset(10);
+            make.centerY.equalTo(cell.contentView.mas_centerY);
+            make.width.equalTo(@30);
+            make.height.equalTo(@30);
+        }];
+    }
+    userImageView.image = userImage;
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:nameLabelTag];
+    if (!nameLabel) {
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+        
+        [cell.contentView addSubview:nameLabel];
+        [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell.contentView.mas_left).with.offset(50);
+            make.centerY.equalTo(cell.contentView.mas_centerY);
+            make.right.equalTo(cell.contentView.mas_right).with.offset(10);
+            make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
+        }];
+        nameLabel.textColor = [Constants mainThemeContrastColor];
+    }
+    
     nameLabel.text = [user getHandle];
-    nameLabel.textColor = [Constants mainThemeContrastColor];
-    
-    [cell.contentView addSubview:nameLabel];
-    [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(cell.contentView.mas_left).with.offset(50);
-        make.centerY.equalTo(cell.contentView.mas_centerY);
-        make.right.equalTo(cell.contentView.mas_right).with.offset(10);
-        make.height.equalTo(cell.contentView.mas_height).with.multipliedBy(0.8);
-    }];
     
     return cell;
 }
@@ -241,12 +251,12 @@ viewForHeaderInSection:(NSInteger)section {
     CGRect frame = tableView.frame;
     
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 250, 30)];
-    title.textColor = [UIColor whiteColor];
+    title.textColor = [Constants mainThemeContrastColor];
     
     UIView *headerView = [[UIView alloc]
                           initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     
-    [headerView setBackgroundColor:[Constants tableHeaderColor]];
+    [headerView setBackgroundColor:[Constants backgroundColor]];
     
     [headerView addSubview:title];
     

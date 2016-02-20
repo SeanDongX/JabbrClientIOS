@@ -18,6 +18,7 @@
 
 // API Client
 #import "CLAWebApiClient.h"
+#import "UserDataManager.h"
 
 @interface CLASignUpViewController ()
 
@@ -71,9 +72,8 @@
              __strong __typeof(&*weakSelf) strongSelf = weakSelf;
              
              if (errorMessage == nil) {
-                 [strongSelf.slidingViewController switchToMainView];
+                 [strongSelf switchToMainView];
                  [strongSelf cleanUpForm];
-                 [strongSelf dismissViewControllerAnimated:YES completion:nil];
              } else {
                  [CLANotificationManager showText:errorMessage
                                 forViewController:strongSelf
@@ -159,4 +159,26 @@
     self.passwordTextField.text = @"";
     self.repeatPasswordTextField.text = @"";
 }
+
+- (void)switchToMainView {
+    [[CLAWebApiClient sharedInstance]
+     getTeams:^(NSArray<CLATeam *> *teams, NSString *errorMessage) {
+         NSString *invitationId = [UserDataManager getCachedObjectForKey:kinvitationId];
+         if (!invitationId && teams != nil && teams.count > 0) {
+             [self dismissViewControllerAnimated: YES completion:^{
+                 [((SlidingViewController *)self.slidingViewController)
+                  switchToMainView];
+             }];
+         }
+         else {
+             [self dismissViewControllerAnimated: YES completion:^{
+                 [((SlidingViewController *)self.slidingViewController)
+                  switchToCreateTeamView:invitationId
+                  sourceViewIdentifier:nil];
+             }];
+             [UserDataManager cacheObject:nil forKey:kinvitationId];
+         }
+     }];
+}
+
 @end

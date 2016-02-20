@@ -75,7 +75,7 @@
 
 #pragma mark - Setters
 
-- (void)setMessage: (CLAMessage *)message {
+- (void)setMessage:(CLAMessage *)message {
     if (message) {
         self.titleLabel.text = message.fromUserName;
         self.bodyLabel.text = message.content;

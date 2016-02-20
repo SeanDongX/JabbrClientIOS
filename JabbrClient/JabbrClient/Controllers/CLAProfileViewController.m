@@ -15,6 +15,8 @@
 #import "SlidingViewController.h"
 #import "CLASignalRMessageClient.h"
 #import "CLAAzureHubPushNotificationService.h"
+#import "CLARealmRepository.h"
+#import "CLACreateTeamViewController.h"
 
 @interface CLAProfileViewController ()
 
@@ -70,7 +72,6 @@
     [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
     [[CLASignalRMessageClient sharedInstance] disconnect];
     [[CLASignalRMessageClient sharedInstance].dataRepository deleteData];
-    // TODO:MessageClient clear data repository
     [self switchToSignInView];
 }
 
@@ -146,11 +147,24 @@
         [weakself switchTeam:newValue withOldValue:oldValue];
     };
     
+    
+    XLFormRowDescriptor *createOrJoinTeamRow =
+    [XLFormRowDescriptor formRowDescriptorWithTag:@"CreateOrJoinTeam"
+                                          rowType:XLFormRowDescriptorTypeButton
+                                            title:NSLocalizedString(@"Create or join team", nil)];
+    [createOrJoinTeamRow.cellConfig setObject:@(NSTextAlignmentLeft) forKey:@"textLabel.textAlignment"];
+    
+    createOrJoinTeamRow.action.formBlock = ^(XLFormRowDescriptor *sender){
+        [((SlidingViewController *)self.slidingViewController) switchToCreateTeamView:nil
+                                                                 sourceViewIdentifier:kProfileNavigationController ];
+    };
+    
+    [section addFormRow: createOrJoinTeamRow];
     return section;
 }
 
 - (void)switchTeam:(XLFormOptionsObject *)newValue withOldValue:(XLFormOptionsObject *)oldValue {
-    if ([newValue.formValue integerValue] == [oldValue.formValue integerValue]) {
+    if (!newValue || [newValue isKindOfClass:[NSNull class]] || [newValue.formValue integerValue] == [oldValue.formValue integerValue]) {
         return;
     }
     

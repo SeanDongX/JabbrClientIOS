@@ -17,6 +17,7 @@
 
 + (NSString *)getUrlString:(UIImage *)image;
 + (NSDictionary *)getImagePostData:(UIImage *)image imageName:(NSString *)imageName fromRoom:(NSString *)roomName;
-+ (NSMutableArray *)getArrayFromRLMArray:(RLMResults *)rlmResult;
++ (NSMutableArray *)getArrayFromRLMResult:(RLMResults *)rlmResult;
++ (NSMutableArray *)getArrayFromRLMArray:(RLMArray *)rlmArray;
 
 @end

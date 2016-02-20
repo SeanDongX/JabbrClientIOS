@@ -59,6 +59,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 - (void)viewDidLoad {
     [self initDataSource];
     [self showHud];
+    [self updateTeam:nil];
 }
 
 - (void)dealloc {
@@ -107,8 +108,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 }
 
 - (void)updateTeam:(NSNotification *)notification {
-    CLATeam *team =
-    [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
+    CLATeam *team = [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
     
     if (team != nil) {
         NSMutableArray *roomArray = [CLAUtility getArrayFromRLMArray:team.rooms];

@@ -56,13 +56,8 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     [self setupMenu];
     [self setupBottomMenus];
     [self subscribNotifications];
-    
-    [[UITextField appearanceWhenContainedIn:[LeftMenuViewController class], nil]
-     setDefaultTextAttributes:@{
-                                NSForegroundColorAttributeName : [UIColor whiteColor]
-                                }];
-    
-    [self.view setBackgroundColor:[Constants mainThemeContrastColor]];
+    [self updateTeam:nil];
+    [self setupStyle];
 }
 
 - (void)dealloc {
@@ -131,6 +126,15 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     UIControlContentHorizontalAlignmentLeft;
 }
 
+- (void)setupStyle {
+    [[UITextField appearanceWhenContainedIn:[LeftMenuViewController class], nil]
+     setDefaultTextAttributes:@{
+                                NSForegroundColorAttributeName : [UIColor whiteColor]
+                                }];
+    
+    [self.view setBackgroundColor:[Constants mainThemeContrastColor]];
+}
+
 #pragma mark -
 #pragma mark - Properties
 
@@ -179,10 +183,9 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 }
 
 - (void)updateTeam:(NSNotification *)notification {
-    CLATeam *team =
-    [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
+    CLATeam *team = [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam];
+    
     if (team != nil) {
-        
         NSMutableArray *roomArray = [[team getJoinedRooms] mutableCopy];
         NSSortDescriptor *sortDescriptor =
         [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];

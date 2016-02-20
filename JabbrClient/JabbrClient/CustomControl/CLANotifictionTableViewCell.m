@@ -49,18 +49,28 @@
     self.unreadImageView.hidden = self.notification.read;
     
     CLAUser *user = [self.repository getUserByName:self.notification.fromUserName];
+    JSQMessagesAvatarImage *jSQMessagesAvatarImage;
+    
     if (user) {
-        JSQMessagesAvatarImage *jSQMessagesAvatarImage =
+        jSQMessagesAvatarImage =
         [JSQMessagesAvatarImageFactory
          avatarImageWithUserInitials:user.initials
          backgroundColor:[UIColor colorWithHexString:user.color]
          textColor:[UIColor whiteColor]
          font:[UIFont systemFontOfSize:13.0f]
          diameter:30.0f];
-        
-        self.avatarImageView = [[UIImageView alloc] initWithImage:jSQMessagesAvatarImage.avatarImage];
-        [self.contentView addSubview:self.avatarImageView];
+    } else {
+        jSQMessagesAvatarImage =
+        [JSQMessagesAvatarImageFactory
+         avatarImageWithUserInitials:[self.notification.fromUserName substringToIndex:2]
+         backgroundColor:[Constants highlightColor]
+         textColor:[UIColor whiteColor]
+         font:[UIFont systemFontOfSize:13.0f]
+         diameter:30.0f];
     }
+    
+    self.avatarImageView = [[UIImageView alloc] initWithImage:jSQMessagesAvatarImage.avatarImage];
+    [self.contentView addSubview:self.avatarImageView];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style

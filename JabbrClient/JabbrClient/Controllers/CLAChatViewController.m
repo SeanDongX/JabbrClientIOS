@@ -12,7 +12,6 @@
 
 #import "UIViewController+ECSlidingViewController.h"
 #import "MessageTextView.h"
-#import "LoremIpsum.h"
 #import "MessageTableViewCell.h"
 #import "CLANotificationManager.h"
 #import "UserDataManager.h"
@@ -115,7 +114,6 @@
 - (void)initData {
     self.repository = [[CLARealmRepository alloc] init];
     self.user = [UserDataManager getUser];
-    self.teamUsers = [self.repository getCurrentOrDefaultTeam].users;
 }
 
 - (void)initMenu {
@@ -236,10 +234,10 @@
     {
         int sentences = (arc4random() % 4);
         if (sentences <= 1) sentences = 1;
-        self.textView.text = [LoremIpsum sentencesWithNumber:sentences];
+        self.textView.text = @"";//[LoremIpsum sentencesWithNumber:sentences];
     }
     else {
-        [self.textView slk_insertTextAtCaretRange:[NSString stringWithFormat:@" %@", [LoremIpsum word]]];
+        [self.textView slk_insertTextAtCaretRange:[NSString stringWithFormat:@" %@", @""]];
     }
 }
 
@@ -260,7 +258,8 @@
                                            [view presentIndicatorWithName:[LoremIpsum name] image:thumbnail];
                                        }];
 #else
-        [self.typingIndicatorView insertUsername:[LoremIpsum name]];
+        //TODO:add typeing user name
+        [self.typingIndicatorView insertUsername:@""];
 #endif
     }
 }
@@ -293,11 +292,8 @@
 - (void)editCellMessage:(UIGestureRecognizer *)gesture
 {
     MessageTableViewCell *cell = (MessageTableViewCell *)gesture.view;
-    
     self.editingMessage = self.room.messages[cell.indexPath.row];
-    
     [self editText:self.editingMessage.content];
-    
     [self.tableView scrollToRowAtIndexPath:cell.indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
@@ -306,7 +302,7 @@
     int sentences = (arc4random() % 10);
     if (sentences <= 1) sentences = 1;
     
-    [self editText:[LoremIpsum sentencesWithNumber:sentences]];
+    //[self editText:[LoremIpsum sentencesWithNumber:sentences]];
 }
 
 - (void)editLastMessage:(id)sender
@@ -529,7 +525,7 @@
             userResults = [self.teamUsers objectsWhere:@"name BEGINSWITH[c] %@", word];
         }
         else {
-            userResults = [self.teamUsers objectsWhere:@"name.length > 0"];
+            userResults = [self.teamUsers objectsWhere:@"name != ''"];
         }
         
         NSMutableArray *userArray = [NSMutableArray array];
@@ -601,10 +597,7 @@
     }
     
     CLAMessage *message = self.room.messages[indexPath.row];
-    
-    cell.titleLabel.text = message.fromUserName;
-    cell.bodyLabel.text = message.content;
-    
+    cell.message = message;
     cell.indexPath = indexPath;
     cell.usedForMessage = YES;
     
@@ -809,6 +802,7 @@
     }
     
     [self sendTeamUpdatedEventNotification];
+    self.teamUsers = [self.repository getCurrentOrDefaultTeam].users;
 }
 
 - (void)didReceiveJoinRoom:(NSString *)room andUpdateRoom:(BOOL)update {

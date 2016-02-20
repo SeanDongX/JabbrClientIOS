@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <JSQMessagesViewController/JSQMessages.h>
 #import "Constants.h"
 
 // Data

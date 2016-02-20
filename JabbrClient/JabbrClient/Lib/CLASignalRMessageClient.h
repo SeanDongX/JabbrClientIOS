@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "CLAMessageClient.h"
-#import <JSQMessagesViewController/JSQMessages.h>
 
 #import "SignalR.h"
 

@@ -8,6 +8,13 @@
 
 #import "MessageTableViewCell.h"
 #import "SLKTextView+SLKAdditions.h"
+#import "JSQMessagesAvatarImageFactory.h"
+
+@interface MessageTableViewCell ()
+
+@property (nonatomic, strong) UIImageView *thumbnailView;
+
+@end
 
 @implementation MessageTableViewCell
 
@@ -28,17 +35,15 @@
     [self.contentView addSubview:self.thumbnailView];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.bodyLabel];
-
+    
     NSDictionary *views = @{@"thumbnailView": self.thumbnailView,
                             @"titleLabel": self.titleLabel,
-                            @"bodyLabel": self.bodyLabel,
-                            };
+                            @"bodyLabel": self.bodyLabel,};
     
     NSDictionary *metrics = @{@"tumbSize": @(kMessageTableViewCellAvatarHeight),
                               @"padding": @15,
                               @"right": @10,
-                              @"left": @5
-                              };
+                              @"left": @5};
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[titleLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[bodyLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
@@ -65,7 +70,25 @@
     
     self.titleLabel.text = @"";
     self.bodyLabel.text = @"";
+    
+}
 
+#pragma mark - Setters
+
+- (void)setMessage: (CLAMessage *)message {
+    if (message) {
+        self.titleLabel.text = message.fromUserName;
+        self.bodyLabel.text = message.content;
+        
+        if (message.fromUser) {
+            self.thumbnailView.image = [JSQMessagesAvatarImageFactory
+                                        avatarImageWithUserInitials:message.fromUser.initials
+                                        backgroundColor: [message.fromUser getUIColor]
+                                        textColor:[UIColor whiteColor]
+                                        font:[UIFont systemFontOfSize:13.0f]
+                                        diameter:30.0f].avatarImage;
+        }
+    }
 }
 
 #pragma mark - Getters

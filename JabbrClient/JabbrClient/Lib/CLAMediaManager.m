@@ -12,8 +12,8 @@
 #import "JTSImageInfo.h"
 #import "JTSImageViewController.h"
 #import "Constants.h"
-#import "JSQPhotoMediaItem.h"
-#import "CLADisplayMessageFactory.h"
+//#import "JSQPhotoMediaItem.h"
+//#import "CLADisplayMessageFactory.h"
 
 
 @implementation CLAMediaManager

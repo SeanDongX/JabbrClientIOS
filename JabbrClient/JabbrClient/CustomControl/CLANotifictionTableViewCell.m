@@ -11,10 +11,11 @@
 #import "Constants.h"
 #import "DateTools.h"
 #import "Masonry.h"
-#import <JSQMessagesViewController/JSQMessages.h>
 #import "CLAUser.h"
 #import "UIColor+HexString.h"
 #import "CLARealmRepository.h"
+#import "JSQMessagesAvatarImage.h"
+#import "JSQMessagesAvatarImageFactory.h"
 
 @interface CLANotifictionTableViewCell ()
 

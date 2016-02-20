@@ -11,11 +11,12 @@
 // Utils
 #import "Constants.h"
 #import "DateTools.h"
-#import <JSQMessagesViewController/JSQMessages.h>
 #import "CLAUser.h"
 #import "UIColor+HexString.h"
 #import "CLADataRepositoryProtocol.h"
 #import "CLARealmRepository.h"
+#import "JSQMessagesAvatarImage.h"
+#import "JSQMessagesAvatarImageFactory.h"
 
 @interface CLANotificationContentViewController ()
 

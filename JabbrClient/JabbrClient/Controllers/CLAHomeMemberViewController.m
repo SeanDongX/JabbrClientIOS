@@ -30,6 +30,7 @@
 #import "CLATaskWebViewController.h"
 
 #import "Masonry.h"
+#import "JSQMessagesAvatarImageFactory.h"
 
 @interface CLAHomeMemberViewController ()
 

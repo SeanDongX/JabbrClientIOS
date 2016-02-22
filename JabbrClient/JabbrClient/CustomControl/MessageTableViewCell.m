@@ -81,7 +81,7 @@
         self.titleLabel.text = [NSString stringWithFormat:@"%@ - %@", message.fromUserName, message.when.timeAgoSinceNow];
         self.bodyLabel.text = message.content;
         
-        if (message.fromUser) {
+        if (message.fromUser && message.fromUser.initials) {
             self.thumbnailView.image = [JSQMessagesAvatarImageFactory
                                         avatarImageWithUserInitials:message.fromUser.initials
                                         backgroundColor: [message.fromUser getUIColor]

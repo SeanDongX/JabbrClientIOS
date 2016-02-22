@@ -14,6 +14,17 @@
     return @"key";
 }
 
++ (CLAMessage *)copyFromMessage:(CLAMessage *)existingMessage {
+    CLAMessage *newMessage = [[CLAMessage alloc] init];
+    newMessage.content = existingMessage.content;
+    newMessage.when = existingMessage.when;
+    newMessage.fromUserName = existingMessage.fromUserName;
+    newMessage.roomKey = existingMessage.roomKey;
+    newMessage.fromUser = existingMessage.fromUser;
+    
+    return newMessage;
+}
+
 + (NSArray <CLAMessage *> *)getFromDataArray:(NSArray *)dictionaryArray forRoom:(NSNumber *)roomKey {
     NSMutableArray <CLAMessage *> *messages = [NSMutableArray array];
     if (dictionaryArray && dictionaryArray != [NSNull null] && dictionaryArray.count > 0) {

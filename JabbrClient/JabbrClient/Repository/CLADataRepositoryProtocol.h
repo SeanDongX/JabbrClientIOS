@@ -25,6 +25,8 @@
 - (void)setRoomUnread:(NSString *)roomName unread:(NSInteger)unread inTeam:(NSNumber *)teamKey;
 
 - (void)addOrgupdateMessage:(CLAMessage *)message;
+- (void)updateMessageKey:(NSString *)oldKey withNewKey:(NSString *)newKey;
+
 - (void)updateNotification: (NSNumber *)notificationKey read:(BOOL)read;
 
 - (void)joinUser:(NSString *)username toRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;

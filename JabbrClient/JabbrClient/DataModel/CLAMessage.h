@@ -20,6 +20,7 @@
 
 @property(nonatomic, strong) CLAUser *fromUser;
 
++ (CLAMessage *)copyFromMessage:(CLAMessage *)existingMessage;
 + (NSArray <CLAMessage *> *)getFromDataArray:(NSArray *)dictionaryArray forRoom:(NSNumber *)roomKey;
 + (CLAMessage *)getFromData:(NSDictionary *)messageDictionary forRoom:(NSNumber *)roomKey;
 

@@ -238,7 +238,7 @@ static bool isFirstAccess = YES;
 
 - (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room {
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
-    [messageData setObject:[[NSUUID UUID] UUIDString] forKey:@"id"];
+    [messageData setObject:message.key forKey:@"id"];
     
     [messageData setObject:message.content forKey:@"content"];
     [messageData setObject:room forKey:@"room"];

@@ -104,6 +104,21 @@
     [realm commitWriteTransaction];
 }
 
+- (void)updateMessageKey:(NSString *)oldKey withNewKey:(NSString *)newKey {
+    CLAMessage *oldMessage = [CLAMessage objectsWhere: @"key = %@", oldKey].firstObject;
+    
+    if (oldMessage) {
+        CLAMessage *newMessage = [CLAMessage copyFromMessage:oldMessage];
+        newMessage.key = newKey;
+        
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        [realm deleteObject:oldMessage];
+        [realm addOrUpdateObject:newMessage];
+        [realm commitWriteTransaction];
+    }
+}
+
 - (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey {
     RLMResults<CLANotificationMessage *>  *notification = [CLANotificationMessage objectsWhere:@"notificationKey = %@", notificationKey];
     return notification.firstObject;

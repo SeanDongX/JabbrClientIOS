@@ -846,7 +846,7 @@
 
 - (void)replaceMessageId:(NSString *)tempMessageId
            withMessageId:(NSString *)serverMessageId {
-    //TODO:reaplceMessageKey
+    [self.messageClient.dataRepository updateMessageKey:tempMessageId withNewKey:serverMessageId];
 }
 
 

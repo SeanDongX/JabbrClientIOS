@@ -165,14 +165,7 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadData) name:UIContentSizeCategoryDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputbarDidMove:) name:SLKTextInputbarDidMoveNotification object:nil];
-    
-    // Register a SLKTextView subclass, if you need any special appearance and/or behavior customisation.
     [self registerClassForTextView:[MessageTextView class]];
-    
-#if DEBUG_CUSTOM_TYPING_INDICATOR
-    // Register a UIView subclass, conforming to SLKTypingIndicatorProtocol, to use a custom typing indicator view.
-    //[self registerClassForTypingIndicatorView:[TypingIndicatorView class]];
-#endif
 }
 
 - (void)configureDataSource
@@ -194,11 +187,6 @@
                                                                 target:self
                                                                 action:@selector(editRandomMessage:)];
     
-    UIBarButtonItem *typeItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_typing"]
-                                                                 style:UIBarButtonItemStylePlain
-                                                                target:self
-                                                                action:@selector(simulateUserTyping:)];
-    
     UIBarButtonItem *appendItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_append"]
                                                                    style:UIBarButtonItemStylePlain
                                                                   target:self
@@ -209,7 +197,7 @@
                                                                target:self
                                                                action:@selector(togglePIPWindow:)];
     
-    self.navigationItem.rightBarButtonItems = @[arrowItem, pipItem, editItem, appendItem, typeItem];
+    self.navigationItem.rightBarButtonItems = @[arrowItem, pipItem, editItem, appendItem];
 }
 
 
@@ -236,29 +224,6 @@
     }
     else {
         [self.textView slk_insertTextAtCaretRange:[NSString stringWithFormat:@" %@", @""]];
-    }
-}
-
-- (void)simulateUserTyping:(id)sender
-{
-    if ([self canShowTypingIndicator]) {
-        
-#if DEBUG_CUSTOM_TYPING_INDICATOR
-        __block TypingIndicatorView *view = (TypingIndicatorView *)self.typingIndicatorProxyView;
-        
-        CGFloat scale = [UIScreen mainScreen].scale;
-        CGSize imgSize = CGSizeMake(kTypingIndicatorViewAvatarHeight*scale, kTypingIndicatorViewAvatarHeight*scale);
-        
-        // This will cause the typing indicator to show after a delay ¯\_(ツ)_/¯
-        [LoremIpsum asyncPlaceholderImageWithSize:imgSize
-                                       completion:^(UIImage *image) {
-                                           UIImage *thumbnail = [UIImage imageWithCGImage:image.CGImage scale:scale orientation:UIImageOrientationUp];
-                                           [view presentIndicatorWithName:[LoremIpsum name] image:thumbnail];
-                                       }];
-#else
-        //TODO:add typeing user name
-        [self.typingIndicatorView insertUsername:@""];
-#endif
     }
 }
 
@@ -743,6 +708,9 @@
     return [super textView:textView shouldInsertSuffixForFormattingWithSymbol:symbol prefixRange:prefixRange];
 }
 
+- (void)textViewDidChange:(UITextView *)textView {
+    [self.messageClient sendTypingFromUser:self.user.name inRoom:self.room.name];
+}
 
 #pragma mark - Lifeterm
 
@@ -839,6 +807,9 @@
 }
 
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
+    if ([self.room.name isEqualToString: room] && ![self.user.name isEqualToString:user]) {
+        [self.typingIndicatorView insertUsername:user];
+    }
 }
 
 - (void)replaceMessageId:(NSString *)tempMessageId

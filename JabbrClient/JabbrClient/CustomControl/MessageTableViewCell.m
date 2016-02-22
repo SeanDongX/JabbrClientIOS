@@ -9,6 +9,7 @@
 #import "MessageTableViewCell.h"
 #import "SLKTextView+SLKAdditions.h"
 #import "JSQMessagesAvatarImageFactory.h"
+#import "DateTools.h"
 
 @interface MessageTableViewCell ()
 
@@ -77,7 +78,7 @@
 
 - (void)setMessage:(CLAMessage *)message {
     if (message) {
-        self.titleLabel.text = message.fromUserName;
+        self.titleLabel.text = [NSString stringWithFormat:@"%@ - %@", message.fromUserName, message.when.timeAgoSinceNow];
         self.bodyLabel.text = message.content;
         
         if (message.fromUser) {

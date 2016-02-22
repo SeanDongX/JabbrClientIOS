@@ -330,7 +330,7 @@ static bool isFirstAccess = YES;
     NSString *serverMessageId = [messageDictionary objectForKey:@"Id"];
     
     if (tempMessageId != nil && serverMessageId != nil) {
-        [self.delegate reaplceMessageId:tempMessageId
+        [self.delegate replaceMessageId:tempMessageId
                           withMessageId:serverMessageId];
     }
 }

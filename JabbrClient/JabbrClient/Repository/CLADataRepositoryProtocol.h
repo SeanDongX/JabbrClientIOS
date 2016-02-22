@@ -19,7 +19,7 @@
 - (CLATeam *)getCurrentOrDefaultTeam;
 - (CLAUser *)getUserByName: (NSString *)name;
 - (CLARoom *)getRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
-- (NSArray <CLAMessage *> *)getRoomMessages: (NSString *)roomName;
+- (NSArray <CLAMessage *> *)getRoomMessages: (NSNumber *)roomKey;
 - (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey;
 
 - (void)setRoomUnread:(NSString *)roomName unread:(NSInteger)unread inTeam:(NSNumber *)teamKey;

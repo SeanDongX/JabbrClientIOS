@@ -47,7 +47,7 @@
     [room.users addObjects: [CLAUser getFromDataArray:usersDcitionaryArray]];
     
     NSArray *recentMessageArray = [dictionary objectForKey:@"RecentMessages"];
-    [room.messages addObjects:[CLAMessage getFromDataArray:recentMessageArray forRoom:room.name]];
+    [room.messages addObjects:[CLAMessage getFromDataArray:recentMessageArray forRoom:room.key]];
     
     return room;
 }

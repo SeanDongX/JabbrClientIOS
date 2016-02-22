@@ -292,7 +292,7 @@
 - (void)editCellMessage:(UIGestureRecognizer *)gesture
 {
     MessageTableViewCell *cell = (MessageTableViewCell *)gesture.view;
-    self.editingMessage = self.room.messages[cell.indexPath.row];
+    self.editingMessage = [self getRoomMessages][cell.indexPath.row];
     [self editText:self.editingMessage.content];
     [self.tableView scrollToRowAtIndexPath:cell.indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
@@ -314,7 +314,7 @@
     NSInteger lastSectionIndex = [self.tableView numberOfSections]-1;
     NSInteger lastRowIndex = [self.tableView numberOfRowsInSection:lastSectionIndex]-1;
     
-    CLAMessage *lastMessage = [self.room.messages objectAtIndex:lastRowIndex];
+    CLAMessage *lastMessage = [[self getRoomMessages] objectAtIndex:lastRowIndex];
     
     [self editText:lastMessage.content];
     
@@ -426,16 +426,12 @@
     // This little trick validates any pending auto-correction or auto-spelling just after hitting the 'Send' button
     [self.textView refreshFirstResponder];
     
-    CLAMessage *message = [[CLAMessage alloc] init];
-    message.fromUserName = self.user.name;
-    message.content = [self.textView.text copy];
-    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     UITableViewRowAnimation rowAnimation = self.inverted ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop;
     UITableViewScrollPosition scrollPosition = self.inverted ? UITableViewScrollPositionBottom : UITableViewScrollPositionTop;
     
     [self.tableView beginUpdates];
-    [self.messageClient sendMessage:message inRoom:self.room.name];
+    [self sendMessage:[self.textView.text copy]];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:rowAnimation];
     [self.tableView endUpdates];
     
@@ -570,7 +566,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([tableView isEqual:self.tableView]) {
-        return self.room.messages.count;
+        return [self getRoomMessages].count;
     }
     else {
         return self.searchResult.count;
@@ -596,7 +592,7 @@
         [cell addGestureRecognizer:longPress];
     }
     
-    CLAMessage *message = self.room.messages[indexPath.row];
+    CLAMessage *message = [self getRoomMessages][indexPath.row];
     cell.message = message;
     cell.indexPath = indexPath;
     cell.usedForMessage = YES;
@@ -631,7 +627,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([tableView isEqual:self.tableView]) {
-        CLAMessage *message = self.room.messages[indexPath.row];
+        CLAMessage *message = [self getRoomMessages][indexPath.row];
         
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -848,13 +844,30 @@
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
 }
 
-- (void)reaplceMessageId:(NSString *)tempMessageId
+- (void)replaceMessageId:(NSString *)tempMessageId
            withMessageId:(NSString *)serverMessageId {
+    //TODO:reaplceMessageKey
 }
 
 
 #pragma mark -
 #pragma mark - Private Methods
+- (NSArray <CLAMessage *> *)getRoomMessages {
+    return [self.messageClient.dataRepository getRoomMessages:self.room.key];
+}
+
+- (void)sendMessage:(NSString *)text {
+    CLAMessage *message = [[CLAMessage alloc] init];
+    message.key = [[NSUUID UUID] UUIDString];
+    message.fromUserName = self.user.name;
+    message.content = text;
+    message.roomKey = self.room.key;
+    message.when = [NSDate date];
+    message.fromUser = self.user;
+    
+    [self.messageClient.dataRepository addOrgupdateMessage:message];
+    [self.messageClient sendMessage:message inRoom:self.room.name];
+}
 
 - (void)switchToRoom:(CLARoom *)room {
     [UserDataManager cacheObject:room.name forKey:kSelectedRoomName];

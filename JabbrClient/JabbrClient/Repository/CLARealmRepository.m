@@ -51,8 +51,8 @@
     return [team.rooms objectsWhere:@"name = %@", name].firstObject;
 }
 
-- (NSArray <CLAMessage *> *)getRoomMessages: (NSString *)roomName {
-    RLMResults<CLAMessage *>  *messages = [CLAMessage objectsWhere:@"roomName = %@", roomName];
+- (NSArray <CLAMessage *> *)getRoomMessages: (NSNumber *)roomKey {
+    RLMResults<CLAMessage *>  *messages = [[CLAMessage objectsWhere:@"roomKey = %d", roomKey.intValue] sortedResultsUsingProperty:@"when" ascending:NO];
     return [CLARealmRepository RLMResultsToNSArray:messages];
 }
 

@@ -16,12 +16,12 @@
 @property(nonatomic, strong) NSString *content;
 @property(nonatomic, strong) NSDate *when;
 @property(nonatomic, strong) NSString *fromUserName;
-@property(nonatomic, strong) NSString *roomName;
+@property(nonatomic, strong) NSNumber<RLMInt> *roomKey;
 
 @property(nonatomic, strong) CLAUser *fromUser;
 
-+ (NSArray <CLAMessage *> *)getFromDataArray:(NSArray *)dictionaryArray forRoom:(NSString *)roomName;
-+ (CLAMessage *)getFromData:(NSDictionary *)messageDictionary forRoom:(NSString *)roomName;
++ (NSArray <CLAMessage *> *)getFromDataArray:(NSArray *)dictionaryArray forRoom:(NSNumber *)roomKey;
++ (CLAMessage *)getFromData:(NSDictionary *)messageDictionary forRoom:(NSNumber *)roomKey;
 
 @end
 

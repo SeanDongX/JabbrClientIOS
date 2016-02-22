@@ -76,6 +76,6 @@ typedef enum {
 - (void)didLoadEarlierMessagesInRoom:(NSString *)room;
 //- (void)didLoadUsers:(NSArray<CLAUser *> *)users inRoom:(NSString *)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room;
-- (void)reaplceMessageId:(NSString *)tempMessageId
+- (void)replaceMessageId:(NSString *)tempMessageId
            withMessageId:(NSString *)serverMessageId;
 @end

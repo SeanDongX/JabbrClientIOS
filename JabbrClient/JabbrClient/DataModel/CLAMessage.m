@@ -14,11 +14,11 @@
     return @"key";
 }
 
-+ (NSArray <CLAMessage *> *)getFromDataArray:(NSArray *)dictionaryArray forRoom:(NSString *)roomName {
++ (NSArray <CLAMessage *> *)getFromDataArray:(NSArray *)dictionaryArray forRoom:(NSNumber *)roomKey {
     NSMutableArray <CLAMessage *> *messages = [NSMutableArray array];
     if (dictionaryArray && dictionaryArray != [NSNull null] && dictionaryArray.count > 0) {
         for (NSDictionary *dictionary in dictionaryArray) {
-            CLAMessage *message = [CLAMessage getFromData:dictionary forRoom:roomName];
+            CLAMessage *message = [CLAMessage getFromData:dictionary forRoom:roomKey];
             if (message) {
                 [messages addObject:message];
             }
@@ -28,10 +28,10 @@
     return messages;
 }
 
-+ (CLAMessage *)getFromData:(NSDictionary *)messageDictionary forRoom:(NSString *)roomName {
++ (CLAMessage *)getFromData:(NSDictionary *)messageDictionary forRoom:(NSNumber *)roomKey {
     CLAMessage *message = [[CLAMessage alloc] init];
     
-    message.roomName = roomName;
+    message.roomKey = roomKey;
     
     NSDictionary *userData = [messageDictionary objectForKey:@"User"];
     NSString *dateString = [messageDictionary objectForKey:@"When"];

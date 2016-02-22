@@ -58,7 +58,4 @@
 - (void)addOrUpdateNotificationsWithData:(NSArray *)dictionaryArray
                               completion:(void (^)(void))completionBlock;
 
-- (void)addOrUpdateNotifications:(NSArray <CLANotificationMessage*> *)notifications
-                      completion:(void (^)(void))completionBlock;
-
 @end

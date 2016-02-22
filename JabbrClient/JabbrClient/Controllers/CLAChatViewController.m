@@ -23,7 +23,6 @@
 @property(weak, nonatomic) IBOutlet UIBarButtonItem *rightMenuButton;
 
 @property(nonatomic, strong) id<CLAMessageClient> messageClient;
-@property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
 
 @property(nonatomic, strong) CLARoom *room;
 @property(nonatomic, strong) CLAUser *user;
@@ -112,7 +111,6 @@
 }
 
 - (void)initData {
-    self.repository = [[CLARealmRepository alloc] init];
     self.user = [UserDataManager getUser];
 }
 
@@ -798,7 +796,7 @@
     }
     
     [self sendTeamUpdatedEventNotification];
-    self.teamUsers = [self.repository getCurrentOrDefaultTeam].users;
+    self.teamUsers = [self.messageClient.dataRepository getCurrentOrDefaultTeam].users;
 }
 
 - (void)didReceiveJoinRoom:(NSString *)room andUpdateRoom:(BOOL)update {
@@ -816,7 +814,7 @@
     
     // make sure room switch works both ways, ie, when chat view is active main
     // view or not
-    CLARoom *newRoom = [self.repository getRoom: room inTeam:[UserDataManager getTeam].key];
+    CLARoom *newRoom = [self.messageClient.dataRepository getRoom: room inTeam:[UserDataManager getTeam].key];
     if (slidingViewController != nil) {
         [slidingViewController switchToRoom:newRoom];
     } else {
@@ -840,7 +838,6 @@
     }
 }
 
-//- (void)didLoadUsers:(NSArray<CLAUser *> *)users inRoom:(NSString *)room;
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {
 }
 
@@ -873,7 +870,9 @@
     [UserDataManager cacheObject:room.name forKey:kSelectedRoomName];
     self.title = self.room.displayName;
     
-    [self.repository joinUser:self.user.name toRoom:self.room.name inTeam:[UserDataManager getTeam].key];
+    [self.messageClient.dataRepository joinUser:self.user.name
+                                         toRoom:self.room.name
+                                         inTeam:[UserDataManager getTeam].key];
     [self.messageClient loadRoom:room.name];
     [self.tableView reloadData];
 }

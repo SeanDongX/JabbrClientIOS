@@ -14,29 +14,10 @@
 
 @protocol CLADataRepositoryProtocol <NSObject>
 
+#pragma - Team
 
 - (NSArray <CLATeam*> *)getTeams;
 - (CLATeam *)getCurrentOrDefaultTeam;
-- (CLAUser *)getUserByName: (NSString *)name;
-- (CLARoom *)getRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
-- (NSArray <CLAMessage *> *)getRoomMessages: (NSNumber *)roomKey;
-- (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey;
-
-- (void)setRoomUnread:(NSString *)roomName unread:(NSInteger)unread inTeam:(NSNumber *)teamKey;
-
-- (void)addOrgupdateMessage:(CLAMessage *)message;
-- (void)updateMessageKey:(NSString *)oldKey withNewKey:(NSString *)newKey;
-
-- (void)updateNotification: (NSNumber *)notificationKey read:(BOOL)read;
-
-- (void)joinUser:(NSString *)username toRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
-
-- (void)deleteData;
-
-- (void)addRoom:(CLARoom *)room inTeam:(NSNumber *)teamKey;
-
-- (void)addOrUpdateObjects: (NSArray *)objects
-                completion:(void (^)(void))completionBlock;
 
 - (void)addOrUpdateTeamsWithData:(NSArray *)dictionaryArray
                       completion:(void (^)(void))completionBlock;
@@ -44,18 +25,48 @@
 - (void)addOrUpdateTeamWithData:(NSArray *)dictionaryArray
                      completion:(void (^)(void))completionBlock;
 
-- (void)addOrUpdateRoomsWithData:(NSArray *)dictionaryArray
-                      completion:(void (^)(void))completionBlock;
+#pragma - User
+
+- (CLAUser *)getUserByName: (NSString *)name;
 
 - (void)addOrUpdateUsersWithData:(NSArray *)dictionaryArray
                       completion:(void (^)(void))completionBlock;
 
+- (void)joinUser:(NSString *)username toRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
+
+#pragma - Room
+
+- (CLARoom *)getRoomByNameInCurrentOrDefaultTeam:(NSString *)roomName;
+- (CLARoom *)getRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
+- (void)addRoom:(CLARoom *)room inTeam:(NSNumber *)teamKey;
+- (void)setRoomUnread:(NSString *)roomName unread:(NSInteger)unread inTeam:(NSNumber *)teamKey;
+
+- (void)addOrUpdateRoomsWithData:(NSArray *)dictionaryArray
+                      completion:(void (^)(void))completionBlock;
+
+
+#pragma - Message
+
+- (NSArray <CLAMessage *> *)getRoomMessages: (NSNumber *)roomKey;
+- (void)addOrgupdateMessage:(CLAMessage *)message;
+- (void)updateMessageKey:(NSString *)oldKey withNewKey:(NSString *)newKey;
 
 - (void)addOrUpdateMessagesWithData:(NSArray *)dictionaryArray
                            formRoom:(NSString *)roomName
                          completion:(void (^)(void))completionBlock;
 
+#pragma - Notification
+
+- (CLANotificationMessage *)getNotificationByKey: (NSNumber *)notificationKey;
+- (void)updateNotification: (NSNumber *)notificationKey read:(BOOL)read;
+
 - (void)addOrUpdateNotificationsWithData:(NSArray *)dictionaryArray
                               completion:(void (^)(void))completionBlock;
+
+
+#pragma - Misc
+- (void)deleteData;
+- (void)addOrUpdateObjects: (NSArray *)objects
+                completion:(void (^)(void))completionBlock;
 
 @end

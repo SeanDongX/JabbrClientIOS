@@ -309,12 +309,15 @@ static bool isFirstAccess = YES;
         return;
     }
     
-    NSString *room = (NSString *)data[1];
+    NSString *roomName = (NSString *)data[1];
+    CLARoom *room = [self.dataRepository getRoomByNameInCurrentOrDefaultTeam:roomName];
     
-    NSDictionary *messageDictionary = (NSDictionary *)data[0];
-    CLAMessage *message = [CLAMessage getFromData:messageDictionary forRoom:room];
-    [self.dataRepository addOrgupdateMessage:message];
-    [self.delegate didReceiveMessageInRoom:room];
+    if (room) {
+        NSDictionary *messageDictionary = (NSDictionary *)data[0];
+        CLAMessage *message = [CLAMessage getFromData:messageDictionary forRoom:room.key];
+        [self.dataRepository addOrgupdateMessage:message];
+        [self.delegate didReceiveMessageInRoom:roomName];
+    }
 }
 
 - (void)replaceMessage:(NSArray *)data {

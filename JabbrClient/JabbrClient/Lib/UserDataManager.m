@@ -59,7 +59,8 @@
     NSDictionary *userDictionary = @{ kUsername: user.name,
                                       kRealName: user.realName,
                                       kInitials : user.initials,
-                                      kEmail: user.email};
+                                      kEmail: user.email,
+                                      kColor: user.color};
     
     [UserDataManager cacheObject:userDictionary forKey:kUser];
 }
@@ -83,6 +84,7 @@
     user.realName = [userDictionary objectForKey:kRealName];
     user.initials = [userDictionary objectForKey:kInitials];
     user.email = [userDictionary objectForKey:kEmail];
+    user.color = [userDictionary objectForKey:kColor];
     return user;
 }
 

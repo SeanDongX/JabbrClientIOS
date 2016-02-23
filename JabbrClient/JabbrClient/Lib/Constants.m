@@ -83,6 +83,7 @@ NSString *const kUser = @"User";
 NSString *const kRealName = @"RealName";
 NSString *const kInitials = @"Initials";
 NSString *const kEmail = @"Email";
+NSString *const kColor = @"Color";
 
 NSString *const kAuthToken = @"AuthToken";
 NSString *const kTeam = @"Team";

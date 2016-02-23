@@ -15,7 +15,7 @@
 @implementation CLARealmRepository
 
 - (NSArray <CLATeam*> *)getTeams {
-    return [CLAUtility getArrayFromRLMArray:[CLATeam allObjects]];
+    return [CLAUtility getArrayFromRLMResult:[CLATeam allObjects]];
 }
 
 - (CLATeam *)getCurrentOrDefaultTeam {

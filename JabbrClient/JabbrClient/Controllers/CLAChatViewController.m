@@ -16,6 +16,7 @@
 #import "CLANotificationManager.h"
 #import "UserDataManager.h"
 #import "SlidingViewController.h"
+#import "CLAUtility.h"
 
 @interface CLAChatViewController ()
 
@@ -30,11 +31,7 @@
 
 #pragma mark -
 #pragma mark - Slack View Controller components
-//TODO:remove
-//@property (nonatomic, strong) NSMutableArray *messages;
-//@property (nonatomic, strong) NSArray *users;
-//@property (nonatomic, strong) NSArray *channels;
-@property (nonatomic, strong) NSArray *emojis;
+
 @property (nonatomic, strong) NSArray *searchResult;
 @property (nonatomic, strong) UIWindow *pipWindow;
 @property (nonatomic, weak) CLAMessage *editingMessage;
@@ -53,8 +50,6 @@
     [self initData];
     [self initMenu];
     
-    // Example's configuration
-    [self configureDataSource];
     [self configureActionItems];
     
     // SLKTVC's configuration
@@ -86,14 +81,14 @@
     [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     
     [self.autoCompletionView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:AutoCompletionCellIdentifier];
-    [self registerPrefixesForAutoCompletion:@[@"@", @"#", @":", @"+:"]];
+    [self registerPrefixesForAutoCompletion:@[@"@", @"#"]];
     
-    [self.textView registerMarkdownFormattingSymbol:@"*" withTitle:@"Bold"];
-    [self.textView registerMarkdownFormattingSymbol:@"_" withTitle:@"Italics"];
-    [self.textView registerMarkdownFormattingSymbol:@"~" withTitle:@"Strike"];
-    [self.textView registerMarkdownFormattingSymbol:@"`" withTitle:@"Code"];
-    [self.textView registerMarkdownFormattingSymbol:@"```" withTitle:@"Preformatted"];
-    [self.textView registerMarkdownFormattingSymbol:@">" withTitle:@"Quote"];
+    //    [self.textView registerMarkdownFormattingSymbol:@"*" withTitle:@"Bold"];
+    //    [self.textView registerMarkdownFormattingSymbol:@"_" withTitle:@"Italics"];
+    //    [self.textView registerMarkdownFormattingSymbol:@"~" withTitle:@"Strike"];
+    //    [self.textView registerMarkdownFormattingSymbol:@"`" withTitle:@"Code"];
+    //    [self.textView registerMarkdownFormattingSymbol:@"```" withTitle:@"Preformatted"];
+    //    [self.textView registerMarkdownFormattingSymbol:@">" withTitle:@"Quote"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -166,13 +161,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadData) name:UIContentSizeCategoryDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputbarDidMove:) name:SLKTextInputbarDidMoveNotification object:nil];
     [self registerClassForTextView:[MessageTextView class]];
-}
-
-- (void)configureDataSource
-{
-    
-    //self.channels = @[@"General", @"Random", @"iOS", @"Bugs", @"Sports", @"Android", @"UI", @"SSB"];
-    self.emojis = @[@"-1", @"m", @"man", @"machine", @"block-a", @"block-b", @"bowtie", @"boar", @"boat", @"book", @"bookmark", @"neckbeard", @"metal", @"fu", @"feelsgood"];
 }
 
 - (void)configureActionItems
@@ -474,41 +462,24 @@
 
 - (void)didChangeAutoCompletionPrefix:(NSString *)prefix andWord:(NSString *)word
 {
-    NSArray<NSString*> *array = [NSMutableArray array];
-    
     self.searchResult = nil;
     
     if ([prefix isEqualToString:@"@"]) {
         RLMResults<CLAUser *> *userResults = nil;
-        if (word.length > 0) {
-            userResults = [self.teamUsers objectsWhere:@"name BEGINSWITH[c] %@", word];
-        }
-        else {
-            userResults = [self.teamUsers objectsWhere:@"name != ''"];
-        }
-        
-        NSMutableArray *userArray = [NSMutableArray array];
-        for (CLAUser *user in userResults) {
-            [userArray addObject:user.name];
-        }
-        
-        array = [userArray copy];
+        userResults = [[self.teamUsers objectsWhere:@"name BEGINSWITH[c] %@", word]
+                       sortedResultsUsingProperty:@"name" ascending:YES];
+        self.searchResult = [CLAUtility getArrayFromRLMResult:userResults];
     }
-    //    else if ([prefix isEqualToString:@"#"] && word.length > 0) {
-    //        array = [self.channels filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self BEGINSWITH[c] %@", word]];
-    //    }
-    else if (([prefix isEqualToString:@":"] || [prefix isEqualToString:@"+:"]) && word.length > 1) {
-        array = [self.emojis filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self BEGINSWITH[c] %@", word]];
+    else if ([prefix isEqualToString:@"#"] && word.length > 0) {
+        RLMResults<CLARoom *> *roomResults = nil;
+        RLMArray *rooms = [self.messageClient.dataRepository getCurrentOrDefaultTeam].rooms;
+        roomResults = [[rooms objectsWithPredicate:
+                        [NSPredicate predicateWithFormat:@"(name BEGINSWITH[c] %@) AND (isDirectRoom == NO)", word]]
+                       sortedResultsUsingProperty:@"name" ascending:YES];
+        self.searchResult = [CLAUtility getArrayFromRLMResult:roomResults];
     }
-    
-    if (array.count > 0) {
-        array = [array sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    }
-    
-    self.searchResult = [[NSMutableArray alloc] initWithArray:array];
     
     BOOL show = (self.searchResult.count > 0);
-    
     [self showAutoCompletionView:show];
 }
 
@@ -572,17 +543,14 @@
     MessageTableViewCell *cell = (MessageTableViewCell *)[self.autoCompletionView dequeueReusableCellWithIdentifier:AutoCompletionCellIdentifier];
     cell.indexPath = indexPath;
     
-    NSString *text = self.searchResult[indexPath.row];
-    
     if ([self.foundPrefix isEqualToString:@"#"]) {
-        text = [NSString stringWithFormat:@"# %@", text];
+        CLARoom *room = self.searchResult[indexPath.row];
+        cell.room = room;
     }
-    else if (([self.foundPrefix isEqualToString:@":"] || [self.foundPrefix isEqualToString:@"+:"])) {
-        text = [NSString stringWithFormat:@":%@:", text];
+    else if ([self.foundPrefix isEqualToString:@"@"]) {
+        CLAUser *user = self.searchResult[indexPath.row];
+        cell.user = user;
     }
-    
-    cell.titleLabel.text = text;
-    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     
     return cell;
 }
@@ -633,18 +601,17 @@
 {
     if ([tableView isEqual:self.autoCompletionView]) {
         
-        NSMutableString *item = [self.searchResult[indexPath.row] mutableCopy];
-        
-        if ([self.foundPrefix isEqualToString:@"@"] && self.foundPrefixRange.location == 0) {
-            [item appendString:@":"];
+        NSString *text = nil;
+        if ([self.foundPrefix isEqualToString:@"#"]) {
+            CLARoom *room = self.searchResult[indexPath.row];
+            text = room.name;
         }
-        else if (([self.foundPrefix isEqualToString:@":"] || [self.foundPrefix isEqualToString:@"+:"])) {
-            [item appendString:@":"];
+        else if ([self.foundPrefix isEqualToString:@"@"]) {
+            CLAUser *user = self.searchResult[indexPath.row];
+            text = user.name;
         }
         
-        [item appendString:@" "];
-        
-        [self acceptAutoCompletionWithString:item keepPrefix:YES];
+        [self acceptAutoCompletionWithString:[NSString stringWithFormat:@"%@ ", text] keepPrefix:YES];
     }
 }
 

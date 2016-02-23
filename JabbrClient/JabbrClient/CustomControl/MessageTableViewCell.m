@@ -10,6 +10,8 @@
 #import "SLKTextView+SLKAdditions.h"
 #import "JSQMessagesAvatarImageFactory.h"
 #import "DateTools.h"
+#import "CLARoom.h"
+#import "Constants.h"
 
 @interface MessageTableViewCell ()
 
@@ -36,27 +38,9 @@
     [self.contentView addSubview:self.thumbnailView];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.bodyLabel];
-    
-    NSDictionary *views = @{@"thumbnailView": self.thumbnailView,
-                            @"titleLabel": self.titleLabel,
-                            @"bodyLabel": self.bodyLabel,};
-    
-    NSDictionary *metrics = @{@"tumbSize": @(kMessageTableViewCellAvatarHeight),
-                              @"padding": @15,
-                              @"right": @10,
-                              @"left": @5};
-    
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[titleLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(tumbSize)]-right-[bodyLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[thumbnailView(tumbSize)]-(>=0)-|" options:0 metrics:metrics views:views]];
-    
-    if ([self.reuseIdentifier isEqualToString:MessengerCellIdentifier]) {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(20)]-left-[bodyLabel(>=0@999)]-left-|" options:0 metrics:metrics views:views]];
-    }
-    else {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel]|" options:0 metrics:metrics views:views]];
-    }
+    [self setContraints];
 }
+
 
 - (void)prepareForReuse
 {
@@ -74,7 +58,56 @@
     
 }
 
+- (void)setContraints {
+    NSDictionary *views = @{@"thumbnailView": self.thumbnailView,
+                            @"titleLabel": self.titleLabel,
+                            @"bodyLabel": self.bodyLabel,};
+    
+    NSDictionary *metrics = @{@"tumbSize": @(kMessageTableViewCellAvatarHeight),
+                              @"padding": @15,
+                              @"right": @10,
+                              @"left": @5};
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(<=tumbSize)]-right-[titleLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(<=tumbSize)]-right-[bodyLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[thumbnailView(<=tumbSize)]-(>=0)-|" options:0 metrics:metrics views:views]];
+    
+    if ([self.reuseIdentifier isEqualToString:MessengerCellIdentifier]) {
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(20)]-left-[bodyLabel(>=0@999)]-left-|" options:0 metrics:metrics views:views]];
+    }
+    else {
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel]|" options:0 metrics:metrics views:views]];
+    }
+}
+
 #pragma mark - Setters
+
+- (void)setRoom:(CLARoom *)room {
+    if (room) {
+        self.titleLabel.text = [NSString stringWithFormat:@"#%@", room.name];
+        self.thumbnailView.image = [JSQMessagesAvatarImageFactory
+                                    avatarImageWithUserInitials:@"#"
+                                    backgroundColor:[Constants highlightColor]
+                                    textColor:[UIColor whiteColor]
+                                    font:[UIFont systemFontOfSize:13.0f]
+                                    diameter:30.0f].avatarImage;
+    }
+}
+
+- (void)setUser:(CLAUser *)user {
+    if (user) {
+        self.titleLabel.text = [NSString stringWithFormat:@"@%@", user.name];
+        
+        if (user.initials) {
+            self.thumbnailView.image = [JSQMessagesAvatarImageFactory
+                                        avatarImageWithUserInitials:user.initials
+                                        backgroundColor: [user getUIColor]
+                                        textColor:[UIColor whiteColor]
+                                        font:[UIFont systemFontOfSize:13.0f]
+                                        diameter:30.0f].avatarImage;
+        }
+    }
+}
 
 - (void)setMessage:(CLAMessage *)message {
     if (message) {

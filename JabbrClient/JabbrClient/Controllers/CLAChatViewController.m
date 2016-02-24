@@ -17,6 +17,8 @@
 #import "UserDataManager.h"
 #import "SlidingViewController.h"
 #import "CLAUtility.h"
+#import "CLAMediaManager.h"
+#import "CLAWebApiClient.h"
 
 @interface CLAChatViewController ()
 
@@ -59,7 +61,7 @@
     self.shouldScrollToBottomAfterKeyboardShows = NO;
     self.inverted = YES;
     
-    [self.leftButton setImage:[UIImage imageNamed:@"icn_upload"] forState:UIControlStateNormal];
+    [self.leftButton setImage:[Constants cameraIcon] forState:UIControlStateNormal];
     [self.leftButton setTintColor:[UIColor grayColor]];
     
     [self.rightButton setTitle:NSLocalizedString(@"Send", nil) forState:UIControlStateNormal];
@@ -262,14 +264,13 @@
         return;
     }
     
-    NSInteger lastSectionIndex = [self.tableView numberOfSections]-1;
-    NSInteger lastRowIndex = [self.tableView numberOfRowsInSection:lastSectionIndex]-1;
-    
-    CLAMessage *lastMessage = [[self getRoomMessages] objectAtIndex:lastRowIndex];
+    NSIndexPath *lasetIndexPath = [self getLasetIndexPath];
+    CLAMessage *lastMessage = [[self getRoomMessages] objectAtIndex:lasetIndexPath.row];
     
     [self editText:lastMessage.content];
     
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:lastRowIndex inSection:lastSectionIndex] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [self.tableView scrollToRowAtIndexPath:lasetIndexPath
+                          atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 - (void)togglePIPWindow:(id)sender
@@ -365,15 +366,20 @@
 
 - (void)didPressLeftButton:(id)sender
 {
-    // Notifies the view controller when the left button's action has been triggered, manually.
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Take Photo", @"Choose From Library", nil];
+    
+    [self.view endEditing:YES];
+    [actionSheet showInView:self.view];
     
     [super didPressLeftButton:sender];
 }
 
 - (void)didPressRightButton:(id)sender
 {
-    // Notifies the view controller when the right button's action has been triggered, manually or by using the keyboard return key.
-    
     // This little trick validates any pending auto-correction or auto-spelling just after hitting the 'Send' button
     [self.textView refreshFirstResponder];
     
@@ -784,6 +790,47 @@
     [self.messageClient.dataRepository updateMessageKey:tempMessageId withNewKey:serverMessageId];
 }
 
+#pragma mark -
+#pragma mark Action Sheet Delegate Methods
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [CLAMediaManager presentPhotoCamera:self canEdit:YES];
+    } else if (buttonIndex == 1) {
+        [CLAMediaManager presentPhotoLibrary:self canEdit:YES];
+    }
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"yyyy_MM_dd_hh_mm_ss"];
+    NSString *imageName = [NSString stringWithFormat:@"%@.JPG", [dateFormatter stringFromDate:[NSDate date]]];
+    
+    UIImage *image = nil;
+    image = info[UIImagePickerControllerEditedImage];
+    [picker dismissViewControllerAnimated: YES completion: ^{
+        [self showHud: NSLocalizedString(@"Uploading photo...", nil)];
+    }];
+    
+    __weak __typeof(&*self) weakSelf = self;
+    [[CLAWebApiClient sharedInstance] uploadImage:image
+                                        imageName:imageName
+                                         fromRoom:self.room.name
+                                          success:^(id responseObject) {
+                                              
+                                              [weakSelf hideHud];
+                                              NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                                              [weakSelf.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                                          } failure:^(NSError *error) {
+                                              [CLANotificationManager showText:NSLocalizedString(@"Oops, upload failed", nil)
+                                                             forViewController:weakSelf
+                                                                      withType:CLANotificationTypeError];
+                                          }];
+    
+    
+}
 
 #pragma mark -
 #pragma mark - Private Methods
@@ -813,6 +860,13 @@
                                          inTeam:[UserDataManager getTeam].key];
     [self.messageClient loadRoom:room.name];
     [self.tableView reloadData];
+}
+
+- (NSIndexPath *)getLasetIndexPath {
+    NSInteger lastSectionIndex = [self.tableView numberOfSections]-1;
+    NSInteger lastRowIndex = [self.tableView numberOfRowsInSection:lastSectionIndex]-1;
+    
+    return [NSIndexPath indexPathForRow:lastRowIndex inSection:lastSectionIndex];
 }
 
 #pragma mark -

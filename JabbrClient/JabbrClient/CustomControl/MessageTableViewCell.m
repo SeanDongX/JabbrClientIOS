@@ -12,10 +12,14 @@
 #import "DateTools.h"
 #import "CLARoom.h"
 #import "Constants.h"
+#import "CLAMessageParser.h"
 
 @interface MessageTableViewCell ()
 
-@property (nonatomic, strong) UIImageView *thumbnailView;
+@property (nonatomic, strong) UIImageView *avatarView;
+@property (nonatomic, strong) UIImageView *imageContentView;
+
+@property (nonatomic, strong) CLAMessageParser *messageParser;
 
 @end
 
@@ -27,7 +31,7 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor whiteColor];
-        
+        self.messageParser = [[CLAMessageParser alloc] init];
         [self configureSubviews];
     }
     return self;
@@ -35,10 +39,10 @@
 
 - (void)configureSubviews
 {
-    [self.contentView addSubview:self.thumbnailView];
+    [self.contentView addSubview:self.avatarView];
     [self.contentView addSubview:self.titleLabel];
     [self.contentView addSubview:self.bodyLabel];
-    [self setContraints];
+    [self.contentView addSubview:self.imageContentView];
 }
 
 
@@ -48,32 +52,39 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    CGFloat pointSize = [MessageTableViewCell defaultFontSize];
-    
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:pointSize];
-    self.bodyLabel.font = [UIFont systemFontOfSize:pointSize];
-    
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:[MessageTableViewCell defaultFontSize]];
     self.titleLabel.text = @"";
-    self.bodyLabel.text = @"";
     
+    //[self setContraints];
 }
 
-- (void)setContraints {
-    NSDictionary *views = @{@"thumbnailView": self.thumbnailView,
+- (void)setContraints:(BOOL)isTextMessage {
+    
+    NSDictionary *views = @{@"avatarView": self.avatarView,
                             @"titleLabel": self.titleLabel,
-                            @"bodyLabel": self.bodyLabel,};
+                            @"bodyLabel": self.bodyLabel,
+                            @"imageContentView": self.imageContentView};
     
     NSDictionary *metrics = @{@"tumbSize": @(kMessageTableViewCellAvatarHeight),
                               @"padding": @15,
                               @"right": @10,
                               @"left": @5};
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(<=tumbSize)]-right-[titleLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[thumbnailView(<=tumbSize)]-right-[bodyLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[thumbnailView(<=tumbSize)]-(>=0)-|" options:0 metrics:metrics views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[avatarView(<=tumbSize)]-right-[titleLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[avatarView(<=tumbSize)]-right-[bodyLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[avatarView(<=tumbSize)]-right-[imageContentView(>=0,<=80)]-right-|" options:0 metrics:metrics views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[avatarView(<=tumbSize)]-(>=0)-|" options:0 metrics:metrics views:views]];
+    
     
     if ([self.reuseIdentifier isEqualToString:MessengerCellIdentifier]) {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(20)]-left-[bodyLabel(>=0@999)]-left-|" options:0 metrics:metrics views:views]];
+        if (isTextMessage == NO) {
+            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(20)]-left-[imageContentView(80)]-left-|" options:0 metrics:metrics views:views]];
+        } else {
+            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(20)]-left-[bodyLabel(>=0@999)]-left-|" options:0 metrics:metrics views:views]];
+        }
     }
     else {
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel]|" options:0 metrics:metrics views:views]];
@@ -85,12 +96,12 @@
 - (void)setRoom:(CLARoom *)room {
     if (room) {
         self.titleLabel.text = [NSString stringWithFormat:@"#%@", room.name];
-        self.thumbnailView.image = [JSQMessagesAvatarImageFactory
-                                    avatarImageWithUserInitials:@"#"
-                                    backgroundColor:[Constants highlightColor]
-                                    textColor:[UIColor whiteColor]
-                                    font:[UIFont systemFontOfSize:13.0f]
-                                    diameter:30.0f].avatarImage;
+        self.avatarView.image = [JSQMessagesAvatarImageFactory
+                                 avatarImageWithUserInitials:@"#"
+                                 backgroundColor:[Constants highlightColor]
+                                 textColor:[UIColor whiteColor]
+                                 font:[UIFont systemFontOfSize:13.0f]
+                                 diameter:30.0f].avatarImage;
     }
 }
 
@@ -99,12 +110,12 @@
         self.titleLabel.text = [NSString stringWithFormat:@"@%@", user.name];
         
         if (user.initials) {
-            self.thumbnailView.image = [JSQMessagesAvatarImageFactory
-                                        avatarImageWithUserInitials:user.initials
-                                        backgroundColor: [user getUIColor]
-                                        textColor:[UIColor whiteColor]
-                                        font:[UIFont systemFontOfSize:13.0f]
-                                        diameter:30.0f].avatarImage;
+            self.avatarView.image = [JSQMessagesAvatarImageFactory
+                                     avatarImageWithUserInitials:user.initials
+                                     backgroundColor: [user getUIColor]
+                                     textColor:[UIColor whiteColor]
+                                     font:[UIFont systemFontOfSize:13.0f]
+                                     diameter:30.0f].avatarImage;
         }
     }
 }
@@ -112,15 +123,30 @@
 - (void)setMessage:(CLAMessage *)message {
     if (message) {
         self.titleLabel.text = [NSString stringWithFormat:@"%@ - %@", message.fromUserName, message.when.timeAgoSinceNow];
-        self.bodyLabel.text = message.content;
         
         if (message.fromUser && message.fromUser.initials) {
-            self.thumbnailView.image = [JSQMessagesAvatarImageFactory
-                                        avatarImageWithUserInitials:message.fromUser.initials
-                                        backgroundColor: [message.fromUser getUIColor]
-                                        textColor:[UIColor whiteColor]
-                                        font:[UIFont systemFontOfSize:13.0f]
-                                        diameter:30.0f].avatarImage;
+            self.avatarView.image = [JSQMessagesAvatarImageFactory
+                                     avatarImageWithUserInitials:message.fromUser.initials
+                                     backgroundColor: [message.fromUser getUIColor]
+                                     textColor:[UIColor whiteColor]
+                                     font:[UIFont systemFontOfSize:13.0f]
+                                     diameter:30.0f].avatarImage;
+        }
+        
+        MessageType messageType = [self.messageParser getMessageType:message.content];
+        if (messageType == MessageTypeImage || messageType == MessageTypeDocument) {
+            [self setContraints:NO];
+            
+            UIImageView *imageView = self.imageContentView;
+            [self.messageParser getMessageData: message.content completionHandler:^(UIImage *image) {
+                imageView.image = image;
+            }];
+        }
+        else {
+            [self setContraints:YES];
+            
+            self.bodyLabel.font = [UIFont systemFontOfSize:[MessageTableViewCell defaultFontSize]];
+            self.bodyLabel.text = message.content;
         }
     }
 }
@@ -155,18 +181,31 @@
     return _bodyLabel;
 }
 
-- (UIImageView *)thumbnailView
+- (UIImageView *)avatarView
 {
-    if (!_thumbnailView) {
-        _thumbnailView = [UIImageView new];
-        _thumbnailView.translatesAutoresizingMaskIntoConstraints = NO;
-        _thumbnailView.userInteractionEnabled = NO;
-        _thumbnailView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    if (!_avatarView) {
+        _avatarView = [UIImageView new];
+        _avatarView.translatesAutoresizingMaskIntoConstraints = NO;
+        _avatarView.userInteractionEnabled = NO;
+        _avatarView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
         
-        _thumbnailView.layer.cornerRadius = kMessageTableViewCellAvatarHeight/2.0;
-        _thumbnailView.layer.masksToBounds = YES;
+        _avatarView.layer.cornerRadius = kMessageTableViewCellAvatarHeight/2.0;
+        _avatarView.layer.masksToBounds = YES;
     }
-    return _thumbnailView;
+    return _avatarView;
+}
+
+- (UIImageView *)imageContentView
+{
+    if (!_imageContentView) {
+        _imageContentView = [UIImageView new];
+        _imageContentView.translatesAutoresizingMaskIntoConstraints = NO;
+        _imageContentView.userInteractionEnabled = YES;
+        _imageContentView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+        _imageContentView.layer.cornerRadius = 10;
+        _imageContentView.layer.masksToBounds = YES;
+    }
+    return _imageContentView;
 }
 
 + (CGFloat)defaultFontSize

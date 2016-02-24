@@ -10,7 +10,7 @@
 #import "CLAMessageClient.h"
 #import "SLKTextViewController.h"
 
-@interface CLAChatViewController : SLKTextViewController <CLAMessageClientDelegate>
+@interface CLAChatViewController : SLKTextViewController <CLAMessageClientDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate>
 
 - (void)setActiveRoom:(CLARoom *)room;
 

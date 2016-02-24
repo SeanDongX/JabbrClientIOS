@@ -32,6 +32,7 @@
 		1463CB061AF955AD00BC2513 /* CLACreateTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB051AF955AD00BC2513 /* CLACreateTeamViewController.m */; };
 		1463CB0A1AF95D0A00BC2513 /* CLANotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB091AF95D0A00BC2513 /* CLANotificationManager.m */; };
 		1463CB0D1AF9691300BC2513 /* CLACreateRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1463CB0C1AF9691300BC2513 /* CLACreateRoomViewController.m */; };
+		1464EABD1C7D149800537E30 /* CLAMessageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1464EABC1C7D149800537E30 /* CLAMessageParser.m */; };
 		14679E961AC8838900316C9C /* ObjectThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 14679E951AC8838900316C9C /* ObjectThread.m */; };
 		146C9BAD1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAC1AFC18AE00885F96 /* CLAUserRegistrationViewModel.m */; };
 		146C9BB01AFC199500885F96 /* CLAWebApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C9BAF1AFC199500885F96 /* CLAWebApiClient.m */; };
@@ -137,6 +138,8 @@
 		1463CB091AF95D0A00BC2513 /* CLANotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLANotificationManager.m; path = Lib/CLANotificationManager.m; sourceTree = "<group>"; };
 		1463CB0B1AF9691300BC2513 /* CLACreateRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLACreateRoomViewController.h; sourceTree = "<group>"; };
 		1463CB0C1AF9691300BC2513 /* CLACreateRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLACreateRoomViewController.m; sourceTree = "<group>"; };
+		1464EABB1C7D149800537E30 /* CLAMessageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAMessageParser.h; path = Lib/CLAMessageParser.h; sourceTree = "<group>"; };
+		1464EABC1C7D149800537E30 /* CLAMessageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLAMessageParser.m; path = Lib/CLAMessageParser.m; sourceTree = "<group>"; };
 		14679E941AC8838900316C9C /* ObjectThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectThread.h; path = JabbrClient/DataModel/ObjectThread.h; sourceTree = SOURCE_ROOT; };
 		14679E951AC8838900316C9C /* ObjectThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectThread.m; path = JabbrClient/DataModel/ObjectThread.m; sourceTree = SOURCE_ROOT; };
 		146C9BA81AFC172C00885F96 /* CLAApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLAApiClient.h; path = Lib/CLAApiClient.h; sourceTree = "<group>"; };
@@ -266,6 +269,8 @@
 				14CA04AA1C642A7100E3E9BC /* UIColor+HexString.m */,
 				14B436581C74EFC0006D5EF0 /* CLAInvitationHandler.h */,
 				14B436591C74EFC0006D5EF0 /* CLAInvitationHandler.m */,
+				1464EABB1C7D149800537E30 /* CLAMessageParser.h */,
+				1464EABC1C7D149800537E30 /* CLAMessageParser.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -744,6 +749,7 @@
 				149F99441AC4D0A200525EA7 /* LeftMenuViewController.m in Sources */,
 				14BE49C61B039D5C005C04E9 /* CLAHomeTopicViewController.m in Sources */,
 				1445C5831C76A64D00ED586F /* MessageTableViewCell.m in Sources */,
+				1464EABD1C7D149800537E30 /* CLAMessageParser.m in Sources */,
 				14B4365A1C74EFC0006D5EF0 /* CLAInvitationHandler.m in Sources */,
 				144BBE121C3DDE5100AE0E49 /* CLANotificationState.m in Sources */,
 				142FFA6B1AFD4B3C0076DB6E /* CLAUtility.m in Sources */,

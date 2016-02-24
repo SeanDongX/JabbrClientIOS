@@ -143,6 +143,7 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIImage *)taskIconImage;
 + (UIImage *)unreadIcon;
 + (UIImage *)documentIconLarge;
++ (UIImage *)cameraIcon;
 
 + (UIColor *)mainThemeColor;
 + (UIColor *)highlightColor;

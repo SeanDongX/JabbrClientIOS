@@ -233,6 +233,13 @@ NSString *const kXLFormTextLabelColor = @"textLabel.color";
     return [iccon imageWithSize:CGSizeMake(210, 150)];
 }
 
++ (UIImage *)cameraIcon {
+    FAKIonIcons *iccon = [FAKIonIcons iosCameraIconWithSize:30];
+    [iccon addAttribute:NSForegroundColorAttributeName
+                  value:[Constants highlightColor]];
+    return [iccon imageWithSize:CGSizeMake(30, 30)];
+}
+
 + (UIColor *)mainThemeColor {
     return [UIColor colorWithRed:(27 / 255.0)
                            green:(188 / 255.0)

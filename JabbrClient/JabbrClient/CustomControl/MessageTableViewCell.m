@@ -49,13 +49,7 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:[MessageTableViewCell defaultFontSize]];
-    self.titleLabel.text = @"";
-    
-    //[self setContraints];
 }
 
 - (void)setContraints:(BOOL)isTextMessage {
@@ -136,17 +130,17 @@
         MessageType messageType = [self.messageParser getMessageType:message.content];
         if (messageType == MessageTypeImage || messageType == MessageTypeDocument) {
             [self setContraints:NO];
+            self.bodyLabel.text = @"";
             
-            UIImageView *imageView = self.imageContentView;
             [self.messageParser getMessageData: message.content completionHandler:^(UIImage *image) {
-                imageView.image = image;
+                self.imageContentView.image = image;
             }];
         }
         else {
             [self setContraints:YES];
             
-            self.bodyLabel.font = [UIFont systemFontOfSize:[MessageTableViewCell defaultFontSize]];
             self.bodyLabel.text = message.content;
+            self.imageContentView.image = nil;
         }
     }
 }

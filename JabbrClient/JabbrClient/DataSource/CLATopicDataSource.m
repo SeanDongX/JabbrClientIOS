@@ -324,7 +324,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 - (CLARoom *)getRoom:(NSIndexPath *)indexPath {
     NSString *key = [NSString stringWithFormat:@"%ld", (long)indexPath.section];
     NSArray *roomArray = [[self getCurrentRoomDictionary] objectForKey:key];
-    CLARoom  *room = [roomArray objectAtIndex:indexPath.row];
     return roomArray == nil ? nil :[roomArray objectAtIndex:indexPath.row];
 }
 

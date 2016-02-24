@@ -14,6 +14,7 @@
 #import "CLANotificationManager.h"
 
 #import "XLForm.h"
+#import "CLAUtility.h"
 
 NSString *const kTopicName = @"TopicName";
 NSString *const kLeaveTopicButton = @"LeaveTopicButton";
@@ -68,8 +69,8 @@ NSString *const kInvitePrefix = @"Invite-";
     XLFormRowDescriptor *row;
     
     NSArray<CLAUser *> *allUsers =
-    [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam]
-    .users;
+    [CLAUtility getArrayFromRLMArray: [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam]
+     .users];
     NSMutableArray<CLAUser *> *notMembers = [NSMutableArray array];
     [notMembers addObjectsFromArray:allUsers];
     

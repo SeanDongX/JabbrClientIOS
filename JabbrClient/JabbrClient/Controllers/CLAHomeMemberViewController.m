@@ -31,6 +31,7 @@
 
 #import "Masonry.h"
 #import "JSQMessagesAvatarImageFactory.h"
+#import "CLAUtility.h"
 
 @interface CLAHomeMemberViewController ()
 
@@ -99,9 +100,9 @@
     [self didFinishRefresh];
 }
 
-- (void)updateTeamMembers:(NSArray *)users {
+- (void)updateTeamMembers:(RLMArray *)users {
     if (users != nil) {
-        self.users = users;
+        self.users = [CLAUtility getArrayFromRLMArray: users];
         [self.teamMemberTableView reloadData];
     }
 }

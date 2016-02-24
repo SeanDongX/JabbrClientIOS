@@ -21,7 +21,6 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *timestampLabel;
 @property (nonatomic, strong) UILabel *bodyLabel;
-@property (nonatomic, strong) UIImageView *imageContentView;
 
 @property (nonatomic, strong) CLAMessageParser *messageParser;
 

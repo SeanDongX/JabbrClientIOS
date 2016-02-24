@@ -21,6 +21,7 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 @property (nonatomic, strong) CLARoom *room;
 @property (nonatomic, strong) CLAUser *user;
 @property (nonatomic, strong) CLAMessage *message;
+@property (nonatomic, strong) UIImageView *imageContentView;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
 

@@ -76,3 +76,5 @@
 "%@ is typing" = "@%@ is typing...";
 "%@ & %@ are typing" = "@%@ & @%@ are typing...";
 "Several people are typing" = "Several people are typing...";
+"Cancel" = "Cancel";
+"Copy Text" = "Copy Text";

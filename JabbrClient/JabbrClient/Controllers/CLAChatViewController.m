@@ -31,6 +31,8 @@
 @property(nonatomic, strong) CLAUser *user;
 @property(nonatomic, strong) RLMArray<CLAUser *> *teamUsers;
 
+@property(nonatomic, strong) NSIndexPath *longPressedIndexPath;
+
 #pragma mark -
 #pragma mark - Slack View Controller components
 
@@ -181,27 +183,30 @@
 
 - (void)didLongPressCell:(UIGestureRecognizer *)gesture
 {
-    //#ifdef __IPHONE_8_0
-    //    if (SLK_IS_IOS8_AND_HIGHER && [UIAlertController class]) {
-    //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    //        alertController.modalPresentationStyle = UIModalPresentationPopover;
-    //        alertController.popoverPresentationController.sourceView = gesture.view.superview;
-    //        alertController.popoverPresentationController.sourceRect = gesture.view.frame;
-    //
-    //        [alertController addAction:[UIAlertAction actionWithTitle:@"Edit Message" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-    //            [self editCellMessage:gesture];
-    //        }]];
-    //
-    //        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:NULL]];
-    //
-    //        [self.navigationController presentViewController:alertController animated:YES completion:nil];
-    //    }
-    //    else {
-    //        [self editCellMessage:gesture];
-    //    }
-    //#else
-    //    [self editCellMessage:gesture];
-    //#endif
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        MessageTableViewCell *selectedCell = (MessageTableViewCell *)gesture.view;
+        self.longPressedIndexPath = selectedCell.indexPath;
+        CLAMessage *selectedMessage = [self getRoomMessages][selectedCell.indexPath.row];
+        
+        if (selectedMessage) {
+            MessageType type = [selectedMessage getType];
+            if (type == MessageTypeText) {
+                UIActionSheet *actionSheet =
+                [[UIActionSheet alloc] initWithTitle:nil
+                                            delegate:self
+                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                              destructiveButtonTitle:nil
+                                   otherButtonTitles:NSLocalizedString(@"Copy Text", nil), nil];
+                
+                actionSheet.tag = 2;
+                [self.view endEditing:YES];
+                [actionSheet showInView:self.view];
+            }
+        }
+    }
+}
+
+- (void)copyTableCellContent:(id)sender {
 }
 
 - (void)editCellMessage:(UIGestureRecognizer *)gesture
@@ -311,6 +316,7 @@
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:@"Take Photo", @"Choose From Library", nil];
     
+    actionSheet.tag = 1;
     [self.view endEditing:YES];
     [actionSheet showInView:self.view];
     
@@ -729,10 +735,24 @@
 #pragma mark Action Sheet Delegate Methods
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        [CLAMediaManager presentPhotoCamera:self canEdit:YES];
-    } else if (buttonIndex == 1) {
-        [CLAMediaManager presentPhotoLibrary:self canEdit:YES];
+    if (actionSheet.tag == 1) {
+        if (buttonIndex == 0) {
+            [CLAMediaManager presentPhotoCamera:self canEdit:YES];
+        } else if (buttonIndex == 1) {
+            [CLAMediaManager presentPhotoLibrary:self canEdit:YES];
+        }
+    } else if (actionSheet.tag == 2 && self.longPressedIndexPath) {
+        CLAMessage *selectedMessage = [self getRoomMessages][self.longPressedIndexPath.row];
+        self.longPressedIndexPath = nil;
+        
+        if (selectedMessage) {
+            if (buttonIndex == 0) {
+                MessageType type = [selectedMessage getType];
+                if (type == MessageTypeText) {
+                    [UIPasteboard generalPasteboard].string = selectedMessage.content;
+                }
+            }
+        }
     }
 }
 

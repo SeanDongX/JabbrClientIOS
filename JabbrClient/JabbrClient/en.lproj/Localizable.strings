@@ -73,3 +73,6 @@
 
 "Send" = "Send";
 "Type a message..." = "Type a message...";
+"%@ is typing" = "@%@ is typing...";
+"%@ & %@ are typing" = "@%@ & @%@ are typing...";
+"Several people are typing" = "Several people are typing...";

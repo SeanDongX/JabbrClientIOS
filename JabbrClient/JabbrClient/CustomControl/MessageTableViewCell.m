@@ -58,7 +58,7 @@
 }
 
 - (void)setContraints {
-    NSNumber *horizontalmargin = @5;
+    NSNumber *horizontalmargin = @10;
     NSNumber *verticalmargin = @10;
     NSNumber *timestampWith = @140;
     [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {

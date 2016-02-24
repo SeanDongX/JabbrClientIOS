@@ -52,7 +52,7 @@
 - (void)updateMessageKey:(NSString *)oldKey withNewKey:(NSString *)newKey;
 
 - (void)addOrUpdateMessagesWithData:(NSArray *)dictionaryArray
-                           formRoom:(NSString *)roomName
+                            forRoom:(NSNumber *)roomKey
                          completion:(void (^)(void))completionBlock;
 
 #pragma - Notification

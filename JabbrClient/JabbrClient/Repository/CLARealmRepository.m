@@ -191,9 +191,9 @@
 }
 
 - (void)addOrUpdateMessagesWithData:(NSArray *)dictionaryArray
-                           formRoom:(NSString *)roomName
+                            forRoom:(NSNumber *)roomKey
                          completion:(void (^)(void))completionBlock {
-    [self addOrUpdateObjects:[CLAMessage getFromDataArray:dictionaryArray forRoom:roomName]
+    [self addOrUpdateObjects:[CLAMessage getFromDataArray:dictionaryArray forRoom:roomKey]
                   completion:completionBlock];
 }
 

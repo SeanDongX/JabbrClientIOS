@@ -249,9 +249,14 @@ static bool isFirstAccess = YES;
     [self invokeHubMethod:@"Typing" withArgs:@[ room ] completionHandler:nil];
 }
 
-- (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room {
+- (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)roomName {
     
     if (messageId == nil) {
+        return;
+    }
+    
+    CLARoom *room = [self.dataRepository getRoomByNameInCurrentOrDefaultTeam:roomName];
+    if (!room) {
         return;
     }
     
@@ -266,10 +271,10 @@ static bool isFirstAccess = YES;
                 NSArray *messages = response;
                 if (messages != nil && messages.count > 0) {
                     [strongSelf.dataRepository addOrUpdateMessagesWithData:messages
-                                                                  formRoom:room
+                                                                   forRoom:room.key
                                                                 completion:^{
                                                                     __strong __typeof(&*weakSelf) strongSelfInner = weakSelf;
-                                                                    [strongSelfInner.delegate didLoadEarlierMessagesInRoom:room];
+                                                                    [strongSelfInner.delegate didLoadEarlierMessagesInRoom:roomName];
                                                                 }];
                 }
             }

@@ -587,7 +587,13 @@
         }
         
         CGFloat height = CGRectGetHeight(titleBounds);
-        height += CGRectGetHeight(bodyBounds);
+        
+        if ([message getType] == MessageTypeText) {
+            height += CGRectGetHeight(bodyBounds);
+        } else {
+            height += kMessageCellImageHeight;
+        }
+        
         height += 40.0;
         
         if (height < kMessageTableViewCellMinimumHeight) {

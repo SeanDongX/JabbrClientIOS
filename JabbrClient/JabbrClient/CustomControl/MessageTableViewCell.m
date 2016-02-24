@@ -13,10 +13,14 @@
 #import "CLARoom.h"
 #import "Constants.h"
 #import "CLAMessageParser.h"
+#import "Masonry.h"
 
 @interface MessageTableViewCell ()
 
 @property (nonatomic, strong) UIImageView *avatarView;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *timestampLabel;
+@property (nonatomic, strong) UILabel *bodyLabel;
 @property (nonatomic, strong) UIImageView *imageContentView;
 
 @property (nonatomic, strong) CLAMessageParser *messageParser;
@@ -41,6 +45,7 @@
 {
     [self.contentView addSubview:self.avatarView];
     [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.timestampLabel];
     [self.contentView addSubview:self.bodyLabel];
     [self.contentView addSubview:self.imageContentView];
 }
@@ -52,37 +57,43 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
-- (void)setContraints:(BOOL)isTextMessage {
+- (void)setContraints {
+    NSNumber *horizontalmargin = @5;
+    NSNumber *verticalmargin = @10;
+    NSNumber *timestampWith = @140;
+    [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView.mas_top).with.offset(verticalmargin.floatValue);
+        make.left.equalTo(self.contentView.mas_left).with.offset(horizontalmargin.floatValue);
+        make.width.equalTo(@(kMessageTableViewCellAvatarHeight));
+        make.height.equalTo(@(kMessageTableViewCellAvatarHeight));
+    }];
     
-    NSDictionary *views = @{@"avatarView": self.avatarView,
-                            @"titleLabel": self.titleLabel,
-                            @"bodyLabel": self.bodyLabel,
-                            @"imageContentView": self.imageContentView};
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView.mas_top).with.offset(verticalmargin.floatValue);
+        make.left.equalTo(self.avatarView.mas_right).with.offset(horizontalmargin.floatValue);
+        make.right.equalTo(self.contentView.mas_right).with.offset(-1 * timestampWith.floatValue);
+        make.height.equalTo(@20);
+    }];
     
-    NSDictionary *metrics = @{@"tumbSize": @(kMessageTableViewCellAvatarHeight),
-                              @"padding": @15,
-                              @"right": @10,
-                              @"left": @5};
+    [self.timestampLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView.mas_top).with.offset(verticalmargin.floatValue);
+        make.right.equalTo(self.contentView.mas_right).with.offset(-1 * horizontalmargin.floatValue);
+        make.width.equalTo(@(timestampWith.floatValue - 20));
+        make.height.equalTo(@20);
+    }];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[avatarView(<=tumbSize)]-right-[titleLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
+    [self.bodyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.titleLabel.mas_bottom).with.offset(verticalmargin.floatValue);
+        make.left.equalTo(self.avatarView.mas_right).with.offset(horizontalmargin.floatValue);
+        make.right.equalTo(self.contentView.mas_right).with.offset(-1 *horizontalmargin.floatValue);
+    }];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[avatarView(<=tumbSize)]-right-[bodyLabel(>=0)]-right-|" options:0 metrics:metrics views:views]];
-    
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[avatarView(<=tumbSize)]-right-[imageContentView(>=0,<=80)]-right-|" options:0 metrics:metrics views:views]];
-    
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[avatarView(<=tumbSize)]-(>=0)-|" options:0 metrics:metrics views:views]];
-    
-    
-    if ([self.reuseIdentifier isEqualToString:MessengerCellIdentifier]) {
-        if (isTextMessage == NO) {
-            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(20)]-left-[imageContentView(80)]-left-|" options:0 metrics:metrics views:views]];
-        } else {
-            [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-right-[titleLabel(20)]-left-[bodyLabel(>=0@999)]-left-|" options:0 metrics:metrics views:views]];
-        }
-    }
-    else {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel]|" options:0 metrics:metrics views:views]];
-    }
+    [self.imageContentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.titleLabel.mas_bottom).with.offset(verticalmargin.floatValue);
+        make.left.equalTo(self.avatarView.mas_right).with.offset(horizontalmargin.floatValue);
+        make.width.equalTo(@(kMessageCellImageWidth));
+        make.height.equalTo(@(kMessageCellImageHeight));
+    }];
 }
 
 #pragma mark - Setters
@@ -116,7 +127,6 @@
 
 - (void)setMessage:(CLAMessage *)message {
     if (message) {
-        self.titleLabel.text = [NSString stringWithFormat:@"%@ - %@", message.fromUserName, message.when.timeAgoSinceNow];
         
         if (message.fromUser && message.fromUser.initials) {
             self.avatarView.image = [JSQMessagesAvatarImageFactory
@@ -127,21 +137,48 @@
                                      diameter:30.0f].avatarImage;
         }
         
-        MessageType messageType = [self.messageParser getMessageType:message.content];
-        if (messageType == MessageTypeImage || messageType == MessageTypeDocument) {
-            [self setContraints:NO];
-            self.bodyLabel.text = @"";
-            
-            [self.messageParser getMessageData: message.content completionHandler:^(UIImage *image) {
-                self.imageContentView.image = image;
-            }];
-        }
-        else {
-            [self setContraints:YES];
-            
-            self.bodyLabel.text = message.content;
-            self.imageContentView.image = nil;
-        }
+        self.titleLabel.text = message.fromUserName;
+        [self setTimestamp:message];
+        [self setContent:message];
+    }
+}
+
+- (void)setTimestamp:(CLAMessage *)message {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    if (message.when.daysAgo > 1) {
+        [formatter setDateStyle:NSDateFormatterShortStyle];
+    } else {
+        [formatter setDateStyle:NSDateFormatterNoStyle];
+    }
+    
+    self.timestampLabel.text = [formatter stringFromDate:message.when];
+}
+
+- (void)setContent:(CLAMessage *)message {
+    MessageType messageType = [message getType];
+    if (messageType == MessageTypeImage || messageType == MessageTypeDocument) {
+        
+        self.bodyLabel.hidden = YES;
+        self.imageContentView.hidden = NO;
+        
+        [self setContraints];
+        self.bodyLabel.text = @"";
+        self.imageContentView.image = nil;
+        [self.messageParser getMessageData:message completionHandler:^(UIImage *image) {
+            self.imageContentView.image = image;
+        }];
+    }
+    else {
+        
+        self.bodyLabel.hidden = NO;
+        self.imageContentView.hidden = YES;
+        
+        [self setContraints];
+        
+        self.bodyLabel.text = message.content;
+        self.imageContentView.image = nil;
     }
 }
 
@@ -155,10 +192,25 @@
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.userInteractionEnabled = NO;
         _titleLabel.numberOfLines = 0;
-        _titleLabel.textColor = [UIColor grayColor];
+        _titleLabel.textColor = [Constants mainThemeContrastColor];
         _titleLabel.font = [UIFont boldSystemFontOfSize:[MessageTableViewCell defaultFontSize]];
     }
     return _titleLabel;
+}
+
+- (UILabel *)timestampLabel
+{
+    if (!_timestampLabel) {
+        _timestampLabel = [UILabel new];
+        _timestampLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _timestampLabel.backgroundColor = [UIColor clearColor];
+        _timestampLabel.userInteractionEnabled = NO;
+        _timestampLabel.numberOfLines = 0;
+        _timestampLabel.textAlignment = NSTextAlignmentRight;
+        _timestampLabel.textColor = [Constants mutedTextColor];
+        _timestampLabel.font = [UIFont systemFontOfSize:[MessageTableViewCell defaultFontSize] - 4 ];
+    }
+    return _timestampLabel;
 }
 
 - (UILabel *)bodyLabel

@@ -14,6 +14,22 @@
     return @"key";
 }
 
+- (MessageType)getType {
+    NSPredicate *textTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"https?:\\/\\/.*\\.(?:png|jpg)"];
+    
+    if (!self.content || [textTest evaluateWithObject:[self.content lowercaseString]]) {
+        return MessageTypeImage;
+    }
+    
+    textTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"https?:\\/\\/.*\\.(?:txt|md|js|doc|docx|xsl|xslx|ppt|pptx)"];
+    
+    if ([textTest evaluateWithObject:[self.content lowercaseString]]) {
+        return MessageTypeDocument;
+    }
+    
+    return MessageTypeText;
+}
+
 + (CLAMessage *)copyFromMessage:(CLAMessage *)existingMessage {
     CLAMessage *newMessage = [[CLAMessage alloc] init];
     newMessage.content = existingMessage.content;

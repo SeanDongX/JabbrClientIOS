@@ -118,6 +118,9 @@ FOUNDATION_EXPORT NSString *const kMimeTypeJpeg;
 
 FOUNDATION_EXPORT NSString *const kXLFormTextLabelColor;
 
+FOUNDATION_EXPORT int const kMessageCellImageWidth;
+FOUNDATION_EXPORT int const kMessageCellImageHeight;
+
 typedef NS_ENUM (NSInteger, RoomType) {
     RoomTypePulbic,
     RoomTypePrivate,
@@ -150,5 +153,5 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIColor *)mainThemeContrastColor;
 + (UIColor *)warningColor;
 + (UIColor *)backgroundColor;
-+ (UIColor *)incomingMessageBubbleBackgroundColor;
++ (UIColor *)mutedTextColor;
 @end

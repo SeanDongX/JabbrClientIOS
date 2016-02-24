@@ -22,9 +22,6 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
 @property (nonatomic, strong) CLAUser *user;
 @property (nonatomic, strong) CLAMessage *message;
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *bodyLabel;
-
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
 @property (nonatomic) BOOL usedForMessage;

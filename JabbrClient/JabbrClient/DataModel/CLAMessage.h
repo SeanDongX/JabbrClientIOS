@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Realm/Realm.h>
 #import "CLAUser.h"
+#import "Constants.h"
 
 @interface CLAMessage : RLMObject
 
@@ -19,6 +20,8 @@
 @property(nonatomic, strong) NSNumber<RLMInt> *roomKey;
 
 @property(nonatomic, strong) CLAUser *fromUser;
+
+- (MessageType)getType;
 
 + (CLAMessage *)copyFromMessage:(CLAMessage *)existingMessage;
 + (NSArray <CLAMessage *> *)getFromDataArray:(NSArray *)dictionaryArray forRoom:(NSNumber *)roomKey;

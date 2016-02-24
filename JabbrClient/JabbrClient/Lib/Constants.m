@@ -142,6 +142,9 @@ NSString *const kMimeTypeJpeg = @"image/jpeg";
 
 NSString *const kXLFormTextLabelColor = @"textLabel.color";
 
+int const kMessageCellImageWidth = 160;
+int const kMessageCellImageHeight = 90;
+
 + (UIImage *)menuIconImage {
     FAKIonIcons *iccon = [FAKIonIcons naviconIconWithSize:30];
     [iccon addAttribute:NSForegroundColorAttributeName
@@ -275,10 +278,10 @@ NSString *const kXLFormTextLabelColor = @"textLabel.color";
                            alpha:1];
 }
 
-+ (UIColor *)incomingMessageBubbleBackgroundColor {
-    return [UIColor colorWithRed:(223 / 255.0)
-                           green:(246 / 255.0)
-                            blue:(247 / 255.0)
++ (UIColor *)mutedTextColor {
+    return [UIColor colorWithRed:(158 / 255.0)
+                           green:(158 / 255.0)
+                            blue:(166 / 255.0)
                            alpha:1];
 }
 @end

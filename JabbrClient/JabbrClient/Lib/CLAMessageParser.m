@@ -11,13 +11,13 @@
 
 @implementation CLAMessageParser
 
-- (void)getMessageData:(NSString *)messageText completionHandler:(void (^)(UIImage *))completion {
-    switch ([self getMessageType:messageText]) {
+- (void)getMessageData:(CLAMessage *)message completionHandler:(void (^)(UIImage *))completion {
+    switch ([message getType]) {
         case MessageTypeImage:
-            return [self getPhotoData:messageText completionHandler:completion];
+            return [self getPhotoData:message.content completionHandler:completion];
             
         case MessageTypeDocument:
-            completion([self getDocumentData:messageText]);
+            completion([self getDocumentData:message.content]);
             return;
             
         default:
@@ -40,21 +40,5 @@
 
 - (UIImage *)getDocumentData:(NSString *)messageText {
     return [Constants documentIconLarge];
-}
-
-- (MessageType)getMessageType:(NSString *)text {
-    NSPredicate *textTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"https?:\\/\\/.*\\.(?:png|jpg)"];
-    
-    if ([textTest evaluateWithObject:[text lowercaseString]]) {
-        return MessageTypeImage;
-    }
-    
-    textTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"https?:\\/\\/.*\\.(?:txt|md|js|doc|docx|xsl|xslx|ppt|pptx)"];
-    
-    if ([textTest evaluateWithObject:[text lowercaseString]]) {
-        return MessageTypeDocument;
-    }
-    
-    return MessageTypeText;
 }
 @end

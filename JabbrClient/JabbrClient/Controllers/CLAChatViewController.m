@@ -168,79 +168,40 @@
 
 - (void)configureActionItems
 {
-    UIBarButtonItem *arrowItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_arrow_down"]
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:@selector(hideOrShowTextInputbar:)];
-    
-    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_editing"]
-                                                                 style:UIBarButtonItemStylePlain
-                                                                target:self
-                                                                action:@selector(editRandomMessage:)];
-    
-    UIBarButtonItem *appendItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_append"]
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:@selector(fillWithText:)];
-    
     UIBarButtonItem *pipItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_pic"]
                                                                 style:UIBarButtonItemStylePlain
                                                                target:self
                                                                action:@selector(togglePIPWindow:)];
     
-    self.navigationItem.rightBarButtonItems = @[arrowItem, pipItem, editItem, appendItem];
+    self.navigationItem.rightBarButtonItems = @[pipItem];
 }
 
 
 #pragma mark - Action Methods
 
-- (void)hideOrShowTextInputbar:(id)sender
-{
-    BOOL hide = !self.textInputbarHidden;
-    
-    UIImage *image = hide ?[UIImage imageNamed:@"icn_arrow_up"] :[UIImage imageNamed:@"icn_arrow_down"];
-    UIBarButtonItem *buttonItem = (UIBarButtonItem *)sender;
-    
-    [self setTextInputbarHidden:hide animated:YES];
-    [buttonItem setImage:image];
-}
-
-- (void)fillWithText:(id)sender
-{
-    if (self.textView.text.length == 0)
-    {
-        int sentences = (arc4random() % 4);
-        if (sentences <= 1) sentences = 1;
-        self.textView.text = @"";//[LoremIpsum sentencesWithNumber:sentences];
-    }
-    else {
-        [self.textView slk_insertTextAtCaretRange:[NSString stringWithFormat:@" %@", @""]];
-    }
-}
-
 - (void)didLongPressCell:(UIGestureRecognizer *)gesture
 {
-#ifdef __IPHONE_8_0
-    if (SLK_IS_IOS8_AND_HIGHER && [UIAlertController class]) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        alertController.modalPresentationStyle = UIModalPresentationPopover;
-        alertController.popoverPresentationController.sourceView = gesture.view.superview;
-        alertController.popoverPresentationController.sourceRect = gesture.view.frame;
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Edit Message" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self editCellMessage:gesture];
-        }]];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:NULL]];
-        
-        [self.navigationController presentViewController:alertController animated:YES completion:nil];
-    }
-    else {
-        [self editCellMessage:gesture];
-    }
-#else
-    [self editCellMessage:gesture];
-#endif
+    //#ifdef __IPHONE_8_0
+    //    if (SLK_IS_IOS8_AND_HIGHER && [UIAlertController class]) {
+    //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    //        alertController.modalPresentationStyle = UIModalPresentationPopover;
+    //        alertController.popoverPresentationController.sourceView = gesture.view.superview;
+    //        alertController.popoverPresentationController.sourceRect = gesture.view.frame;
+    //
+    //        [alertController addAction:[UIAlertAction actionWithTitle:@"Edit Message" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    //            [self editCellMessage:gesture];
+    //        }]];
+    //
+    //        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:NULL]];
+    //
+    //        [self.navigationController presentViewController:alertController animated:YES completion:nil];
+    //    }
+    //    else {
+    //        [self editCellMessage:gesture];
+    //    }
+    //#else
+    //    [self editCellMessage:gesture];
+    //#endif
 }
 
 - (void)editCellMessage:(UIGestureRecognizer *)gesture
@@ -249,29 +210,6 @@
     self.editingMessage = [self getRoomMessages][cell.indexPath.row];
     [self editText:self.editingMessage.content];
     [self.tableView scrollToRowAtIndexPath:cell.indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-}
-
-- (void)editRandomMessage:(id)sender
-{
-    int sentences = (arc4random() % 10);
-    if (sentences <= 1) sentences = 1;
-    
-    //[self editText:[LoremIpsum sentencesWithNumber:sentences]];
-}
-
-- (void)editLastMessage:(id)sender
-{
-    if (self.textView.text.length > 0) {
-        return;
-    }
-    
-    NSIndexPath *lasetIndexPath = [self getLasetIndexPath];
-    CLAMessage *lastMessage = [[self getRoomMessages] objectAtIndex:lasetIndexPath.row];
-    
-    [self editText:lastMessage.content];
-    
-    [self.tableView scrollToRowAtIndexPath:lasetIndexPath
-                          atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 - (void)togglePIPWindow:(id)sender
@@ -400,16 +338,6 @@
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     [super didPressRightButton:sender];
-}
-
-- (void)didPressArrowKey:(UIKeyCommand *)keyCommand
-{
-    if ([keyCommand.input isEqualToString:UIKeyInputUpArrow] && self.textView.text.length == 0) {
-        [self editLastMessage:nil];
-    }
-    else {
-        [super didPressArrowKey:keyCommand];
-    }
 }
 
 - (NSString *)keyForTextCaching

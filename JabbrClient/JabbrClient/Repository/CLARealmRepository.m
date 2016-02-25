@@ -104,6 +104,10 @@
 
 #pragma - Room
 
+- (CLARoom *)getRoom:(NSNumber *)roomKey {
+    return [CLARoom objectsWhere:@"key = %d", roomKey.intValue].firstObject;
+}
+
 - (CLARoom *)getRoomByNameInCurrentOrDefaultTeam:(NSString *)roomName {
     CLATeam *team = [self getCurrentOrDefaultTeam];
     if (team && team.rooms) {

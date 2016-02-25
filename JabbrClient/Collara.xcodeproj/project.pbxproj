@@ -21,7 +21,6 @@
 		142FFA6B1AFD4B3C0076DB6E /* CLAUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FFA6A1AFD4B3C0076DB6E /* CLAUtility.m */; };
 		143053A41C787468004C3602 /* JSQMessagesAvatarImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 143053A11C787468004C3602 /* JSQMessagesAvatarImage.m */; };
 		143053A51C787468004C3602 /* JSQMessagesAvatarImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 143053A31C787468004C3602 /* JSQMessagesAvatarImageFactory.m */; };
-		1430E00C1AF6DFF300F2D974 /* CLARoomViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */; };
 		1433D8D81C24AD7900DE4F33 /* CLATaskWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1433D8D71C24AD7900DE4F33 /* CLATaskWebViewController.m */; };
 		1445C57D1C76A2E500ED586F /* MessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1445C57C1C76A2E500ED586F /* MessageTextView.m */; };
 		1445C5831C76A64D00ED586F /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1445C5821C76A64D00ED586F /* MessageTableViewCell.m */; };
@@ -116,8 +115,6 @@
 		143053A11C787468004C3602 /* JSQMessagesAvatarImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSQMessagesAvatarImage.m; path = CustomControl/JSQMessagesAvatarImage.m; sourceTree = "<group>"; };
 		143053A21C787468004C3602 /* JSQMessagesAvatarImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSQMessagesAvatarImageFactory.h; path = CustomControl/JSQMessagesAvatarImageFactory.h; sourceTree = "<group>"; };
 		143053A31C787468004C3602 /* JSQMessagesAvatarImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSQMessagesAvatarImageFactory.m; path = CustomControl/JSQMessagesAvatarImageFactory.m; sourceTree = "<group>"; };
-		1430E00A1AF6DFF300F2D974 /* CLARoomViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLARoomViewModel.h; path = ViewModel/CLARoomViewModel.h; sourceTree = "<group>"; };
-		1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLARoomViewModel.m; path = ViewModel/CLARoomViewModel.m; sourceTree = "<group>"; };
 		1433D8D61C24AD7900DE4F33 /* CLATaskWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLATaskWebViewController.h; sourceTree = "<group>"; };
 		1433D8D71C24AD7900DE4F33 /* CLATaskWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLATaskWebViewController.m; sourceTree = "<group>"; };
 		1445C57B1C76A2E500ED586F /* MessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageTextView.h; path = CustomControl/MessageTextView.h; sourceTree = "<group>"; };
@@ -392,7 +389,6 @@
 				145067D71C2D8992007EE873 /* Protocol */,
 				142046401AD1EC58006143D5 /* Lib */,
 				14679E931AC8832900316C9C /* DataModel */,
-				14BEBC3C1AF2E63600F2470C /* ViewModel */,
 				1419E8E31B1E26CB0057CAC5 /* Repository */,
 				14F8677C1B020C5D00CF751F /* CustomControl */,
 				149F994A1AC4D0FD00525EA7 /* StoryBoards */,
@@ -470,15 +466,6 @@
 				142FF7EB1C6AA732007E1DAD /* CLAChatViewController.m */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		14BEBC3C1AF2E63600F2470C /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				1430E00A1AF6DFF300F2D974 /* CLARoomViewModel.h */,
-				1430E00B1AF6DFF300F2D974 /* CLARoomViewModel.m */,
-			);
-			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		14E4C7071C271AFA00FC35F9 /* DataSource */ = {
@@ -764,7 +751,6 @@
 				144D9EE91AF03528005EBAD2 /* CLATeam.m in Sources */,
 				146D83D91AF17B1E00855C59 /* CLASignUpViewController.m in Sources */,
 				14679E961AC8838900316C9C /* ObjectThread.m in Sources */,
-				1430E00C1AF6DFF300F2D974 /* CLARoomViewModel.m in Sources */,
 				143053A51C787468004C3602 /* JSQMessagesAvatarImageFactory.m in Sources */,
 				1404B5361AF118BB00363178 /* CLASignalRMessageClient.m in Sources */,
 				14B6FB551ACB4CF500E5B5A5 /* DocumentViewController.m in Sources */,

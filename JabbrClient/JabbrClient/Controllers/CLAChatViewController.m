@@ -19,6 +19,8 @@
 #import "CLAUtility.h"
 #import "CLAMediaManager.h"
 #import "CLAWebApiClient.h"
+#import "CLATopicInfoViewController.h"
+#import "CLATaskWebViewController.h"
 
 @interface CLAChatViewController ()
 
@@ -31,7 +33,7 @@
 @property(nonatomic, strong) RLMArray<CLAUser *> *teamUsers;
 
 @property(nonatomic, strong) NSIndexPath *selectedCellIndexPath;
-
+@property(nonatomic, strong) CLATaskWebViewController *taskViewController;
 #pragma mark -
 #pragma mark - Slack View Controller components
 
@@ -130,6 +132,31 @@
     self.messageClient = [CLASignalRMessageClient sharedInstance];
     self.messageClient.delegate = self;
     [self.messageClient connect];
+}
+
+#pragma mark -
+#pragma mark - Public Methods
+
+- (void)showInfoView {
+    CLATopicInfoViewController *topicInfoView =
+    [[CLATopicInfoViewController alloc] initWithRoom:self.room];
+    [self.navigationController pushViewController:topicInfoView animated:YES];
+}
+
+- (void)showCreateTeamView {
+    SlidingViewController *slidingViewController =
+    (SlidingViewController *)self.slidingViewController;
+    [slidingViewController switchToCreateTeamView:nil
+                             sourceViewIdentifier:nil];
+}
+
+- (void)showTaskView {
+    if (self.taskViewController == nil) {
+        self.taskViewController = [[CLATaskWebViewController alloc] init];
+    }
+    
+    [self.taskViewController switchRoom:self.room.name];
+    [self.navigationController pushViewController:self.taskViewController animated:YES];
 }
 
 #pragma mark -

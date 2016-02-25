@@ -23,24 +23,18 @@ NSString *const kInvitePrefix = @"Invite-";
 
 @interface CLATopicInfoViewController ()
 
-@property(strong, nonatomic) CLARoomViewModel *roomViewModel;
+@property(strong, nonatomic) CLARoom *room;
+@property(strong, nonatomic) id<CLAMessageClient> messageClient;
 
 @end
 
 @implementation CLATopicInfoViewController
 
-- (instancetype)init {
+- (instancetype)initWithRoom:(CLARoom *)room {
     self = [super init];
     if (self) {
-        self.form = [self getForm];
-    }
-    return self;
-}
-
-- (instancetype)initWithRoom:(CLARoomViewModel *)roomViewModel {
-    self = [super init];
-    if (self) {
-        self.roomViewModel = roomViewModel;
+        self.messageClient = [CLASignalRMessageClient sharedInstance];
+        self.room = room;
         self.form = [self getForm];
     }
     return self;
@@ -69,7 +63,7 @@ NSString *const kInvitePrefix = @"Invite-";
     XLFormRowDescriptor *row;
     
     NSArray<CLAUser *> *allUsers =
-    [CLAUtility getArrayFromRLMArray: [[CLASignalRMessageClient sharedInstance].dataRepository getCurrentOrDefaultTeam]
+    [CLAUtility getArrayFromRLMArray: [self.messageClient.dataRepository getCurrentOrDefaultTeam]
      .users];
     NSMutableArray<CLAUser *> *notMembers = [NSMutableArray array];
     [notMembers addObjectsFromArray:allUsers];
@@ -81,7 +75,8 @@ NSString *const kInvitePrefix = @"Invite-";
     row = [XLFormRowDescriptor
            formRowDescriptorWithTag:kTopicName
            rowType:XLFormRowDescriptorTypeName
-           title:[self.roomViewModel.room getHandle]];
+           title:self.room.displayName];
+    
     row.disabled = @YES;
     [section addFormRow:row];
     
@@ -93,12 +88,12 @@ NSString *const kInvitePrefix = @"Invite-";
     row.action.formSelector = @selector(leavelTopic:);
     [section addFormRow:row];
     
-    if (self.roomViewModel && self.roomViewModel.users) {
+    if (self.room && self.room.users) {
         section = [XLFormSectionDescriptor
                    formSectionWithTitle:NSLocalizedString(@"Members", nil)];
         [form addFormSection:section];
         
-        for (CLAUser *user in self.roomViewModel.users) {
+        for (CLAUser *user in self.room.users) {
             for (CLAUser *innerUser in allUsers) {
                 if ([innerUser.name isEqualToString:user.name]) {
                     [notMembers removeObject:innerUser];
@@ -144,8 +139,7 @@ NSString *const kInvitePrefix = @"Invite-";
 }
 
 - (void)leavelTopic:(id)sender {
-    [[CLASignalRMessageClient sharedInstance]
-     leaveRoom:self.roomViewModel.room.name];
+    [self.messageClient leaveRoom:self.room.name];
     [CLANotificationManager
      showText:NSLocalizedString(@"You will not receive notification "
                                 @"about this topic any more.",
@@ -170,7 +164,7 @@ NSString *const kInvitePrefix = @"Invite-";
                     matchFound = true;
                     [[CLASignalRMessageClient sharedInstance]
                      inviteUser:username
-                     inRoom:self.roomViewModel.room.name];
+                     inRoom:self.room.name];
                 }
             }
         }

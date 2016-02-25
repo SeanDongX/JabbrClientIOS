@@ -14,4 +14,6 @@
 
 - (void)setActiveRoom:(CLARoom *)room;
 
+- (void)showTaskView;
+- (void)showInfoView;
 @end

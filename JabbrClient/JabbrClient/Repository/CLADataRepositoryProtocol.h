@@ -35,7 +35,7 @@
 - (void)joinUser:(NSString *)username toRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
 
 #pragma - Room
-
+- (CLARoom *)getRoom:(NSNumber *)roomKey;
 - (CLARoom *)getRoomByNameInCurrentOrDefaultTeam:(NSString *)roomName;
 - (CLARoom *)getRoom:(NSString *)roomName inTeam:(NSNumber *)teamKey;
 - (void)addRoom:(CLARoom *)room inTeam:(NSNumber *)teamKey;

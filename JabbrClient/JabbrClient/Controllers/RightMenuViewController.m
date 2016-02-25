@@ -89,12 +89,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (chatViewController != nil) {
         [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
         
-        //        if (indexPath.item == 0) {
-        //            [chatViewController showTaskView];
-        //        }
-        //        else {
-        //            [chatViewController showInfoView];
-        //        }
+        if (indexPath.item == 0) {
+            [chatViewController showTaskView];
+        }
+        else {
+            [chatViewController showInfoView];
+        }
         
         [self.slidingViewController resetTopViewAnimated:YES];
     }

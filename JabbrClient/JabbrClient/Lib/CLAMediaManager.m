@@ -12,6 +12,7 @@
 #import "JTSImageInfo.h"
 #import "JTSImageViewController.h"
 #import "Constants.h"
+#import "CLAMessageParser.h"
 //#import "JSQPhotoMediaItem.h"
 //#import "CLADisplayMessageFactory.h"
 
@@ -80,33 +81,23 @@
     return YES;
 }
 
-+ (void)openMediaMessage:(CLAMessage *)message from:(id)target {
-    //MessageType messageType = [CLADisplayMessageFactory getMessageType:message.mediaUrl];
-    
-    //    if (messageType == MessageTypeImage && message.media != nil) {
-    //        JSQPhotoMediaItem *photoItem = message.media;
-    //        if (photoItem != nil && photoItem.image != nil) {
-    //            [CLAMediaManager showImage: photoItem.image from:target];
-    //        }
-    //    }
-    //    else if (messageType == MessageTypeDocument) {
-    //        if (message.mediaUrl != nil) {
-    //            [CLAMediaManager openDocument:message.mediaUrl];
-    //        }
-    //    }
-    
-}
-
-+ (void)showImage:(UIImage*)image from:(id)target {
-    
-    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-    imageInfo.image = image;
-    JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
-                                           initWithImageInfo:imageInfo
-                                           mode:JTSImageViewControllerMode_Image
-                                           backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
-    
-    [imageViewer showFromViewController:target transition:JTSImageViewControllerTransition_FromOriginalPosition];
++ (void)showImage:(CLAMessage*)message from:(id)target {
+    CLAMessageParser *messageParser = [[CLAMessageParser alloc] init];
+    [messageParser getMessageData: message completionHandler:^(UIImage *image) {
+        if (!image) {
+            return;
+        }
+        
+        JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+        imageInfo.image = image;
+        JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                               initWithImageInfo:imageInfo
+                                               mode:JTSImageViewControllerMode_Image
+                                               backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+        
+        [imageViewer showFromViewController:target transition:JTSImageViewControllerTransition_FromOriginalPosition];
+        
+    }];
 }
 
 + (void)openDocument:(NSString *)mediaUrl {

@@ -30,7 +30,7 @@
 @property(nonatomic, strong) CLAUser *user;
 @property(nonatomic, strong) RLMArray<CLAUser *> *teamUsers;
 
-@property(nonatomic, strong) NSIndexPath *longPressedIndexPath;
+@property(nonatomic, strong) NSIndexPath *selectedCellIndexPath;
 
 #pragma mark -
 #pragma mark - Slack View Controller components
@@ -161,7 +161,6 @@
 - (void)commonInit
 {
     [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadData) name:UIContentSizeCategoryDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputbarDidMove:) name:SLKTextInputbarDidMoveNotification object:nil];
     [self registerClassForTextView:[MessageTextView class]];
 }
 
@@ -171,7 +170,7 @@
 {
     if (gesture.state == UIGestureRecognizerStateBegan) {
         MessageTableViewCell *selectedCell = (MessageTableViewCell *)gesture.view;
-        self.longPressedIndexPath = selectedCell.indexPath;
+        self.selectedCellIndexPath = selectedCell.indexPath;
         CLAMessage *selectedMessage = [self getRoomMessages][selectedCell.indexPath.row];
         
         if (selectedMessage) {
@@ -187,6 +186,21 @@
                 actionSheet.tag = 2;
                 [self.view endEditing:YES];
                 [actionSheet showInView:self.view];
+            }
+        }
+    }
+}
+
+- (void)didTapCell:(UIGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateEnded) {
+        MessageTableViewCell *selectedCell = (MessageTableViewCell *)gesture.view;
+        self.selectedCellIndexPath = selectedCell.indexPath;
+        CLAMessage *selectedMessage = [self getRoomMessages][selectedCell.indexPath.row];
+        
+        if (selectedMessage) {
+            MessageType type = [selectedMessage getType];
+            if (type == MessageTypeImage) {
+                [CLAMediaManager showImage:selectedMessage from:self];
             }
         }
     }
@@ -396,6 +410,9 @@
     if (!cell.textLabel.text) {
         UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLongPressCell:)];
         [cell addGestureRecognizer:longPress];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapCell:)];
+        [cell addGestureRecognizer:tap];
     }
     
     CLAMessage *message = [self getRoomMessages][indexPath.row];
@@ -672,9 +689,9 @@
         } else if (buttonIndex == 1) {
             [CLAMediaManager presentPhotoLibrary:self canEdit:YES];
         }
-    } else if (actionSheet.tag == 2 && self.longPressedIndexPath) {
-        CLAMessage *selectedMessage = [self getRoomMessages][self.longPressedIndexPath.row];
-        self.longPressedIndexPath = nil;
+    } else if (actionSheet.tag == 2 && self.selectedCellIndexPath) {
+        CLAMessage *selectedMessage = [self getRoomMessages][self.selectedCellIndexPath.row];
+        self.selectedCellIndexPath = nil;
         
         if (selectedMessage) {
             if (buttonIndex == 0) {

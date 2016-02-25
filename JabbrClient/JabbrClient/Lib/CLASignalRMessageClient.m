@@ -344,26 +344,26 @@ static bool isFirstAccess = YES;
 }
 
 
-- (void)setTyping:(NSArray *)data {
+- (void)setTyping:(NSDictionary *)data {
     if (!data && data.count < 2) {
         return;
     }
     
-    NSDictionary *userDictionary = (NSDictionary *)data[0];
+    NSDictionary *userDictionary = data;
     if (userDictionary && [userDictionary objectForKey:@"Name"]) {
-        NSString *room = (NSString *)data[1];
+        NSString *room = @"";
         NSString *user = [userDictionary objectForKey:@"Name"];
         
         [self.delegate didReceiveTypingFromUser:user inRoom:room];
     }
 }
 
-- (void)roomLoaded:(NSArray *)data {
+- (void)roomLoaded:(NSDictionary *)data {
     if (data == nil || data.count == 0) {
         return;
     }
     
-    NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
+    NSDictionary *roomInfoDictionary = data;
     NSString *room = [roomInfoDictionary objectForKey:@"Name"];
     
     if (roomInfoDictionary == nil || roomInfoDictionary == (id)[NSNull null]) {
@@ -379,12 +379,12 @@ static bool isFirstAccess = YES;
                                        }];
 }
 
-- (void)joinRoomReceived:(NSArray *)data {
+- (void)joinRoomReceived:(NSDictionary *)data {
     if (data == nil) {
         return;
     }
     
-    NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
+    NSDictionary *roomInfoDictionary = data;
     CLARoom *room = [[CLARoom alloc] init];
     [CLARoom getFromData:roomInfoDictionary];
     
@@ -403,12 +403,12 @@ static bool isFirstAccess = YES;
     [self.delegate didReceiveJoinRoom:room.name andUpdateRoom: NO];
 }
 
-- (void)updateRoomReceived:(NSArray *)data {
+- (void)updateRoomReceived:(NSDictionary *)data {
     if (data == nil) {
         return;
     }
     
-    NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
+    NSDictionary *roomInfoDictionary = data;
     CLARoom *room = [CLARoom getFromData:roomInfoDictionary];
     NSArray *roomsArray = [NSArray arrayWithObject:roomInfoDictionary];
     

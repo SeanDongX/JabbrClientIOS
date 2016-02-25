@@ -15,5 +15,5 @@
 + (BOOL) presentPhotoCamera:(id)target canEdit:(BOOL)canEdit;
 + (BOOL) presentPhotoLibrary:(id)target canEdit:(BOOL)canEdit;
 
-+ (void) openMediaMessage:(CLAMessage *)message from:(id)target;
++ (void)showImage:(CLAMessage*)message from:(id)target;
 @end

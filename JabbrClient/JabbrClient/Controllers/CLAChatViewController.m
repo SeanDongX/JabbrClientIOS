@@ -36,7 +36,6 @@
 #pragma mark - Slack View Controller components
 
 @property (nonatomic, strong) NSArray *searchResult;
-@property (nonatomic, strong) UIWindow *pipWindow;
 @property (nonatomic, weak) CLAMessage *editingMessage;
 
 @end
@@ -123,12 +122,6 @@
                                                                    target:self
                                                                    action:@selector(showRightMenu)];
     optionsItem.tintColor = [UIColor whiteColor];
-    
-    UIBarButtonItem *pipItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_pic"]
-                                                                style:UIBarButtonItemStylePlain
-                                                               target:self
-                                                               action:@selector(togglePIPWindow:)];
-    
     self.navigationItem.rightBarButtonItems = @[optionsItem];
 }
 
@@ -209,61 +202,6 @@
     [self editText:self.editingMessage.content];
     [self.tableView scrollToRowAtIndexPath:cell.indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
-
-- (void)togglePIPWindow:(id)sender
-{
-    if (!_pipWindow) {
-        [self showPIPWindow:sender];
-    }
-    else {
-        [self hidePIPWindow:sender];
-    }
-}
-
-- (void)showPIPWindow:(id)sender
-{
-    CGRect frame = CGRectMake(CGRectGetWidth(self.view.frame) - 60.0, 0.0, 50.0, 50.0);
-    frame.origin.y = CGRectGetMinY(self.textInputbar.frame) - 60.0;
-    
-    _pipWindow = [[UIWindow alloc] initWithFrame:frame];
-    _pipWindow.backgroundColor = [UIColor blackColor];
-    _pipWindow.layer.cornerRadius = 10.0;
-    _pipWindow.layer.masksToBounds = YES;
-    _pipWindow.hidden = NO;
-    _pipWindow.alpha = 0.0;
-    
-    [[UIApplication sharedApplication].keyWindow addSubview:_pipWindow];
-    
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         _pipWindow.alpha = 1.0;
-                     }];
-}
-
-- (void)hidePIPWindow:(id)sender
-{
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         _pipWindow.alpha = 0.0;
-                     }
-                     completion:^(BOOL finished) {
-                         _pipWindow.hidden = YES;
-                         _pipWindow = nil;
-                     }];
-}
-
-- (void)textInputbarDidMove:(NSNotification *)note
-{
-    if (!_pipWindow) {
-        return;
-    }
-    
-    CGRect frame = self.pipWindow.frame;
-    frame.origin.y = [note.userInfo[@"origin"] CGPointValue].y - 60.0;
-    
-    self.pipWindow.frame = frame;
-}
-
 
 #pragma mark - Overriden Methods
 

@@ -23,7 +23,6 @@
 @interface CLAChatViewController ()
 
 @property(weak, nonatomic) IBOutlet UIBarButtonItem *leftMenuButton;
-@property(weak, nonatomic) IBOutlet UIBarButtonItem *rightMenuButton;
 
 @property(nonatomic, strong) id<CLAMessageClient> messageClient;
 
@@ -53,8 +52,6 @@
     [super viewDidLoad];
     [self initData];
     [self initMenu];
-    
-    [self configureActionItems];
     
     // SLKTVC's configuration
     self.bounces = YES;
@@ -121,11 +118,18 @@
     self.leftMenuButton.target = self;
     self.leftMenuButton.action = @selector(showLeftMenu);
     
-    [self.rightMenuButton setTitle:@""];
-    [self.rightMenuButton setWidth:30];
-    [self.rightMenuButton setImage:[Constants optionsIconImage]];
-    self.rightMenuButton.target = self;
-    self.rightMenuButton.action = @selector(showRightMenu);
+    UIBarButtonItem *optionsItem = [[UIBarButtonItem alloc] initWithImage:[Constants optionsIconImage]
+                                                                    style:UIBarButtonItemStylePlain
+                                                                   target:self
+                                                                   action:@selector(showRightMenu)];
+    optionsItem.tintColor = [UIColor whiteColor];
+    
+    UIBarButtonItem *pipItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_pic"]
+                                                                style:UIBarButtonItemStylePlain
+                                                               target:self
+                                                               action:@selector(togglePIPWindow:)];
+    
+    self.navigationItem.rightBarButtonItems = @[optionsItem];
 }
 
 
@@ -167,17 +171,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputbarDidMove:) name:SLKTextInputbarDidMoveNotification object:nil];
     [self registerClassForTextView:[MessageTextView class]];
 }
-
-- (void)configureActionItems
-{
-    UIBarButtonItem *pipItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_pic"]
-                                                                style:UIBarButtonItemStylePlain
-                                                               target:self
-                                                               action:@selector(togglePIPWindow:)];
-    
-    self.navigationItem.rightBarButtonItems = @[pipItem];
-}
-
 
 #pragma mark - Action Methods
 

@@ -77,9 +77,6 @@
 /* Class = "UITextField"; placeholder = "Team Name"; ObjectID = "dg4-Nx-u52"; */
 "dg4-Nx-u52.placeholder" = "Team Name";
 
-/* Class = "UIBarButtonItem"; title = "Docs"; ObjectID = "eIt-t0-87j"; */
-"eIt-t0-87j.title" = "Docs";
-
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "eoW-RA-sJz"; */
 "eoW-RA-sJz.placeholder" = "Password";
 

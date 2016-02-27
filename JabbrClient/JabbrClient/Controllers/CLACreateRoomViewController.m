@@ -209,7 +209,7 @@
     [searchBar resignFirstResponder];
     
     CGRect f = self.view.frame;
-    f.origin.y = kStatusBarHeight;
+    f.origin.y = 0;
     [self.rootScrollView setFrame:f];
 }
 

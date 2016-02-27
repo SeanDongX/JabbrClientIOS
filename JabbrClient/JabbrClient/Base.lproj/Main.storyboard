@@ -792,7 +792,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="78K-8C-dfd" userLabel="UpperView">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="280"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create a new topic" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urC-OO-6Jd">
                                                         <rect key="frame" x="32" y="70" width="256" height="20"/>
@@ -847,14 +847,14 @@
                                                     <constraint firstItem="urC-OO-6Jd" firstAttribute="top" secondItem="78K-8C-dfd" secondAttribute="top" constant="70" id="Phe-cV-mni"/>
                                                     <constraint firstItem="lRr-MZ-gLy" firstAttribute="width" secondItem="urC-OO-6Jd" secondAttribute="width" id="R6z-fb-Fvg"/>
                                                     <constraint firstItem="9yc-pk-ljP" firstAttribute="top" secondItem="lRr-MZ-gLy" secondAttribute="bottom" constant="21" id="aGE-kg-w9w"/>
-                                                    <constraint firstAttribute="height" constant="280" id="flh-Lh-dGV"/>
+                                                    <constraint firstAttribute="height" constant="250" id="flh-Lh-dGV"/>
                                                     <constraint firstItem="9yc-pk-ljP" firstAttribute="width" secondItem="urC-OO-6Jd" secondAttribute="width" id="ltE-WD-EXx"/>
                                                     <constraint firstItem="P6Z-Tn-z7G" firstAttribute="top" secondItem="urC-OO-6Jd" secondAttribute="bottom" constant="18" id="tZW-X5-s18"/>
                                                     <constraint firstItem="urC-OO-6Jd" firstAttribute="centerX" secondItem="78K-8C-dfd" secondAttribute="centerX" id="xx0-ia-edc"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vVP-aS-62A" userLabel="LowerView">
-                                                <rect key="frame" x="0.0" y="280" width="320" height="400"/>
+                                                <rect key="frame" x="0.0" y="250" width="320" height="400"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or join an existing topic" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W3W-9R-R8t">
                                                         <rect key="frame" x="0.0" y="8" width="320" height="20"/>

@@ -43,6 +43,8 @@
     [self setupFormItem];
     [self updateConstraints];
     self.topicNameTextField.delegate = self;
+    self.searchBar.showsCancelButton = YES;
+    self.searchBar.delegate = self;
 }
 
 - (void)setupNavBar {
@@ -192,6 +194,24 @@
 
 #pragma mark -
 #pragma Search Bar Delegate Methods
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    CGRect f = self.view.frame;
+    f.origin.y = -1 * self.lowerViewContainer.frame.origin.y + kStatusBarHeight;
+    [self.rootScrollView setFrame:f];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    
+    CGRect f = self.view.frame;
+    f.origin.y = kStatusBarHeight;
+    [self.rootScrollView setFrame:f];
+}
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)text {
     if (text.length == 0) {

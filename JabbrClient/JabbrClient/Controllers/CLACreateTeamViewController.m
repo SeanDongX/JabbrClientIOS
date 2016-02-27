@@ -27,6 +27,7 @@
 @property(weak, nonatomic) IBOutlet UITextField *teamNameCreateTextField;
 @property(weak, nonatomic) IBOutlet UITextField *teamNameJoinTextField;
 
+@property (weak, nonatomic) IBOutlet UIView *contentBottomView;
 @property(strong, nonatomic) UIAlertView *alertView;
 
 @end
@@ -163,6 +164,44 @@ replacementString:(NSString *)string {
     return YES;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField == self.teamNameJoinTextField) {
+        [self raiseContent];
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    if (textField == self.teamNameCreateTextField) {
+        [self.teamNameJoinTextField becomeFirstResponder];
+        [self raiseContent];
+    } else {
+        [self.teamNameCreateTextField becomeFirstResponder];
+        [self restoreContent];
+    }
+    return YES;
+}
+
+- (void)raiseContent {
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect f = self.contentBottomView.frame;
+        f.origin.y = 0;
+        [self.contentBottomView setFrame:f];
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)restoreContent {
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect f = self.contentBottomView.frame;
+        f.origin.y = f.size.height;
+        [self.contentBottomView setFrame:f];
+    } completion:^(BOOL finished) {
+    }];
+}
 #pragma mark -
 #pragma mark Alert View Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

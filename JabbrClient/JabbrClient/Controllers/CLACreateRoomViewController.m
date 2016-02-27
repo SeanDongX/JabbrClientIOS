@@ -67,7 +67,7 @@
                                     action:@selector(closeButtonClicked:)];
     [closeButton setTintColor:[UIColor whiteColor]];
     
-    navItem.leftBarButtonItem = closeButton;
+    navItem.rightBarButtonItem = closeButton;
     
     [self.view addSubview:navBar];
 }
@@ -196,21 +196,23 @@
 #pragma Search Bar Delegate Methods
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    CGRect f = self.view.frame;
-    f.origin.y = -1 * self.lowerViewContainer.frame.origin.y + kStatusBarHeight;
-    [self.rootScrollView setFrame:f];
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect f = self.view.frame;
+        f.origin.y = -1 * self.lowerViewContainer.frame.origin.y + kStatusBarHeight;
+        [self.rootScrollView setFrame:f];
+    } completion:^(BOOL finished) {
+    }];
 }
 
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    
-}
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
-    
-    CGRect f = self.view.frame;
-    f.origin.y = 0;
-    [self.rootScrollView setFrame:f];
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect f = self.view.frame;
+        f.origin.y = 0;
+        [self.rootScrollView setFrame:f];
+    } completion:^(BOOL finished) {
+    }];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)text {
@@ -259,6 +261,16 @@
     cell.selectedBackgroundView = backgroundView;
     
     return cell;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    if (textField == self.topicNameTextField) {
+        [self.searchBar becomeFirstResponder];
+    }
+    
+    return YES;
 }
 
 #pragma mark - Table Section

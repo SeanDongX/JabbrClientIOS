@@ -12,6 +12,8 @@
 @interface SlidingViewController : ECSlidingViewController
 @property NSMutableDictionary *mainViewControllersCache;
 
++ (SlidingViewController *)getAppTopViewController;
+
 - (UINavigationController *)getNavigationControllerWithKeyIdentifier:
 (NSString *)keyIdentifier;
 - (UINavigationController *)setTopNavigationControllerWithKeyIdentifier:

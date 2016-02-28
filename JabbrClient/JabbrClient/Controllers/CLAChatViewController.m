@@ -658,8 +658,7 @@
 }
 
 - (void)didReceiveJoinRoom:(NSString *)room andUpdateRoom:(BOOL)update {
-    if (self.room == nil ||
-        (room != nil && [self.room.name isEqual:room])) {
+    if (self.room != nil && [self.room.name isEqual:room]) {
         return;
     }
     
@@ -667,12 +666,15 @@
     // view or not
     CLARoom *newRoom = [self.messageClient.dataRepository getRoom:room inTeam:[UserDataManager getTeam].key];
     
-    //TODO: add room to left menu
     if (update != NO) {
         [self sendTeamUpdatedEventNotification];
     }
     
     SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
+    if (!slidingViewController) {
+        slidingViewController = [SlidingViewController getAppTopViewController];
+    }
+    
     if (slidingViewController != nil) {
         [slidingViewController switchToRoom:newRoom];
     } else {

@@ -58,6 +58,10 @@
 #pragma mark -
 #pragma mark Public Mehtods
 
++ (SlidingViewController *)getAppTopViewController {
+    return (SlidingViewController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+}
+
 - (void)clearControllerCache {
     // TODO: find a way to re init left menu, so that the filter goes away
     [self.mainViewControllersCache removeAllObjects];

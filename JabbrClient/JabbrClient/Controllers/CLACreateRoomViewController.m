@@ -297,6 +297,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     else {
         [[CLASignalRMessageClient sharedInstance] joinRoom:selectedRoom.name];
+        //TODO:load the selected room instead of get team all over again
         [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
         [self dismissViewControllerAnimated:YES completion:nil];
     }

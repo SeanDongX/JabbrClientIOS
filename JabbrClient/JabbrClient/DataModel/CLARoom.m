@@ -37,6 +37,7 @@
 + (CLARoom *)getFromData:(NSDictionary *)dictionary {
     CLARoom *room = [[CLARoom alloc] init];
     room.key = [dictionary objectForKey:@"Key"];
+    //room.teamKey = [dictionary objectForKey:@"TeamKey"];
     room.name = [dictionary objectForKey:@"Name"];
     room.displayName = [dictionary objectForKey:@"DisplayName"];
     room.isPrivate = [[dictionary objectForKey:@"Private"] boolValue];

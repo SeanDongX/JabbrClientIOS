@@ -16,6 +16,7 @@
 @interface CLARoom : RLMObject
 
 @property(nonatomic, strong) NSNumber<RLMInt> *key;
+//@property(nonatomic, strong) NSNumber<RLMInt> *teamKey;
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, strong) NSString *displayName;
 @property(nonatomic) BOOL isPrivate;

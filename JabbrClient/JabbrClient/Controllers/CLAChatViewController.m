@@ -106,10 +106,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self initData];
 }
 
 - (void)initData {
-    //TODO: bug fix: this should be called once again when one user logout and another user login
     self.user = [UserDataManager getUser];
 }
 

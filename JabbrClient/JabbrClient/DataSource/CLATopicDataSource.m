@@ -46,12 +46,12 @@
 }
 
 #pragma Public Methods
-- (CLARoom *)GetSelectedRoom {
-    return self.selectedRoom;
-}
-
 - (NSIndexPath *)getSelectedRoomIndexPath {
-    return [self getIndexPath:self.selectedRoom];
+    if (self.selectedRoom) {
+        return [self getIndexPath:self.selectedRoom];
+    } else {
+        return nil;
+    }
 }
 
 - (void)updateRooms:(NSArray<CLARoom *> *)rooms {
@@ -320,6 +320,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma -
 #pragma Private Methods
+- (CLARoom *)selectedRoom {
+    NSString *roomName = [UserDataManager getCachedObjectForKey:kSelectedRoomName];
+    return [self.repository getRoomByNameInCurrentOrDefaultTeam:roomName];
+}
+
+- (void)setSelectedRoom:(CLARoom *)room {
+    [UserDataManager cacheObject: room.name forKey: kSelectedRoomName];
+}
 
 - (CLARoom *)getRoom:(NSIndexPath *)indexPath {
     NSString *key = [NSString stringWithFormat:@"%ld", (long)indexPath.section];

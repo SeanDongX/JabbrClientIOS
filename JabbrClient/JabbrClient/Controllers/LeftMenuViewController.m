@@ -71,7 +71,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self highSelectedRoom];
+    [self highlightSelectedRoom];
     [super viewDidAppear:animated];
 }
 
@@ -216,7 +216,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     }
     
     self.dataSource.selectedRoom = room;
-    [self highSelectedRoom];
+    [self highlightSelectedRoom];
 }
 
 #pragma mark -
@@ -323,7 +323,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 #pragma mark -
 #pragma mark Private Methods
 
-- (void)highSelectedRoom {
+- (void)highlightSelectedRoom {
     NSIndexPath *indexPath = [self.dataSource getSelectedRoomIndexPath];
     if (indexPath != nil) {
         [self.tableView selectRowAtIndexPath:indexPath

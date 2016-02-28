@@ -109,6 +109,7 @@
 }
 
 - (void)initData {
+    //TODO: bug fix: this should be called once again when one user logout and another user login
     self.user = [UserDataManager getUser];
 }
 
@@ -662,16 +663,16 @@
         return;
     }
     
-    //FixMe: add room to left menu
+    // make sure room switch works both ways, ie, when chat view is active main
+    // view or not
+    CLARoom *newRoom = [self.messageClient.dataRepository getRoom:room inTeam:[UserDataManager getTeam].key];
+    
+    //TODO: add room to left menu
     if (update != NO) {
         [self sendTeamUpdatedEventNotification];
     }
     
     SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
-    
-    // make sure room switch works both ways, ie, when chat view is active main
-    // view or not
-    CLARoom *newRoom = [self.messageClient.dataRepository getRoom: room inTeam:[UserDataManager getTeam].key];
     if (slidingViewController != nil) {
         [slidingViewController switchToRoom:newRoom];
     } else {

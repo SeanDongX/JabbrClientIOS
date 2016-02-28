@@ -24,7 +24,7 @@
     CLATeam *currentTeam = [UserDataManager getTeam];
     
     if (currentTeam != nil && currentTeam.key != nil && currentTeam.key.intValue > 0) {
-        RLMResults<CLATeam *>  *teams = [CLATeam objectsWhere:@"key = %@", currentTeam.key];
+        RLMResults<CLATeam *>  *teams = [CLATeam objectsWhere:@"key = %d", currentTeam.key.intValue];
         if (teams && teams.firstObject) {
             return teams.firstObject;
         }
@@ -127,10 +127,11 @@
 }
 
 - (void)addRoom:(CLARoom *)room inTeam:(NSNumber *)teamKey {
-    CLATeam *team = [CLATeam objectsWhere:@"key = %d", teamKey].firstObject;
+    CLATeam *team = [CLATeam objectsWhere:@"key = %d", teamKey.intValue].firstObject;
     if (team) {
         RLMRealm *realm = [RLMRealm defaultRealm];
         [realm beginWriteTransaction];
+        [realm addOrUpdateObject:room];
         [team.rooms addObject:room];
         [realm addOrUpdateObject:team];
         [realm commitWriteTransaction];

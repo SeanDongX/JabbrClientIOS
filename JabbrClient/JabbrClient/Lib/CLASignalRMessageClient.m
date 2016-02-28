@@ -159,7 +159,7 @@ static bool isFirstAccess = YES;
     [self.hub on:@"updateRoom"
          perform:self
         selector:@selector(updateRoomReceived:)];
-    
+    [self.hub on:@"addUser" perform:self selector:@selector(userAddedToRoom:)];
     //[self.hub on:@"sendPrivateMessage" perform:self
     // selector:@selector(sendPrivateMessage:)];
     //[self.hub on:@"updateActivity" perform:self
@@ -379,15 +379,15 @@ static bool isFirstAccess = YES;
                                        }];
 }
 
+//TODO: investigate why this is method is called twice everytime user opens a room
 - (void)joinRoomReceived:(NSArray *)data {
     if (data == nil) {
         return;
     }
     
     NSDictionary *roomInfoDictionary = (NSDictionary *)data[0];
-    CLARoom *room = [[CLARoom alloc] init];
-    [CLARoom getFromData:roomInfoDictionary];
-    
+    CLARoom *room = [CLARoom getFromData:roomInfoDictionary];
+    //TODO: need to get team key in the room info here to add existing rooms
     CLATeam *team = [self.dataRepository getCurrentOrDefaultTeam];
     CLARoom *existingRoom = [team.rooms objectsWhere:@"name = %@", room.name].firstObject;
     
@@ -401,6 +401,19 @@ static bool isFirstAccess = YES;
     
     [self.dataRepository joinUser:username toRoom:room.name inTeam:team.key];
     [self.delegate didReceiveJoinRoom:room.name andUpdateRoom: NO];
+}
+
+- (void)userAddedToRoom:(NSArray *)data {
+    //data[0] = userviewmodel
+    //data[1] = roomName
+    //data[2] = isOwner
+    
+    if (data && data[0] && data[1]) {
+        CLAUser *user = [CLAUser getFromData:data[0]];
+        if (user) {
+            [self.delegate didAddUser:user.name toRoom:data[1]];
+        };
+    }
 }
 
 - (void)updateRoomReceived:(NSArray *)data {

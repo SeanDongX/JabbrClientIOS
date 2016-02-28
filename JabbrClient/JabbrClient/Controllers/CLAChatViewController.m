@@ -680,6 +680,10 @@
     }
 }
 
+- (void)didAddUser:(NSString *)username toRoom:(NSString*)room {
+    //TODO: notify used joined room
+}
+
 - (void)didReceiveUpdateRoom:(NSString *)room {
     [self sendTeamUpdatedEventNotification];
 }

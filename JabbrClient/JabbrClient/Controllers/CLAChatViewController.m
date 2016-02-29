@@ -626,7 +626,6 @@
 
 - (void)setActiveRoom:(CLARoom *)room {
     self.room = room;
-    [self.messageClient joinRoom:room.name];
     [self switchToRoom:room];
 }
 
@@ -658,10 +657,6 @@
 }
 
 - (void)didReceiveJoinRoom:(NSString *)room andUpdateRoom:(BOOL)update {
-    if (self.room != nil && [self.room.name isEqual:room]) {
-        return;
-    }
-    
     // make sure room switch works both ways, ie, when chat view is active main
     // view or not
     CLARoom *newRoom = [self.messageClient.dataRepository getRoom:room inTeam:[UserDataManager getTeam].key];
@@ -795,7 +790,6 @@
     [self.messageClient.dataRepository joinUser:self.user.name
                                          toRoom:self.room.name
                                          inTeam:[UserDataManager getTeam].key];
-    [self.messageClient loadRoom:room.name];
     [self.tableView reloadData];
 }
 

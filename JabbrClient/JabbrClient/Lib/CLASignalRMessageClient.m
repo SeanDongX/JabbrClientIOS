@@ -232,8 +232,8 @@ static bool isFirstAccess = YES;
     }
 }
 
-- (void)loadRoom:(NSString *)room {
-    [self invokeHubMethod:@"LoadRooms" withArgs:@[@[ room ]] completionHandler:nil];
+- (void)loadRooms:(NSArray *)rooms {
+    [self invokeHubMethod:@"LoadRooms" withArgs:@[rooms] completionHandler:nil];
 }
 
 - (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room {
@@ -285,6 +285,23 @@ static bool isFirstAccess = YES;
 #pragma mark Message Processing Methods
 
 - (void)logon:(NSArray *)data {
+    //data = [publicRooms, privateRooms, directRooms, userPreferences];
+    NSMutableArray<NSString *> *roomsToLoad = [NSMutableArray array];
+    
+    for(NSInteger k= 0; k < 3; k++) {
+        if (data[k]) {
+            for (NSDictionary *roomData in data[k]) {
+                CLARoom *room = [CLARoom getFromData:roomData];
+                if (room && room.name) {
+                    [roomsToLoad addObject:room.name];
+                }
+            }
+        }
+    }
+    
+    if (roomsToLoad.count > 0) {
+        [self loadRooms:roomsToLoad.mutableCopy];
+    }
 }
 
 - (void)loadTeamData:(NSArray *)data {

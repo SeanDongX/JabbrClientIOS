@@ -154,4 +154,5 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIColor *)warningColor;
 + (UIColor *)backgroundColor;
 + (UIColor *)mutedTextColor;
++ (UIColor *)darkBackgroundColor;
 @end

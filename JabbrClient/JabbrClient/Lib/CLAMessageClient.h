@@ -49,6 +49,7 @@ typedef enum {
 - (CLAConnectionState)getConnectionState;
 
 - (void)loadRooms:(NSArray *)rooms;
+- (void)getRoomMessages:(NSString *)room;
 - (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room;
 - (void)sendTypingFromUser:(NSString *)user inRoom:(NSString *)room;
 - (void)getPreviousMessages:(NSString *)messageId inRoom:(NSString *)room;

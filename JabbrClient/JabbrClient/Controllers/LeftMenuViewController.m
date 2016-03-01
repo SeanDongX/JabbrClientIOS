@@ -24,10 +24,10 @@
 #import "CLACreateRoomViewController.h"
 
 // Custom Controls
-#import "BOZPongRefreshControl.h"
 #import "CLATopicDataSource.h"
 #import "CLAProfileViewController.h"
 #import "UserDataManager.h"
+#import "SVPullToRefresh.h"
 
 NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 
@@ -43,7 +43,6 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 @property(weak, nonatomic) IBOutlet UIImageView *homeIcon;
 @property(weak, nonatomic) IBOutlet UIButton *homeButton;
 
-@property(nonatomic, strong) BOZPongRefreshControl *pongRefreshControl;
 @property(nonatomic) BOOL isRefreshing;
 
 @end
@@ -58,6 +57,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     [self subscribNotifications];
     [self updateTeam:nil];
     [self setupStyle];
+    [self setupPullToRefresh];
 }
 
 - (void)dealloc {
@@ -80,22 +80,13 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     [self.view endEditing:YES];
 }
 
-- (void)viewDidLayoutSubviews {
-    self.pongRefreshControl =
-    [BOZPongRefreshControl attachToTableView:self.tableView
-                           withRefreshTarget:self
-                            andRefreshAction:@selector(refreshTriggered)];
-    self.pongRefreshControl.backgroundColor = [Constants highlightColor];
-    
-    self.dataSource.pongRefreshControl = self.pongRefreshControl;
-}
-
 - (void)initDataSource {
     self.dataSource = [[CLATopicDataSource alloc] init];
     
     self.dataSource.slidingViewController = (SlidingViewController *)self.slidingViewController;
     self.dataSource.tableCellIdentifierName = kLeftMenuViewCellIdentifierName;
     
+    self.dataSource.rowBackgroundColor = [Constants darkBackgroundColor];
     self.dataSource.rowTextColor = [UIColor whiteColor];
     
     self.dataSource.eventDelegate = self;
@@ -133,6 +124,18 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
                                 }];
     
     [self.view setBackgroundColor:[Constants mainThemeContrastColor]];
+}
+
+- (void)setupPullToRefresh {
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [self refreshTriggered];
+    }];
+    
+    self.tableView.pullToRefreshView.arrowColor = [UIColor whiteColor];
+    self.tableView.pullToRefreshView.textColor = [UIColor whiteColor];
+    self.tableView.pullToRefreshView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+    self.tableView.backgroundColor = [Constants highlightColor];
+    self.tableView.pullToRefreshView.backgroundColor = [Constants highlightColor];
 }
 
 #pragma mark -
@@ -223,39 +226,13 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [UserDataManager cacheLastRefreshTime];
-    self.isRefreshing = TRUE;
     [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
     // team loading finished will be notified through kEventTeamUpdated
     // notification which calls self.updateTeam method
 }
 
 - (void)didFinishRefresh {
-    
-    if (!self.isRefreshing) {
-        return;
-    }
-    
-    NSDate *lastRefreshTime = (NSDate *)[UserDataManager getCachedObjectForKey:kLastRefreshTime];
-    NSTimeInterval remainTime = 0;
-    
-    if (![lastRefreshTime isEqual:[NSNull null]]) {
-        remainTime = minRefreshLoadTime + [lastRefreshTime timeIntervalSinceNow];
-        remainTime =
-        remainTime > minRefreshLoadTime ? minRefreshLoadTime : remainTime;
-    }
-    
-    [NSTimer scheduledTimerWithTimeInterval:remainTime
-                                     target:self
-                                   selector:@selector(finishRefresh)
-                                   userInfo:nil
-                                    repeats:NO];
-}
-
-- (void)finishRefresh {
-    [self.pongRefreshControl finishedLoading];
-    self.isRefreshing = FALSE;
-    [self.tableView reloadData];
+    [self.tableView.pullToRefreshView stopAnimating];
 }
 
 - (void)updateRooms:(NSArray<CLARoom *> *)rooms {

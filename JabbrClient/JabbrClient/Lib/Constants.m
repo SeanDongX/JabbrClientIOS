@@ -284,4 +284,12 @@ int const kMessageCellImageHeight = 90;
                             blue:(166 / 255.0)
                            alpha:1];
 }
+
++ (UIColor *)darkBackgroundColor {
+    return [UIColor colorWithRed:(50 / 255.0)
+                           green:(63 / 255.0)
+                            blue:(81 / 255.0)
+                           alpha:1];
+}
+
 @end

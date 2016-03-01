@@ -93,10 +93,6 @@
 }
 
 
-+ (NSDate *)getLastRefreshTime {
-    return (NSDate *)[UserDataManager getCachedObjectForKey:kLastRefreshTime];
-}
-
 + (void)cacheAuthToken:(NSString *)authToken {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:authToken forKey:kAuthToken];
@@ -106,10 +102,6 @@
 
 + (void)cacheDeviceToken:(NSData *)deviceToken {
     [UserDataManager cacheObject:deviceToken forKey:kDeviceToken];
-}
-
-+ (void)cacheLastRefreshTime {
-    [UserDataManager cacheObject: [NSDate date] forKey:kLastRefreshTime];
 }
 
 + (void)signOut {

@@ -28,13 +28,12 @@
 #import "CLANotificationContentViewController.h"
 
 // Custom Controls
-#import "BOZPongRefreshControl.h"
 #import "CLANotifictionTableViewCell.h"
 #import "CLARealmRepository.h"
+#import "SVPullToRefresh.h"
 
 @interface CLAHomeNotificationViiewController ()
 
-@property(nonatomic, strong) BOZPongRefreshControl *pongRefreshControl;
 @property(nonatomic) BOOL isRefreshing;
 @property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
 
@@ -45,6 +44,7 @@
 - (void)viewDidLoad {
     self.repository = [[CLARealmRepository alloc] init];
     [self addTalbeView];
+    [self setupPullToRefresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -56,6 +56,13 @@
                                                   style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+}
+
+
+- (void)setupPullToRefresh {
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [self refreshTriggered];
+    }];
 }
 
 - (void)loadNotifications {
@@ -71,7 +78,7 @@
               forViewController:self
               withType:CLANotificationTypeError];
              
-             [self finishRefresh];
+             [self didFinishRefresh];
              [CLANotificationManager dismiss];
              
              return;
@@ -83,68 +90,21 @@
           addOrUpdateNotificationsWithData:result
           completion:^(void) {
               [weakSelf.tableView reloadData];
-              [weakSelf finishRefresh];
+              [weakSelf didFinishRefresh];
               [CLANotificationManager dismiss];
           }];
      }];
-}
-
-- (void)viewDidLayoutSubviews {
-    // The very first time this is called, the table view has a smaller size than
-    // the screen size
-    if (self.tableView.frame.size.width >=
-        [UIScreen mainScreen].bounds.size.width) {
-        self.pongRefreshControl =
-        [BOZPongRefreshControl attachToTableView:self.tableView
-                               withRefreshTarget:self
-                                andRefreshAction:@selector(refreshTriggered)];
-        self.pongRefreshControl.backgroundColor = [Constants highlightColor];
-    }
 }
 
 #pragma mark -
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [UserDataManager cacheLastRefreshTime];
-    self.isRefreshing = TRUE;
     [self loadNotifications];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.pongRefreshControl scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
-                  willDecelerate:(BOOL)decelerate {
-    [self.pongRefreshControl scrollViewDidEndDragging];
-}
-
 - (void)didFinishRefresh {
-    
-    if (!self.isRefreshing) {
-        return;
-    }
-    
-    NSDate *lastRefreshTime = [UserDataManager getLastRefreshTime];
-    NSTimeInterval remainTime = 0;
-    
-    if (![lastRefreshTime isEqual:[NSNull null]]) {
-        remainTime = minRefreshLoadTime + [lastRefreshTime timeIntervalSinceNow];
-        remainTime =
-        remainTime > minRefreshLoadTime ? minRefreshLoadTime : remainTime;
-    }
-    
-    [NSTimer scheduledTimerWithTimeInterval:remainTime
-                                     target:self
-                                   selector:@selector(finishRefresh)
-                                   userInfo:nil
-                                    repeats:NO];
-}
-
-- (void)finishRefresh {
-    [self.pongRefreshControl finishedLoading];
-    self.isRefreshing = FALSE;
+    [self.tableView.pullToRefreshView stopAnimating];
 }
 
 #pragma mark - XLPagerTabStripViewControllerDelegate

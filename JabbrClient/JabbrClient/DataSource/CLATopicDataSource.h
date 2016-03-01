@@ -10,7 +10,6 @@
 #import <UIKit/UIKit.h>
 #import "CLARoom.h"
 #import "SlidingViewController.h"
-#import "BOZPongRefreshControl.h"
 #import "CLATopicDataSourceEventDelegate.h"
 
 @interface CLATopicDataSource : NSObject <UITableViewDataSource, UITableViewDelegate>
@@ -20,7 +19,6 @@
 @property (nonatomic) BOOL isFiltered;
 @property (nonatomic, strong) CLARoom *selectedRoom;
 @property (nonatomic, strong) SlidingViewController *slidingViewController;
-@property (nonatomic, strong) BOZPongRefreshControl *pongRefreshControl;
 
 @property (nonatomic, strong) NSString *tableCellIdentifierName;
 
@@ -28,6 +26,8 @@
 @property (nonatomic, strong) UIColor *sectionHeaderBackgronndColor;
 @property (nonatomic, strong) UIColor *sectionHeaderTextColor;
 @property (nonatomic, strong) UIColor *rowTextColor;
+@property (nonatomic, strong) UIColor *rowBackgroundColor;
+@property (nonatomic, strong) UIColor *rowSelectedBackgroundColor;
 
 - (NSIndexPath *)getSelectedRoomIndexPath;
 

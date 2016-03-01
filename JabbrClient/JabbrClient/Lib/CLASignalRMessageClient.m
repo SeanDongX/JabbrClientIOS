@@ -236,6 +236,26 @@ static bool isFirstAccess = YES;
     [self invokeHubMethod:@"LoadRooms" withArgs:@[rooms] completionHandler:nil];
 }
 
+- (void)getRoomMessages:(NSString *)room {
+    __weak __typeof(&*self) weakSelf = self;
+    
+    [self invokeHubMethod: @"GetRoomInfo" withArgs: @[room] completionHandler:^(id response, NSError *error) {
+        if (!error) {
+            NSArray *data = response;
+            if (data[0]) {
+                CLARoom *roomObject = [self.dataRepository getRoomByNameInCurrentOrDefaultTeam:room];
+                [weakSelf.dataRepository addOrUpdateMessagesWithData: data[0] forRoom: roomObject.key completion:^{
+                    [weakSelf.delegate didLoadEarlierMessagesInRoom:room];
+                }];
+            } else {
+                [weakSelf.delegate didLoadEarlierMessagesInRoom:room];
+            }
+        } else {
+            [weakSelf.delegate didLoadEarlierMessagesInRoom:room];
+        }
+    }];
+}
+
 - (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room {
     NSMutableDictionary *messageData = [NSMutableDictionary dictionary];
     [messageData setObject:message.key forKey:@"id"];
@@ -277,6 +297,8 @@ static bool isFirstAccess = YES;
                                                                     [strongSelfInner.delegate didLoadEarlierMessagesInRoom:roomName];
                                                                 }];
                 }
+            } else {
+                [strongSelf.delegate didLoadEarlierMessagesInRoom:roomName];
             }
         }];
 }

@@ -15,6 +15,7 @@
 #import "JSQMessagesAvatarImageFactory.h"
 #import "CLARealmRepository.h"
 #import "UserDataManager.h"
+#import "SVPullToRefresh.h"
 
 @interface CLATopicDataSource ()
 
@@ -39,6 +40,8 @@
         
         self.sectionHeaderBackgronndColor = [Constants backgroundColor];
         self.sectionHeaderTextColor = [Constants mainThemeContrastColor];
+        self.rowBackgroundColor = [UIColor whiteColor];
+        self.rowSelectedBackgroundColor = [Constants highlightColor];
         self.rowTextColor = [Constants mainThemeContrastColor];
     }
     
@@ -195,9 +198,9 @@ viewForHeaderInSection:(NSInteger)section {
     
     cell.textLabel.text = [room getHandle];
     cell.textLabel.textColor = self.rowTextColor;
-    [cell setBackgroundColor:[UIColor clearColor]];
+    [cell setBackgroundColor:self.rowBackgroundColor];
     UIView *backgroundView = [UIView new];
-    backgroundView.backgroundColor = [Constants highlightColor];
+    backgroundView.backgroundColor = self.rowSelectedBackgroundColor;
     cell.selectedBackgroundView = backgroundView;
     UIView *unreadView = [cell.contentView viewWithTag:1];
     unreadView.hidden = unreadHidden;
@@ -222,12 +225,13 @@ viewForHeaderInSection:(NSInteger)section {
     
     NSInteger userImageSize = 30;
     
+    [cell setBackgroundColor:self.rowBackgroundColor];
+    UIView *backgroundView = [UIView new];
+    backgroundView.backgroundColor = self.rowSelectedBackgroundColor;
+    cell.selectedBackgroundView = backgroundView;
+    
     UILabel *topicLabel =  (UILabel *)[cell viewWithTag:labelViewTag];
     if (!topicLabel) {
-        [cell setBackgroundColor:[UIColor clearColor]];
-        UIView *backgroundView = [UIView new];
-        backgroundView.backgroundColor = [Constants highlightColor];
-        cell.selectedBackgroundView = backgroundView;
         
         topicLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         topicLabel.tag = labelViewTag;
@@ -304,18 +308,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         self.selectedRoom = room;
         [self openRoom:room];
     }
-}
-
-#pragma mark -
-#pragma mark - Pull To Resfresh
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self.pongRefreshControl scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
-                  willDecelerate:(BOOL)decelerate {
-    [self.pongRefreshControl scrollViewDidEndDragging];
 }
 
 #pragma -

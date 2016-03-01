@@ -24,14 +24,12 @@
 + (CLATeam *)getTeam;
 + (CLAUser *)getUser;
 + (NSData *)getCachedDeviceToken;
-+ (NSDate *)getLastRefreshTime;
 
 + (void)cacheAuthToken:(NSString *)authToken;
 + (void)cacheUsername:(NSString *)username;
 + (void)cacheTeam:(CLATeam *)team;
 + (void)cacheUser:(CLAUser *)user;
 + (void)cacheDeviceToken:(NSData *)deviceToken;
-+ (void)cacheLastRefreshTime;
 + (void)cacheTaskServiceAuthInfo:(NSDictionary *)data;
 + (NSString *)getTaskAuthFrameUrl;
 

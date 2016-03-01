@@ -254,8 +254,6 @@ replacementString:(NSString *)string {
     if (errorMessage == nil) {
         [UserDataManager cacheTeam:team];
         [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
-        [UserDataManager cacheLastRefreshTime];
-        
         [self showAlertWithMessage:[NSString stringWithFormat:NSLocalizedString(@"You are now a member of team %@", nil), team.name]
                  confirmButtonText: NSLocalizedString(@"Jump In", nil)];
         

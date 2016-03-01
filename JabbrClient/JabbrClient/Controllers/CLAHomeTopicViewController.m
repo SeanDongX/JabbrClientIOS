@@ -33,6 +33,7 @@
 #import "slidingViewController.h"
 #import "CLAUtility.h"
 #import "CLANotificationManager.h"
+#import "SVPullToRefresh.h"
 
 NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
@@ -45,7 +46,6 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 @property(weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property(nonatomic, strong) BOZPongRefreshControl *pongRefreshControl;
-@property(nonatomic) BOOL isRefreshing;
 
 @end
 
@@ -58,27 +58,13 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
 - (void)viewDidLoad {
     [self initDataSource];
-    [self showHud];
-    [self updateTeam:nil];
+    [self.topicTableView triggerPullToRefresh];
+    //[self updateTeam:nil];
+    [self setupPullToRefresh];
 }
 
 - (void)dealloc {
     [self unsubscribNotifications];
-}
-
-- (void)viewDidLayoutSubviews {
-    // The very first time this is called, the table view has a smaller size than
-    // the screen size
-    if (self.topicTableView.frame.size.width >=
-        [UIScreen mainScreen].bounds.size.width) {
-        self.pongRefreshControl =
-        [BOZPongRefreshControl attachToTableView:self.topicTableView
-                               withRefreshTarget:self
-                                andRefreshAction:@selector(refreshTriggered)];
-        self.pongRefreshControl.backgroundColor = [Constants highlightColor];
-        
-        self.dataSource.pongRefreshControl = self.pongRefreshControl;
-    }
 }
 
 - (void)initDataSource {
@@ -92,6 +78,12 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     self.topicTableView.delegate = self.dataSource;
     
     self.searchBar.delegate = self;
+}
+
+- (void)setupPullToRefresh {
+    [self.topicTableView addPullToRefreshWithActionHandler:^{
+        [self refreshTriggered];
+    }];
 }
 
 #pragma mark -
@@ -146,40 +138,14 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 #pragma mark - Pull To Resfresh
 
 - (void)refreshTriggered {
-    [UserDataManager cacheLastRefreshTime];
-    self.isRefreshing = TRUE;
     [[CLASignalRMessageClient sharedInstance] invokeGetTeam];
     // team loading finished will be notified through kEventTeamUpdated
     // notification which calls self.updateTeam method
 }
 
 - (void)didFinishRefresh {
-    
-    if (!self.isRefreshing) {
-        [self.topicTableView reloadData];
-        return;
-    }
-    
-    NSDate *lastRefreshTime = [UserDataManager getLastRefreshTime];
-    NSTimeInterval remainTime = 0;
-    
-    if (![lastRefreshTime isEqual:[NSNull null]]) {
-        remainTime = minRefreshLoadTime + [lastRefreshTime timeIntervalSinceNow];
-        remainTime =
-        remainTime > minRefreshLoadTime ? minRefreshLoadTime : remainTime;
-    }
-    
-    [NSTimer scheduledTimerWithTimeInterval:remainTime
-                                     target:self
-                                   selector:@selector(finishRefresh)
-                                   userInfo:nil
-                                    repeats:NO];
-    
-}
-
-- (void)finishRefresh {
-    [self.pongRefreshControl finishedLoading];
-    self.isRefreshing = FALSE;
+    [self.topicTableView reloadData];
+    [self.topicTableView.pullToRefreshView stopAnimating];
 }
 
 #pragma mark -

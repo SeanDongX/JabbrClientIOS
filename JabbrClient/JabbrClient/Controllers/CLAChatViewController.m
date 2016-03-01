@@ -40,6 +40,7 @@
 @property (nonatomic, strong) NSArray *searchResult;
 @property (nonatomic, weak) CLAMessage *editingMessage;
 
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation CLAChatViewController
@@ -53,6 +54,57 @@
     [super viewDidLoad];
     [self initData];
     [self initMenu];
+    [self setupSlackViewController];
+    
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.tableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)refreshTable {
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.refreshControl endRefreshing];
+        [self.tableView reloadData];
+    });
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    self.navigationController.navigationBar.topItem.title = self.room.displayName;
+    
+    if (self.messageClient == nil || self.messageClient.teamLoaded == FALSE) {
+        [self showHud];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self initData];
+}
+
+- (void)initData {
+    self.user = [UserDataManager getUser];
+}
+
+- (void)initMenu {
+    [self.leftMenuButton setTitle:@""];
+    [self.leftMenuButton setWidth:30];
+    [self.leftMenuButton setImage:[Constants menuIconImage]];
+    self.leftMenuButton.target = self;
+    self.leftMenuButton.action = @selector(showLeftMenu);
+    
+    UIBarButtonItem *optionsItem = [[UIBarButtonItem alloc] initWithImage:[Constants optionsIconImage]
+                                                                    style:UIBarButtonItemStylePlain
+                                                                   target:self
+                                                                   action:@selector(showRightMenu)];
+    optionsItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItems = @[optionsItem];
+}
+
+- (void)setupSlackViewController {
     
     // SLKTVC's configuration
     self.bounces = YES;
@@ -93,41 +145,6 @@
     //    [self.textView registerMarkdownFormattingSymbol:@"```" withTitle:@"Preformatted"];
     //    [self.textView registerMarkdownFormattingSymbol:@">" withTitle:@"Quote"];
 }
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    self.navigationController.navigationBar.topItem.title = self.room.displayName;
-    
-    if (self.messageClient == nil || self.messageClient.teamLoaded == FALSE) {
-        [self showHud];
-    }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self initData];
-}
-
-- (void)initData {
-    self.user = [UserDataManager getUser];
-}
-
-- (void)initMenu {
-    [self.leftMenuButton setTitle:@""];
-    [self.leftMenuButton setWidth:30];
-    [self.leftMenuButton setImage:[Constants menuIconImage]];
-    self.leftMenuButton.target = self;
-    self.leftMenuButton.action = @selector(showLeftMenu);
-    
-    UIBarButtonItem *optionsItem = [[UIBarButtonItem alloc] initWithImage:[Constants optionsIconImage]
-                                                                    style:UIBarButtonItemStylePlain
-                                                                   target:self
-                                                                   action:@selector(showRightMenu)];
-    optionsItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItems = @[optionsItem];
-}
-
 
 - (void)connect {
     self.messageClient = [CLASignalRMessageClient sharedInstance];
@@ -414,7 +431,29 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([tableView isEqual:self.tableView]) {
-        return [self getRoomMessages].count;
+        NSInteger count = [self getRoomMessages].count;
+        if (count > 0) {
+            return count;
+        } else {
+            
+            UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            
+            messageLabel.text = @"No data is currently available. Please pull down to refresh.";
+            messageLabel.textColor = [Constants mainThemeContrastColor];
+            messageLabel.numberOfLines = 0;
+            messageLabel.textAlignment = NSTextAlignmentCenter;
+            messageLabel.font = [UIFont systemFontOfSize:14];
+            [messageLabel sizeToFit];
+            
+            if (self.inverted) {
+                messageLabel.transform = CGAffineTransformMake(1, 0, 0, -1, 0, 0);
+            }
+            self.tableView.backgroundView = messageLabel;
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
+            return 0;
+        }
+        
     }
     else {
         return self.searchResult.count;

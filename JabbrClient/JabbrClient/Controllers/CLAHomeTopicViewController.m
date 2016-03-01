@@ -71,6 +71,8 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     self.dataSource.advancedMode = YES;
     self.dataSource.eventDelegate = self;
     
+    self.dataSource.rowSelectedBackgroundColor = [UIColor whiteColor];
+    
     self.topicTableView.dataSource = self.dataSource;
     self.topicTableView.delegate = self.dataSource;
     

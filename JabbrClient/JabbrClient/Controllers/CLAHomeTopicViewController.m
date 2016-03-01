@@ -33,7 +33,6 @@
 #import "slidingViewController.h"
 #import "CLAUtility.h"
 #import "CLANotificationManager.h"
-#import "SVPullToRefresh.h"
 
 NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
@@ -45,7 +44,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 @property(weak, nonatomic) IBOutlet UILabel *welcomeLabel;
 @property(weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
-@property(nonatomic, strong) BOZPongRefreshControl *pongRefreshControl;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -58,8 +57,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
 - (void)viewDidLoad {
     [self initDataSource];
-    [self.topicTableView triggerPullToRefresh];
-    //[self updateTeam:nil];
+    [self updateTeam:nil];
     [self setupPullToRefresh];
 }
 
@@ -81,9 +79,12 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 }
 
 - (void)setupPullToRefresh {
-    [self.topicTableView addPullToRefreshWithActionHandler:^{
-        [self refreshTriggered];
-    }];
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.topicTableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
+    
+    self.refreshControl.backgroundColor = [Constants highlightColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
 }
 
 #pragma mark -
@@ -145,7 +146,8 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
 - (void)didFinishRefresh {
     [self.topicTableView reloadData];
-    [self.topicTableView.pullToRefreshView stopAnimating];
+    [self.refreshControl endRefreshing];
+    //[self.topicTableView.pullToRefreshView stopAnimating];
 }
 
 #pragma mark -

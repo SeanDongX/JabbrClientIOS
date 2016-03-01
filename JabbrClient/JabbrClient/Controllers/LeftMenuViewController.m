@@ -27,7 +27,6 @@
 #import "CLATopicDataSource.h"
 #import "CLAProfileViewController.h"
 #import "UserDataManager.h"
-#import "SVPullToRefresh.h"
 
 NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 
@@ -43,7 +42,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 @property(weak, nonatomic) IBOutlet UIImageView *homeIcon;
 @property(weak, nonatomic) IBOutlet UIButton *homeButton;
 
-@property(nonatomic) BOOL isRefreshing;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -127,15 +126,13 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 }
 
 - (void)setupPullToRefresh {
-    [self.tableView addPullToRefreshWithActionHandler:^{
-        [self refreshTriggered];
-    }];
+    self.refreshControl = [[UIRefreshControl alloc]init];
     
-    self.tableView.pullToRefreshView.arrowColor = [UIColor whiteColor];
-    self.tableView.pullToRefreshView.textColor = [UIColor whiteColor];
-    self.tableView.pullToRefreshView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
-    self.tableView.backgroundColor = [Constants highlightColor];
-    self.tableView.pullToRefreshView.backgroundColor = [Constants highlightColor];
+    [self.tableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
+    
+    self.refreshControl.backgroundColor = [Constants highlightColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
 }
 
 #pragma mark -
@@ -232,7 +229,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 }
 
 - (void)didFinishRefresh {
-    [self.tableView.pullToRefreshView stopAnimating];
+    [self.refreshControl endRefreshing];
 }
 
 - (void)updateRooms:(NSArray<CLARoom *> *)rooms {

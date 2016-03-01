@@ -22,7 +22,6 @@ target 'Collara' do
   pod 'netfox'
   pod 'Realm'
   pod 'JLRoutes'
-  pod 'SVPullToRefresh', :git => 'https://github.com/wonderxboy/SVPullToRefresh.git'
 end
 
 target 'CollaraTests' do

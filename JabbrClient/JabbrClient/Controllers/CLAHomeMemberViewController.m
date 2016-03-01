@@ -31,7 +31,6 @@
 #import "Masonry.h"
 #import "JSQMessagesAvatarImageFactory.h"
 #import "CLAUtility.h"
-#import "SVPullToRefresh.h"
 
 @interface CLAHomeMemberViewController ()
 
@@ -43,7 +42,7 @@
 @property(strong, nonatomic) NSArray<CLAUser *> *users;
 @property(strong, nonatomic) NSArray<CLAUser *> *filteredUsers;
 
-@property(nonatomic) BOOL isRefreshing;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -60,9 +59,12 @@
 }
 
 - (void)setupPullToRefresh {
-    [self.teamMemberTableView addPullToRefreshWithActionHandler:^{
-        [self refreshTriggered];
-    }];
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.teamMemberTableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
+    
+    self.refreshControl.backgroundColor = [Constants highlightColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
 }
 
 - (void)dealloc {
@@ -110,7 +112,7 @@
 }
 
 - (void)didFinishRefresh {
-    [self.teamMemberTableView.pullToRefreshView stopAnimating];
+    [self.refreshControl endRefreshing];
 }
 
 #pragma mark - XLPagerTabStripViewControllerDelegate

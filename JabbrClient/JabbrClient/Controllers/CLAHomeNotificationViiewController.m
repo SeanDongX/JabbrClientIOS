@@ -30,12 +30,11 @@
 // Custom Controls
 #import "CLANotifictionTableViewCell.h"
 #import "CLARealmRepository.h"
-#import "SVPullToRefresh.h"
 
 @interface CLAHomeNotificationViiewController ()
 
-@property(nonatomic) BOOL isRefreshing;
 @property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -60,9 +59,12 @@
 
 
 - (void)setupPullToRefresh {
-    [self.tableView addPullToRefreshWithActionHandler:^{
-        [self refreshTriggered];
-    }];
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.tableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
+    
+    self.refreshControl.backgroundColor = [Constants highlightColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
 }
 
 - (void)loadNotifications {
@@ -104,7 +106,7 @@
 }
 
 - (void)didFinishRefresh {
-    [self.tableView.pullToRefreshView stopAnimating];
+    [self.refreshControl endRefreshing];
 }
 
 #pragma mark - XLPagerTabStripViewControllerDelegate

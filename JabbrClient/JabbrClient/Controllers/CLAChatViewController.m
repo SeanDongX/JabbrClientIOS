@@ -55,19 +55,6 @@
     [self initData];
     [self initMenu];
     [self setupSlackViewController];
-    
-    self.refreshControl = [[UIRefreshControl alloc]init];
-    [self.tableView addSubview:self.refreshControl];
-    [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
-}
-
-- (void)refreshTable {
-    double delayInSeconds = 2.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.refreshControl endRefreshing];
-        [self.tableView reloadData];
-    });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -431,29 +418,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([tableView isEqual:self.tableView]) {
-        NSInteger count = [self getRoomMessages].count;
-        if (count > 0) {
-            return count;
-        } else {
-            
-            UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-            
-            messageLabel.text = @"No data is currently available. Please pull down to refresh.";
-            messageLabel.textColor = [Constants mainThemeContrastColor];
-            messageLabel.numberOfLines = 0;
-            messageLabel.textAlignment = NSTextAlignmentCenter;
-            messageLabel.font = [UIFont systemFontOfSize:14];
-            [messageLabel sizeToFit];
-            
-            if (self.inverted) {
-                messageLabel.transform = CGAffineTransformMake(1, 0, 0, -1, 0, 0);
-            }
-            self.tableView.backgroundView = messageLabel;
-            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            
-            return 0;
-        }
-        
+        return [self getRoomMessages].count;
     }
     else {
         return self.searchResult.count;

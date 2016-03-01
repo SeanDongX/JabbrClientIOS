@@ -79,11 +79,14 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
 - (void)setupPullToRefresh {
     self.refreshControl = [[UIRefreshControl alloc]init];
+    self.refreshControl.backgroundColor = [Constants highlightColor];
+    [self.refreshControl setTintColor:[UIColor whiteColor]];
+    
     [self.topicTableView addSubview:self.refreshControl];
     [self.refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
     
-    self.refreshControl.backgroundColor = [Constants highlightColor];
-    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl beginRefreshing];
+    [self.topicTableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
 }
 
 #pragma mark -
@@ -114,7 +117,6 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     self.welcomeLabel.text =
     [NSString stringWithFormat: NSLocalizedString(@"Welcome to team %@", nil), [UserDataManager getTeam].name];
     [self didFinishRefresh];
-    [self hideHud];
 }
 
 - (void)updateRooms:(NSArray<CLARoom *> *)rooms {
@@ -205,19 +207,6 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     [(SlidingViewController *)self.slidingViewController setTopNavigationControllerWithKeyIdentifier:kChatNavigationController];
     
     [self.slidingViewController resetTopViewAnimated:YES];
-}
-
-- (void)showHud {
-    //TODO: investigation why notification won't show, if the text here (only in this controller) ends with "...",
-    [CLANotificationManager showText:NSLocalizedString(@"Loading", nil)
-                   forViewController:self.parentViewController
-                            withType:CLANotificationTypeMessage
-                         autoDismiss:NO
-                          atPosition:0];
-}
-
-- (void)hideHud {
-    [CLANotificationManager dismiss];
 }
 
 @end

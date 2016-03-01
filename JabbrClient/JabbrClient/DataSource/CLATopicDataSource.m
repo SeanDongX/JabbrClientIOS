@@ -15,7 +15,6 @@
 #import "JSQMessagesAvatarImageFactory.h"
 #import "CLARealmRepository.h"
 #import "UserDataManager.h"
-#import "SVPullToRefresh.h"
 
 @interface CLATopicDataSource ()
 

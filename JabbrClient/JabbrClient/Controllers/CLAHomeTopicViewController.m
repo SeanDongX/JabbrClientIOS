@@ -26,7 +26,6 @@
 #import "CLASignalRMessageClient.h"
 
 // Custom Controls
-#import "BOZPongRefreshControl.h"
 #import "CLATopicDataSource.h"
 #import "UserDataManager.h"
 #import "CLAChatViewController.h"

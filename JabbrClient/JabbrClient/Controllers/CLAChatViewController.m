@@ -21,6 +21,7 @@
 #import "CLAWebApiClient.h"
 #import "CLATopicInfoViewController.h"
 #import "CLATaskWebViewController.h"
+#import "UIScrollView+InfiniteScroll.h"
 
 @interface CLAChatViewController ()
 
@@ -40,7 +41,6 @@
 @property (nonatomic, strong) NSArray *searchResult;
 @property (nonatomic, weak) CLAMessage *editingMessage;
 
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation CLAChatViewController
@@ -48,6 +48,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self connect];
+    
+    //needs to be call here instead of viewDidLoad due to unknow reason of caused by method swizzling in "UIScrollView+InfiniteScroll.h"
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)viewDidLoad {
@@ -55,16 +58,20 @@
     [self initData];
     [self initMenu];
     [self setupSlackViewController];
+    [self setupPullToRefresh];
+}
+
+- (void)setupPullToRefresh {
+    self.tableView.infiniteScrollIndicatorStyle = UIActivityIndicatorViewStyleGray;
+    //need to add bottom infinity scroll to simulator top pull to scroll, due to the table view here is inverted by slack view controller;
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView* tableView) {
+        [self refreshTriggered];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     self.navigationController.navigationBar.topItem.title = self.room.displayName;
-    
-    if (self.messageClient == nil || self.messageClient.teamLoaded == FALSE) {
-        [self showHud];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -119,7 +126,6 @@
     self.typingIndicatorView.canResignByTouch = YES;
 #endif
     
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
     
     [self.autoCompletionView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:AutoCompletionCellIdentifier];
@@ -162,6 +168,22 @@
     
     [self.taskViewController switchRoom:self.room.name];
     [self.navigationController pushViewController:self.taskViewController animated:YES];
+}
+
+#pragma mark -
+#pragma mark - Pull To Resfresh
+
+- (void)refreshTriggered {
+    CLAMessage *lastestMessage = [self getRoomMessages].lastObject;
+    if (lastestMessage) {
+        [self.messageClient getPreviousMessages:lastestMessage.key inRoom:self.room.name];
+    } else {
+        [self.messageClient getRoomMessages:self.room.name];
+    }
+}
+
+- (void)didFinishRefresh {
+    [self.tableView finishInfiniteScroll];
 }
 
 #pragma mark -
@@ -643,10 +665,8 @@
                         newState:(CLAConnectionState)newState {
     if (newState == CLAConnected) {
         //TODO: when offline, this path is being taken periodically
-        [self hideHud];
     }
     else {
-        [self showHud];
     }
 }
 
@@ -699,6 +719,7 @@
     if ([self.room.name isEqualToString: room]) {
         [self.tableView reloadData];
     }
+    [self didFinishRefresh];
 }
 
 - (void)didReceiveTypingFromUser:(NSString *)user inRoom:(NSString *)room {

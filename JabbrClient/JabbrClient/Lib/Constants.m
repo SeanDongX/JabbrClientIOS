@@ -243,6 +243,20 @@ int const kMessageCellImageHeight = 90;
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
++ (UIImage *)arrowRightIcon {
+    FAKIonIcons *iccon = [FAKIonIcons iosArrowRightIconWithSize:10];
+    [iccon addAttribute:NSForegroundColorAttributeName
+                  value:[Constants mainThemeContrastColor]];
+    return [iccon imageWithSize:CGSizeMake(10, 10)];
+}
+
++ (UIImage *)arrowDownIcon {
+    FAKIonIcons *iccon = [FAKIonIcons iosArrowDownIconWithSize:10];
+    [iccon addAttribute:NSForegroundColorAttributeName
+                  value:[Constants mainThemeContrastColor]];
+    return [iccon imageWithSize:CGSizeMake(10, 10)];
+}
+
 + (UIColor *)mainThemeColor {
     return [UIColor colorWithRed:(27 / 255.0)
                            green:(188 / 255.0)

@@ -147,6 +147,8 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIImage *)unreadIcon;
 + (UIImage *)documentIconLarge;
 + (UIImage *)cameraIcon;
++ (UIImage *)arrowRightIcon;
++ (UIImage *)arrowDownIcon;
 
 + (UIColor *)mainThemeColor;
 + (UIColor *)highlightColor;

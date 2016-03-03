@@ -23,6 +23,8 @@
 @property (nonatomic, strong) NSString *tableCellIdentifierName;
 
 @property (nonatomic) BOOL advancedMode;
+@property (nonatomic) BOOL collapseEnabled;
+
 @property (nonatomic, strong) UIColor *sectionHeaderBackgronndColor;
 @property (nonatomic, strong) UIColor *sectionHeaderTextColor;
 @property (nonatomic, strong) UIColor *rowTextColor;

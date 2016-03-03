@@ -11,5 +11,6 @@
 @protocol CLATopicDataSourceEventDelegate <NSObject>
 
 - (void)showCreateTopicView:(id)sender;
+- (void)sectionToggled:(NSInteger)section toOpen:(BOOL)open;
 
 @end

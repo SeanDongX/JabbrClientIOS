@@ -67,6 +67,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     self.dataSource = [[CLATopicDataSource alloc] init];
     self.dataSource.slidingViewController = (SlidingViewController *)self.slidingViewController;
     self.dataSource.tableCellIdentifierName = kHomeTopicViewCellIdentifierName;
+    self.dataSource.collapseEnabled = YES;
     self.dataSource.advancedMode = YES;
     self.dataSource.eventDelegate = self;
     
@@ -180,6 +181,11 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
                        animated:YES
                      completion:nil];
 }
+
+- (void)sectionToggled:(NSInteger)section toOpen:(BOOL)open {
+    [self.topicTableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation: UITableViewRowAnimationAutomatic];
+}
+
 #pragma mark -
 #pragma Search Bar Delegate Methods
 

@@ -84,6 +84,7 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     
     self.dataSource.slidingViewController = (SlidingViewController *)self.slidingViewController;
     self.dataSource.tableCellIdentifierName = kLeftMenuViewCellIdentifierName;
+    self.dataSource.collapseEnabled = YES;
     
     self.dataSource.rowBackgroundColor = [Constants darkBackgroundColor];
     self.dataSource.rowTextColor = [UIColor whiteColor];
@@ -270,6 +271,11 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
     [self presentViewController:createRoomViewController
                        animated:YES
                      completion:nil];
+}
+
+
+- (void)sectionToggled:(NSInteger)section toOpen:(BOOL)open {
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation: UITableViewRowAnimationAutomatic];
 }
 
 - (IBAction)homeBUttonClicked:(id)sender {

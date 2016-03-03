@@ -24,6 +24,8 @@
 @property(nonatomic, strong) NSMutableDictionary *filteredRoomDictionary;
 @property(nonatomic, strong) id<CLADataRepositoryProtocol> repository;
 
+@property(nonatomic, strong) NSMutableDictionary *sectionStates;
+
 @end
 
 @implementation CLATopicDataSource
@@ -36,6 +38,7 @@
         self.roomDictionary = [NSMutableDictionary dictionary];
         self.filteredRoomDictionary = [NSMutableDictionary dictionary];
         self.repository = [[CLARealmRepository alloc] init];
+        self.sectionStates = [NSMutableDictionary dictionary];
         
         self.sectionHeaderBackgronndColor = [Constants backgroundColor];
         self.sectionHeaderTextColor = [Constants mainThemeContrastColor];
@@ -122,14 +125,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-        case 1:
-        case 2:
-            return [self getRoomCountAtSection:section filterCount:YES];
-            
-        default:
-            return 0;
+    if ([self shouldShowSectionRows:section]) {
+        return [self getRoomCountAtSection:section filterCount:YES];
+        
+    } else {
+        return 0;
     }
 }
 
@@ -143,14 +143,16 @@ viewForHeaderInSection:(NSInteger)section {
     
     CGRect frame = tableView.frame;
     
+    NSInteger titlePaddingLeft = self.collapseEnabled != NO ? 35 : 15;
+    
     UILabel *title = [[UILabel alloc]
-                      initWithFrame:CGRectMake(15, 10, frame.size.width - 15 - 60, 30)];
+                      initWithFrame:CGRectMake(titlePaddingLeft, 10, frame.size.width - 15 - 60, 30)];
     
     title.text = [self getSectionHeaderString:section];
     title.textColor = self.sectionHeaderTextColor;
     
     UIButton *addButton = [[UIButton alloc]
-                           initWithFrame:CGRectMake(frame.size.width - 60, 10, 30, 30)];
+                           initWithFrame:CGRectMake(frame.size.width - 45, 10, 30, 30)];
     addButton.tag = section;
     
     [addButton addTarget:self
@@ -166,6 +168,21 @@ viewForHeaderInSection:(NSInteger)section {
     
     [headerView addSubview:title];
     [headerView addSubview:addButton];
+    
+    
+    if (self.collapseEnabled != NO) {
+        UIImageView  *imageView = [[UIImageView alloc]
+                                   initWithFrame:CGRectMake(15, 15, 20, 20)];
+        [headerView addSubview:imageView];
+        
+        if ([self shouldShowSectionRows:section] != NO) {
+            imageView.image = [Constants arrowRightIcon];
+        } else {
+            imageView.image = [Constants arrowDownIcon];
+        }
+    }
+    
+    headerView.tag = section;
     
     return headerView;
 }
@@ -309,8 +326,44 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+- (void)tableView:(UITableView *)tableView
+willDisplayHeaderView:(nonnull UIView *)view
+       forSection:(NSInteger)section {
+    UITapGestureRecognizer *tapGestureRecodnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableHeaderTapped:)];
+    [view addGestureRecognizer:tapGestureRecodnizer];
+}
+
+- (void)tableHeaderTapped:(UIGestureRecognizer *)sender {
+    NSInteger tappedSection = sender.view.tag;
+    if ([self isSectionOpen:tappedSection]) {
+        [self setSectionState:tappedSection open:NO];
+        [self.eventDelegate sectionToggled:tappedSection toOpen:NO];
+    } else {
+        [self setSectionState:tappedSection open:YES];
+        [self.eventDelegate sectionToggled:tappedSection toOpen:YES];
+    }
+}
+
 #pragma -
 #pragma Private Methods
+
+- (BOOL)shouldShowSectionRows:(NSInteger)section {
+    return [self isSectionOpen:section] || self.collapseEnabled == NO;
+}
+
+- (BOOL)isSectionOpen:(NSInteger)section {
+    NSNumber *sectionState = [self.sectionStates objectForKey:@(section)];
+    return sectionState == nil || sectionState.intValue == 0;
+}
+
+- (void)setSectionState:(NSInteger)section open:(BOOL)isOpen {
+    if (isOpen != NO) {
+        [self.sectionStates setObject:@0 forKey:@(section)];
+    } else {
+        [self.sectionStates setObject:@1 forKey:@(section)];
+    }
+}
+
 - (CLARoom *)selectedRoom {
     NSString *roomName = [UserDataManager getCachedObjectForKey:kSelectedRoomName];
     return [self.repository getRoomByNameInCurrentOrDefaultTeam:roomName];

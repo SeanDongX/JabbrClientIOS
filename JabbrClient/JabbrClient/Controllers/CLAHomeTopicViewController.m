@@ -56,7 +56,6 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
 - (void)viewDidLoad {
     [self initDataSource];
-    [self updateTeam:nil];
     [self setupPullToRefresh];
 }
 
@@ -75,7 +74,6 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     
     self.topicTableView.dataSource = self.dataSource;
     self.topicTableView.delegate = self.dataSource;
-    
     self.searchBar.delegate = self;
 }
 
@@ -86,9 +84,6 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
     
     [self.topicTableView addSubview:self.refreshControl];
     [self.refreshControl addTarget:self action:@selector(refreshTriggered) forControlEvents:UIControlEventValueChanged];
-    
-    [self.refreshControl beginRefreshing];
-    [self.topicTableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
 }
 
 #pragma mark -

@@ -22,6 +22,7 @@
 #import "CLATopicInfoViewController.h"
 #import "CLATaskWebViewController.h"
 #import "UIScrollView+InfiniteScroll.h"
+#import "CLAAzureHubPushNotificationService.h"
 
 @interface CLAChatViewController ()
 
@@ -82,7 +83,7 @@
 - (void)initData {
     self.user = [UserDataManager getUser];
     if (self.room.name) {
-        [self.messageClient getRoomMessages:self.room.name];
+        [self.messageClient loadRooms:@[self.room.name]];
     }
 }
 
@@ -158,10 +159,8 @@
 }
 
 - (void)showCreateTeamView {
-    SlidingViewController *slidingViewController =
-    (SlidingViewController *)self.slidingViewController;
-    [slidingViewController switchToCreateTeamView:nil
-                             sourceViewIdentifier:nil];
+    [[self getSlidingViewController] switchToCreateTeamView:nil
+                                       sourceViewIdentifier:nil];
 }
 
 - (void)showTaskView {
@@ -181,7 +180,7 @@
     if (lastestMessage) {
         [self.messageClient getPreviousMessages:lastestMessage.key inRoom:self.room.name];
     } else {
-        [self.messageClient getRoomMessages:self.room.name];
+        [self.messageClient loadRooms:@[self.room.name]];
     }
 }
 
@@ -642,11 +641,11 @@
 #pragma mark - Navigation
 
 - (void)showLeftMenu {
-    [self.slidingViewController anchorTopViewToRightAnimated:YES];
+    [[self getSlidingViewController] anchorTopViewToRightAnimated:YES];
 }
 
 - (void)showRightMenu {
-    [self.slidingViewController anchorTopViewToLeftAnimated:YES];
+    [[self getSlidingViewController] anchorTopViewToLeftAnimated:YES];
 }
 
 
@@ -662,6 +661,22 @@
 #pragma mark - CLAMessageClientDelegate Methods
 
 - (void)didOpenConnection {
+}
+
+- (void)didReceiveConnectionError:(NSError *)error {
+    if (error && error.code == -1016) {
+        [UserDataManager signOut];
+        [[CLAAzureHubPushNotificationService sharedInstance] unregisterDevice];
+        [self.messageClient disconnect];
+        [self.messageClient.dataRepository deleteData];
+        [self switchToSignInView];
+    }
+}
+
+- (void)switchToSignInView {
+    SlidingViewController *slidingViewController = [self getSlidingViewController];
+    [slidingViewController clearControllerCache];
+    [slidingViewController switchToSignInView];
 }
 
 - (void)didConnectionChnageState:(CLAConnectionState)oldState
@@ -692,10 +707,7 @@
         [self sendTeamUpdatedEventNotification];
     }
     
-    SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
-    if (!slidingViewController) {
-        slidingViewController = [SlidingViewController getAppTopViewController];
-    }
+    SlidingViewController *slidingViewController = [self getSlidingViewController];
     
     if (slidingViewController != nil) {
         [slidingViewController switchToRoom:newRoom];
@@ -840,6 +852,15 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kEventNoTeam
                                                         object:nil
                                                       userInfo:nil];
+}
+
+- (SlidingViewController *)getSlidingViewController {
+    SlidingViewController *slidingViewController = (SlidingViewController *)self.slidingViewController;
+    if (!slidingViewController) {
+        slidingViewController = [SlidingViewController getAppTopViewController];
+    }
+    
+    return slidingViewController;
 }
 
 - (void)showHud {

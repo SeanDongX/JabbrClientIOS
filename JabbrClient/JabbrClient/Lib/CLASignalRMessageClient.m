@@ -193,7 +193,10 @@ static bool isFirstAccess = YES;
 
 - (void)SRConnection:(id<SRConnectionInterface>)connection
      didReceiveError:(NSError *)error {
-    NSLog(@"Error %@", error.description);
+    NSLog(@"Socket connection error - code: %ld", (long)error.code);
+    NSLog(@"Socket connection error - description: %@", error.description);
+    
+    [self.delegate didReceiveConnectionError:error];
 }
 
 - (void)SRConnection:(id<SRConnectionInterface>)connection
@@ -232,29 +235,8 @@ static bool isFirstAccess = YES;
     }
 }
 
-- (void)loadRooms:(NSArray *)rooms {
+- (void)loadRooms:(NSArray <NSString*> *)rooms {
     [self invokeHubMethod:@"LoadRooms" withArgs:@[rooms] completionHandler:nil];
-}
-
-- (void)getRoomMessages:(NSString *)room {
-    __weak __typeof(&*self) weakSelf = self;
-    
-    [self invokeHubMethod: @"GetRoomInfo" withArgs: @[room] completionHandler:^(id response, NSError *error) {
-        if (!error) {
-            NSDictionary *data = response;
-            if (data) {
-                CLARoom *roomObject = [self.dataRepository getRoomByNameInCurrentOrDefaultTeam:room];
-                
-                [weakSelf.dataRepository addOrUpdateMessagesWithData:@[data] forRoom: roomObject.key completion:^{
-                    [weakSelf.delegate didLoadEarlierMessagesInRoom:room];
-                }];
-            } else {
-                [weakSelf.delegate didLoadEarlierMessagesInRoom:room];
-            }
-        } else {
-            [weakSelf.delegate didLoadEarlierMessagesInRoom:room];
-        }
-    }];
 }
 
 - (void)sendMessage:(CLAMessage *)message inRoom:(NSString *)room {

@@ -241,10 +241,11 @@ static bool isFirstAccess = YES;
     
     [self invokeHubMethod: @"GetRoomInfo" withArgs: @[room] completionHandler:^(id response, NSError *error) {
         if (!error) {
-            NSArray *data = response;
-            if (data[0]) {
+            NSDictionary *data = response;
+            if (data) {
                 CLARoom *roomObject = [self.dataRepository getRoomByNameInCurrentOrDefaultTeam:room];
-                [weakSelf.dataRepository addOrUpdateMessagesWithData: data[0] forRoom: roomObject.key completion:^{
+                
+                [weakSelf.dataRepository addOrUpdateMessagesWithData:@[data] forRoom: roomObject.key completion:^{
                     [weakSelf.delegate didLoadEarlierMessagesInRoom:room];
                 }];
             } else {

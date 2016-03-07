@@ -81,6 +81,9 @@
 
 - (void)initData {
     self.user = [UserDataManager getUser];
+    if (self.room.name) {
+        [self.messageClient getRoomMessages:self.room.name];
+    }
 }
 
 - (void)initMenu {

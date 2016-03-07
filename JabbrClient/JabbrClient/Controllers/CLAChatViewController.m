@@ -82,9 +82,6 @@
 
 - (void)initData {
     self.user = [UserDataManager getUser];
-    if (self.room.name) {
-        [self.messageClient loadRooms:@[self.room.name]];
-    }
 }
 
 - (void)initMenu {

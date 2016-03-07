@@ -321,9 +321,20 @@ static bool isFirstAccess = YES;
     
     [self.dataRepository addOrUpdateTeamsWithData:data completion:^{
         __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+        CLATeam *cachedTeam = [UserDataManager getTeam];
+        if (cachedTeam == nil || cachedTeam.key == nil || cachedTeam.key.intValue == 0) {
+            CLATeam *defaultTeam = [strongSelf.dataRepository getCurrentOrDefaultTeam];
+            //If cached team is nil, it indicates that the current connection is connected without a team.
+            //If default team is not nil, it indicates that user has at least one team.
+            //In this case, the client should reconnect with default team
+            if (defaultTeam != nil) {
+                [strongSelf reconnect];
+                return;
+            }
+        } else {
+            [strongSelf.dataRepository getCurrentOrDefaultTeam];
+        }
         
-        //TOOD:optimize init default team, user
-        [strongSelf.dataRepository getCurrentOrDefaultTeam];
         NSString *userName = [UserDataManager getUsername];
         CLAUser *user = [strongSelf.dataRepository getUserByName:userName];
         [UserDataManager cacheUser:user];

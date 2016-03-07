@@ -87,8 +87,11 @@
 - (NSURL *)getBoardUrl {
     NSArray *array = @[kTaskServiceRootUrl, @"redirect/b/", [UserDataManager getTeam].name, @"/", self.roomName];
     //Task board needs lower case url for board name
+    NSString *urlString = [array componentsJoinedByString:@""];
     
-    return [NSURL URLWithString:[array componentsJoinedByString:@""].lowercaseString];
+    //Hanlder chinese chars in url
+    urlString = [urlString.lowercaseString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [NSURL URLWithString:urlString];
 }
 
 @end

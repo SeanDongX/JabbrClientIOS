@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "CLAMessageClient.h"
 #import "SLKTextViewController.h"
+#import "UIScrollView+EmptyDataSet.h"
 
-@interface CLAChatViewController : SLKTextViewController <CLAMessageClientDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate>
+@interface CLAChatViewController : SLKTextViewController <CLAMessageClientDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
 
 - (void)setActiveRoom:(CLARoom *)room;
 

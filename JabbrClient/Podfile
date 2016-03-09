@@ -23,6 +23,7 @@ target 'Collara' do
   pod 'Realm'
   pod 'JLRoutes'
   pod 'UIScrollView-InfiniteScroll'
+  pod 'DZNEmptyDataSet'
 end
 
 target 'CollaraTests' do

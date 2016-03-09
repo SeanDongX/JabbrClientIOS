@@ -52,6 +52,8 @@
     
     //needs to be call here instead of viewDidLoad due to unknow reason of caused by method swizzling in "UIScrollView+InfiniteScroll.h"
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self setupEmptyDataSource];
 }
 
 - (void)viewDidLoad {
@@ -68,6 +70,11 @@
     [self.tableView addInfiniteScrollWithHandler:^(UITableView* tableView) {
         [self refreshTriggered];
     }];
+}
+
+- (void)setupEmptyDataSource {
+    self.tableView.emptyDataSetSource = self;
+    self.tableView.emptyDataSetDelegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -183,6 +190,7 @@
 
 - (void)didFinishRefresh {
     [self.tableView finishInfiniteScroll];
+    [self hideHud];
 }
 
 #pragma mark -
@@ -802,6 +810,41 @@
 }
 
 #pragma mark -
+#pragma mark - Empty Data Set Delegate Methods
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    UIImage *image = [Constants noMessageIconImage];
+    UIView *emptyDataSerView = [scrollView valueForKey:@"emptyDataSetView"];
+    if (emptyDataSerView) {
+        emptyDataSerView.transform = self.tableView.transform;
+    }
+    return image;
+}
+
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = NSLocalizedString(@"It's lonely here", nil);
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f],
+                                 NSForegroundColorAttributeName: [UIColor darkGrayColor]};
+    
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return attributedString;
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *text = NSLocalizedString(@"Invite someone and say hello", nil);
+    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
+                                 NSParagraphStyleAttributeName: paragraph};
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+#pragma mark -
 #pragma mark - Private Methods
 - (NSArray <CLAMessage *> *)getRoomMessages {
     return [self.messageClient.dataRepository getRoomMessages:self.room.key];
@@ -827,6 +870,10 @@
     [self.messageClient.dataRepository joinUser:self.user.name
                                          toRoom:self.room.name
                                          inTeam:[UserDataManager getTeam].key];
+    if ([self getRoomMessages].count == 0) {
+        [self.messageClient loadRooms:@[self.room.name]];
+    }
+    
     [self.tableView reloadData];
 }
 

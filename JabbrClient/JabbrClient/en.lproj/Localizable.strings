@@ -41,7 +41,8 @@
 
 "PushNotificationMentionMessage" = "%@ mentioned you in %@ : %@";
 "PushNotificationRoomInviteMessage" = "%@ invited you to join %@";
-"It's lonely here, invite someone and say hello." = "It's lonely here, invite someone and say hello.";
+"It's lonely here" = "It's lonely here";
+"Invite someone and say hello" = "Invite someone and say hello";
 "Create Public Topic" = "Create Public Topic";
 "Create Pirvate Topic" = "Create Private Topic";
 "Send Direct Message" = "Send Direct Message";

@@ -44,6 +44,21 @@
     [team.rooms addObjects:roomArray];
     [team.users addObjects:userArray];
     
+    //handle the return from webapi
+    if (!team.name && [teamDictionary objectForKey:@"name"]) {
+        team.name = [teamDictionary objectForKey:@"name"];
+        team.key = [teamDictionary objectForKey:@"key"];
+        
+        NSArray *roomArrayFromDictionary = [teamDictionary objectForKey:@"rooms"];
+        NSArray *roomArray = [CLARoom getFromDataArray:roomArrayFromDictionary];
+        
+        NSArray *userArrayFromDictionary = [teamDictionary objectForKey:@"users"];
+        NSArray<CLAUser *> *userArray = [CLAUser getFromDataArray:userArrayFromDictionary];
+        
+        [team.rooms addObjects:roomArray];
+        [team.users addObjects:userArray];
+    }
+    
     return team;
 }
 

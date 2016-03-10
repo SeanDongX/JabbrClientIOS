@@ -173,6 +173,13 @@ int const kMessageCellImageHeight = 90;
     return [iccon imageWithSize:CGSizeMake(30, 30)];
 }
 
++ (UIImage *)noMessageIconImage {
+    FAKIonIcons *iccon = [FAKIonIcons iosChatbubbleIconWithSize:60];
+    [iccon addAttribute:NSForegroundColorAttributeName
+                  value:[Constants mainThemeContrastColor]];
+    return [iccon imageWithSize:CGSizeMake(60, 60)];
+}
+
 + (UIImage *)docIconImage {
     FAKIonIcons *iccon = [FAKIonIcons iosPaperOutlineIconWithSize:30];
     [iccon addAttribute:NSForegroundColorAttributeName

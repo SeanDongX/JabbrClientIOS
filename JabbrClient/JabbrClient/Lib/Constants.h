@@ -137,6 +137,7 @@ typedef NS_ENUM (NSInteger, MessageType) {
 + (UIImage *)homeImage;
 + (UIImage *)settingsImage;
 + (UIImage *)chatIconImage;
++ (UIImage *)noMessageIconImage;
 + (UIImage *)docIconImage;
 + (UIImage *)infoIconImage;
 + (UIImage *)closeIconImage;

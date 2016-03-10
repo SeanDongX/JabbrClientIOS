@@ -158,7 +158,7 @@
 
 - (void)showInfoView {
     CLATopicInfoViewController *topicInfoView =
-    [[CLATopicInfoViewController alloc] initWithRoom:self.room];
+    [[CLATopicInfoViewController alloc] initWithRoomKey:self.room.key];
     [self.navigationController pushViewController:topicInfoView animated:YES];
 }
 

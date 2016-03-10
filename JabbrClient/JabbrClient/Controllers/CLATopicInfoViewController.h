@@ -12,6 +12,6 @@
 
 @interface CLATopicInfoViewController : XLFormViewController <UITextFieldDelegate>
 
-- (instancetype)initWithRoom:(CLARoom *)room;
+- (instancetype)initWithRoomKey:(NSNumber *)roomKey;
 
 @end

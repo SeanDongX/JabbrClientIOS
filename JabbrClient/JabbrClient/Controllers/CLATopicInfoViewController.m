@@ -30,11 +30,11 @@ NSString *const kInvitePrefix = @"Invite-";
 
 @implementation CLATopicInfoViewController
 
-- (instancetype)initWithRoom:(CLARoom *)room {
+- (instancetype)initWithRoomKey:(NSNumber *)roomKey {
     self = [super init];
     if (self) {
         self.messageClient = [CLASignalRMessageClient sharedInstance];
-        self.room = room;
+        self.room = [self.messageClient.dataRepository getRoom:roomKey];
         self.form = [self getForm];
     }
     return self;

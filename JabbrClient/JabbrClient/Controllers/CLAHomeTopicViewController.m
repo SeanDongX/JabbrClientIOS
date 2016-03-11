@@ -56,6 +56,7 @@ NSString * const kHomeTopicViewCellIdentifierName = @"TopicCell";
 
 - (void)viewDidLoad {
     [self initDataSource];
+    [self updateTeam:nil];
     [self setupPullToRefresh];
 }
 

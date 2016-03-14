@@ -24,4 +24,6 @@
 - (void)switchToCreateTeamView:(NSString *)invitationId sourceViewIdentifier:(NSString*)sourceViewIdentifier;
 - (void)switchToRoom:(CLARoom *)room;
 
+#pragma mark ECSlidingViewController Method declaration
+- (void)detectPanGestureRecognizer:(UIPanGestureRecognizer *)recognizer;
 @end

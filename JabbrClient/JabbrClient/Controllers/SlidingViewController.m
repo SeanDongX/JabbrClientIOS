@@ -165,4 +165,10 @@
         [self switchToMainView];
     }
 }
+
+#pragma mark ECSlidingViewController Method override
+
+- (void)detectPanGestureRecognizer:(UIPanGestureRecognizer *)recognizer {
+    
+}
 @end

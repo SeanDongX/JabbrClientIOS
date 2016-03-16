@@ -65,7 +65,6 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
-    self.searchBar.text = nil;
     [super viewWillAppear:animated];
 }
 
@@ -154,6 +153,11 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
 #pragma Search Bar Delegate Methods
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)text {
+    [self filterDataSource:text];
+    [self.tableView reloadData];
+}
+
+- (void)filterDataSource:(NSString *)text {
     if (text.length == 0) {
         self.dataSource.isFiltered = NO;
         [self.dataSource resetFilter];
@@ -161,8 +165,6 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
         self.dataSource.isFiltered = YES;
         [self.dataSource filterContentForSearchText:text];
     }
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -194,7 +196,9 @@ NSString * const kLeftMenuViewCellIdentifierName = @"MenuCell";
         [self updateRooms:roomArray];
     }
     
+    [self filterDataSource:self.searchBar.text];
     [self.tableView reloadData];
+    
     [self didFinishRefresh];
 }
 

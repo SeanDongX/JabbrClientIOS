@@ -99,6 +99,10 @@
 
 - (void)setRoom:(CLARoom *)room {
     if (room) {
+        [self setContraints];
+        self.bodyLabel.hidden = YES;
+        self.imageContentView.hidden = YES;
+        
         self.titleLabel.text = [NSString stringWithFormat:@"#%@", room.name];
         self.avatarView.image = [JSQMessagesAvatarImageFactory
                                  avatarImageWithUserInitials:@"#"
@@ -111,8 +115,11 @@
 
 - (void)setUser:(CLAUser *)user {
     if (user) {
-        self.titleLabel.text = [NSString stringWithFormat:@"@%@", user.name];
+        [self setContraints];
+        self.bodyLabel.hidden = YES;
+        self.imageContentView.hidden = YES;
         
+        self.titleLabel.text = [NSString stringWithFormat:@"@%@", user.name];
         if (user.initials) {
             self.avatarView.image = [JSQMessagesAvatarImageFactory
                                      avatarImageWithUserInitials:user.initials
@@ -120,12 +127,14 @@
                                      textColor:[UIColor whiteColor]
                                      font:[UIFont systemFontOfSize:13.0f]
                                      diameter:30.0f].avatarImage;
+            self.avatarView.hidden = NO;
         }
     }
 }
 
 - (void)setMessage:(CLAMessage *)message {
     if (message) {
+        [self setContraints];
         
         if (message.fromUser && message.fromUser.initials) {
             self.avatarView.image = [JSQMessagesAvatarImageFactory

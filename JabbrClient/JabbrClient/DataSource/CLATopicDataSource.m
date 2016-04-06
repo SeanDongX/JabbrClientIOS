@@ -95,15 +95,14 @@
 }
 
 - (void)resetFilter {
-    [self.filteredRoomDictionary
-     setObject:[self.roomDictionary objectForKey:@"0"]
-     forKey:@"0"];
-    [self.filteredRoomDictionary
-     setObject:[self.roomDictionary objectForKey:@"1"]
-     forKey:@"1"];
-    [self.filteredRoomDictionary
-     setObject:[self.roomDictionary objectForKey:@"2"]
-     forKey:@"2"];
+    NSArray *roomKeys = @[@"0", @"1", @"2"];
+    
+    for (NSString *roomKey in roomKeys) {
+        id rooms = [self.roomDictionary objectForKey:roomKey];
+        if (rooms) {
+            [self.filteredRoomDictionary setObject:rooms forKey:roomKey];
+        }
+    }
 }
 
 - (void)filterContentForSearchText:(NSString *)searchText {
